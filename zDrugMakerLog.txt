@@ -1,0 +1,113 @@
+date - 2023/05/12 - 16:25:11 
+1. Amount of drug needed 
+Drug name - TestArticle 
+ BEW - 1.0 
+ dose - 10.0 
+ Volume total (1 ml/kg) - 0.35000000000000003 ml 
+ Volume total (5 ml/kg) - 1.7500000000000002 ml 
+ Volume total (10 ml/kg) - 3.5000000000000004 ml 
+
+date - 2023/05/12 - 16:25:53 
+zDrugMaker v.0.0.6
+End of session
+
+ ------------------------------------------------
+
+date - 2023/05/12 - 16:29:24 
+1. Amount of drug needed 
+Drug name - testArt 
+ BEW - 1 
+ dose - 4 
+ Volume total (1 ml/kg) - 0.42 ml 
+ Volume total (5 ml/kg) - 2.1 ml 
+ Volume total (10 ml/kg) - 4.2 ml 
+
+date - 2023/05/12 - 16:29:35 
+2. Volume of vehicle 
+Drug name - testArt 
+ BEW - 1.0 
+ dose - 13.0 
+ amount - 500.0 
+ Volume total (1 ml/kg) - 38.46153846153846 ml 
+ Volume total (5 ml/kg) - 192.30769230769232 ml 
+ Volume total (10 ml/kg) - 384.61538461538464 ml 
+
+date - 2023/05/12 - 16:30:24 
+date - 2023/05/12 - 16:33:41 
+2. Volume of vehicle 
+Drug name - plooopies 
+ BEW - 1 
+ dose - 12 
+ amount - 30 
+ Volume total (1 ml/kg) - 2.5 ml 
+ Volume total (5 ml/kg) - 12.5 ml 
+ Volume total (10 ml/kg) - 25 ml 
+
+date - 2023/05/12 - 16:33:57 
+date - 2023/05/12 - 16:34:16 
+date - 2023/05/12 - 16:34:19 
+zDrugMaker v.0.0.6
+End of session
+
+ ------------------------------------------------
+
+date - 2023/05/12 - 16:36:44 
+date - 2023/05/12 - 16:39:10 
+3. Dilutions 
+Drug name - aaaaa 
+ Original Volume - 10ml 
+ Volume of new solution - 10ml 
+ Stock used - 5ml 
+ Vehicle added - 5ml 
+
+date - 2023/05/12 - 16:39:31 
+zDrugMaker v.0.0.6
+End of session
+
+ ------------------------------------------------
+
+date - 2023/05/12 - 16:44:04 
+3. Dilutions 
+Drug name - asdaq 
+ Original Volume - 100ml 
+ Volume of new solution - 50ml 
+ Stock used - 10ml 
+ Vehicle added - 40ml 
+
+date - 2023/05/12 - 16:44:34 
+3. Dilutions 
+Drug name - asdaq 
+ Original Volume - 10ml 
+ Volume of new solution - 1ml 
+ Stock used - 4.17ml 
+ Vehicle added - -3.17ml 
+
+date - 2023/05/12 - 16:47:32 
+date - 2023/05/12 - 16:50:09 
+date - 2023/05/12 - 16:50:12 
+date - 2023/05/12 - 16:50:16 
+date - 2023/05/12 - 16:50:36 
+date - 2023/05/12 - 16:50:53 
+3. Dilutions 
+Drug name - poopler 
+ Original Volume - 100ml 
+ Volume of new solution - 1ml 
+ Stock used - 2ml 
+ Vehicle added - -1ml 
+
+date - 2023/05/12 - 16:51:03 
+date - 2023/05/12 - 16:51:23 
+1. Amount of drug needed 
+Drug name - mickydombers 
+ BEW - 1 
+ dose - 5 
+ Volume total (1 ml/kg) - 0.006 ml 
+ Volume total (5 ml/kg) - 0.03 ml 
+ Volume total (10 ml/kg) - 0.06 ml 
+
+date - 2023/05/12 - 16:51:32 
+zDrugMaker v.0.0.6
+End of session
+
+ ------------------------------------------------
+
