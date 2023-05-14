@@ -32,6 +32,7 @@ def display_menu():
 def estimate_drug_amount(compound_name, text_file):
     print("\nPlease enter the following values:\n")
     bew = float(input("BEW of the drug: "))
+    append_bew_to_file(compound_name, bew)
     dose = float(input("Dose being administered (mg/kg): "))
     avgbw = float(input("average body weight of the animals (g): "))
     animalnumber = int(input("number of animals to be used: "))
@@ -62,6 +63,7 @@ def estimate_drug_amount(compound_name, text_file):
 def calculate_vehicle_amount(compound_name, text_file):
     print("\nPlease enter the following values:\n")
     bew = float(input("BEW of the drug: "))
+    append_bew_to_file(compound_name, bew)
     dose = float(input("Dose being administered (mg/kg): "))
     amt = float(input("Amount of drug weighed (mg): "))
     print("\n")
@@ -125,6 +127,7 @@ def display_version_history():
     print("Version 0.0.4\n-added dilutions functionality\n-polished some of the output text")
     print("Version 0.0.5\n-added option 6 (dev log)")
     print("Version 0.0.6\n-added logging capabilities")
+    print("Version 1.0\n-updated an streamlined code\n-added more logging capabilities (BEW logger)")
 
 def print_common_bew_values():
     with open("zDrugMakerBEW.txt", 'r') as text_file:
@@ -132,6 +135,9 @@ def print_common_bew_values():
         for line in text_file:
             print('\t', line, end='')
 
+def append_bew_to_file(compound_name, bew):
+    with open("zDrugMakerBEW.txt", 'a') as bew_file:
+        bew_file.write(f"{compound_name} - {bew:.3g}\n")
 
 
 

@@ -52,7 +52,7 @@ def allocation(filename, number_of_groups):
                 results.write(f"{key},{index[key]}\n")
 
 print("\n" + "=" * 80)
-print("LBS Animal Allocator Applet v0.2.0")
+print("LBS Animal Allocator Applet v1.0")
 print("=" * 80 + "\n\n")
 filename_input = input('Filename: ')
 number_of_groups = int(input('Number of groups (2 to 10): '))
