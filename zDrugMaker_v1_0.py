@@ -3,7 +3,7 @@ import time
 
 def display_intro():
     print("\n" + "=" * 80)
-    print("Leo's Dilution Calculator and Volume Conversion Applet v0.6.2\n")
+    print("Leo's Dilution Calculator and Volume Conversion Applet v1.0\n")
     print("=" * 80)
 
 
@@ -117,7 +117,36 @@ def perform_dilution(compound_name, text_file):
     text_file.write(f"Drug name - {compound_name} \n Original Volume - {vol_tot_01:.3g}ml \n Volume of new solution - {vol_02:.3g}ml \n Stock used - {vol_01:.3g}ml \n Vehicle added - {vol_03:.3g}ml \n\n")
 
 def check_bew_values():
-    print("You entered 1\n")
+    print("===========================================")
+    print("List of BEW Values:")
+    print("===========================================")
+
+    max_line_length = 0
+    lines = []
+
+    # Read the file once to find the maximum line length
+    with open("zDrugMakerBEW.txt", 'r') as text_file:
+        for line in text_file:
+            line = line.strip()
+            line = line.replace('\t', '    ')  # Replace each tab character with four spaces
+            lines.append(line)
+            if len(line) > max_line_length:
+                max_line_length = len(line)
+
+    # Add 3 to max_line_length to account for extra space and "|"
+    max_line_length += 3 
+
+    # Print the top boundary line
+    print('=' * max_line_length)
+
+    # Read the file again to print the lines, padding each one to the maximum length
+    for line in lines:
+        print(f"| {line:<{max_line_length - 2}}|")
+
+    # Print the bottom boundary line
+    print('=' * max_line_length)
+
+
 
 def display_version_history():
     print("Version history")
