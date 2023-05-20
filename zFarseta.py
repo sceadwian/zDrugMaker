@@ -37,7 +37,10 @@ def encrypt_text(text):
         encrypted_block = ''
         for char in reversed_block:
             if char.lower() in mapping:
-                encrypted_block += mapping[char.lower()]
+                if char.islower():
+                    encrypted_block += mapping[char.lower()]
+                else:
+                    encrypted_block += mapping[char.lower()].upper()
             else:
                 encrypted_block += char
         encrypted_text += encrypted_block
@@ -56,7 +59,10 @@ def decrypt_text(encrypted_text):
         decrypted_block = ''
         for char in block:
             if char.lower() in reverse_mapping:
-                decrypted_block += reverse_mapping[char.lower()]
+                if char.islower():
+                    decrypted_block += reverse_mapping[char.lower()]
+                else:
+                    decrypted_block += reverse_mapping[char.lower()].upper()
             else:
                 decrypted_block += char
         decrypted_text += decrypted_block[::-1]
