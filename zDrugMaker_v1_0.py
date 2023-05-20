@@ -195,6 +195,10 @@ def main():
                 compound_name = input('Name of compound being weighed: ')
             elif selection == 8:
                 print_common_bew_values()
+            elif selection == 9:
+                ##functon to sort through the BEW file and remove duplicates and sort in alphabetical order (maybe) backup file with date timestamp before applying this feature.
+                with open("zDrugMakerBEW.txt", 'r') as text_file:
+                    #unfinished
             elif selection == 5:
                 running = False
                 text_file.write('zDrugMaker v.1.0\n')
