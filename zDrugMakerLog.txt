@@ -52,3 +52,39 @@ End of session
  ------------------------------------------------
 
 
+date - 2023/05/17 - 20:43:43 
+1. Amount of drug needed 
+Drug name - testCompound 
+ BEW - 1.23 
+ dose - 10 
+ Volume total (1 ml/kg) - 0.3 ml 
+ Volume total (5 ml/kg) - 1.5 ml 
+ Volume total (10 ml/kg) - 3 ml 
+
+date - 2023/05/17 - 20:43:54 
+2. Volume of vehicle 
+Drug name - testCompound 
+ BEW - 1.23 
+ dose - 10 
+ amount - 30 
+ Volume total (1 ml/kg) - 2.44 ml 
+ Volume total (5 ml/kg) - 12.2 ml 
+ Volume total (10 ml/kg) - 24.4 ml 
+
+date - 2023/05/17 - 20:44:11 
+3. Dilutions 
+Drug name - testCompound 
+ Original Volume - 10ml 
+ Volume of new solution - 2ml 
+ Stock used - 1ml 
+ Vehicle added - 1ml 
+
+date - 2023/05/17 - 20:44:51 
+date - 2023/05/17 - 20:45:07 
+date - 2023/05/17 - 20:52:19 
+date - 2023/05/17 - 20:52:39 
+zDrugMaker v.1.0
+End of session
+
+ ------------------------------------------------
+
