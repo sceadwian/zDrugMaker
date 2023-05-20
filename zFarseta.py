@@ -30,11 +30,18 @@ mapping = {
 
 def encrypt_text(text):
     encrypted_text = ''
-    for char in text:
-        if char.lower() in mapping:
-            encrypted_text += mapping[char.lower()]
-        else:
-            encrypted_text += char
+    i = 0
+    while i < len(text):
+        block = text[i:i+5]
+        reversed_block = block[::-1]
+        encrypted_block = ''
+        for char in reversed_block:
+            if char.lower() in mapping:
+                encrypted_block += mapping[char.lower()]
+            else:
+                encrypted_block += char
+        encrypted_text += encrypted_block
+        i += 5
 
     return encrypted_text
 
@@ -43,11 +50,17 @@ def decrypt_text(encrypted_text):
     reverse_mapping = {v: k for k, v in mapping.items()}
 
     decrypted_text = ''
-    for char in encrypted_text:
-        if char.lower() in reverse_mapping:
-            decrypted_text += reverse_mapping[char.lower()]
-        else:
-            decrypted_text += char
+    i = 0
+    while i < len(encrypted_text):
+        block = encrypted_text[i:i+5]
+        decrypted_block = ''
+        for char in block:
+            if char.lower() in reverse_mapping:
+                decrypted_block += reverse_mapping[char.lower()]
+            else:
+                decrypted_block += char
+        decrypted_text += decrypted_block[::-1]
+        i += 5
 
     return decrypted_text
 
