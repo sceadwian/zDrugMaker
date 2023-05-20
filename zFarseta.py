@@ -103,3 +103,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+#maybe add to the code so that numbers are converted to # and ad the end of the file there is a -- followed by every single number in the document in the order that they appear
+#
+
+
