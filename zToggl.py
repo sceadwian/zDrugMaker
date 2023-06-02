@@ -62,3 +62,5 @@ def parse_csv(input_file, output_file):
                 csv_writer.writerow([f'Client: {client}, Bill: {bill}, Study: {study}', f'{total_hours:.2f} hours'])
 
 parse_csv('input.csv', 'output.csv')
+
+input("Press any key to close script...")
