@@ -13,6 +13,7 @@ def parse_csv(input_file, output_file):
         csv_reader = csv.DictReader(csv_file)
         data = defaultdict(list)
         description_data = defaultdict(lambda: defaultdict(timedelta))
+        overall_description_data = defaultdict(timedelta)
         for row in csv_reader:
             if row['Project'] == 'IVS':
                 start_time = parse_time(row['Start time'])
@@ -31,6 +32,7 @@ def parse_csv(input_file, output_file):
                     else:
                         continue
                     description_data[row['Start date']][(client, bill, study)] += duration
+                    overall_description_data[(client, bill, study)] += duration
 
         with open(output_file, 'w', newline='') as out_file:
             csv_writer = csv.writer(out_file)
@@ -53,5 +55,10 @@ def parse_csv(input_file, output_file):
                     task_hours = duration.total_seconds() / 3600
                     print(f'\033[93mClient:\033[0m {client}, \033[93mBill:\033[0m {bill}, \033[93mStudy:\033[0m {study}: \033[92m{task_hours:.2f} hours\033[0m')
                 print('-' * 40)
+            
+            csv_writer.writerow(['Overall Description Breakdown'])
+            for (client, bill, study), duration in overall_description_data.items():
+                total_hours = duration.total_seconds() / 3600
+                csv_writer.writerow([f'Client: {client}, Bill: {bill}, Study: {study}', f'{total_hours:.2f} hours'])
 
 parse_csv('input.csv', 'output.csv')
