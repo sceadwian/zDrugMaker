@@ -47,11 +47,7 @@ def parse_csv(input_file, output_file):
                     end_time = max(end_time, next_end_time)
                 total_hours = (end_time - start_time).total_seconds() / 3600
                 csv_writer.writerow([date, start_time.time(), end_time.time(), f'{total_hours:.2f}'])
-                
-                print(f'Date: {date}')
-                print(f'Start time: {start_time.time()}')
-                print(f'End time: {end_time.time()}')
-                print(f'Total hours: {total_hours:.2f}')
+                print(f'Date: {date}, Start time: {start_time.time()}, End time: {end_time.time()}, Total hours: {total_hours:.2f}')
                 print("Description breakdown:")
                 for (client, bill, study), duration in description_data[date].items():
                     task_hours = duration.total_seconds() / 3600
