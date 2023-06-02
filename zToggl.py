@@ -57,7 +57,7 @@ def parse_csv(input_file, output_file):
                 print('-' * 40)
             
             csv_writer.writerow(['Overall Description Breakdown'])
-            for (client, bill, study), duration in overall_description_data.items():
+            for (client, bill, study), duration in sorted(overall_description_data.items(), key=lambda x: x[0][0]):
                 total_hours = duration.total_seconds() / 3600
                 csv_writer.writerow([f'Client: {client}, Bill: {bill}, Study: {study}', f'{total_hours:.2f} hours'])
 
