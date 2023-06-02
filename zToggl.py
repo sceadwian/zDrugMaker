@@ -1,6 +1,7 @@
 import csv
 from datetime import datetime, timedelta
 from collections import defaultdict
+import time
 
 def parse_time(time_str):
     return datetime.strptime(time_str, '%H:%M:%S')
@@ -55,6 +56,7 @@ def parse_csv(input_file, output_file):
                     task_hours = duration.total_seconds() / 3600
                     print(f'\033[93mClient:\033[0m {client}, \033[93mBill:\033[0m {bill}, \033[93mStudy:\033[0m {study}: \033[92m{task_hours:.2f} hours\033[0m')
                 print('-' * 40)
+                time.sleep(0.4)
             
             csv_writer.writerow(['Overall Description Breakdown'])
             for (client, bill, study), duration in sorted(overall_description_data.items(), key=lambda x: x[0][0]):
