@@ -17,6 +17,8 @@ def parse_csv(input_file, output_file):
             if row['Project'] == 'IVS':
                 start_time = parse_time(row['Start time'])
                 end_time = parse_time(row['End time'])
+                if end_time < start_time:
+                    end_time += timedelta(days=1)
                 duration = end_time - start_time
                 data[row['Start date']].append((start_time, end_time))
                 if row['Description']:
