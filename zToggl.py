@@ -91,6 +91,31 @@ def parse_csv(input_file, output_file):
                 total_hours = duration.total_seconds() / 3600
                 csv_writer.writerow([f'Client: {client}, Bill: {bill}, Study: {study}', f'{total_hours:.2f} hours'])
 
-parse_csv('input.csv', 'output.csv')
+def main():
+    print("Choose an option:")
+    print("1. Parse CSV file")
+    # Print other options here...
+    
+    choice = input("Your choice: ")
+    
+    if choice == '1':
+        input_file = input("Enter the name of the input CSV file: ")
+        output_file = input("Enter the name of the output CSV file: ")
 
-input("Press any key to close script...")
+        # If no input file is provided, use a default name.
+        if not input_file.strip():
+            input_file = "input_zT.csv"
+
+        # If no output file is provided, use a default name.
+        if not output_file.strip():
+            output_file = "output_zT.csv"
+        
+        parse_csv(input_file, output_file)
+        
+    # Handle other choices here...
+
+    input("Press any key to close script...")
+
+# This line ensures that main() gets called when this script is run directly.
+if __name__ == "__main__":
+    main()
