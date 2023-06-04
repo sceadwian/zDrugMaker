@@ -1,3 +1,7 @@
+#v0.1 is the safer option that does not convert nubmers
+# this version may be better to use with really important documents
+# to prevent potential loss
+
 mapping = {
     'a': 'b',
     'b': 'q',

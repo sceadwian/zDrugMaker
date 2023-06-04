@@ -1,3 +1,7 @@
+# v0.2 is the one that mucosa with numbers, signature at the end
+# problem is if you modify the output it may become impossible to read back.
+#
+
 mapping = {
     'a': 'b',
     'b': 'q',
