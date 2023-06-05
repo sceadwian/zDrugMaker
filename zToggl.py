@@ -96,6 +96,7 @@ def tally_hours(input_file):
     with open(input_file, 'r') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         hours_data = defaultdict(timedelta)
+        description_data = defaultdict(timedelta)
 
         # Total time across all tasks.
         total_time = timedelta()
@@ -110,18 +111,33 @@ def tally_hours(input_file):
             duration = end_time - start_time
             project_task = (row['Project'], row['Task'])
             hours_data[project_task] += duration
+            
+            # Only include non-'IVS' entries in the description tally.
+            if row['Project'] != 'IVS':
+                description_data[row['Description']] += duration
+            
             total_time += duration
 
         # Convert total_time to seconds for easy calculation of percentage.
         total_seconds = total_time.total_seconds()
         
         # Sort the results by total hours and print them.
+        print('--- Project & Task Tally ---')
         sorted_results = sorted(hours_data.items(), key=lambda x: x[1], reverse=True)
         for (project, task), duration in sorted_results:
             task_seconds = duration.total_seconds()
             total_hours = task_seconds / 3600
             percentage = (task_seconds / total_seconds) * 100
             print(f'\033[93mProject:\033[0m {project}, \033[93mTask:\033[0m {task}: \033[92m{total_hours:.2f} hours ({percentage:.2f}%)\033[0m')
+        
+        # Sort and print the results by descriptions.
+        print('\n--- Description Tally ---')
+        sorted_descriptions = sorted(description_data.items(), key=lambda x: x[1], reverse=True)
+        for description, duration in sorted_descriptions:
+            task_seconds = duration.total_seconds()
+            total_hours = task_seconds / 3600
+            percentage = (task_seconds / total_seconds) * 100
+            print(f'\033[93mDescription:\033[0m {description}: \033[92m{total_hours:.2f} hours ({percentage:.2f}%)\033[0m')
 
 
 
