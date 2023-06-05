@@ -14,5 +14,5 @@ https://toggl.com/track/
 zFarseta_v0_1.py - Leo's cypher v1 - 
 Simple encryption tool to transform legible digital text into encrypted document which can be decrypted with the same python script. This version can read sections of the document at a time.
 
-zFarseta_v0_2.py - Leo's cypher with additional number hiding v2 - 
+zFarseta_v0_2.py - Leo's cypher with + number hiding signature v2 - 
 Simple encryption tool to transform legible digital text into encrypted document which can be decrypted with the same python script. This version has additional number scrambling functionality to make the encrypted information more difficult to crack. However, small edits to the output may invalidate the whole text. Text cannot be partially decrypted either.

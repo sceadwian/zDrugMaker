@@ -91,9 +91,44 @@ def parse_csv(input_file, output_file):
                 total_hours = duration.total_seconds() / 3600
                 csv_writer.writerow([f'Client: {client}, Bill: {bill}, Study: {study}', f'{total_hours:.2f} hours'])
 
+
+def tally_hours(input_file):
+    with open(input_file, 'r') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        hours_data = defaultdict(timedelta)
+
+        # Total time across all tasks.
+        total_time = timedelta()
+        
+        for row in csv_reader:
+            start_time = parse_time(row['Start time'])
+            end_time = parse_time(row['End time'])
+            
+            if end_time < start_time:
+                end_time += timedelta(days=1)
+            
+            duration = end_time - start_time
+            project_task = (row['Project'], row['Task'])
+            hours_data[project_task] += duration
+            total_time += duration
+
+        # Convert total_time to seconds for easy calculation of percentage.
+        total_seconds = total_time.total_seconds()
+        
+        # Sort the results by total hours and print them.
+        sorted_results = sorted(hours_data.items(), key=lambda x: x[1], reverse=True)
+        for (project, task), duration in sorted_results:
+            task_seconds = duration.total_seconds()
+            total_hours = task_seconds / 3600
+            percentage = (task_seconds / total_seconds) * 100
+            print(f'\033[93mProject:\033[0m {project}, \033[93mTask:\033[0m {task}: \033[92m{total_hours:.2f} hours ({percentage:.2f}%)\033[0m')
+
+
+
 def main():
     print("Choose an option:")
     print("1. Parse CSV file")
+    print("2. Tally hours from CSV file")
     # Print other options here...
     
     choice = input("Your choice: ")
@@ -112,6 +147,14 @@ def main():
         
         parse_csv(input_file, output_file)
         
+    elif choice == '2':
+        input_file = input("Enter the name of the input CSV file: ")
+
+        # If no input file is provided, use a default name.
+        if not input_file.strip():
+            input_file = "input_zT.csv"
+        
+        tally_hours(input_file)
     # Handle other choices here...
 
     input("Press any key to close script...")
