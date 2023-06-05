@@ -1,6 +1,7 @@
 import csv
 from datetime import datetime, timedelta
 from collections import defaultdict
+from collections import Counter
 import time
 
 # Helper function to parse time.
@@ -139,12 +140,41 @@ def tally_hours(input_file):
             percentage = (task_seconds / total_seconds) * 100
             print(f'\033[93mDescription:\033[0m {description}: \033[92m{total_hours:.2f} hours ({percentage:.2f}%)\033[0m')
 
+def common_tasks(input_file, output_file):
+    with open(input_file, 'r') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        description_counter = Counter()
+        project_dict = {}
 
+        for row in csv_reader:
+            description = row['Description']
+            description_counter[description] += 1
+            if description not in project_dict:
+                project_dict[description] = row['Project']
+
+        most_common_descriptions = description_counter.most_common(15)
+
+        existing_descriptions = set()
+
+        try:
+            with open(output_file, 'r') as out_file:
+                csv_reader = csv.reader(out_file)
+                for row in csv_reader:
+                    existing_descriptions.add(row[0])
+        except FileNotFoundError:
+            pass
+
+        with open(output_file, 'a', newline='') as out_file:
+            csv_writer = csv.writer(out_file)
+            for description, _ in most_common_descriptions:
+                if description not in existing_descriptions:
+                    csv_writer.writerow([f'{description} ({project_dict[description]})'])
 
 def main():
     print("Choose an option:")
     print("1. Parse CSV file")
     print("2. Tally hours from CSV file")
+    print("3. Update file with 15 most common descriptions")
     # Print other options here...
     
     choice = input("Your choice: ")
@@ -171,6 +201,19 @@ def main():
             input_file = "input_zT.csv"
         
         tally_hours(input_file)
+
+    elif choice == '3':
+        input_file = input("Enter the name of the input CSV file: ")
+        output_file = input("Enter the name of the output CSV file: ")
+
+        # If no file names are provided, use default names.
+        if not input_file.strip():
+            input_file = "input_zT.csv"
+        if not output_file.strip():
+            output_file = "tasks_zT.csv"
+
+        common_tasks(input_file, output_file)
+
     # Handle other choices here...
 
     input("Press any key to close script...")
