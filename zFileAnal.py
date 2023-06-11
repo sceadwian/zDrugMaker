@@ -158,12 +158,73 @@ def remove_prefix_from_files():
 
     print("\nFiles renamed successfully.")
 
+def group_files_by_date():
+    path = os.getcwd()
+    files = sorted(os.listdir(path))
+
+    image_extensions = ['.jpg', '.jpeg', '.png', '.gif']
+    video_extensions = ['.mp4', '.avi', '.mov']
+
+    prefix_pattern = r"(\d{8}|\d{6}XX)"
+
+    # Dictionary to store grouped files by date
+    file_groups = {}
+
+    # Iterate over the files
+    for file in files:
+        file_path = os.path.join(path, file)
+
+        # Check if it's a file and has an image or video extension
+        if os.path.isfile(file_path) and (file.lower().endswith(tuple(image_extensions)) or file.lower().endswith(tuple(video_extensions))):
+            # Extract the prefix from the file name
+            match = re.search(prefix_pattern, file)
+            if match:
+                prefix = match.group(1)
+
+                # Create a new date block if it doesn't exist
+                if prefix not in file_groups:
+                    file_groups[prefix] = {
+                        'images': [],
+                        'videos': [],
+                        'size': 0,
+                        'num_images': 0,
+                        'num_videos': 0,
+                        'other_strings': set()
+                    }
+
+                # Group the file based on its type (image or video)
+                file_type = 'images' if file.lower().endswith(tuple(image_extensions)) else 'videos'
+                file_groups[prefix][file_type].append(file)
+
+                # Update the size and count for the date block
+                file_groups[prefix]['size'] += os.path.getsize(file_path)
+                file_groups[prefix]['num_images'] += 1 if file_type == 'images' else 0
+                file_groups[prefix]['num_videos'] += 1 if file_type == 'videos' else 0
+
+                # Extract other strings from the file name
+                other_strings = re.findall(r"_(.*?)_", file)
+                file_groups[prefix]['other_strings'].update(other_strings)
+
+    # Print the grouped files and summary for each date block
+    for prefix, data in file_groups.items():
+        print(f"\nDate Block: {prefix}")
+        print(f"Images: {data['num_images']}")
+        print(f"Videos: {data['num_videos']}")
+        print(f"Total Size: {get_size_string(data['size'])}")
+        print(f"Other Strings: {', '.join(data['other_strings'])}\n")
+        print("Files:")
+        for file_type, files_list in data.items():
+            if file_type not in ['size', 'num_images', 'num_videos', 'other_strings']:
+                for file in files_list:
+                    print(f"\033[92m{file}\033[0m")
+
 def main():
     while True:
         print("\nSelect a function:")
         print("1. List files in the current directory and display folder structure")
         print("2. Rename files in the current directory with a prefix")
         print("3. Remove prefix from files in the current directory")
+        print("4. Group image and video files by date")
         print("0. Exit")
         choice = input("Enter your choice: ")
 
@@ -173,6 +234,8 @@ def main():
             rename_files_with_prefix()
         elif choice == "3":
             remove_prefix_from_files()
+        elif choice == "4":
+            group_files_by_date()
         elif choice == "0":
             print("Exiting the script.")
             break
