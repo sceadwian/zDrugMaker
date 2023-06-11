@@ -1,5 +1,5 @@
 # zDrugMaker
-Leo's Pharmacology Companion Applet 
+Leo's Preclinical Pharmacology Companion Scripts 
 
 zDrugMaker_v1_0.py - Leo's Dilution Calculator and Volume Conversion Applet v1 - 
 Most recent version of the calculator. Can calculate simple formulations, dilutions and can estimate drug requirements for rodent pharmacological studies. This script has an additional functionality of logging all calculations in simple text format with time stamps to make this a great way to keep additional records of your formulations.
@@ -16,3 +16,6 @@ Simple encryption tool to transform legible digital text into encrypted document
 
 zFarseta_v0_2.py - Leo's cypher with + number hiding signature v2 - 
 Simple encryption tool to transform legible digital text into encrypted document which can be decrypted with the same python script. This version has additional number scrambling functionality to make the encrypted information more difficult to crack. However, small edits to the output may invalidate the whole text. Text cannot be partially decrypted either.
+
+zFileAnal - File Analysis Script -
+Work in progress

@@ -1,0 +1,6 @@
+prompt
+I would like to Create a python script with multiple functionalities that I can add as separate functions over time. 
+To start Prompt the user to select which function he would like to open.
+The first function I would like to add is that  the script looks into it's present directory and lists it's contents (files).
+Script goes down 2 folder levels and displays a nice schematic of the folder structure below.
+Put in front of each item the size of the folder of file.
