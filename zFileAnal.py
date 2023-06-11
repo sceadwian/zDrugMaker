@@ -1,3 +1,10 @@
+# This Python script provides multiple functionalities:
+# 1. List files in the current directory and display folder structure.
+# 2. Rename files in the current directory with a prefix.
+# 3. Remove prefix from files in the current directory.
+# The user can select the desired function from the main menu.
+# The script prompts for user input and performs the chosen operation.
+
 import os
 import math
 import re
