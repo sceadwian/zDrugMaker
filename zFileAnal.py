@@ -1,5 +1,6 @@
 import os
 import math
+import re
 
 def get_directory_size(path):
     total_size = 0
@@ -66,14 +67,110 @@ def list_files():
                 else:
                     print(f"{subindent}\033[92m{f}\033[0m ({size_string})")  # Print other files in green
 
+def list_files_alphabetical():
+    path = os.getcwd()
+    print("Files in the current directory (alphabetical order):")
+    files = sorted(os.listdir(path))
+    for file in files:
+        print(file)
+
+def rename_files_with_prefix():
+    path = os.getcwd()
+    files = sorted(os.listdir(path))
+
+    script_file = os.path.basename(__file__)
+    files = [file for file in files if file != script_file]
+
+    print("Current files in the directory:")
+    for file in files:
+        print(file)
+
+    prefix = input("\nEnter a prefix (YYYYMMDD or YYYYMMXX): ")
+    if not re.match(r"\d{6}(?:\d{2}|XX)$", prefix):
+        print("Invalid prefix format.")
+        return
+
+    description = input("Enter a description: ")
+
+    print("\nNew file names:")
+    for file in files:
+        if os.path.isfile(os.path.join(path, file)):
+            file_extension = os.path.splitext(file)[1]
+            new_name = f"{prefix}_{description}_{os.path.splitext(file)[0]}{file_extension}"
+            print(f"{file}\n{'--->'} {new_name}\n")
+
+    confirm = input("\nType 'Y' to confirm renaming the files: ")
+    if confirm.lower() != "y":
+        print("Action canceled.")
+        return
+
+    new_files = []
+    for old_name in files:
+        if os.path.isfile(os.path.join(path, old_name)):
+            file_extension = os.path.splitext(old_name)[1]
+            new_name = f"{prefix}_{description}_{os.path.splitext(old_name)[0]}{file_extension}"
+            new_files.append((old_name, new_name))
+
+    for old_name, new_name in new_files:
+        os.rename(os.path.join(path, old_name), os.path.join(path, new_name))
+
+    print("\nFiles renamed successfully.")
+
+def remove_prefix_from_files():
+    path = os.getcwd()
+    files = sorted(os.listdir(path))
+
+    print("Current files in the directory:")
+    for file in files:
+        print(file)
+
+    prefix = input("\nEnter the prefix to remove (YYYYMMDD): ")
+    if not re.match(r"\d{8}$", prefix):
+        print("Invalid prefix format.")
+        return
+
+    pattern = fr"^{re.escape(prefix)}_[^_]+_"
+
+    print("\nFiles to be renamed:")
+    renamed_files = []
+    for file in files:
+        if os.path.isfile(os.path.join(path, file)):
+            match = re.search(pattern, file)
+            if match:
+                new_name = re.sub(pattern, "", file)
+                print(f"{file} -> {new_name}")
+                renamed_files.append((file, new_name))
+
+    confirm = input("\nType 'Y' to confirm renaming the files: ")
+    if confirm.lower() != "y":
+        print("Action canceled.")
+        return
+
+    for old_name, new_name in renamed_files:
+        os.rename(os.path.join(path, old_name), os.path.join(path, new_name))
+
+    print("\nFiles renamed successfully.")
+
 def main():
-    print("Select a function:")
-    print("1. List files in the current directory and display folder structure")
-    choice = input("Enter your choice (1): ")
-    if choice == "1":
-        list_files()
-    else:
-        print("Invalid choice.")
+    while True:
+        print("\nSelect a function:")
+        print("1. List files in the current directory and display folder structure")
+        print("2. Rename files in the current directory with a prefix")
+        print("3. Remove prefix from files in the current directory")
+        print("0. Exit")
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            list_files_alphabetical()
+        elif choice == "2":
+            rename_files_with_prefix()
+        elif choice == "3":
+            remove_prefix_from_files()
+        elif choice == "0":
+            print("Exiting the script.")
+            break
+        else:
+            print("Invalid choice. Please try again.")
 
 if __name__ == "__main__":
     main()
