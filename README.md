@@ -20,8 +20,4 @@ Welcome to Leo's Preclinical Pharmacology Companion Scripts! This collection of 
 
 For detailed instructions and usage examples, please refer to the individual script files.
 
-## Contribution
-
-We encourage you to explore, contribute, and enhance these scripts for the benefit of the research community. Feel free to submit your improvements and suggestions. Together, we can create a powerful toolkit for preclinical pharmacology research.
-
 Happy scripting!
