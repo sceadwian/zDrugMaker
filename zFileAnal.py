@@ -76,7 +76,7 @@ def list_files():
 
 def list_files_alphabetical():
     path = os.getcwd()
-    print("Files in the current directory (alphabetical order):")
+    print("Files in the current directory (alphabetical order):\n")
     files = sorted(os.listdir(path))
     for file in files:
         print(file)
@@ -225,6 +225,7 @@ def main():
         print("2. Rename files in the current directory with a prefix")
         print("3. Remove prefix from files in the current directory")
         print("4. Group image and video files by date")
+        print("5. list_files function")
         print("0. Exit")
         choice = input("Enter your choice: ")
 
@@ -236,6 +237,8 @@ def main():
             remove_prefix_from_files()
         elif choice == "4":
             group_files_by_date()
+        elif choice == "5":
+            list_files()
         elif choice == "0":
             print("Exiting the script.")
             break
