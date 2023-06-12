@@ -76,7 +76,7 @@ def list_files():
 
 def list_files_alphabetical():
     path = os.getcwd()
-    print("Files in the current directory (alphabetical order):\n")
+    print("\nFiles in the current directory (alphabetical order):\n")
     files = sorted(os.listdir(path))
     for file in files:
         print(file)
@@ -222,23 +222,23 @@ def main():
     while True:
         print("\nSelect a function:")
         print("1. List files in the current directory and display folder structure")
-        print("2. Rename files in the current directory with a prefix")
-        print("3. Remove prefix from files in the current directory")
-        print("4. Group image and video files by date")
-        print("5. list_files function")
+        print("2. list_files function")       
+        print("3. Rename files in the current directory with a prefix")
+        print("4. Remove prefix from files in the current directory")
+        print("5. Group image and video files by date")
         print("0. Exit")
         choice = input("Enter your choice: ")
 
         if choice == "1":
             list_files_alphabetical()
         elif choice == "2":
-            rename_files_with_prefix()
-        elif choice == "3":
-            remove_prefix_from_files()
-        elif choice == "4":
-            group_files_by_date()
-        elif choice == "5":
             list_files()
+        elif choice == "3":
+            rename_files_with_prefix()
+        elif choice == "4":
+            remove_prefix_from_files()
+        elif choice == "5":
+            group_files_by_date()
         elif choice == "0":
             print("Exiting the script.")
             break
