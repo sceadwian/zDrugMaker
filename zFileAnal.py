@@ -29,9 +29,23 @@ def get_size_string(size):
 
 def list_files():
     path = os.getcwd()
+    input("Press any key to view folders and their sizes...")
+    folders = []
+    for folder in os.listdir(path):
+        folder_path = os.path.join(path, folder)
+        if os.path.isdir(folder_path):
+            size = get_directory_size(folder_path)
+            folders.append((folder, size))
+
+    folders.sort(key=lambda x: x[1], reverse=True)
+
+    print("Folders in the current directory:")
+    for folder, size in folders:
+        size_string = get_size_string(size)
+        print(f"\033[93m{folder}\033[0m ({size_string})")  # Print folders in yellow
+
     input("Press any key to view files in the current directory...")
     files = []
-    folders = []
     for file in os.listdir(path):
         file_path = os.path.join(path, file)
         if os.path.isfile(file_path):
@@ -40,14 +54,10 @@ def list_files():
                 files.append((file, size, True))  # Mark .exe and .py files with red flag
             else:
                 files.append((file, size, False))
-        else:
-            size = get_directory_size(file_path)
-            folders.append((file, size))
 
     files.sort(key=lambda x: x[1], reverse=True)
-    folders.sort(key=lambda x: x[1], reverse=True)
 
-    print("Files in the current directory:")
+    print("\nFiles in the current directory:")
     for file, size, red in files:
         size_string = get_size_string(size)
         if red:
