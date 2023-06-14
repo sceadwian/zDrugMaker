@@ -40,3 +40,5 @@ X	CGS21680A
 
 testCompound - 1.23
 testCompound - 1.23
+testArticlez - 1.68
+TSTart - 1.68

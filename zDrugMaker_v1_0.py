@@ -3,7 +3,7 @@ import time
 
 def display_intro():
     print("\n" + "=" * 80)
-    print("Leo's Dilution Calculator and Volume Conversion Applet v1.0\n")
+    print("Leo's Dilution Calculator and Volume Conversion Applet v1.1\n")
     print("=" * 80)
 
 
@@ -56,8 +56,15 @@ def estimate_drug_amount(compound_name, text_file):
     print(f"  - Oral (5 ml/kg)  : {voltot05:.3g} ml")
     print(f"  - Mice (10 ml/kg) : {voltot10:.3g} ml")
     print("============================================")
+
     text_file.write("1. Amount of drug needed \n")
-    text_file.write(f"Drug name - {compound_name} \n BEW - {bew:.3g} \n dose - {dose:.3g} \n Volume total (1 ml/kg) - {voltot01:.3g} ml \n Volume total (5 ml/kg) - {voltot05:.3g} ml \n Volume total (10 ml/kg) - {voltot10:.3g} ml \n\n")
+    text_file.write(f"Compound name: {compound_name} \n")
+    text_file.write(f"BEW: {bew:.3g} \n")
+    text_file.write(f"Dose: {dose:.3g} mg/kg \n")
+    text_file.write(f"Drug amount needed: {drugtot:.3g} mg \n")
+    text_file.write(f"Volume total (1 ml/kg): {voltot01:.3g} ml \n")
+    text_file.write(f"Volume total (5 ml/kg): {voltot05:.3g} ml \n")
+    text_file.write(f"Volume total (10 ml/kg): {voltot10:.3g} ml \n\n")
 
 
 def calculate_vehicle_amount(compound_name, text_file):
@@ -157,6 +164,7 @@ def display_version_history():
     print("Version 0.0.5\n-added option 6 (dev log)")
     print("Version 0.0.6\n-added logging capabilities")
     print("Version 1.0\n-updated an streamlined code\n-added more logging capabilities (BEW logger)")
+    print("Version 1.0.1\n-fixed output log file for estimate of drug amount")
 
 def print_common_bew_values():
     with open("zDrugMakerBEW.txt", 'r') as text_file:
@@ -196,16 +204,17 @@ def main():
             elif selection == 8:
                 print_common_bew_values()
             elif selection == 9:
-                ##functon to sort through the BEW file and remove duplicates and sort in alphabetical order (maybe) backup file with date timestamp before applying this feature.
-                with open("zDrugMakerBEW.txt", 'r') as text_file:
-                    #unfinished
+                print("This feature is not implemented yet.")
+                # with open("zDrugMakerBEW.txt", 'r') as text_file:
+                #     # This feature is not implemented yet
             elif selection == 5:
                 running = False
-                text_file.write('zDrugMaker v.1.0\n')
+                text_file.write('zDrugMaker v.1.1\n')
                 text_file.write('End of session\n\n ------------------------------------------------\n\n')
                 print("Goodbye!")
             else:
                 print("Please enter a valid number!\n")
+
 
 
 
