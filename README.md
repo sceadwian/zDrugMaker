@@ -10,14 +10,12 @@ Welcome to Leo's Preclinical Pharmacology Companion Scripts! This collection of 
 
 3. **zToggl.py** - Toggl Time Tracker Export Parser: Currently a work in progress, this script aims to parse the detailed Toggl Time Tracker export CSV file and extract hours worked at the lab. It provides a convenient way to analyze your time tracking data. Stay tuned for updates! https://toggl.com/track/
 
-4. **zFarseta_v0_1.py** - Leo's Cypher v1: This simple encryption tool transforms legible digital text into an encrypted document that can be decrypted using the same Python script. Version 1 allows for reading sections of the encrypted document at a time.
+4. **zFarseta_v0_1.py** - zCypher v1: This simple encryption tool transforms legible digital text into an encrypted document that can be decrypted using the same Python script. Version 1 allows for reading sections of the encrypted document at a time.
 
-5. **zFarseta_v0_2.py** - Leo's Cypher with Number Hiding Signature v2: Building upon the previous version, this encryption tool includes additional functionality for scrambling numbers, making the encrypted information more challenging to crack. However, please note that small edits to the output may invalidate the entire text, and partial decryption is not possible.
+5. **zFarseta_v0_2.py** - zCypher with Number Hiding Signature v2: Building upon the previous version, this encryption tool includes additional functionality for scrambling numbers, making the encrypted information more challenging to crack. However, please note that small edits to the output may invalidate the entire text, and partial decryption is not possible.
 
-6. **zFileAnal** - File Analysis Script: Currently a work in progress, this script aims to provide file analysis capabilities. Stay tuned for updates on this exciting feature!
+6. **zFileAnal** - File Analysis Script: Currently a work in progress, this script aims to provide file analysis capabilities. Reports on media files (video and images) contained in the folder.
 
 ## Usage
 
 For detailed instructions and usage examples, please refer to the individual script files.
-
-Happy scripting!
