@@ -45,15 +45,16 @@ def analyze_names():
             last_names.append(parts[1].lower())
     return first_names, last_names
 
-def generate_names(first_names, last_names, n=10):
+def generate_names(first_names, last_names, n):
     first_name_chain = MarkovChain()
     first_name_chain.train(first_names)
     last_name_chain = MarkovChain()
     last_name_chain.train(last_names)
-    for _ in range(n):
-        first_name = first_name_chain.generate().capitalize()
-        last_name = last_name_chain.generate().capitalize()
-        print(f"{first_name} {last_name}")
+    with open('zNameKrtrGenerated.txt', 'a') as f:
+        for _ in range(n):
+            first_name = first_name_chain.generate().capitalize()
+            last_name = last_name_chain.generate().capitalize()
+            f.write(f"{first_name} {last_name}\n")
 
 def main():
     while True:
@@ -65,7 +66,8 @@ def main():
             add_name()
         elif choice == '2':
             first_names, last_names = analyze_names()
-            generate_names(first_names, last_names)
+            n = int(input("Enter the number of names to generate: "))
+            generate_names(first_names, last_names, n)
         elif choice == '3':
             break
         else:
