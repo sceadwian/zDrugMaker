@@ -23,6 +23,19 @@ GROWTH_RATE = {
     COMMUNITY_D: 1.4,
 }
 
+# Define community colors
+COLORS = {
+    COMMUNITY_A: '\033[96m',  # Cyan
+    COMMUNITY_B: '\033[92m',  # Green
+    COMMUNITY_C: '\033[93m',  # Yellow
+    COMMUNITY_D: '\033[91m',  # Red
+    GROUND: '\033[0m',  # Reset to default
+    POND: '\033[94m',  # Blue
+    ROCK: '\033[90m',  # Dark Gray
+    VEGETATION: '\033[32m',  # Green
+    BORDER: '\033[97m',  # White
+}
+
 # Define the map
 map_width = 96  # Increased width
 map_height = 64  # Reduced height
@@ -81,6 +94,7 @@ def expand_community(community):
             if map[x][y] not in communities and any(map[nx][ny] == community for nx, ny in get_neighbors(x, y)):
                 map[x][y] = community
                 break
+
 # Function to clear console
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -102,7 +116,7 @@ for year in range(years):
             clear()
             print(f"Year: {year}")
             for row in map:
-                print(''.join(row))
+                print(''.join(COLORS[cell] + cell for cell in row))
 
             # Print community sizes
             print("Community sizes:")
@@ -116,10 +130,4 @@ for year in range(years):
     except KeyboardInterrupt:
         print(f"\nSimulation stopped after {year+1} years.")
         break
-
-#Can you change the code so that during map creation ponds come in clusters of 5, rocks come in clusters of 3 and vegetation comes in clusters of 10. Additionally can you adjust the expand_community function so that if the tile being expanded to is adjacent to a tile of that community already the change of expanding is improved by something like 10% ?
-
-
-
-
-
+     
