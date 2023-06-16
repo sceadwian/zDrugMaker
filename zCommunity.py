@@ -117,6 +117,7 @@ for year in range(years):
         print(f"\nSimulation stopped after {year+1} years.")
         break
 
+#Can you change the code so that during map creation ponds come in clusters of 5, rocks come in clusters of 3 and vegetation comes in clusters of 10. Additionally can you adjust the expand_community function so that if the tile being expanded to is adjacent to a tile of that community already the change of expanding is improved by something like 10% ?
 
 
 
