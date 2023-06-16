@@ -44,11 +44,11 @@ for community in communities:
     map[x][y] = community
 
 # Function to get neighboring cells within a given radius
-def get_neighbors(x, y, radius):
+def get_neighbors(x, y, radius=1):  # default radius set to 1 for adjacent cells
     neighbors = []
     for i in range(x-radius, x+radius+1):
         for j in range(y-radius, y+radius+1):
-            if 1 <= i <= map_height and 1 <= j <= map_width:
+            if (i, j) != (x, y) and 1 <= i <= map_height and 1 <= j <= map_width:
                 neighbors.append((i, j))
     return neighbors
 
@@ -67,7 +67,7 @@ def expand_community(community):
     # Try to expand the community from each location
     for location in locations:
         x, y = location
-        neighbors = get_neighbors(x, y, 3)  # get neighboring cells within radius of 3
+        neighbors = get_neighbors(x, y, 1)  # get neighboring cells within radius of 1
         for neighbor in neighbors:
             nx, ny = neighbor
             if map[nx][ny] in elements:
@@ -77,7 +77,8 @@ def expand_community(community):
     if year % 10 == 0 and random.random() < 0.2 * GROWTH_RATE[community]:
         while True:
             x, y = random.randint(1, map_height), random.randint(1, map_width)
-            if map[x][y] not in communities:
+            # Make sure the new settlement is spawned next to an existing one
+            if map[x][y] not in communities and any(map[nx][ny] == community for nx, ny in get_neighbors(x, y)):
                 map[x][y] = community
                 break
 # Function to clear console
@@ -115,3 +116,11 @@ for year in range(years):
     except KeyboardInterrupt:
         print(f"\nSimulation stopped after {year+1} years.")
         break
+
+
+#Great, can you make it so that the simulation goes to 5000 years. Additionally, I think Ground's growth rate should not be the same as vegetation. In terms of growth_rate, the number should follow the follow trend ROCK<GROUND<POND<VEGETATION.
+
+
+
+
+
