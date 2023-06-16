@@ -55,10 +55,10 @@ def get_neighbors(x, y, radius=1):  # default radius set to 1 for adjacent cells
 # Function to expand a community
 def expand_community(community):
     growth_rate = {
-        GROUND: 20,  # greatly increased growth rates
-        POND: 10,
-        ROCK: 15,
-        VEGETATION: 20,
+        GROUND: 15,
+        POND: 20,
+        ROCK: 10,
+        VEGETATION: 25,
     }
     
     # Find the current community locations
@@ -90,7 +90,7 @@ def count_community(community):
     return sum(row.count(community) for row in map)
 
 # Run the simulation
-years = 2000
+years = 5000
 for year in range(years):
     try:
         for community in communities:
@@ -117,8 +117,6 @@ for year in range(years):
         print(f"\nSimulation stopped after {year+1} years.")
         break
 
-
-#Great, can you make it so that the simulation goes to 5000 years. Additionally, I think Ground's growth rate should not be the same as vegetation. In terms of growth_rate, the number should follow the follow trend ROCK<GROUND<POND<VEGETATION.
 
 
 
