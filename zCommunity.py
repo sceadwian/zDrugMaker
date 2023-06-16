@@ -95,6 +95,16 @@ def expand_community(community):
                 map[x][y] = community
                 break
 
+def decay_community(community):
+    # Find all community cells
+    community_cells = [(i, j) for i in range(1, map_height+1) for j in range(1, map_width+1) if map[i][j] == community]
+
+    # If there is more than one community cell, randomly select one to decay
+    if len(community_cells) > 1:
+        x, y = random.choice(community_cells)
+        map[x][y] = GROUND  # revert the cell to its original state
+
+
 # Function to clear console
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -104,11 +114,15 @@ def count_community(community):
     return sum(row.count(community) for row in map)
 
 # Run the simulation
-years = 5000
+years = 500000
 for year in range(years):
     try:
         for community in communities:
             expand_community(community)
+
+            # Occasionally remove a community from a tile
+            if year % 100 == 0:
+                decay_community(community)
 
         # Only update the console every 10 time steps
         if year % 10 == 0:
@@ -126,8 +140,7 @@ for year in range(years):
             print(f"{COMMUNITY_D}: {count_community(COMMUNITY_D)}")
 
         # Pause between each turn
-        time.sleep(0.01)
+        time.sleep(0.000000002)
     except KeyboardInterrupt:
         print(f"\nSimulation stopped after {year+1} years.")
         break
-     
