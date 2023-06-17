@@ -77,14 +77,23 @@ class Soldier:
         self.y = max(1, min(self.y, map_width))
 
     def attack(self):
+        destroyed = 0
         if map[self.x][self.y] in communities and map[self.x][self.y] != self.community:
             map[self.x][self.y] = GROUND
+            destroyed += 1
 
-# Initialize soldiers
-soldiers = {community: [Soldier(random.randint(1, map_height), random.randint(1, map_width), community)] for community in communities}
+        neighbors = get_neighbors(self.x, self.y, 1)
+        for i, j in neighbors:
+            if map[i][j] in communities and map[i][j] != self.community and destroyed < 3:
+                map[i][j] = GROUND
+                destroyed += 1
+        return destroyed
+
+soldiers = {community: [] for community in communities}
+destroyed_counters = {community: 0 for community in communities}
 
 # Function to get neighboring cells within a given radius
-def get_neighbors(x, y, radius=1):
+def get_neighbors(x, y, radius=1):  # default radius set to 1 for adjacent cells
     neighbors = []
     for i in range(x-radius, x+radius+1):
         for j in range(y-radius, y+radius+1):
@@ -137,9 +146,12 @@ for year in range(years):
             expand_community(community)
             if year % 100 == 0:
                 decay_community(community)
-            for soldier in soldiers[community]:
+            for soldier in soldiers[community][:]:
                 soldier.move()
-                soldier.attack()
+                destroyed = soldier.attack()
+                if destroyed > 0:
+                    soldiers[community].remove(soldier)
+                    destroyed_counters[community] += destroyed
 
         if year % 50 == 0:
             for community in communities:
@@ -161,10 +173,12 @@ for year in range(years):
                 print(row_string)
 
             print("Community sizes:")
-            print(f"{COMMUNITY_A}: {count_community(COMMUNITY_A)}")
-            print(f"{COMMUNITY_B}: {count_community(COMMUNITY_B)}")
-            print(f"{COMMUNITY_C}: {count_community(COMMUNITY_C)}")
-            print(f"{COMMUNITY_D}: {count_community(COMMUNITY_D)}")
+            for community in communities:
+                print(f"{community}: {count_community(community)}")
+
+            print("\nCommunity destruction counts:")
+            for community in communities:
+                print(f"{community}: {destroyed_counters[community]}")
 
         time.sleep(0.000000002)
     except KeyboardInterrupt:
