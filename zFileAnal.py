@@ -49,10 +49,12 @@ def list_files():
 
     input("Press any key to view files in the current directory...")
     files = []
+    total_size = 0
     for file in os.listdir(path):
         file_path = os.path.join(path, file)
         if os.path.isfile(file_path):
             size = os.path.getsize(file_path)
+            total_size += size
             if file.endswith((".exe", ".py")):
                 files.append((file, size, True))  # Mark .exe and .py files with red flag
             else:
@@ -63,10 +65,11 @@ def list_files():
     print("\nFiles in the current directory:")
     for file, size, red in files:
         size_string = get_size_string(size)
+        percentage = (size / total_size) * 100
         if red:
-            print(f"\033[91m{file}\033[0m ({size_string})")  # Print executables and .py files in red
+            print(f"\033[91m{file}\033[0m ({size_string}) [{percentage:.2f}%]")  # Print executables and .py files in red
         else:
-            print(f"\033[92m{file}\033[0m ({size_string})")  # Print other files in green
+            print(f"\033[92m{file}\033[0m ({size_string}) [{percentage:.2f}%]")  # Print other files in green
 
     input("Press any key to view the folder structure...")
     print("\nFolder structure:")
@@ -82,10 +85,12 @@ def list_files():
                 file_path = os.path.join(dirpath, f)
                 size = os.path.getsize(file_path)
                 size_string = get_size_string(size)
+                percentage = (size / total_size) * 100
                 if f.endswith((".exe", ".py")):
-                    print(f"{subindent}\033[91m{f}\033[0m ({size_string})")  # Print executables and .py files in red
+                    print(f"{subindent}\033[91m{f}\033[0m ({size_string}) [{percentage:.2f}%]")  # Print executables and .py files in red
                 else:
-                    print(f"{subindent}\033[92m{f}\033[0m ({size_string})")  # Print other files in green
+                    print(f"{subindent}\033[92m{f}\033[0m ({size_string}) [{percentage:.2f}%]")  # Print other files in green
+
 
 def list_files_alphabetical():
     path = os.getcwd()
