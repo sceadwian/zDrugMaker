@@ -4,9 +4,10 @@
 # 3. Rename files in the current directory with a prefix.
 # 4. Remove prefix from files in the current directory.
 # 5. Reports on images and video files by date
-# 6. 
+# 6. List sub folder structure
 # The user can select the desired function from the main menu.
 # The script prompts for user input and performs the chosen operation.
+
 
 import os
 import math
@@ -231,6 +232,28 @@ def group_files_by_date():
                 for file in files_list:
                     print(f"\033[92m{file}\033[0m")
 
+def list_subfolders_and_save():
+    path = os.getcwd()
+    subfolders = []
+
+    # Traverse through all subfolders
+    for root, dirs, files in os.walk(path):
+        for dir in dirs:
+            subfolder_path = os.path.join(root, dir)
+            subfolders.append(subfolder_path)
+
+    # Sort the subfolders for better readability
+    subfolders.sort()
+
+    # Print subfolders and write to a text file
+    with open('zfileanaloutput_subfolders_list.txt', 'w') as file:
+        for subfolder in subfolders:
+            print(subfolder)
+            file.write(subfolder + '\n')
+
+    print("\nSubfolder structure saved to 'subfolders_list.txt'")
+
+
 def main():
     while True:
         print("\nSelect a function:")
@@ -239,6 +262,7 @@ def main():
         print("3. Rename files in the current directory with a prefix")
         print("4. Remove prefix from files in the current directory")
         print("5. Group image and video files by date")
+        print("6. List all subfolders and save to a text file")        
         print("0. Exit")
         choice = input("Enter your choice: ")
 
@@ -252,6 +276,8 @@ def main():
             remove_prefix_from_files()
         elif choice == "5":
             group_files_by_date()
+        elif choice == "6":
+            list_subfolders_and_save()
         elif choice == "0":
             print("Exiting the script.")
             break
