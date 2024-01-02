@@ -1,0 +1,118 @@
+Date,Start time,End time,Total hours
+2023-11-01,09:54:23,13:09:00,3.24
+2023-11-01,14:42:57,16:13:38,1.51
+
+2023-11-02,00:15:00,02:13:00,1.97
+2023-11-02,10:43:00,17:15:00,6.53
+
+2023-11-03,08:30:00,17:15:00,8.75
+
+2023-11-05,08:47:19,13:43:07,4.93
+2023-11-05,23:15:00,23:45:00,0.50
+
+2023-11-06,00:05:16,01:44:00,1.65
+2023-11-06,09:45:00,18:04:04,8.32
+
+2023-11-07,09:30:00,16:59:37,7.49
+2023-11-07,21:27:34,23:59:00,2.52
+
+2023-11-08,00:00:00,00:50:47,0.85
+2023-11-08,10:15:00,17:32:29,7.29
+2023-11-08,22:22:19,23:59:21,1.62
+
+2023-11-09,08:58:58,17:20:10,8.35
+
+2023-11-10,10:18:32,17:05:00,6.77
+
+2023-11-11,21:45:00,22:46:01,1.02
+
+2023-11-12,12:30:00,12:57:18,0.46
+2023-11-12,19:57:56,21:30:31,1.54
+
+2023-11-13,00:00:00,00:24:00,0.40
+2023-11-13,10:07:13,17:05:06,6.96
+
+2023-11-14,00:15:00,00:49:51,0.58
+2023-11-14,08:30:00,17:00:00,8.50
+2023-11-14,20:46:26,23:54:26,3.13
+
+2023-11-15,10:18:00,17:23:00,7.08
+
+2023-11-16,10:24:16,18:26:41,8.04
+
+2023-11-17,10:15:00,17:00:00,6.75
+
+2023-11-18,00:08:59,00:29:50,0.35
+
+2023-11-19,23:58:53,00:43:00,0.74
+
+2023-11-20,00:43:00,02:30:00,1.78
+2023-11-20,09:30:00,15:30:00,6.00
+
+2023-11-21,00:21:32,01:30:00,1.14
+2023-11-21,12:15:51,17:21:35,5.10
+
+2023-11-22,01:05:58,01:54:24,0.81
+2023-11-22,09:00:00,11:00:00,2.00
+2023-11-22,12:15:00,17:41:00,5.43
+2023-11-22,22:30:00,23:59:59,1.50
+
+2023-11-23,00:00:00,00:57:00,0.95
+2023-11-23,10:24:57,17:03:00,6.63
+2023-11-23,23:05:10,01:01:39,1.94
+
+2023-11-24,08:30:00,18:00:00,9.50
+
+2023-11-25,00:00:00,01:00:00,1.00
+
+2023-11-26,00:01:03,00:44:25,0.72
+2023-11-26,12:26:00,14:07:36,1.69
+2023-11-26,16:28:40,16:55:24,0.45
+
+2023-11-27,00:01:11,01:24:05,1.38
+2023-11-27,08:30:00,10:00:00,1.50
+2023-11-27,11:51:00,17:01:00,5.17
+
+2023-11-28,00:21:03,01:43:00,1.37
+2023-11-28,08:45:00,14:00:00,5.25
+2023-11-28,16:14:13,16:57:24,0.72
+2023-11-28,22:18:06,23:59:15,1.69
+
+2023-11-29,08:45:00,17:41:32,8.94
+
+2023-11-30,01:07:36,01:32:30,0.41
+2023-11-30,10:00:38,17:33:07,7.54
+2023-11-30,19:54:53,21:03:32,1.14
+Overall Description Breakdown
+"Client: Alkermes, Bill: BD, Study: N/A",3.12 hours
+"Client: Angelini, Bill: Study, Study: Drifter",11.22 hours
+"Client: Angelini, Bill: BD, Study: N/A",4.27 hours
+"Client: Axonis, Bill: Study, Study: Alethi",8.31 hours
+"Client: BHVN, Bill: Study, Study: Larkin",1.25 hours
+"Client: BHVN, Bill: BD, Study: N/A",13.71 hours
+"Client: BHVN, Bill: Study, Study: Taldain",9.07 hours
+"Client: BHVN, Bill: Study, Study: Ulric",9.17 hours
+"Client: BHVN, Bill: Study, Study: Sylphrena",10.18 hours
+"Client: BHVN, Bill: Study, Study: Zellion",7.50 hours
+"Client: BHVN, Bill: Study, Study: Vandell",1.01 hours
+"Client: Cerevance, Bill: BD, Study: N/A",0.98 hours
+"Client: Encoded, Bill: BD, Study: N/A",0.56 hours
+"Client: Encoded, Bill: Study, Study: Alethi",5.43 hours
+"Client: Encoded, Bill: Study, Study: Glys",0.50 hours
+"Client: IVS, Bill: Admin, Study: N/A",20.06 hours
+"Client: IVS, Bill: Study, Study: Mammothcave",8.50 hours
+"Client: IVS, Bill: BD, Study: N/A",9.08 hours
+"Client: IVS, Bill: Admin, Study: Team",8.09 hours
+"Client: IVS, Bill: BD, Study: Team",2.50 hours
+"Client: IVS, Bill: Scientific, Study: N/A",5.17 hours
+"Client: IVS, Bill: Scientific, Study: Team",4.04 hours
+"Client: IVS, Bill: Admin, Study: S&R",4.05 hours
+"Client: IVS, Bill: Admin, Study: Equipment",0.38 hours
+"Client: JW, Bill: BD, Study: N/A",0.78 hours
+"Client: JW, Bill: Study, Study: Blushweaver",0.53 hours
+"Client: JW, Bill: Study, Study: Canticle",0.96 hours
+"Client: Jazz, Bill: BD, Study: N/A",2.85 hours
+"Client: Pandeia, Bill: BD, Study: N/A",1.51 hours
+"Client: Pandeia, Bill: Study, Study: Giovinazzi",0.50 hours
+"Client: Sensorium, Bill: Study, Study: Kalak",4.26 hours
+"Client: cistim, Bill: BD, Study: N/A",2.00 hours
