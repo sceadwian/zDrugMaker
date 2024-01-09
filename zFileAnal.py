@@ -5,6 +5,7 @@
 # 4. Remove prefix from files in the current directory.
 # 5. Reports on images and video files by date
 # 6. List sub folder structure
+# 7. Replace empty spaces in file names with underscores. Only current folder or directory.
 # The user can select the desired function from the main menu.
 # The script prompts for user input and performs the chosen operation.
 
@@ -258,6 +259,33 @@ def list_subfolders_and_save():
 
     print("\nSubfolder structure saved to 'subfolders_list.txt'")
 
+def replace_spaces_in_filenames():
+
+    print("\n\nFunction to Replace Spaces in Filenames:")
+    print("This function will scan all files in the current directory.")
+    print("It will identify files with spaces in their names and display them.")
+    print("You will then have the option to replace all spaces with underscores.\n\n")
+
+    path = os.getcwd()
+    files_with_spaces = {file: file.count(' ') for file in os.listdir(path) if ' ' in file}
+
+    if not files_with_spaces:
+        print("No files with spaces in their names were found.")
+        return
+
+    print("Files with spaces:")
+    for file, space_count in files_with_spaces.items():
+        print(f"{file} - {space_count} spaces")
+
+    choice = input("Do you want to replace spaces with underscores in these files? (y/n): ")
+    if choice.lower() == 'y':
+        for file in files_with_spaces:
+            new_name = file.replace(' ', '_')
+            os.rename(os.path.join(path, file), os.path.join(path, new_name))
+        print("Spaces in file names have been replaced with underscores.")
+    else:
+        print("No changes were made.")
+
 
 def main():
     while True:
@@ -267,7 +295,8 @@ def main():
         print("3. Rename files in the current directory with a prefix")
         print("4. Remove prefix from files in the current directory")
         print("5. Group image and video files by date")
-        print("6. List all subfolders and save to a text file")        
+        print("6. List all subfolders and save to a text file")
+        print("7. Replace spaces in filenames with underscores")        
         print("0. Exit")
         choice = input("Enter your choice: ")
 
@@ -283,6 +312,8 @@ def main():
             group_files_by_date()
         elif choice == "6":
             list_subfolders_and_save()
+        elif choice == "7":
+            replace_spaces_in_filenames()
         elif choice == "0":
             print("Exiting the script.")
             break
