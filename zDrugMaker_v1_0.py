@@ -165,6 +165,7 @@ def display_version_history():
     print("Version 0.0.6\n-added logging capabilities")
     print("Version 1.0\n-updated an streamlined code\n-added more logging capabilities (BEW logger)")
     print("Version 1.0.1\n-fixed output log file for estimate of drug amount")
+    #print("Version 1.0.2\n-haven't done it yet") 
 
 def print_common_bew_values():
     with open("zDrugMakerBEW.txt", 'r') as text_file:
