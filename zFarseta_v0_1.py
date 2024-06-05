@@ -1,6 +1,7 @@
 #v0.1 is the safer option that does not convert nubmers
 # this version may be better to use with really important documents
 # to prevent potential loss
+# "potential" bug noted when copying just encrypted text into a text file it produced a broken version of the text.
 
 mapping = {
     'a': 'b',
