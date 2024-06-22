@@ -42,3 +42,6 @@ testCompound - 1.23
 testCompound - 1.23
 testArticlez - 1.68
 TSTart - 1.68
+JZP511 - 1
+JZP511 - 1
+JZP511 - 1

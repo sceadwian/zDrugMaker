@@ -128,3 +128,39 @@ End of session
 
  ------------------------------------------------
 
+date - 2024/06/07 - 01:06:28 
+1. Amount of drug needed 
+Compound name: JZP511 
+BEW: 1 
+Dose: 130 mg/kg 
+Drug amount needed: 7.64e+03 mg 
+Volume total (1 ml/kg): 58.8 ml 
+Volume total (5 ml/kg): 294 ml 
+Volume total (10 ml/kg): 588 ml 
+
+date - 2024/06/07 - 01:07:15 
+1. Amount of drug needed 
+Compound name: JZP511 
+BEW: 1 
+Dose: 130 mg/kg 
+Drug amount needed: 1.09e+03 mg 
+Volume total (1 ml/kg): 8.4 ml 
+Volume total (5 ml/kg): 42 ml 
+Volume total (10 ml/kg): 84 ml 
+
+date - 2024/06/07 - 01:07:59 
+1. Amount of drug needed 
+Compound name: JZP511 
+BEW: 1 
+Dose: 130 mg/kg 
+Drug amount needed: 76.4 mg 
+Volume total (1 ml/kg): 0.588 ml 
+Volume total (5 ml/kg): 2.94 ml 
+Volume total (10 ml/kg): 5.88 ml 
+
+date - 2024/06/07 - 01:09:50 
+zDrugMaker v.1.1
+End of session
+
+ ------------------------------------------------
+
