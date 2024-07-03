@@ -57,6 +57,8 @@ def ask_subtraction_question():
         return 60
 
 def cognitive_test():
+    mindstate = input("\nPlease comment on your current mindstate: ")
+
     addition_times = []
     simple_multiplication_times = []
     subtraction_times = []
@@ -102,10 +104,11 @@ def cognitive_test():
         if file.tell() == 0:
             writer.writerow(["Date and Time", "Avg Addition Time (s)", "Total Addition Time (s)", 
                              "Avg Simple Multiplication Time (s)", "Total Simple Multiplication Time (s)", 
-                             "Avg Subtraction Time (s)", "Total Subtraction Time (s)"])
+                             "Avg Subtraction Time (s)", "Total Subtraction Time (s)", "Mindstate"])
         writer.writerow([date_time, f"{avg_addition_time:.2f}", f"{total_addition_time:.2f}", 
                          f"{avg_simple_multiplication_time:.2f}", f"{total_simple_multiplication_time:.2f}", 
-                         f"{avg_subtraction_time:.2f}", f"{total_subtraction_time:.2f}"])
+                         f"{avg_subtraction_time:.2f}", f"{total_subtraction_time:.2f}", mindstate])
+
 
     print("\nTest completed and results saved.")
     input("Press Enter to exit the program...")
