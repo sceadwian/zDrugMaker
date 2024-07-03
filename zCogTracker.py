@@ -107,5 +107,8 @@ def cognitive_test():
                          f"{avg_simple_multiplication_time:.2f}", f"{total_simple_multiplication_time:.2f}", 
                          f"{avg_subtraction_time:.2f}", f"{total_subtraction_time:.2f}"])
 
+    print("\nTest completed and results saved.")
+    input("Press Enter to exit the program...")
+
 if __name__ == "__main__":
     cognitive_test()
