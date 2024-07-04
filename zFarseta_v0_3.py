@@ -91,11 +91,17 @@ class EncryptionApp:
         self.text_encrypted = scrolledtext.ScrolledText(master, height=10, width=50)
         self.text_encrypted.pack()
 
+        self.copy_encrypted_button = tk.Button(master, text="Copy Encrypted", command=self.copy_encrypted)
+        self.copy_encrypted_button.pack()
+
         self.label_decrypted = tk.Label(master, text="Decrypted Text:")
         self.label_decrypted.pack()
 
         self.text_decrypted = scrolledtext.ScrolledText(master, height=10, width=50)
         self.text_decrypted.pack()
+
+        self.copy_decrypted_button = tk.Button(master, text="Copy Decrypted", command=self.copy_decrypted)
+        self.copy_decrypted_button.pack()
 
         self.close_button = tk.Button(master, text="Close", command=self.close_app)
         self.close_button.pack()
@@ -123,6 +129,16 @@ class EncryptionApp:
                 self.text_decrypted.insert(tk.END, decrypted)
 
             time.sleep(5)
+
+    def copy_encrypted(self):
+        self.master.clipboard_clear()
+        self.master.clipboard_append(self.text_encrypted.get("1.0", tk.END).strip())
+        self.master.update()  # To make sure the clipboard is updated
+
+    def copy_decrypted(self):
+        self.master.clipboard_clear()
+        self.master.clipboard_append(self.text_decrypted.get("1.0", tk.END).strip())
+        self.master.update()  # To make sure the clipboard is updated
 
     def close_app(self):
         self.master.quit()
