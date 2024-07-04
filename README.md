@@ -14,6 +14,8 @@ Welcome to Leo's Preclinical Pharmacology Companion Scripts! This collection of 
 
 5. **zFarseta_v0_2.py** - zCypher with Number Hiding Signature v2: Building upon the previous version, this encryption tool includes additional functionality for scrambling numbers, making the encrypted information more challenging to crack. However, please note that small edits to the output may invalidate the entire text, and partial decryption is not possible.
 
+5. **zFarseta_v0_3.py** - zCypher with a GUI v1: Building upon the previous version (version 0_1), this encryption tool does a live encryption/decryption using the same algorith as a bove. It also includes a nice interface.
+
 6. **zFileAnal** - File Analysis Script: Currently a work in progress, this script aims to provide file analysis capabilities. Reports on media files (video and images) contained in the folder.
 
 ## Usage
