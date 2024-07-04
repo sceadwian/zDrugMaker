@@ -170,11 +170,59 @@ def common_tasks(input_file, output_file):
                 if description not in existing_descriptions:
                     csv_writer.writerow([f'{description} ({project_dict[description]})'])
 
+
+def report_hours_by_client_category(input_file):
+    with open(input_file, 'r') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        client_data = defaultdict(timedelta)
+        category_data = defaultdict(timedelta)
+        
+        total_time = timedelta()
+
+        for row in csv_reader:
+            if row['Project'] == 'IVS':
+                start_time = parse_time(row['Start time'])
+                end_time = parse_time(row['End time'])
+                
+                if end_time < start_time:
+                    end_time += timedelta(days=1)
+                
+                duration = end_time - start_time
+                total_time += duration
+
+                description_parts = row['Description'].split(' - ')
+                
+                if len(description_parts) >= 2:
+                    client = description_parts[0]
+                    category = description_parts[1]
+                    
+                    client_data[client] += duration
+                    category_data[category] += duration
+
+        total_seconds = total_time.total_seconds()
+
+        print('\n--- Hours by Client ---')
+        sorted_clients = sorted(client_data.items(), key=lambda x: x[1], reverse=True)
+        for client, duration in sorted_clients:
+            client_seconds = duration.total_seconds()
+            total_hours = client_seconds / 3600
+            percentage = (client_seconds / total_seconds) * 100
+            print(f'\033[93mClient:\033[0m {client}: \033[92m{total_hours:.2f} hours ({percentage:.2f}%)\033[0m')
+
+        print('\n--- Hours by Category ---')
+        sorted_categories = sorted(category_data.items(), key=lambda x: x[1], reverse=True)
+        for category, duration in sorted_categories:
+            category_seconds = duration.total_seconds()
+            total_hours = category_seconds / 3600
+            percentage = (category_seconds / total_seconds) * 100
+            print(f'\033[93mCategory:\033[0m {category}: \033[92m{total_hours:.2f} hours ({percentage:.2f}%)\033[0m')
+
 def main():
     print("Choose an option:")
     print("1. Parse CSV file")
     print("2. Tally hours from CSV file")
     print("3. Update file with 15 most common descriptions")
+    print("4. Report hours by Client or Category for IVS project")
     # Print other options here...
     
     choice = input("Your choice: ")
@@ -214,6 +262,13 @@ def main():
 
         common_tasks(input_file, output_file)
 
+    elif choice == '4':
+        input_file = input("Enter the name of the input CSV file: ")
+        # If no input file is provided, use a default name.
+        if not input_file.strip():
+            input_file = "input_zT.csv"
+        
+        report_hours_by_client_category(input_file)
     # Handle other choices here...
 
     input("Press any key to close script...")
