@@ -217,10 +217,13 @@ def report_hours_by_client_category(input_file):
             percentage = (category_seconds / total_seconds) * 100
             print(f'\033[93mCategory:\033[0m {category}: \033[92m{total_hours:.2f} hours ({percentage:.2f}%)\033[0m')
 
-def report_hours_by_client_over_time(input_file):
+from functools import reduce
+import operator
+
+def report_hours_by_client_over_time(input_file, output_file):
     with open(input_file, 'r') as csv_file:
         csv_reader = csv.DictReader(csv_file)
-        client_data = defaultdict(lambda: defaultdict(timedelta))
+        data = defaultdict(lambda: defaultdict(list))
         dates = set()
         
         for row in csv_reader:
@@ -238,38 +241,59 @@ def report_hours_by_client_over_time(input_file):
                 
                 if len(description_parts) >= 2:
                     client = description_parts[0]
-                    client_data[client][start_date] += duration
+                    category = description_parts[1]
+                    study = description_parts[2] if len(description_parts) > 2 else "N/A"
+                    
+                    entry_key = f"{client} - {category}"
+                    if category.lower() == "study" and study != "N/A":
+                        entry_key += f" - {study}"
+                    
+                    data[start_date][entry_key].append((start_time, end_time, duration))
                     dates.add(start_date)
 
-        # Sort dates
-        sorted_dates = sorted(dates)
+    # Sort dates
+    sorted_dates = sorted(dates)
+    
+    # Open output file
+    with open(output_file, 'w', newline='') as out_file:
+        csv_writer = csv.writer(out_file)
+        csv_writer.writerow(['Date', 'Client/Category/Study', 'Hours', 'Percentage', 'Time Range'])
+
+        print("\n--- Hours by Client, Category, and Study over Time ---")
         
-        # Prepare data for printing
-        clients = sorted(client_data.keys())
-        
-        # Print header
-        print("\n--- Hours by Client over Time ---")
-        header = "Client".ljust(20) + " | " + " | ".join(d.strftime('%Y-%m-%d') for d in sorted_dates)
-        print(header)
-        print("-" * len(header))
-        
-        # Print data for each client
-        for client in clients:
-            row = client.ljust(20) + " | "
-            for date in sorted_dates:
-                duration = client_data[client][date]
-                hours = duration.total_seconds() / 3600
-                row += f"{hours:5.2f} | "
-            print(row)
-        
-        # Print total for each day
-        total_row = "TOTAL".ljust(20) + " | "
         for date in sorted_dates:
-            total_duration = sum((client_data[client][date] for client in clients), timedelta())
+            print(f"\nDate: {date.strftime('%Y-%m-%d')}")
+            print("-" * 60)
+            
+            # Calculate total duration for the day
+            total_duration = reduce(operator.add, (duration for entry_data in data[date].values() for _, _, duration in entry_data), timedelta())
+            
+            # Sort entries by total hours (descending)
+            sorted_entries = sorted(data[date].items(), key=lambda x: reduce(operator.add, (duration for _, _, duration in x[1]), timedelta()), reverse=True)
+            
+            for entry, entry_data in sorted_entries:
+                total_entry_duration = reduce(operator.add, (duration for _, _, duration in entry_data), timedelta())
+                hours = total_entry_duration.total_seconds() / 3600
+                percentage = (total_entry_duration / total_duration) * 100 if total_duration else 0
+                
+                # Sort time ranges
+                time_ranges = sorted([(start, end) for start, end, _ in entry_data])
+                time_range_str = ", ".join([f"{start.strftime('%H:%M')}-{end.strftime('%H:%M')}" for start, end in time_ranges])
+                
+                print(f"{entry.ljust(30)}: {hours:.2f} hours ({percentage:.2f}%) - {time_range_str}")
+                
+                # Write to CSV
+                csv_writer.writerow([date.strftime('%Y-%m-%d'), entry, f"{hours:.2f}", f"{percentage:.2f}", time_range_str])
+            
             total_hours = total_duration.total_seconds() / 3600
-            total_row += f"{total_hours:5.2f} | "
-        print("-" * len(header))
-        print(total_row)
+            print("-" * 60)
+            print(f"{'Total'.ljust(30)}: {total_hours:.2f} hours")
+            
+            # Write total to CSV
+            csv_writer.writerow([date.strftime('%Y-%m-%d'), 'Total', f"{total_hours:.2f}", "100.00", ""])
+            csv_writer.writerow([])  # Empty row for readability
+
+    print(f"\nReport has been written to {output_file}")
 
 def main():
     print("Choose an option:")
@@ -327,10 +351,17 @@ def main():
     
     elif choice == '5':
         input_file = input("Enter the name of the input CSV file: ")
+        output_file = input("Enter the name of the output CSV file: ")
+
         # If no input file is provided, use a default name.
         if not input_file.strip():
             input_file = "input_zT.csv"
-        report_hours_by_client_over_time(input_file)
+        
+        # If no output file is provided, use a default name.
+        if not output_file.strip():
+            output_file = "client_hours_report.csv"
+        
+        report_hours_by_client_over_time(input_file, output_file)
     # Handle other choices here...
 
     input("Press any key to close script...")
