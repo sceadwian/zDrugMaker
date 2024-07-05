@@ -146,7 +146,7 @@ class Community:
         print(f"Food Consumed this cycle: {round(self.food_consumed)} units")
         print("Characters Alive:")
         for character in self.characters:
-            print(f"{character.name} - {character.nationality} - Age {character.age} - Metabolism {character.metabolism} - Work Ethic {character.work_ethic}")
+            print(f"{character.name} - {character.nationality} - Age {character.age} - Mtblsm {character.metabolism} - WrkEt {character.work_ethic}")
         print()
 
 def initialize_simulation(community_name: str):

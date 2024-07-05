@@ -1,5 +1,7 @@
-# version 20240705 using claude + Tkinter for UI
+# version 20240705 added more infor on prints
 # 
+
+
 import random
 from dataclasses import dataclass
 from typing import List
@@ -37,11 +39,17 @@ class Community:
         self.next_character_id = 1
         self.nationalities = ["Morfigo", "Konforme", "Skibidi", "Poputah", "Elgibidi", "Noffinoffs"]
         self.csv_filename = f"{name}_population_stats.csv"
+        self.food_nutrition_filename = f"{name}_food_nutrition_stats.csv"
         
         if not os.path.exists(self.csv_filename):
             with open(self.csv_filename, 'w', newline='') as f:
                 writer = csv.writer(f)
                 writer.writerow(['year'] + [f'#{n}' for n in self.nationalities])
+        
+        if not os.path.exists(self.food_nutrition_filename):
+            with open(self.food_nutrition_filename, 'w', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow(['year', 'cycle', 'food_available', 'nutrition_available'])
 
     def add_character(self, character: Character):
         self.characters.append(character)
@@ -79,14 +87,14 @@ class Community:
                 self.food_consumed += character.metabolism
             else:
                 self.remove_character(character)
-                print(f"Death Announcement: {character.name} ({character.nationality}) has died at age {character.age} due to starvation.")
+                print(f"[Year {self.year}-Cycle {self.cycle}] Death Announcement: {character.name} ({character.nationality}) has died at age {character.age} due to starvation.")
 
     def age_characters(self):
         for character in self.characters:
             character.age += 1
             if character.age >= character.age_of_death:
                 self.remove_character(character)
-                print(f"Death Announcement: {character.name} ({character.nationality}) has died at age {character.age}.")
+                print(f"[Year {self.year}-Cycle {self.cycle}] Death Announcement: {character.name} ({character.nationality}) has died at age {character.age}.")
 
     def attempt_reproduction(self):
         for character in self.characters:
@@ -102,7 +110,8 @@ class Community:
             if character.in_relationship and character.partner and random.random() < 0.25 * (character.reproductive_fitness / 10):
                 new_character = self.create_new_character(character.nationality)
                 self.add_character(new_character)
-                print(f"New character born: {new_character.name} ({new_character.nationality})")
+                print(f"[Year {self.year}-Cycle {self.cycle}] New character born: {new_character.name} ({new_character.nationality}) - Parents: {character.name} and {character.partner.name}")
+
 
     def create_new_character(self, nationality):
         new_character = Character(
@@ -132,11 +141,18 @@ class Community:
         self.collect_food()
         self.consume_food()
         self.attempt_reproduction()
+        self.write_food_nutrition_stats()
         time.sleep(0.2)
 
     def write_population_stats(self):
         stats = [self.year] + [sum(1 for c in self.characters if c.nationality == n) for n in self.nationalities]
         with open(self.csv_filename, 'a', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(stats)
+    
+    def write_food_nutrition_stats(self):
+        stats = [self.year, self.cycle, round(self.food_available), round(self.nutrition)]
+        with open(self.food_nutrition_filename, 'a', newline='') as f:
             writer = csv.writer(f)
             writer.writerow(stats)
 

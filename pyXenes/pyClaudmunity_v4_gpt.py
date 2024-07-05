@@ -1,5 +1,6 @@
-# version 20240705 using claude + Tkinter for UI
+# version 20240705 using additional CSV output fomr GPT
 # 
+
 import random
 from dataclasses import dataclass
 from typing import List
@@ -37,11 +38,17 @@ class Community:
         self.next_character_id = 1
         self.nationalities = ["Morfigo", "Konforme", "Skibidi", "Poputah", "Elgibidi", "Noffinoffs"]
         self.csv_filename = f"{name}_population_stats.csv"
+        self.food_nutrition_filename = f"{name}_food_nutrition_stats.csv"
         
         if not os.path.exists(self.csv_filename):
             with open(self.csv_filename, 'w', newline='') as f:
                 writer = csv.writer(f)
                 writer.writerow(['year'] + [f'#{n}' for n in self.nationalities])
+        
+        if not os.path.exists(self.food_nutrition_filename):
+            with open(self.food_nutrition_filename, 'w', newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow(['year', 'cycle', 'food_available', 'nutrition_available'])
 
     def add_character(self, character: Character):
         self.characters.append(character)
@@ -132,11 +139,18 @@ class Community:
         self.collect_food()
         self.consume_food()
         self.attempt_reproduction()
+        self.write_food_nutrition_stats()
         time.sleep(0.2)
 
     def write_population_stats(self):
         stats = [self.year] + [sum(1 for c in self.characters if c.nationality == n) for n in self.nationalities]
         with open(self.csv_filename, 'a', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(stats)
+    
+    def write_food_nutrition_stats(self):
+        stats = [self.year, self.cycle, round(self.food_available), round(self.nutrition)]
+        with open(self.food_nutrition_filename, 'a', newline='') as f:
             writer = csv.writer(f)
             writer.writerow(stats)
 
