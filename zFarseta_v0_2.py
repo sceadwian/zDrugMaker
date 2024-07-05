@@ -1,6 +1,19 @@
 # v0.2 is the one that mucosa with numbers, signature at the end
 # problem is if you modify the output it may become impossible to read back.
 #
+# This script is used for encrypting and decrypting text using a custom mapping.
+# The decrypted text retrieves the numbers from a signature at the end of the encrypted text.
+# The encryption process also ensures that if the encrypted text is modified, it may become unreadable.
+# The script reads from an input file and writes the processed (encrypted/decrypted) text to an output file.
+#
+# The encrypted text has a signature at the end, preceded by "-1-", containing all the numbers
+# that were replaced by '#' in the order they appeared.
+#
+# To use the script:
+# 1. Run the script and provide the input file name when prompted.
+# 2. Choose the operation (1 for encryption, 2 for decryption).
+# 3. The processed text will be written to an output file with "_encrypted" or "_decrypted" suffix.
+
 
 mapping = {
     'a': 'b',
