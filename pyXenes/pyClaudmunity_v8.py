@@ -1,4 +1,4 @@
-# version 20240706 modified feeding to make ita bit more sustainable... also added new log file
+# version 20240707 stamina degradation
 # 
 
 
@@ -75,7 +75,7 @@ class Community:
 
     def collect_food(self):
         self.food_collected = 0
-        efficiency_factor = 5.5  # Increase the base and extra collection by 450%
+        efficiency_factor = 6.0  # Increase the base and extra collection by 500%
 
         for character in self.characters:
             base_collection = min(round(1 * efficiency_factor), self.food_available)
@@ -100,10 +100,13 @@ class Community:
                 if random.random() < 0.25:
                     self.remove_character(character, "Starvation")
                 else:
-                    # Character survives starvation this time
-                    event = f"{character.name} ({character.nationality}) is starving but survived this cycle."
-                    self.log_event(event)
-                    # You might want to add some negative effects here, like reduced work_ethic or stamina
+                    # Character survives starvation this time but loses stamina
+                    character.stamina -= 1
+                    if character.stamina <= 0:
+                        self.remove_character(character, "Stress")
+                    else:
+                        event = f"{character.name} ({character.nationality}) is starving but survived this cycle. Stamina reduced to {character.stamina}."
+                        self.log_event(event)
 
     def age_characters(self):
         for character in self.characters:
@@ -175,7 +178,7 @@ class Community:
         self.consume_food()
         self.attempt_reproduction()
         self.write_food_nutrition_stats()
-        time.sleep(0.1)
+        time.sleep(0.2)
 
     def write_population_stats(self):
         stats = [self.year] + [sum(1 for c in self.characters if c.nationality == n) for n in self.nationalities]
@@ -204,7 +207,7 @@ class Community:
         status += f"Food Consumed this cycle: {round(self.food_consumed)} units\n"
         status += "Characters Alive:\n"
         for character in self.characters:
-            status += f"{character.name} - {character.nationality} - Age {character.age} - Mtblsm {character.metabolism} - WrkEt {character.work_ethic}\n"
+            status += f"{character.name} - {character.nationality} - Age {character.age} - Mtblsm {character.metabolism} - WrkEt {character.work_ethic} {'*' * character.stamina}\n"
         return status
 
 class SimulationGUI:
