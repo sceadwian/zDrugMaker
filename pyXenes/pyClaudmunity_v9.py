@@ -1,7 +1,4 @@
-# version 20240707 stamina degradation
-# 
-
-
+#now with names
 import random
 from dataclasses import dataclass
 from typing import List
@@ -15,6 +12,7 @@ from tkinter import ttk, scrolledtext
 @dataclass
 class Character:
     name: str
+    toon_id: str
     age: int
     nationality: str
     metabolism: int
@@ -58,6 +56,20 @@ class Community:
             writer = csv.writer(f)
             writer.writerow(['Timestamp', 'Year', 'Cycle', 'Event'])
 
+        self.load_names()
+
+    def load_names(self):
+        self.name_lists = {}
+        for nationality in self.nationalities:
+            filename = f"pyCl_{nationality.lower()}.csv"
+            if os.path.exists(filename):
+                with open(filename, 'r', newline='') as f:
+                    reader = csv.reader(f)
+                    self.name_lists[nationality] = [row[0] for row in reader]
+            else:
+                print(f"Warning: Name file {filename} not found. Using default names for {nationality}.")
+                self.name_lists[nationality] = [f"{nationality}Person"]
+
     def add_character(self, character: Character):
         self.characters.append(character)
 
@@ -66,7 +78,7 @@ class Community:
             character.partner.in_relationship = False
             character.partner.partner = None
         self.characters.remove(character)
-        event = f"Death Announcement: {character.name} ({character.nationality}) has died at age {character.age} due to {cause}."
+        event = f"Death Announcement: {character.name} ({character.toon_id}) ({character.nationality}) has died at age {character.age} due to {cause}."
         self.log_event(event)
 
     def update_food(self):
@@ -105,7 +117,7 @@ class Community:
                     if character.stamina <= 0:
                         self.remove_character(character, "Stress")
                     else:
-                        event = f"{character.name} ({character.nationality}) is starving but survived this cycle. Stamina reduced to {character.stamina}."
+                        event = f"{character.name} ({character.toon_id}) ({character.nationality}) is starving but survived this cycle. Stamina reduced to {character.stamina}."
                         self.log_event(event)
 
     def age_characters(self):
@@ -146,7 +158,7 @@ class Community:
             if character.in_relationship and character.partner and random.random() < 0.25 * (character.reproductive_fitness / 10):
                 new_character = self.create_new_character(character.nationality)
                 self.add_character(new_character)
-                event = f"New character born: {new_character.name} ({new_character.nationality}) - Parents: {character.name} and {character.partner.name}"
+                event = f"New character born: {new_character.name} ({new_character.toon_id}) ({new_character.nationality}) - Parents: {character.name} ({character.toon_id}) and {character.partner.name} ({character.partner.toon_id})"
                 self.log_event(event)
 
     def create_new_character(self, nationality):
@@ -157,7 +169,7 @@ class Community:
                 "metabolism": (2, 8),
                 "intelligence": (3, 10),
                 "mate_acquisition": (2, 8),
-                "reproductive_fitness": (1, 4),
+                "reproductive_fitness": (1, 10),
                 "age_of_death": (40, 80)
             },
             "Konforme": {
@@ -166,7 +178,7 @@ class Community:
                 "metabolism": (1, 10),
                 "intelligence": (1, 7),
                 "mate_acquisition": (5, 10),
-                "reproductive_fitness": (1, 5),
+                "reproductive_fitness": (5, 10),
                 "age_of_death": (30, 100)
             },
             "Skibidi": {
@@ -175,16 +187,16 @@ class Community:
                 "metabolism": (1, 10),
                 "intelligence": (1, 10),
                 "mate_acquisition": (1, 10),
-                "reproductive_fitness": (3, 5),
+                "reproductive_fitness": (6, 10),
                 "age_of_death": (20, 40)
             },
             "Poputah": {
                 "stamina": (3, 10),
                 "work_ethic": (6, 10),
-                "metabolism": (1, 3),
+                "metabolism": (5, 10),
                 "intelligence": (8, 10),
                 "mate_acquisition": (1, 5),
-                "reproductive_fitness": (1, 3),
+                "reproductive_fitness": (3, 7),
                 "age_of_death": (20, 100)
             },
             "Elgibidi": {
@@ -202,15 +214,19 @@ class Community:
                 "metabolism": (1, 7),
                 "intelligence": (3, 6),
                 "mate_acquisition": (6, 10),
-                "reproductive_fitness": (2, 5),
+                "reproductive_fitness": (5, 9),
                 "age_of_death": (55, 90)
             }
         }
 
         ranges = stat_ranges[nationality]
+        
+        # Choose a random name from the appropriate list
+        name = random.choice(self.name_lists[nationality])
 
         new_character = Character(
-            name=f"toon{self.next_character_id:04d}",
+            name=name,
+            toon_id=f"toon{self.next_character_id:04d}",
             age=0,
             nationality=nationality,
             metabolism=random.randint(*ranges["metabolism"]),
@@ -266,7 +282,7 @@ class Community:
         status += f"Food Consumed this cycle: {round(self.food_consumed)} units\n"
         status += "Characters Alive:\n"
         for character in self.characters:
-            status += f"{character.name} - {character.nationality} - Age {character.age} - Mtblsm {character.metabolism} - WrkEt {character.work_ethic} {'*' * character.stamina}\n"
+            status += f"{character.name} ({character.toon_id}) - {character.nationality} - Age {character.age} - Mtblsm {character.metabolism} - WrkEt {character.work_ethic} {'*' * character.stamina}\n"
         return status
 
 class SimulationGUI:
@@ -351,7 +367,7 @@ class SimulationGUI:
 
 def initialize_simulation(community_name: str):
     community = Community(community_name)
-    for i in range(20):
+    for i in range(10):
         character = community.create_new_character(random.choice(community.nationalities))
         character.age = 18  # Set initial age to 18
         community.add_character(character)
