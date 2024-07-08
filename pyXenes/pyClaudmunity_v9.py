@@ -367,7 +367,7 @@ class SimulationGUI:
 
 def initialize_simulation(community_name: str):
     community = Community(community_name)
-    for i in range(10):
+    for i in range(25):
         character = community.create_new_character(random.choice(community.nationalities))
         character.age = 18  # Set initial age to 18
         community.add_character(character)
