@@ -82,7 +82,7 @@ class Community:
         self.log_event(event)
 
     def update_food(self):
-        self.food_available += random.randint(-10, 50)
+        self.food_available += random.randint(-100, 500)
         self.food_available = max(0, self.food_available)
 
     def collect_food(self):
