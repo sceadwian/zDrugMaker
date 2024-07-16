@@ -249,18 +249,18 @@ class Community:
         self.check_research_upgrades()
 
     def check_research_upgrades(self):
-        if self.research_points >= 1000000:
-            self.food_min = 500
-            self.food_max = 1000
-        elif self.research_points >= 100000:
+        if self.research_points >= 2000000:
+            self.food_min = 400
+            self.food_max = 8000
+        elif self.research_points >= 500000:
             self.food_min = 300
             self.food_max = 600
-        elif self.research_points >= 10000:
+        elif self.research_points >= 50000:
             self.food_min = 0
-        elif self.research_points >= 1000:
+        elif self.research_points >= 5000:
             self.food_min = -100
             self.food_max = 600
-        elif self.research_points >= 100:
+        elif self.research_points >= 500:
             self.food_min = -100
             self.food_max = 550
 
@@ -278,7 +278,7 @@ class Community:
         self.attempt_reproduction()
         self.accumulate_research()
         self.write_food_nutrition_stats()
-        time.sleep(0.2)
+        time.sleep(0.01)
 
     def write_population_stats(self):
         stats = [self.year] + [sum(1 for c in self.characters if c.nationality == n) for n in self.nationalities]
