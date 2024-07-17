@@ -164,3 +164,59 @@ End of session
 
  ------------------------------------------------
 
+date - 2024/07/17 - 01:09:35 
+1. Amount of drug needed 
+Compound name: BH-015638 
+BEW: 1 
+Dose: 100 mg/kg 
+Drug amount needed: 56 mg 
+Volume total (1 ml/kg): 0.56 ml 
+Volume total (5 ml/kg): 2.8 ml 
+Volume total (10 ml/kg): 5.6 ml 
+
+date - 2024/07/17 - 01:10:05 
+2. Volume of vehicle 
+Drug name - BH-015638 
+ BEW - 1 
+ dose - 60 
+ amount - 84.9 
+ Volume total (1 ml/kg) - 1.42 ml 
+ Volume total (5 ml/kg) - 7.08 ml 
+ Volume total (10 ml/kg) - 14.2 ml 
+
+date - 2024/07/17 - 01:10:38 
+1. Amount of drug needed 
+Compound name: BH-015638 
+BEW: 1 
+Dose: 1 mg/kg 
+Drug amount needed: 0.001 mg 
+Volume total (1 ml/kg): 0.001 ml 
+Volume total (5 ml/kg): 0.005 ml 
+Volume total (10 ml/kg): 0.01 ml 
+
+date - 2024/07/17 - 01:14:35 
+2. Volume of vehicle 
+Drug name - BH-015638 
+ BEW - 1 
+ dose - 60 
+ amount - 79 
+ Volume total (1 ml/kg) - 1.32 ml 
+ Volume total (5 ml/kg) - 6.58 ml 
+ Volume total (10 ml/kg) - 13.2 ml 
+
+date - 2024/07/17 - 01:14:42 
+2. Volume of vehicle 
+Drug name - BH-015638 
+ BEW - 1 
+ dose - 60 
+ amount - 40.9 
+ Volume total (1 ml/kg) - 0.682 ml 
+ Volume total (5 ml/kg) - 3.41 ml 
+ Volume total (10 ml/kg) - 6.82 ml 
+
+date - 2024/07/17 - 01:16:47 
+zDrugMaker v.1.1
+End of session
+
+ ------------------------------------------------
+
