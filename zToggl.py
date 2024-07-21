@@ -261,6 +261,37 @@ def report_hours_by_client_over_time(input_file, output_file):
 
     print(f"\nReport has been written to {output_file}")
 
+
+def report_metelao_instances(input_file):
+    with open(input_file, 'r') as csv_file:
+        csv_reader = csv.DictReader(csv_file)
+        metelao_instances = []
+        
+        for row in csv_reader:
+            if 'metelao' in row['Description'].lower():
+                start_date = parse_date(row['Start date'])
+                start_time = parse_time(row['Start time'])
+                end_time = parse_time(row['End time'])
+                
+                start_datetime = datetime.combine(start_date, start_time)
+                end_datetime = datetime.combine(start_date, end_time)
+                
+                if end_datetime < start_datetime:
+                    end_datetime += timedelta(days=1)
+                
+                metelao_instances.append((start_datetime, end_datetime))
+
+    if metelao_instances:
+        print("\n--- Metelao Instances ---")
+        for start, end in sorted(metelao_instances):
+            print(f"Date: {start.strftime('%Y-%m-%d')}, Time window: {start.strftime('%H:%M')} - {end.strftime('%H:%M')}")
+        
+        print(f"\nTotal instances of 'metelao': {len(metelao_instances)}")
+    else:
+        print("\nNo instances of 'metelao' found in the document.")
+
+
+
 def main():
     print("Choose an option:")
     print("1. Parse CSV file")
@@ -268,6 +299,7 @@ def main():
     print("3. Update file with 15 most common descriptions")
     print("4. Report hours by Client or Category for projects")
     print("5. Report hours by Client over time for projects")
+    print("6. Report instances of 'metelao'")
     # Print other options here...
     
     choice = input("Your choice: ")
@@ -328,6 +360,17 @@ def main():
             output_file = "client_hours_report.csv"
         
         report_hours_by_client_over_time(input_file, output_file)
+
+    elif choice == '6':
+        input_file = input("Enter the name of the input CSV file: ")
+
+        # If no input file is provided, use a default name.
+        if not input_file.strip():
+            input_file = "input_zT.csv"
+        
+        report_metelao_instances(input_file)
+
+
     # Handle other choices here...
 
     input("Press any key to close script...")
