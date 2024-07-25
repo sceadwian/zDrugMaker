@@ -340,3 +340,60 @@ to produce a 10ml/kg solution
 
 ==================================================
 
+Date: 2024/07/25 - 12:09:35
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: Lorcaserin
+BEW: 1.17
+Dose: 3 mg/kg
+========================================
+Drug amount needed: 21.1 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 6 ml
+- Oral (5 ml/kg): 30 ml
+- Mice (10 ml/kg): 60 ml
+========================================
+
+==================================================
+
+Date: 2024/07/25 - 12:10:22
+Calculation Type: Calculate Vehicle Amount
+Vehicle Amounts for Different Concentrations
+==================================================
+Compound: Lorcaserin
+BEW: 1.17
+Dose: 3 mg/kg
+==================================================
+Add 8.55 ml of vehicle to your 30 mg of drug
+to produce a 1ml/kg solution
+
+Add 42.7 ml of vehicle to your 30 mg of drug
+to produce a 5ml/kg solution
+
+Add 85.5 ml of vehicle to your 30 mg of drug
+to produce a 10ml/kg solution
+==================================================
+
+==================================================
+
+Date: 2024/07/25 - 12:11:47
+Calculation Type: Perform Dilution
+Dilution Calculation
+========================================
+Compound: Lorcaserin
+========================================
+Starting solution concentration: 3 mg/ml
+Final solution concentration: 1.5 mg/ml
+Volume of new solution: 2 ml
+========================================
+Mix 1 ml of your stock solution
+with 1 ml of the appropriate vehicle
+========================================
+This will leave you with 7.55 ml of your stock solution
+Producing a final volume of 2 ml
+========================================
+
+==================================================
+

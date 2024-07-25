@@ -20,6 +20,9 @@ class ZDrugMakerApp(tk.Tk):
         self.create_calculate_vehicle_tab()
         self.create_perform_dilution_tab()
         self.create_bew_values_tab()
+        self.create_output_tab()
+        
+        self.create_close_button()
         
     def create_compound_name_frame(self):
         frame = ttk.Frame(self)
@@ -29,6 +32,14 @@ class ZDrugMakerApp(tk.Tk):
         ttk.Label(frame, text="Compound Name:").grid(row=0, column=0, sticky="w")
         self.compound_name = tk.StringVar()
         ttk.Entry(frame, textvariable=self.compound_name).grid(row=0, column=1, sticky="ew", padx=(5, 0))
+        
+        ttk.Label(frame, text="Comments:").grid(row=1, column=0, sticky="w", pady=(5, 0))
+        self.comments = tk.Text(frame, height=3, wrap=tk.WORD)
+        self.comments.grid(row=1, column=1, sticky="ew", padx=(5, 0), pady=(5, 0))
+        
+    def create_close_button(self):
+        close_button = ttk.Button(self, text="Close", command=self.quit)
+        close_button.grid(row=2, column=0, pady=10)
         
     def create_estimate_drug_tab(self):
         tab = ttk.Frame(self.notebook)
@@ -50,8 +61,6 @@ class ZDrugMakerApp(tk.Tk):
         self.estimate_result = scrolledtext.ScrolledText(tab, wrap=tk.WORD, font=("TkDefaultFont", 11))
         self.estimate_result.grid(row=0, column=2, rowspan=6, padx=10, pady=5, sticky="nsew")
         
-        tab.columnconfigure(2, weight=3)
-    
     def create_calculate_vehicle_tab(self):
         tab = ttk.Frame(self.notebook)
         self.notebook.add(tab, text="Calculate Vehicle Amount")
@@ -71,8 +80,6 @@ class ZDrugMakerApp(tk.Tk):
         self.vehicle_result = scrolledtext.ScrolledText(tab, wrap=tk.WORD, font=("TkDefaultFont", 11))
         self.vehicle_result.grid(row=0, column=2, rowspan=4, padx=10, pady=5, sticky="nsew")
         
-        tab.columnconfigure(2, weight=3)
-    
     def create_perform_dilution_tab(self):
         tab = ttk.Frame(self.notebook)
         self.notebook.add(tab, text="Perform Dilution")
@@ -94,8 +101,6 @@ class ZDrugMakerApp(tk.Tk):
         self.dilution_result = scrolledtext.ScrolledText(tab, wrap=tk.WORD, font=("TkDefaultFont", 11))
         self.dilution_result.grid(row=0, column=2, rowspan=5, padx=10, pady=5, sticky="nsew")
         
-        tab.columnconfigure(2, weight=3)
-    
     def create_bew_values_tab(self):
         tab = ttk.Frame(self.notebook)
         self.notebook.add(tab, text="BEW Values")
@@ -106,7 +111,16 @@ class ZDrugMakerApp(tk.Tk):
         self.bew_values.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
         
         self.load_bew_values()
-    
+        
+    def create_output_tab(self):
+        tab = ttk.Frame(self.notebook)
+        self.notebook.add(tab, text="Output")
+        tab.columnconfigure(0, weight=1)
+        tab.rowconfigure(0, weight=1)
+        
+        self.output_text = scrolledtext.ScrolledText(tab, wrap=tk.WORD, font=("TkDefaultFont", 11))
+        self.output_text.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
+        
     def estimate_drug_amount(self):
         try:
             bew = self.bew.get()
@@ -137,6 +151,7 @@ class ZDrugMakerApp(tk.Tk):
             self.estimate_result.delete(1.0, tk.END)
             self.estimate_result.insert(tk.END, result)
             
+            self.update_output_tab("Estimate Drug Amount", result)
             self.log_calculation("Estimate Drug Amount", result)
             self.append_bew_to_file(self.compound_name.get(), bew)
             
@@ -170,6 +185,7 @@ class ZDrugMakerApp(tk.Tk):
             self.vehicle_result.delete(1.0, tk.END)
             self.vehicle_result.insert(tk.END, result)
             
+            self.update_output_tab("Calculate Vehicle Amount", result)
             self.log_calculation("Calculate Vehicle Amount", result)
             self.append_bew_to_file(self.compound_name.get(), bew)
             
@@ -206,10 +222,22 @@ class ZDrugMakerApp(tk.Tk):
             self.dilution_result.delete(1.0, tk.END)
             self.dilution_result.insert(tk.END, result)
             
+            self.update_output_tab("Perform Dilution", result)
             self.log_calculation("Perform Dilution", result)
             
         except tk.TclError:
             messagebox.showerror("Input Error", "Please enter valid numeric values.")
+    
+    def update_output_tab(self, calculation_type, result):
+        timestamp = time.strftime('%Y/%m/%d - %H:%M:%S')
+        output = f"Date: {timestamp}\n"
+        output += f"Calculation Type: {calculation_type}\n"
+        output += f"Comments: {self.comments.get('1.0', tk.END).strip()}\n"
+        output += result
+        output += "\n" + "="*50 + "\n\n"
+        
+        self.output_text.insert(tk.END, output)
+        self.output_text.see(tk.END)  # Scroll to the bottom
     
     def load_bew_values(self):
         try:
