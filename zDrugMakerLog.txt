@@ -220,3 +220,123 @@ End of session
 
  ------------------------------------------------
 
+Date: 2024/07/25 - 11:32:02
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+Compound: 
+BEW: 1
+Dose: 130 mg/kg
+Drug amount needed: 936 mg
+Volumes:
+- Rats (1 ml/kg): 7.2 ml
+- Oral (5 ml/kg): 36 ml
+- Mice (10 ml/kg): 72 ml
+
+==================================================
+
+Date: 2024/07/25 - 11:33:05
+Calculation Type: Perform Dilution
+Dilution Calculation
+Compound: 
+Starting solution concentration: 2 mg/ml
+Final solution concentration: 1 mg/ml
+Volume of new solution: 10 ml
+Mix 5 ml of your stock solution
+with 5 ml of the appropriate vehicle
+This will leave you with 5 ml of your stock solution
+Producing a final volume of 10 ml
+
+==================================================
+
+Date: 2024/07/25 - 11:44:52
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: 
+BEW: 1
+Dose: 10 mg/kg
+========================================
+Drug amount needed: 4 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.4 ml
+- Oral (5 ml/kg): 2 ml
+- Mice (10 ml/kg): 4 ml
+========================================
+
+==================================================
+
+Date: 2024/07/25 - 11:46:54
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: Levetiracetam
+BEW: 1
+Dose: 100 mg/kg
+========================================
+Drug amount needed: 40 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.4 ml
+- Oral (5 ml/kg): 2 ml
+- Mice (10 ml/kg): 4 ml
+========================================
+
+==================================================
+
+Date: 2024/07/25 - 11:48:02
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: Levetiracetam
+BEW: 1
+Dose: 100 mg/kg
+========================================
+Drug amount needed: 40 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.4 ml
+- Oral (5 ml/kg): 2 ml
+- Mice (10 ml/kg): 4 ml
+========================================
+
+==================================================
+
+Date: 2024/07/25 - 11:48:03
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: Levetiracetam
+BEW: 1
+Dose: 100 mg/kg
+========================================
+Drug amount needed: 40 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.4 ml
+- Oral (5 ml/kg): 2 ml
+- Mice (10 ml/kg): 4 ml
+========================================
+
+==================================================
+
+Date: 2024/07/25 - 11:48:24
+Calculation Type: Calculate Vehicle Amount
+Vehicle Amounts for Different Concentrations
+==================================================
+Compound: Levetiracetam
+BEW: 1
+Dose: 100 mg/kg
+==================================================
+Add 0.425 ml of vehicle to your 42.5 mg of drug
+to produce a 1ml/kg solution
+
+Add 2.12 ml of vehicle to your 42.5 mg of drug
+to produce a 5ml/kg solution
+
+Add 4.25 ml of vehicle to your 42.5 mg of drug
+to produce a 10ml/kg solution
+==================================================
+
+==================================================
+
