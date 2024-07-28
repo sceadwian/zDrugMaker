@@ -38,23 +38,8 @@ X	CGS21680A
 1.34	Ro-66-31908
 1.18	SB-242084
 
-testCompound - 1.23
-testCompound - 1.23
-testArticlez - 1.68
-TSTart - 1.68
-JZP511 - 1
-JZP511 - 1
+NCE name - BEW
 JZP511 - 1
 BH-015638 - 1
-BH-015638 - 1
-BH-015638 - 1
-BH-015638 - 1
-BH-015638 - 1
- - 1
- - 1
 Levetiracetam - 1
-Levetiracetam - 1
-Levetiracetam - 1
-Levetiracetam - 1
-Lorcaserin - 1.17
-Lorcaserin - 1.17
+Leo - 1

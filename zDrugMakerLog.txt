@@ -397,3 +397,21 @@ Producing a final volume of 2 ml
 
 ==================================================
 
+Date: 2024/07/26 - 01:27:35
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: Leo
+BEW: 1
+Dose: 19 mg/kg
+========================================
+Drug amount needed: 6.61 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.348 ml
+- Oral (5 ml/kg): 1.74 ml
+- Mice (10 ml/kg): 3.48 ml
+========================================
+
+==================================================
+
