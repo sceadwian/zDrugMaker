@@ -415,3 +415,78 @@ Volumes:
 
 ==================================================
 
+Date: 2024/07/27 - 22:45:42
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: TA0727
+BEW: 1
+Dose: 400 mg/kg
+========================================
+Drug amount needed: 192 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.48 ml
+- Oral (5 ml/kg): 2.4 ml
+- Mice (10 ml/kg): 4.8 ml
+========================================
+
+==================================================
+
+Date: 2024/07/27 - 22:52:01
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: TA1051
+BEW: 1
+Dose: 600 mg/kg
+========================================
+Drug amount needed: 288 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.48 ml
+- Oral (5 ml/kg): 2.4 ml
+- Mice (10 ml/kg): 4.8 ml
+========================================
+
+==================================================
+
+Date: 2024/07/27 - 22:52:14
+Calculation Type: Calculate Vehicle Amount
+Vehicle Amounts for Different Concentrations
+==================================================
+Compound: TA1051
+BEW: 1
+Dose: 600 mg/kg
+==================================================
+Add 0.5 ml of vehicle to your 300 mg of drug
+to produce a 1ml/kg solution
+
+Add 2.5 ml of vehicle to your 300 mg of drug
+to produce a 5ml/kg solution
+
+Add 5 ml of vehicle to your 300 mg of drug
+to produce a 10ml/kg solution
+==================================================
+
+==================================================
+
+Date: 2024/07/27 - 22:52:45
+Calculation Type: Perform Dilution
+Dilution Calculation
+========================================
+Compound: TA1051
+========================================
+Starting solution concentration: 600 mg/ml
+Final solution concentration: 300 mg/ml
+Volume of new solution: 5 ml
+========================================
+Mix 2.5 ml of your stock solution
+with 2.5 ml of the appropriate vehicle
+========================================
+This will leave you with 3.5 ml of your stock solution
+Producing a final volume of 5 ml
+========================================
+
+==================================================
+

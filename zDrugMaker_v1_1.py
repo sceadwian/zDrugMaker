@@ -1,6 +1,7 @@
 import tkinter as tk
-from tkinter import ttk, messagebox, scrolledtext
+from tkinter import ttk, messagebox, scrolledtext, filedialog
 import time
+import os
 
 class ZDrugMakerApp(tk.Tk):
     def __init__(self):
@@ -121,6 +122,42 @@ class ZDrugMakerApp(tk.Tk):
         self.output_text = scrolledtext.ScrolledText(tab, wrap=tk.WORD, font=("TkDefaultFont", 11))
         self.output_text.grid(row=0, column=0, sticky="nsew", padx=10, pady=10)
         
+        # Add Export button
+        export_button = ttk.Button(tab, text="Export", command=self.export_output)
+        export_button.grid(row=1, column=0, pady=10)
+
+    def export_output(self):
+        # Get current timestamp
+        timestamp = time.strftime('%Y%m%d_%H%M')
+        
+        # Get compound name
+        compound_name = self.compound_name.get().strip()
+        if not compound_name:
+            messagebox.showerror("Export Error", "Please enter a compound name before exporting.")
+            return
+        
+        # Create filename
+        filename = f"{timestamp}_{compound_name}.txt"
+        
+        # Get output content
+        content = self.output_text.get("1.0", tk.END)
+        
+        # Ask user for save location
+        file_path = filedialog.asksaveasfilename(
+            defaultextension=".txt",
+            filetypes=[("Text files", "*.txt")],
+            initialfile=filename
+        )
+        
+        if file_path:
+            try:
+                with open(file_path, 'w') as file:
+                    file.write(content)
+                messagebox.showinfo("Export Successful", f"Output exported to {file_path}")
+            except Exception as e:
+                messagebox.showerror("Export Error", f"An error occurred while exporting: {str(e)}")
+
+
     def estimate_drug_amount(self):
         try:
             bew = self.bew.get()
