@@ -490,3 +490,21 @@ Producing a final volume of 5 ml
 
 ==================================================
 
+Date: 2024/07/31 - 09:36:21
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: 
+BEW: 1
+Dose: 40 mg/kg
+========================================
+Drug amount needed: 48 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 1.2 ml
+- Oral (5 ml/kg): 6 ml
+- Mice (10 ml/kg): 12 ml
+========================================
+
+==================================================
+
