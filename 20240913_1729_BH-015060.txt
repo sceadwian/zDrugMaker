@@ -1,0 +1,81 @@
+Date: 2024/09/13 - 17:19:36
+Calculation Type: Estimate Drug Amount
+Comments: 0.1% Tween-80 / 0.5% CMC
+Estimated Drug Amount and Volumes
+========================================
+Compound: BH-015060
+BEW: 1
+Dose: 40 mg/kg
+========================================
+Drug amount needed: 28.8 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.72 ml
+- Oral (5 ml/kg): 3.6 ml
+- Mice (10 ml/kg): 7.2 ml
+========================================
+
+==================================================
+
+Date: 2024/09/13 - 17:20:12
+Calculation Type: Estimate Drug Amount
+Comments: 0.1% Tween-80 / 0.5% CMC
+Estimated Drug Amount and Volumes
+========================================
+Compound: BH-015060
+BEW: 1
+Dose: 30 mg/kg
+========================================
+Drug amount needed: 21.6 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.72 ml
+- Oral (5 ml/kg): 3.6 ml
+- Mice (10 ml/kg): 7.2 ml
+========================================
+
+==================================================
+
+Date: 2024/09/13 - 17:23:36
+Calculation Type: Calculate Vehicle Amount
+Comments: 0.1% Tween-80 / 0.5% CMC
+Vehicle Amounts for Different Concentrations
+==================================================
+Compound: BH-015060
+BEW: 1
+Dose: 30 mg/kg
+==================================================
+Add 1.28 ml of vehicle to your 38.4 mg of drug
+to produce a 1ml/kg solution
+
+Add 6.39 ml of vehicle to your 38.4 mg of drug
+to produce a 5ml/kg solution
+
+Add 12.8 ml of vehicle to your 38.4 mg of drug
+to produce a 10ml/kg solution
+==================================================
+
+==================================================
+
+Date: 2024/09/13 - 17:27:34
+Calculation Type: Calculate Vehicle Amount
+Comments: 0.1% Tween-80 / 0.5% CMC
+Vehicle Amounts for Different Concentrations
+==================================================
+Compound: BH-015060
+BEW: 1
+Dose: 10 mg/kg
+==================================================
+Add 1.29 ml of vehicle to your 12.9 mg of drug
+to produce a 1ml/kg solution
+
+Add 6.43 ml of vehicle to your 12.9 mg of drug
+to produce a 5ml/kg solution
+
+Add 12.9 ml of vehicle to your 12.9 mg of drug
+to produce a 10ml/kg solution
+==================================================
+
+==================================================
+
+

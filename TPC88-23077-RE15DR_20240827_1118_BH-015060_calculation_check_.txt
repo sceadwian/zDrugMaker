@@ -1,0 +1,143 @@
+Date: 2024/08/27 - 11:06:47
+Calculation Type: Estimate Drug Amount
+Comments: Checking test article preparation records that Matt prepared
+Estimated Drug Amount and Volumes
+========================================
+Compound: TPC88-23077-RE15DR
+BEW: 1
+Dose: 44 mg/kg
+========================================
+Drug amount needed: 12.3 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.28 ml
+- Oral (5 ml/kg): 1.4 ml
+- Mice (10 ml/kg): 2.8 ml
+========================================
+
+==================================================
+
+Date: 2024/08/27 - 11:12:33
+Calculation Type: Calculate Vehicle Amount
+Comments: Checking test article preparation records that Matt prepared
+Vehicle Amounts for Different Concentrations
+==================================================
+Compound: TPC88-23077-RE15DR
+BEW: 1
+Dose: 30 mg/kg
+==================================================
+Add 0.707 ml of vehicle to your 21.2 mg of drug
+to produce a 1ml/kg solution
+
+Add 3.53 ml of vehicle to your 21.2 mg of drug
+to produce a 5ml/kg solution
+
+Add 7.07 ml of vehicle to your 21.2 mg of drug
+to produce a 10ml/kg solution
+==================================================
+
+==================================================
+
+Date: 2024/08/27 - 11:13:04
+Calculation Type: Calculate Vehicle Amount
+Comments: Checking test article preparation records that Matt prepared (TPC88-23077-RE15DR)
+Vehicle Amounts for Different Concentrations
+==================================================
+Compound: BH-015060
+BEW: 1
+Dose: 30 mg/kg
+==================================================
+Add 0.707 ml of vehicle to your 21.2 mg of drug
+to produce a 1ml/kg solution
+
+Add 3.53 ml of vehicle to your 21.2 mg of drug
+to produce a 5ml/kg solution
+
+Add 7.07 ml of vehicle to your 21.2 mg of drug
+to produce a 10ml/kg solution
+==================================================
+
+==================================================
+
+Date: 2024/08/27 - 11:14:48
+Calculation Type: Perform Dilution
+Comments: Checking test article preparation records that Matt prepared (TPC88-23077-RE15DR)
+Dilution Calculation
+========================================
+Compound: BH-015060
+========================================
+Starting solution concentration: 3 mg/ml
+Final solution concentration: 1 mg/ml
+Volume of new solution: 4.5 ml
+========================================
+Mix 1.5 ml of your stock solution
+with 3 ml of the appropriate vehicle
+========================================
+This will leave you with 5.58 ml of your stock solution
+Producing a final volume of 4.5 ml
+========================================
+
+==================================================
+
+Date: 2024/08/27 - 11:15:13
+Calculation Type: Perform Dilution
+Comments: Checking test article preparation records that Matt prepared (TPC88-23077-RE15DR)
+Dilution Calculation
+========================================
+Compound: BH-015060
+========================================
+Starting solution concentration: 1 mg/ml
+Final solution concentration: 0.3 mg/ml
+Volume of new solution: 4 ml
+========================================
+Mix 1.2 ml of your stock solution
+with 2.8 ml of the appropriate vehicle
+========================================
+This will leave you with 3.3 ml of your stock solution
+Producing a final volume of 4 ml
+========================================
+
+==================================================
+
+Date: 2024/08/27 - 11:16:16
+Calculation Type: Perform Dilution
+Comments: Checking test article preparation records that Matt prepared (TPC88-23077-RE15DR)
+Dilution Calculation
+========================================
+Compound: BH-015060
+========================================
+Starting solution concentration: 0.3 mg/ml
+Final solution concentration: 0.1 mg/ml
+Volume of new solution: 3 ml
+========================================
+Mix 1 ml of your stock solution
+with 2 ml of the appropriate vehicle
+========================================
+This will leave you with 3 ml of your stock solution
+Producing a final volume of 3 ml
+========================================
+
+==================================================
+
+Date: 2024/08/27 - 11:17:16
+Calculation Type: Calculate Vehicle Amount
+Comments: Checking test article preparation records that Matt prepared (TPC88-23077-RE16DR)
+Vehicle Amounts for Different Concentrations
+==================================================
+Compound: BH-015060
+BEW: 1
+Dose: 30 mg/kg
+==================================================
+Add 0.607 ml of vehicle to your 18.2 mg of drug
+to produce a 1ml/kg solution
+
+Add 3.03 ml of vehicle to your 18.2 mg of drug
+to produce a 5ml/kg solution
+
+Add 6.07 ml of vehicle to your 18.2 mg of drug
+to produce a 10ml/kg solution
+==================================================
+
+==================================================
+
+

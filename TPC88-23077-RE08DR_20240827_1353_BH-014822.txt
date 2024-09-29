@@ -1,0 +1,242 @@
+Date: 2024/08/27 - 13:47:40
+Calculation Type: Calculate Vehicle Amount
+Comments: TPC88-23077-RE07DR Matt check calculations 5mlKG
+Vehicle Amounts for Different Concentrations
+==================================================
+Compound: BH-014822
+BEW: 1
+Dose: 30 mg/kg
+==================================================
+Add 0.537 ml of vehicle to your 16.1 mg of drug
+to produce a 1ml/kg solution
+
+Add 2.68 ml of vehicle to your 16.1 mg of drug
+to produce a 5ml/kg solution
+
+Add 5.37 ml of vehicle to your 16.1 mg of drug
+to produce a 10ml/kg solution
+==================================================
+
+==================================================
+
+Date: 2024/08/27 - 13:51:03
+Calculation Type: Perform Dilution
+Comments: TPC88-23077-RE08DR Matt check calculations 10 ml/Kg
+Dilution Calculation
+========================================
+Compound: BH-014822
+========================================
+Starting solution concentration: 30 mg/ml
+Final solution concentration: 10 mg/ml
+Volume of new solution: 2.9 ml
+========================================
+Mix 0.967 ml of your stock solution
+with 1.93 ml of the appropriate vehicle
+========================================
+This will leave you with 1.71 ml of your stock solution
+Producing a final volume of 2.9 ml
+========================================
+
+==================================================
+
+Date: 2024/08/27 - 13:51:59
+Calculation Type: Perform Dilution
+Comments: TPC88-23077-RE08DR Matt check calculations 10 ml/Kg
+Dilution Calculation
+========================================
+Compound: BH-014822
+========================================
+Starting solution concentration: 10 mg/ml
+Final solution concentration: 3 mg/ml
+Volume of new solution: 2.7 ml
+========================================
+Mix 0.81 ml of your stock solution
+with 1.89 ml of the appropriate vehicle
+========================================
+This will leave you with 2.09 ml of your stock solution
+Producing a final volume of 2.7 ml
+========================================
+
+==================================================
+
+Date: 2024/08/27 - 13:52:05
+Calculation Type: Perform Dilution
+Comments: TPC88-23077-RE08DR Matt check calculations 10 ml/Kg
+Dilution Calculation
+========================================
+Compound: BH-014822
+========================================
+Starting solution concentration: 10 mg/ml
+Final solution concentration: 3 mg/ml
+Volume of new solution: 2.6 ml
+========================================
+Mix 0.78 ml of your stock solution
+with 1.82 ml of the appropriate vehicle
+========================================
+This will leave you with 2.12 ml of your stock solution
+Producing a final volume of 2.6 ml
+========================================
+
+==================================================
+
+Date: 2024/08/27 - 13:52:18
+Calculation Type: Perform Dilution
+Comments: TPC88-23077-RE08DR Matt check calculations 10 ml/Kg
+Dilution Calculation
+========================================
+Compound: BH-014822
+========================================
+Starting solution concentration: 10 mg/ml
+Final solution concentration: 3 mg/ml
+Volume of new solution: 2.5 ml
+========================================
+Mix 0.75 ml of your stock solution
+with 1.75 ml of the appropriate vehicle
+========================================
+This will leave you with 2.15 ml of your stock solution
+Producing a final volume of 2.5 ml
+========================================
+
+==================================================
+
+Date: 2024/08/27 - 13:52:23
+Calculation Type: Perform Dilution
+Comments: TPC88-23077-RE08DR Matt check calculations 10 ml/Kg
+Dilution Calculation
+========================================
+Compound: BH-014822
+========================================
+Starting solution concentration: 10 mg/ml
+Final solution concentration: 3 mg/ml
+Volume of new solution: 2.6 ml
+========================================
+Mix 0.78 ml of your stock solution
+with 1.82 ml of the appropriate vehicle
+========================================
+This will leave you with 2.12 ml of your stock solution
+Producing a final volume of 2.6 ml
+========================================
+
+==================================================
+
+Date: 2024/08/27 - 13:52:28
+Calculation Type: Perform Dilution
+Comments: TPC88-23077-RE08DR Matt check calculations 10 ml/Kg
+Dilution Calculation
+========================================
+Compound: BH-014822
+========================================
+Starting solution concentration: 10 mg/ml
+Final solution concentration: 3 mg/ml
+Volume of new solution: 2.7 ml
+========================================
+Mix 0.81 ml of your stock solution
+with 1.89 ml of the appropriate vehicle
+========================================
+This will leave you with 2.09 ml of your stock solution
+Producing a final volume of 2.7 ml
+========================================
+
+==================================================
+
+Date: 2024/08/27 - 13:52:33
+Calculation Type: Perform Dilution
+Comments: TPC88-23077-RE08DR Matt check calculations 10 ml/Kg
+Dilution Calculation
+========================================
+Compound: BH-014822
+========================================
+Starting solution concentration: 10 mg/ml
+Final solution concentration: 3 mg/ml
+Volume of new solution: 2.8 ml
+========================================
+Mix 0.84 ml of your stock solution
+with 1.96 ml of the appropriate vehicle
+========================================
+This will leave you with 2.06 ml of your stock solution
+Producing a final volume of 2.8 ml
+========================================
+
+==================================================
+
+Date: 2024/08/27 - 13:52:38
+Calculation Type: Perform Dilution
+Comments: TPC88-23077-RE08DR Matt check calculations 10 ml/Kg
+Dilution Calculation
+========================================
+Compound: BH-014822
+========================================
+Starting solution concentration: 10 mg/ml
+Final solution concentration: 3 mg/ml
+Volume of new solution: 2.9 ml
+========================================
+Mix 0.87 ml of your stock solution
+with 2.03 ml of the appropriate vehicle
+========================================
+This will leave you with 2.03 ml of your stock solution
+Producing a final volume of 2.9 ml
+========================================
+
+==================================================
+
+Date: 2024/08/27 - 13:52:39
+Calculation Type: Perform Dilution
+Comments: TPC88-23077-RE08DR Matt check calculations 10 ml/Kg
+Dilution Calculation
+========================================
+Compound: BH-014822
+========================================
+Starting solution concentration: 10 mg/ml
+Final solution concentration: 3 mg/ml
+Volume of new solution: 2.9 ml
+========================================
+Mix 0.87 ml of your stock solution
+with 2.03 ml of the appropriate vehicle
+========================================
+This will leave you with 2.03 ml of your stock solution
+Producing a final volume of 2.9 ml
+========================================
+
+==================================================
+
+Date: 2024/08/27 - 13:53:31
+Calculation Type: Perform Dilution
+Comments: TPC88-23077-RE08DR Matt check calculations 10 ml/Kg
+Dilution Calculation
+========================================
+Compound: BH-014822
+========================================
+Starting solution concentration: 3 mg/ml
+Final solution concentration: 1 mg/ml
+Volume of new solution: 2.6 ml
+========================================
+Mix 0.867 ml of your stock solution
+with 1.73 ml of the appropriate vehicle
+========================================
+This will leave you with 2.03 ml of your stock solution
+Producing a final volume of 2.6 ml
+========================================
+
+==================================================
+
+Date: 2024/08/27 - 13:53:47
+Calculation Type: Perform Dilution
+Comments: TPC88-23077-RE08DR Matt check calculations 10 ml/Kg
+Dilution Calculation
+========================================
+Compound: BH-014822
+========================================
+Starting solution concentration: 1 mg/ml
+Final solution concentration: 0.3 mg/ml
+Volume of new solution: 2 ml
+========================================
+Mix 0.6 ml of your stock solution
+with 1.4 ml of the appropriate vehicle
+========================================
+This will leave you with 2.3 ml of your stock solution
+Producing a final volume of 2 ml
+========================================
+
+==================================================
+
+

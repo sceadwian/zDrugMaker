@@ -1,0 +1,62 @@
+Date: 2024/08/27 - 13:55:16
+Calculation Type: Calculate Vehicle Amount
+Comments: TPC88-23077-RE09DR Matt check calculations 10 ml/Kg
+Vehicle Amounts for Different Concentrations
+==================================================
+Compound: BH-014822
+BEW: 1
+Dose: 30 mg/kg
+==================================================
+Add 0.587 ml of vehicle to your 17.6 mg of drug
+to produce a 1ml/kg solution
+
+Add 2.93 ml of vehicle to your 17.6 mg of drug
+to produce a 5ml/kg solution
+
+Add 5.87 ml of vehicle to your 17.6 mg of drug
+to produce a 10ml/kg solution
+==================================================
+
+==================================================
+
+Date: 2024/08/27 - 14:03:50
+Calculation Type: Perform Dilution
+Comments: TPC88-23077-RE09DR Matt check calculations 10 ml/Kg 0.5% MC 0.25% SLS
+Dilution Calculation
+========================================
+Compound: BH-014822
+========================================
+Starting solution concentration: 30 mg/ml
+Final solution concentration: 10 mg/ml
+Volume of new solution: 2 ml
+========================================
+Mix 0.667 ml of your stock solution
+with 1.33 ml of the appropriate vehicle
+========================================
+This will leave you with 2.26 ml of your stock solution
+Producing a final volume of 2 ml
+========================================
+
+==================================================
+
+Date: 2024/08/27 - 14:04:03
+Calculation Type: Perform Dilution
+Comments: TPC88-23077-RE09DR Matt check calculations 10 ml/Kg 0.5% MC 0.25% SLS
+Dilution Calculation
+========================================
+Compound: BH-014822
+========================================
+Starting solution concentration: 10 mg/ml
+Final solution concentration: 3 mg/ml
+Volume of new solution: 2 ml
+========================================
+Mix 0.6 ml of your stock solution
+with 1.4 ml of the appropriate vehicle
+========================================
+This will leave you with 2.33 ml of your stock solution
+Producing a final volume of 2 ml
+========================================
+
+==================================================
+
+

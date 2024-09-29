@@ -1,0 +1,60 @@
+Date: 2024/09/23 - 20:27:41
+Calculation Type: Estimate Drug Amount
+Comments: 
+Estimated Drug Amount and Volumes
+========================================
+Compound: Scopolamine
+BEW: 1.42
+Dose: 1 mg/kg
+========================================
+Drug amount needed: 2.5 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 1.76 ml
+- Oral (5 ml/kg): 8.8 ml
+- Mice (10 ml/kg): 17.6 ml
+========================================
+
+==================================================
+
+Date: 2024/09/23 - 20:28:09
+Calculation Type: Estimate Drug Amount
+Comments: Patamon
+Estimated Drug Amount and Volumes
+========================================
+Compound: Scopolamine
+BEW: 1.42
+Dose: 1 mg/kg
+========================================
+Drug amount needed: 2.5 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 1.76 ml
+- Oral (5 ml/kg): 8.8 ml
+- Mice (10 ml/kg): 17.6 ml
+========================================
+
+==================================================
+
+Date: 2024/09/23 - 20:28:34
+Calculation Type: Calculate Vehicle Amount
+Comments: Patamon
+Vehicle Amounts for Different Concentrations
+==================================================
+Compound: Scopolamine
+BEW: 1.42
+Dose: 1 mg/kg
+==================================================
+Add 2.46 ml of vehicle to your 3.5 mg of drug
+to produce a 1ml/kg solution
+
+Add 12.3 ml of vehicle to your 3.5 mg of drug
+to produce a 5ml/kg solution
+
+Add 24.6 ml of vehicle to your 3.5 mg of drug
+to produce a 10ml/kg solution
+==================================================
+
+==================================================
+
+
