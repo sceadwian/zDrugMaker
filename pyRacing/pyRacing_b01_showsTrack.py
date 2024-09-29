@@ -14,7 +14,7 @@ def render_track(file_path):
     track_lines = load_track(file_path)
     for line in track_lines:
         print(line)
-    time.sleep(10)  # Pause to simulate real-time rendering
+    time.sleep(12)  # Pause to simulate real-time rendering
 
 # Main function to handle user input and loading the correct track file
 def main():
