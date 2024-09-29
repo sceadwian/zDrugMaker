@@ -1,84 +1,141 @@
+import os
 import time
+import random
+from typing import List
 
-# Define Car class with attributes like speed, acceleration, and drag coefficient
+
 class Car:
-    def __init__(self, symbol, position, speed, acceleration, drag_coefficient, cornering, downforce):
+    def __init__(self, symbol, drag_coefficient, cooling_efficiency, acceleration, cornering_ability, downforce):
         self.symbol = symbol
-        self.position = position  # Tuple (x, y)
-        self.speed = speed
+        self.position = None
+        self.speed = 0
         self.acceleration = acceleration
         self.drag_coefficient = drag_coefficient
-        self.cornering = cornering
+        self.cooling_efficiency = cooling_efficiency
+        self.cornering_ability = cornering_ability
         self.downforce = downforce
-        self.laps = 0
+        self.lap = 0
+        self.sector = 0
+        self.distance = 0
 
-    def move(self, track):
-        # Calculate new speed based on drag and acceleration
+    def update_position(self, track):
         drag_force = 0.5 * self.drag_coefficient * (self.speed ** 2)
         self.speed += self.acceleration - drag_force
-        
-        # Update position based on speed (for simplicity, only move horizontally for now)
-        new_x = self.position[0] + int(self.speed)
-        new_y = self.position[1]
+        self.speed = max(0, min(self.speed, 5))  # Limit speed between 0 and 5
 
-        # Check if the new position hits the track boundaries
-        if track[new_y][new_x] == '#':  # Assuming '#' is a boundary
-            # If the car hits a boundary, stop or reduce speed
-            self.speed = 0
-        else:
-            # Update car position
-            self.position = (new_x, new_y)
+        print(f"{self.symbol} speed: {self.speed}, position: {self.position}")
 
-        # Check if the car finishes a lap (you can expand this logic)
-        if new_x >= len(track[0]):  # If car reaches the end of the row, count a lap
-            self.laps += 1
-            self.position = (0, new_y)  # Move car back to the start of the track row
+        if track[self.position[0]][self.position[1]] in ['#', '$', 'S']:
+            self.speed *= (0.5 + 0.5 * self.cornering_ability)
 
-# Function to render the track with car positions
+        move = int(self.speed)
+        for _ in range(move):
+            next_pos = self.get_next_position(track)
+            if next_pos == self.position:
+                break  # Properly break out of the loop if no valid moves
+            self.position = next_pos  # Correct indentation to update position after each move
+            self.distance += 20  # Each character represents 20 meters
+
+        print(f"{self.symbol} moved to {self.position}, distance: {self.distance}")
+
+        if track[self.position[0]][self.position[1]] == '$':
+            self.sector += 1
+        elif track[self.position[0]][self.position[1]] == 'S':
+            if self.sector == 3:
+                self.lap += 1
+                self.sector = 0
+
+    def get_next_position(self, track):
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # Up, Down, Left, Right
+        random.shuffle(directions)  # Randomize direction
+
+        for dx, dy in directions:
+            new_x, new_y = self.position[0] + dx, self.position[1] + dy
+            if 0 <= new_x < len(track) and 0 <= new_y < len(track[0]):
+                if track[new_x][new_y] not in ['#', 'S']:  # Avoid blocked and start positions
+                    return (new_x, new_y)  # Move to the new position
+        return self.position  # Stay in the same position if no valid moves
+
+
+def load_track(filename: str) -> List[str]:
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(script_dir, filename)
+    try:
+        with open(file_path, 'r') as file:
+            track = [line.strip() for line in file if line.strip()]
+            for row in track:
+                print(row)  # Add this line to debug the track layout
+            return track
+    except FileNotFoundError:
+        print(f"Error: The file '{filename}' was not found in the directory: {script_dir}")
+        exit(1)
+
+
+def find_start_position(track):
+    for i, row in enumerate(track):
+        for j, cell in enumerate(row):
+            if cell == 'S':
+                return i, j
+    raise ValueError("Start position 'S' not found in the track")
+
+
 def render_track(track, cars):
-    rendered_track = [list(row) for row in track]  # Copy of the track
+    os.system('cls' if os.name == 'nt' else 'clear')
 
-    # Place cars on the track
+    track_with_cars = [list(row) for row in track]
     for car in cars:
-        x, y = car.position
-        rendered_track[y][x] = car.symbol
+        if car.position:
+            x, y = car.position
+            track_with_cars[x][y] = car.symbol
 
-    # Print the track with cars
-    for row in rendered_track:
-        print("".join(row))
+    for row in track_with_cars:
+        print(''.join(row))
 
-# Load a simple track
-track = [
-    "##############################",
-    "#                            #",
-    "#                            #",
-    "#                            #",
-    "#                            #",
-    "#                            #",
-    "##############################"
-]
+    print("\nCar Positions:")
+    for car in cars:
+        print(f"{car.symbol}: Lap {car.lap}, Sector {car.sector}, Distance {car.distance}m")
 
-# Create cars with different attributes
-cars = [
-    Car(symbol="1", position=(1, 1), speed=1, acceleration=0.2, drag_coefficient=0.01, cornering=0.5, downforce=0.5),
-    Car(symbol="2", position=(1, 2), speed=1.2, acceleration=0.18, drag_coefficient=0.02, cornering=0.4, downforce=0.6),
-    Car(symbol="3", position=(1, 3), speed=1.1, acceleration=0.22, drag_coefficient=0.015, cornering=0.6, downforce=0.7)
-]
 
-# Simulate the race
-def simulate_race(track, cars, steps=50):
-    for step in range(steps):
-        print(f"\nStep {step + 1}\n")
-        
-        # Move each car
+def simulate_race(track, cars, num_laps):
+    start_pos = find_start_position(track)
+    for car in cars:
+        car.position = start_pos
+
+    while any(car.lap < num_laps for car in cars):
         for car in cars:
-            car.move(track)
-        
-        # Render the track with car positions
+            if car.lap < num_laps:
+                car.update_position(track)
         render_track(track, cars)
-        
-        # Pause for a short time to simulate real-time movement
-        time.sleep(0.5)
+        time.sleep(0.1)
 
-# Run the simulation
-simulate_race(track, cars)
+    print("\nRace Finished!")
+    for car in sorted(cars, key=lambda x: (-x.lap, -x.distance)):
+        print(f"{car.symbol}: Completed {car.lap} laps, Distance {car.distance}m")
+
+
+def main():
+    track = load_track('track.csv')
+
+    cars = [
+        Car('A', 0.3, 0.8, 0.5, 0.7, 0.6),
+        Car('B', 0.25, 0.85, 0.55, 0.75, 0.65),
+        Car('C', 0.28, 0.82, 0.52, 0.72, 0.62),
+        Car('D', 0.27, 0.83, 0.53, 0.73, 0.63),
+        Car('E', 0.29, 0.81, 0.51, 0.71, 0.61),
+        Car('F', 0.26, 0.84, 0.54, 0.74, 0.64),
+        Car('G', 0.31, 0.79, 0.49, 0.69, 0.59),
+        Car('H', 0.32, 0.78, 0.48, 0.68, 0.58),
+        Car('I', 0.33, 0.77, 0.47, 0.67, 0.57),
+        Car('J', 0.34, 0.76, 0.46, 0.66, 0.56),
+        Car('K', 0.35, 0.75, 0.45, 0.65, 0.55),
+        Car('L', 0.36, 0.74, 0.44, 0.64, 0.54),
+        Car('M', 0.37, 0.73, 0.43, 0.63, 0.53),
+        Car('N', 0.38, 0.72, 0.42, 0.62, 0.52),
+    ]
+
+    num_laps = 3
+    simulate_race(track, cars, num_laps)
+
+
+if __name__ == "__main__":
+    main()
