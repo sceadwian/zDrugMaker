@@ -4,8 +4,8 @@ import time
 # Function to load and display the track from the CSV file
 def load_track(file_path):
     with open(file_path, 'r') as file:
-        # Read all lines from the file
-        track_lines = [line.rstrip() for line in file.readlines()]  # rstrip to remove trailing newline
+        # Read all lines from the file and remove commas from each line
+        track_lines = [line.rstrip().replace(',', '') for line in file.readlines()]  # Remove trailing newlines and commas
     return track_lines
 
 # Function to render the track
@@ -14,7 +14,7 @@ def render_track(file_path):
     track_lines = load_track(file_path)
     for line in track_lines:
         print(line)
-    time.sleep(10)  # Pause to simulate real-time rendering
+    time.sleep(1)  # Pause to simulate real-time rendering
 
 # Main function to handle user input and loading the correct track file
 def main():
@@ -36,6 +36,7 @@ def main():
         render_track(file_path)
     else:
         print(f"Error: The file '{filename}' does not exist in the current directory.")
+        time.sleep(10)
 
 # Call the main function to start the program
 if __name__ == "__main__":
