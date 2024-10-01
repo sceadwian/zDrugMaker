@@ -60,27 +60,30 @@ def analyze_track(track):
             'W': is_track(track[y][x-1]) if is_valid_position(track, x-1, y) else False
         }
 
-        # Determine the next direction
-        if surroundings[direction]:  # Can continue straight
+        # Determine the next direction (always turn right first)
+        right_direction = {'N': 'E', 'E': 'S', 'S': 'W', 'W': 'N'}[direction]
+        if surroundings[right_direction]:  # Try turning right first
+            path.append("Turn Right")
+            direction = right_direction
+        elif surroundings[direction]:  # Can continue straight
             path.append("Straight")
         else:
-            # Try turning left first (counter-clockwise priority)
+            # Try turning left last (clockwise)
             left_direction = {'N': 'W', 'W': 'S', 'S': 'E', 'E': 'N'}[direction]
             if surroundings[left_direction]:
                 path.append("Turn Left")
                 direction = left_direction
-            # If can't turn left, try turning right
-            elif surroundings[{'N': 'E', 'E': 'S', 'S': 'W', 'W': 'N'}[direction]]:
-                path.append("Turn Right")
-                direction = {'N': 'E', 'E': 'S', 'S': 'W', 'W': 'N'}[direction]
             else:
                 return f"Error: Dead end at ({x}, {y})"
 
+        # Update the position based on the new direction
         x, y = get_next_position(x, y, direction)
         if not is_valid_position(track, x, y) or not is_track(track[y][x]):
             return f"Error: Off track at ({x}, {y})"
 
     return path
+    
+
 
 def render_track(file_path):
     os.system('cls' if os.name == 'nt' else 'clear')
