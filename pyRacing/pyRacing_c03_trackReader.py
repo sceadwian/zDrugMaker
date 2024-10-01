@@ -1,5 +1,27 @@
+"""
+pyRacing_c03_trackReader.py
+
+Part of a Formula 1 race simulation project. This script handles track analysis and preparation.
+
+Key functions:
+1. Reads and parses track layout from a CSV file
+2. Analyzes track characteristics (length, sectors, turns, straights)
+3. Generates a navigation path and segment sequence
+
+Output:
+- Displays ASCII track layout
+- Prints navigation path and track analysis
+- Saves track segment sequence (S: Start, I: Straight, U: Turn, X: Sector boundary) to CSV
+
+Usage: Run script and enter track CSV filename when prompted.
+
+This component prepares track data for the main race simulation, which will 
+handle car movements, lap counting, and real-time race rendering.
+"""
+
 import os
 import time
+import csv
 
 def load_track(file_path):
     with open(file_path, 'r') as file:
@@ -48,9 +70,19 @@ def analyze_track(track):
 
     path = []
     visited = set()
+    segment_count = 0
+    straight_count = 0
+    turn_count = 0
+    sector_borders = []
+    sequence = ['S']  # Start with 'S' for the starting position
 
     while (x, y) not in visited:
         visited.add((x, y))
+        segment_count += 1
+        
+        if track[y][x].strip() == '$':
+            sector_borders.append(segment_count)
+            sequence.append('X')  # Add 'X' for sector boundary
         
         # Check surrounding cells
         surroundings = {
@@ -65,14 +97,20 @@ def analyze_track(track):
         if surroundings[right_direction]:  # Try turning right first
             path.append("Turn Right")
             direction = right_direction
+            turn_count += 1
+            sequence.append('U')  # Add 'U' for turn
         elif surroundings[direction]:  # Can continue straight
             path.append("Straight")
+            straight_count += 1
+            sequence.append('I')  # Add 'I' for straight
         else:
             # Try turning left last (clockwise)
             left_direction = {'N': 'W', 'W': 'S', 'S': 'E', 'E': 'N'}[direction]
             if surroundings[left_direction]:
                 path.append("Turn Left")
                 direction = left_direction
+                turn_count += 1
+                sequence.append('U')  # Add 'U' for turn
             else:
                 return f"Error: Dead end at ({x}, {y})"
 
@@ -81,9 +119,27 @@ def analyze_track(track):
         if not is_valid_position(track, x, y) or not is_track(track[y][x]):
             return f"Error: Off track at ({x}, {y})"
 
-    return path
-    
+    # Calculate track length and sector sizes
+    track_length_km = segment_count * 20 / 1000
+    sector_sizes = [
+        sector_borders[0] * 20 / 1000,
+        (sector_borders[1] - sector_borders[0]) * 20 / 1000,
+        (segment_count - sector_borders[1]) * 20 / 1000
+    ]
 
+    return {
+        'path': path,
+        'track_length_km': track_length_km,
+        'sector_sizes': sector_sizes,
+        'straight_count': straight_count,
+        'turn_count': turn_count,
+        'sequence': sequence
+    }
+
+def save_sequence_to_csv(sequence, file_path):
+    with open(file_path, 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(sequence)
 
 def render_track(file_path):
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -93,13 +149,26 @@ def render_track(file_path):
     print("\nAnalyzing track...")
     time.sleep(2)
     
-    path = analyze_track(track)
-    if isinstance(path, str):  # Error message
-        print(path)
+    result = analyze_track(track)
+    if isinstance(result, str):  # Error message
+        print(result)
     else:
-        print("\nTrack analysis:")
-        for i, move in enumerate(path, 1):
+        print("\nPath:")
+        for i, move in enumerate(result['path'], 1):
             print(f"{i}. {move}")
+
+        print("\nTrack analysis:")
+        print(f"Track length: {result['track_length_km']:.2f} km")
+        print(f"Sector 1 size: {result['sector_sizes'][0]:.2f} km")
+        print(f"Sector 2 size: {result['sector_sizes'][1]:.2f} km")
+        print(f"Sector 3 size: {result['sector_sizes'][2]:.2f} km")
+        print(f"Number of straights: {result['straight_count']}")
+        print(f"Number of turns: {result['turn_count']}")
+        
+        # Save sequence to CSV
+        sequence_file_path = file_path.rsplit('.', 1)[0] + '_seq.csv'
+        save_sequence_to_csv(result['sequence'], sequence_file_path)
+        print(f"\nTrack sequence saved to: {sequence_file_path}")
 
 def main():
     current_dir = os.path.dirname(os.path.abspath(__file__))
