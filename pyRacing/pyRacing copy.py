@@ -1,97 +1,104 @@
 import os
 import time
-import csv
-from typing import List, Tuple
+
+import random
 
 class Car:
-    def __init__(self, symbol: str):
+    def __init__(self, symbol, cc_maxSpd, cc_accel, cc_dragC, cc_downC, cc_cornr):
         self.symbol = symbol
-        self.position = (0, 0)  # (x, y) coordinates
-        self.lap = 0
+        self.cc_maxSpd = cc_maxSpd
+        self.cc_accel = cc_accel
+        self.cc_dragC = cc_dragC
+        self.cc_downC = cc_downC
+        self.cc_cornr = cc_cornr
+        self.position = 21  # Default position
+        self.speed = 0  # Current speed in km/h
 
-    def move(self, new_position: Tuple[int, int]):
-        self.position = new_position
+    def __str__(self):
+        return (f"Car {self.symbol}: "
+                f"Max Speed: {self.cc_maxSpd}, "
+                f"Acceleration: {self.cc_accel}, "
+                f"Drag Coefficient: {self.cc_dragC}, "
+                f"Downforce Coefficient: {self.cc_downC}, "
+                f"Cornering Coefficient: {self.cc_cornr}, "
+                f"Position: {self.position}, "
+                f"Current Speed: {self.speed:.2f} km/h")
 
-class Track:
-    def __init__(self, layout: List[str]):
-        self.layout = layout
-        self.start_position = self.find_start_position()
-        self.cars = [
-            Car('A'), Car('B'), Car('C'), Car('D'), Car('E'),
-            Car('F'), Car('G'), Car('H'), Car('I'), Car('J'),
-            Car('K'), Car('L'), Car('M'), Car('N')
-        ]
-        self.place_cars_at_start()
+    def update_speed_turn(self):
+        self.speed = self.speed * (0.4 + (self.cc_cornr / 200) + (self.cc_downC / 2000))
 
-    def find_start_position(self) -> Tuple[int, int]:
-        for y, row in enumerate(self.layout):
-            if 'S' in row:
-                return (row.index('S'), y)
-        # If 'S' is not found, use the first '#' character as the start position
-        for y, row in enumerate(self.layout):
-            if '#' in row:
-                return (row.index('#'), y)
-        raise ValueError("No valid start position found in track layout")
+    def update_speed_straight(self, random_factor):
+        new_speed = (self.speed + 
+                     0.2 * random_factor * (self.cc_downC + self.cc_dragC - self.cc_accel) + 
+                     (self.cc_accel / 2.5) - 
+                     self.speed * (1 - (self.cc_dragC / 500)) * (0.10 + 0.31 * ((self.speed**0.5 - 100) / 1500)) - 
+                     self.speed * (self.cc_downC / 5000))
+        self.speed = min(new_speed, self.cc_maxSpd)  # Ensure speed doesn't exceed max speed
 
-    def place_cars_at_start(self):
-        for car in self.cars:
-            car.position = self.start_position
+    def move(self, is_turning, random_factor):
+        if is_turning:
+            self.update_speed_turn()
+        else:
+            self.update_speed_straight(random_factor)
+        # Update position logic would go here
 
-    def render(self):
-        os.system('cls' if os.name == 'nt' else 'clear')
-        rendered_layout = self.layout.copy()
-        
-        # Place cars on the track
-        for car in self.cars:
-            x, y = car.position
-            row = list(rendered_layout[y])
-            row[x] = car.symbol
-            rendered_layout[y] = ''.join(row)
-        
-        # Print the rendered track
-        for line in rendered_layout:
-            print(line)
-        
-        # Print car information
-        print("\nCar Positions:")
-        for car in self.cars:
-            print(f"{car.symbol}: Lap {car.lap}, Position {car.position}")
+# Create 20 cars with random attributes
+cars = []
+for i in range(20):
+    car = Car(
+        symbol=chr(65 + i),  # A, B, C, ...
+        cc_maxSpd=random.randint(300, 350),
+        cc_accel=random.randint(1, 100),
+        cc_dragC=random.randint(1, 100),
+        cc_downC=random.randint(1, 100),
+        cc_cornr=random.randint(1, 100)
+    )
+    cars.append(car)
 
-def load_track(file_path: str) -> List[str]:
-    with open(file_path, 'r', newline='') as file:
-        reader = csv.reader(file)
-        track_lines = [','.join(row).replace(',', '') for row in reader if row]
-    
-    # Debugging: Print the loaded track
-    print(f"Loaded track layout ({len(track_lines)} lines):")
-    for i, line in enumerate(track_lines):
-        print(f"{i:2d}: {line}")
-    print("End of track layout")
-    
+# Example of moving a car
+for car in cars:
+    is_turning = random.choice([True, False])  # This would be determined by your track logic
+    random_factor = random.uniform(0, 0.5)
+    car.move(is_turning, random_factor)
+    print(car)
+
+# Function to load and display the track from the CSV file
+def load_track(file_path):
+    with open(file_path, 'r') as file:
+        # Read all lines from the file and remove commas from each line
+        track_lines = [line.rstrip().replace(',', '') for line in file.readlines()]  # Remove trailing newlines and commas
     return track_lines
 
+# Function to render the track
+def render_track(file_path):
+    os.system('cls' if os.name == 'nt' else 'clear')
+    track_lines = load_track(file_path)
+    for line in track_lines:
+        print(line)
+    time.sleep(1)  # Pause to simulate real-time rendering
+
+# Main function to handle user input and loading the correct track file
 def main():
+    # Get the directory where the Python script is running
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    filename = input("Enter the track filename (press Enter for 'track.csv'): ").strip() or 'track.csv'
+
+    # Prompt the user for a filename
+    filename = input("Enter the track filename (press Enter for 'track.csv'): ").strip()
+
+    # Default to 'track.csv' if the user presses Enter without input
+    if not filename:
+        filename = 'track.csv'
+    
+    # Construct the file path
     file_path = os.path.join(current_dir, filename)
 
+    # Check if the file exists before attempting to load it
     if os.path.exists(file_path):
-        try:
-            track_layout = load_track(file_path)
-            if not track_layout:
-                raise ValueError("The track file is empty or contains no valid data.")
-            track = Track(track_layout)
-            
-            # Simulate a few rendering cycles
-            for _ in range(5):
-                track.render()
-                time.sleep(1)
-        except Exception as e:
-            print(f"An error occurred: {e}")
-            print("Please check the contents of your track file and ensure it's formatted correctly.")
+        render_track(file_path)
     else:
         print(f"Error: The file '{filename}' does not exist in the current directory.")
+        time.sleep(10)
 
+# Call the main function to start the program
 if __name__ == "__main__":
     main()
-    
