@@ -1,1 +1,0 @@
-Date,Client/Category/Study,Hours,Percentage,Suggested Time Window
