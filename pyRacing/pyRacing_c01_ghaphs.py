@@ -4,7 +4,7 @@ import tkinter as tk
 from tkinter import ttk
 
 def straight_formula(current_speed, cc_accel, cc_dragc, cc_downc):
-    random_factor = random.random() * 0.5
+    random_factor = random.random() * 1.2
     new_speed = (current_speed + 0.2 * random_factor * (cc_downc + cc_dragc - cc_accel) +
                  (cc_accel / 2.5) - current_speed * (1 - (cc_dragc / 500)) *
                  (0.10 + 0.31 * ((math.sqrt(current_speed) - 100) / 1500)) -

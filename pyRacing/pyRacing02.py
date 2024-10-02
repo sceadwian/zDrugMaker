@@ -13,6 +13,7 @@ class Car:
         self.cc_cornr = cc_cornr
         self.position = 21  # Default position
         self.speed = 0  # Current speed in km/h
+        self.lap = 0
 
     def __str__(self):
         return (f"Car {self.symbol}: "
