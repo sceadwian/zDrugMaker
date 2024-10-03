@@ -1,0 +1,28 @@
+Race Results
+============
+
+Date: 2024-10-03 01:13:21
+Track: track_3.csv
+
+Pos | Car | Driver                | Best Lap   | Total Time
+----+-----+----------------------+------------+------------
+  1 | GUY | Guy Lorcaserin       | 72.43 s    | 371.54 s  
+  2 | JOJ | Johanna Jojo         | 73.97 s    | 377.24 s  
+  3 | ZOA | Zoah Sceadwian       | 76.44 s    | 387.47 s  
+  4 | SHT | Sero Tonin           | 81.80 s    | 419.09 s  
+  5 | MIN | Yuki Minato          | 83.20 s    | 421.97 s  
+  6 | VOV | Pai Vovo             | 85.60 s    | 426.90 s  
+  7 | VOH | Marta Vovoh          | 84.85 s    | 432.50 s  
+  8 | DOP | Dopa Mina            | 84.41 s    | 437.57 s  
+  9 | ATH | Fifi Athena          | 86.34 s    | 441.71 s  
+ 10 | ELT | Elliot Sweenieks     | 87.67 s    | 446.73 s  
+ 11 | MED | Vah Medoh            | 89.53 s    | 453.53 s  
+ 12 | BTZ | Cordelius Botzinger  | 90.58 s    | 457.70 s  
+ 13 | RUA | Vah Ruta             | 90.19 s    | 461.05 s  
+ 14 | SCH | Heidel Schatten      | 94.29 s    | 475.63 s  
+ 15 | ALC | Alice Seraphina      | 96.14 s    | 483.63 s  
+ 16 | BAH | Bah Ocha             | 95.84 s    | 493.29 s  
+ 17 | SPD | Speedy Gonzalez      | 98.73 s    | 495.96 s  
+ 18 | VAN | Evander Van          | 97.15 s    | 497.10 s  
+ 19 | TON | Tony Figate          | 100.27 s   | 509.39 s  
+ 20 | DIK | Sain Dicklass        | 101.66 s   | 521.18 s  

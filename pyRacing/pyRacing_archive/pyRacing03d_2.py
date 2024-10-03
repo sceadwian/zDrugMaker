@@ -1,7 +1,7 @@
 #version 3b fixed the simulation a bit. some minor tweaks to prevent cars from halting.
 #version 3c added more to the reporting of the race.
-#version 3d Added new attributes + load driver attributes + fixed reporting position to txt
-
+#version 3d Added new attributes + load driver attributes + fixed reporting position to txt 
+#version 3e overtaking + 
 import os
 import time
 import random
@@ -32,7 +32,6 @@ class Car:
         self.current_lap_start_time = 0
         self.finished = False
         self.total_race_time = float('inf')  # Initialize with infinity
-        self.finish_position = 0
 
     def update_speed_turn(self):
         self.speed = self.speed * (0.4 + (self.cc_cornr / 200) + (self.cc_downC / 2000))
@@ -101,15 +100,8 @@ def render_race_progress(cars, track_length, display_width=80):
     for i, car in enumerate(sorted_cars, 1):
         progress = int((car.distance / track_length) * display_width)
         best_lap = f"{car.best_lap_time:.2f} s" if car.best_lap_time != float('inf') else "N/A"
-        
-        if car.finished:
-            # Create a "bouncing" effect for finished cars
-            bounce_pos = int(time.time() * 5) % display_width
-            line = " " * bounce_pos + car.symbol + " " * (display_width - bounce_pos - 1)
-        else:
-            line = "=" * progress + " " * (display_width - progress)
-        
-        print(f"{i:2d}. {car.symbol} |{line}| Lap {car.laps_completed + 1} - Best Lap: {best_lap}")
+        line = f"{i:2d}. {car.symbol} |" + "=" * progress + " " * (display_width - progress) + f"| Lap {car.laps_completed + 1} - Best Lap: {best_lap}"
+        print(line)
     
     print("\nCar Details:")
     for i, car in enumerate(sorted_cars, 1):
@@ -124,36 +116,30 @@ def simulate_race(track_sequence, cars, num_laps, time_step=0.1):
     for car in cars:
         car.current_lap_start_time = start_time
     
-    finish_position = 1
     while any(not car.finished for car in cars):
         current_time = time.time() - start_time
         for car in cars:
             if not car.finished:
                 car.move(track_sequence, track_length, time_step, current_time, num_laps)
-                if car.finished and car.finish_position == 0:
-                    car.finish_position = finish_position
-                    finish_position += 1
         
         render_race_progress(cars, track_length)
 
-def write_race_results(cars, filename, track_length, track_name):
-    # Sort cars by their finish position (finished cars first, then by time for unfinished)
-    sorted_cars = sorted(cars, key=lambda car: (car.finish_position if car.finished else float('inf'), car.total_race_time))
+def write_race_results(cars, filename, track_length):
+    # Sort cars by their total race time (finished cars first, then by time)
+    sorted_cars = sorted(cars, key=lambda car: (not car.finished, car.total_race_time))
     
     with open(filename, 'w') as f:
         f.write("Race Results\n")
         f.write("============\n\n")
-        f.write(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-        f.write(f"Track: {track_name}\n\n")
+        f.write(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
         f.write("Pos | Car | Driver                | Best Lap   | Total Time\n")
         f.write("----+-----+----------------------+------------+------------\n")
         
-        for car in sorted_cars:
+        for i, car in enumerate(sorted_cars, 1):
             best_lap = f"{car.best_lap_time:.2f} s" if car.best_lap_time != float('inf') else "N/A"
             total_time = f"{car.total_race_time:.2f} s" if car.finished else "DNF"
             driver_name = f"{car.first_name} {car.last_name}"
-            f.write(f"{car.finish_position:3d} | {car.symbol:3s} | {driver_name:20s} | {best_lap:10s} | {total_time:10s}\n")
-
+            f.write(f"{i:3d} | {car.symbol:3s} | {driver_name:20s} | {best_lap:10s} | {total_time:10s}\n")
 
 def load_drivers(file_path):
     cars = []
@@ -205,7 +191,7 @@ def main():
 
     # Write race results to a log file
     log_filename = f"race_results_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
-    write_race_results(cars, os.path.join(current_dir, log_filename), track_length, track_filename)
+    write_race_results(cars, os.path.join(current_dir, log_filename), track_length)
     print(f"\nRace results have been written to {log_filename}")
 
 if __name__ == "__main__":
