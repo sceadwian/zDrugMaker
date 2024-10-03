@@ -1,0 +1,27 @@
+Race Results
+============
+
+Date: 2024-10-02 22:50:25
+
+Pos | Car | Driver                | Best Lap   | Total Time
+----+-----+----------------------+------------+------------
+  1 | SPD | Speedy Gonzalez      | 9.44 s     | 48.22 s   
+  2 | DIK | Sain Dicklass        | 10.06 s    | 52.52 s   
+  3 | SHT | Sero Tonin           | 8.97 s     | 46.36 s   
+  4 | DOP | Dopa Mina            | 9.44 s     | 47.52 s   
+  5 | GUY | Guy Lorcaserin       | 8.96 s     | 45.66 s   
+  6 | TON | Tony Figate          | 10.11 s    | 52.52 s   
+  7 | ELT | Elliot Sweenieks     | 9.30 s     | 47.05 s   
+  8 | ALC | Alice Seraphina      | 9.66 s     | 49.23 s   
+  9 | JOJ | Johanna Jojo         | 8.78 s     | 44.66 s   
+ 10 | ZOA | Zoah Sceadwian       | 8.84 s     | 45.55 s   
+ 11 | EVN | Evander Strongfeather | 9.99 s     | 51.12 s   
+ 12 | ATH | Fifi Athena          | 8.54 s     | 44.54 s   
+ 13 | VOH | Marta Vovoh          | 9.62 s     | 49.58 s   
+ 14 | VOV | Pai Vovo             | 9.62 s     | 48.78 s   
+ 15 | BAH | Bah Ocha             | 10.67 s    | 53.33 s   
+ 16 | MIN | Yuki Minato          | 8.60 s     | 44.76 s   
+ 17 | SCH | Heidel Schatten      | 9.87 s     | 50.29 s   
+ 18 | BTZ | Cordelius Botzinger  | 9.41 s     | 47.86 s   
+ 19 | Rua | Vah Ruta             | 9.39 s     | 49.58 s   
+ 20 | MED | Vah Medoh            | 9.52 s     | 48.66 s   
