@@ -3,7 +3,6 @@
 #version 3d Added new attributes + load driver attributes + fixed reporting position to txt
 #version 3e+3f overtaking + 3f colour
 #version 3g events
-
 import os
 import time
 import random
@@ -20,7 +19,6 @@ class Colors:
     MAGENTA = '\033[95m'
     CYAN = '\033[96m'
     WHITE = '\033[97m'
-
 
 class Car:
     def __init__(self, first_name, last_name, symbol, cc_maxSpd, cc_accel, cc_dragC, cc_downC, cc_cornr, cc_ovrtk, cc_const, cc_defnd, cc_stam):
@@ -51,6 +49,10 @@ class Car:
         self.overtake_boost = 0
         self.overtake_penalty = 0
         self.overtake_cooldown = 0
+        # New attributes for random events
+        self.current_event = None
+        self.event_duration = 0
+        self.event_effect = 0
 
     def update_speed_turn(self):
         self.speed = self.speed * (0.4 + (self.cc_cornr / 200) + (self.cc_downC / 2000))
@@ -73,17 +75,62 @@ class Car:
             self.speed -= 20
             self.overtake_penalty -= 1
 
+    def check_for_random_event(self, is_turning):
+        if self.current_event:
+            self.event_duration -= 1
+            if self.event_duration <= 0:
+                self.current_event = None
+                self.event_effect = 0
+            return
+
+        # Base probability for an event to occur (adjust as needed)
+        base_prob = 0.005  # This gives roughly one event every 2-3 laps for 20 drivers
+        
+        # Modify probability based on consistency (lower consistency increases probability)
+        event_prob = base_prob * (1 + (100 - self.cc_const) / 100)
+
+        if random.random() < event_prob:
+            self.trigger_random_event(is_turning)
+
+    def trigger_random_event(self, is_turning):
+        events = [
+            ("Lock up", lambda: is_turning and random.random() < 0.01, -30, 5),
+            ("Handling malfunction", lambda: random.random() < 0.02, -5, 40),
+            ("Throttle malfunction", lambda: not is_turning and random.random() < 0.03, -40, 20),
+            ("Electrical reset", lambda: self.speed > 300 and random.random() < 0.02, -150, 17),
+            ("Fuel flow issue", lambda: self.speed < 150 and random.random() < 0.01, -5, 100),
+            ("Inspired", lambda: random.random() < 0.05, 33, 15),
+            (" --- GOD MODE !!!!!!!! --- ", lambda: 110 < self.speed < 124 and random.random() < 0.01, 69, 26)
+        ]
+
+        possible_events = [event for event in events if event[1]()]
+        if possible_events:
+            event = random.choice(possible_events)
+            self.current_event = event[0]
+            self.event_effect = event[2]
+            self.event_duration = event[3]
+
     def move(self, track_sequence, track_length, time_step, current_time, num_laps, cars):
         if not self.finished:
             current_tile_index = int(self.distance / 20) % len(track_sequence)
             current_tile = track_sequence[current_tile_index]
             is_turning = current_tile == 'U'
         
+            # Check for random events
+            self.check_for_random_event(is_turning)
+
             if is_turning:
                 self.update_speed_turn()
             else:
                 self.update_speed_straight(random.uniform(0.8, 1.2))
+
+            # Apply event effect
+            if self.current_event:
+                self.speed += self.event_effect
         
+            # Ensure speed doesn't go below 0
+            self.speed = max(0, self.speed)
+
             # Calculate distance moved in this time step
             distance_moved = (self.speed * 1000 / 3600) * time_step
             self.distance += distance_moved
@@ -169,6 +216,8 @@ def render_race_progress(cars, track_length, display_width=80):
             status = Colors.RED + " [BLOCKED]" + Colors.RESET
         elif car.overtake_cooldown > 0:
             status = Colors.MAGENTA + f" [COOLDOWN: {car.overtake_cooldown}]" + Colors.RESET
+        elif car.current_event:
+            status = Colors.BLUE + f" [{car.current_event.upper()}]" + Colors.RESET
         
         print(f"{Colors.WHITE}{i:2d}. {Colors.BLUE}{car.symbol} {Colors.WHITE}|{line}| Lap {car.laps_completed + 1} - Best Lap: {best_lap}{status}")
     
