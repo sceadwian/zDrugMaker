@@ -1,0 +1,28 @@
+Race Results
+============
+
+Date: 2024-10-06 01:42:22
+Track: track_1.csv
+
+Pos | Car | Driver                | Best Lap   | Total Time
+----+-----+----------------------+------------+------------
+  1 | ATH | Fifi Athena          | 82.88 s    | 450.40 s  
+  2 | ZOA | Zoah Sceadwian       | 83.51 s    | 460.78 s  
+  3 | GUY | Guy Lorcaserin       | 85.64 s    | 472.76 s  
+  4 | LUK | Lukasz Dlugosz       | 87.79 s    | 483.35 s  
+  5 | MED | Vah Medoh            | 92.07 s    | 494.79 s  
+  6 | DOP | Dopa Mine            | 94.42 s    | 514.24 s  
+  7 | DON | Don Trump            | 98.27 s    | 529.75 s  
+  8 | ELT | Elliot Sweenieks     | 106.07 s   | 547.51 s  
+  9 | RUA | Vah Ruta             | 105.00 s   | 557.44 s  
+ 10 | SCH | Heidel Schatten      | 106.91 s   | 560.01 s  
+ 11 | BTZ | Cordelius Botzinger  | 106.81 s   | 562.35 s  
+ 12 | PUT | Vlad Putin           | 110.76 s   | 572.39 s  
+ 13 | SHT | Sero Tony            | 110.12 s   | 576.56 s  
+ 14 | JOJ | Johanna Jojo         | 108.74 s   | 584.35 s  
+ 15 | VOV | Pai Vovo             | 110.76 s   | 585.63 s  
+ 16 | DIK | Sain Dicklass        | 109.58 s   | 588.84 s  
+ 17 | TON | Tony Figate          | 114.13 s   | 600.69 s  
+ 18 | ADR | Adri Nelline         | 109.80 s   | 601.44 s  
+ 19 | SPD | Speedy Gonzalez      | 116.26 s   | 602.93 s  
+ 20 | BAH | Bah Ocha             | 111.72 s   | 602.93 s  

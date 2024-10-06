@@ -1,0 +1,28 @@
+Race Results
+============
+
+Date: 2024-10-06 02:22:20
+Track: track_1.csv
+
+Pos | Car | Driver                | Best Lap   | Total Time
+----+-----+----------------------+------------+------------
+  1 | LUK | Lukasz Dlugosz       | 75.70 s    | 829.05 s  
+  2 | ZOA | Zoah Sceadwian       | 88.18 s    | 869.80 s  
+  3 | DOP | Dopa Mine            | 93.33 s    | 924.79 s  
+  4 | DON | Don Trump            | 95.89 s    | 927.47 s  
+  5 | ELT | Elliot Sweenieks     | 98.15 s    | 934.02 s  
+  6 | GUY | Guy Lorcaserin       | 105.01 s   | 943.55 s  
+  7 | ATH | Fifi Athena          | 94.82 s    | 948.16 s  
+  8 | ADR | Adri Nelline         | 102.32 s   | 967.36 s  
+  9 | BTZ | Cordelius Botzinger  | 102.45 s   | 970.26 s  
+ 10 | SPD | Speedy Gonzalez      | 104.59 s   | 989.68 s  
+ 11 | SHT | Sero Tony            | 104.48 s   | 992.03 s  
+ 12 | TON | Tony Figate          | 107.50 s   | 1003.79 s 
+ 13 | PUT | Vlad Putin           | 114.15 s   | 1005.18 s 
+ 14 | JOJ | Johanna Jojo         | 109.73 s   | 1006.68 s 
+ 15 | VOV | Pai Vovo             | 105.88 s   | 1008.61 s 
+ 16 | SCH | Heidel Schatten      | 108.04 s   | 1024.28 s 
+ 17 | DIK | Sain Dicklass        | 110.72 s   | 1026.01 s 
+ 18 | BAH | Bah Ocha             | 111.99 s   | 1039.80 s 
+ 19 | MED | Vah Medoh            | 109.95 s   | 1060.74 s 
+ 20 | RUA | Vah Ruta             | 112.30 s   | 1069.04 s 
