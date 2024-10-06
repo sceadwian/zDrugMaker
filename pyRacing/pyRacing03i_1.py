@@ -1,13 +1,9 @@
-#version 3b fixed the simulation a bit. some minor tweaks to prevent cars from halting.
-#version 3c added more to the reporting of the race.
-#version 3d Added new attributes + load driver attributes + fixed reporting position to txt
-#version 3e+3f overtaking + 3f colour
-#version 3g events
 import os
 import time
 import random
 import csv
 from datetime import datetime
+from collections import deque
 
 # ANSI color codes
 class Colors:
@@ -39,7 +35,7 @@ class Car:
         self.distance = 0
         self.speed = 0
         self.laps_completed = 0
-        self.lap_times = []
+        self.lap_times = deque(maxlen=10)  # Store only the last 10 lap times
         self.best_lap_time = float('inf')
         self.current_lap_start_time = 0
         self.finished = False
@@ -53,16 +49,26 @@ class Car:
         self.current_event = None
         self.event_duration = 0
         self.event_effect = 0
+        self.stamina_pool = 100  # Start with 100% stamina
+        self.distance_since_last_stamina_decrease = 0
+
+    def update_stamina(self, distance_moved):
+        self.distance_since_last_stamina_decrease += distance_moved
+        if self.distance_since_last_stamina_decrease >= 3000:  # changed from 200 track segments * 20 meters per segment = 4000 for 10 stam
+            self.stamina_pool = max(0, self.stamina_pool - 5)
+            self.distance_since_last_stamina_decrease = 0
 
     def update_speed_turn(self):
-        self.speed = self.speed * (0.6 + (self.cc_cornr / 200) + (self.cc_downC / 2000))
+        stamina_factor = self.stamina_pool / 100
+        self.speed = self.speed * (0.4 + (self.cc_cornr / 200) * stamina_factor + (self.cc_downC / 2000))
         if self.speed < 50:
             self.speed = 50
 
     def update_speed_straight(self, random_factor):
+        stamina_factor = self.stamina_pool / 100
         new_speed = (self.speed + 
-                     0.2 * random_factor * (self.cc_downC + self.cc_dragC - self.cc_accel) + 
-                     (self.cc_accel / 2) - 
+                     0.2 * random_factor * (self.cc_downC + self.cc_dragC - self.cc_accel * stamina_factor) + 
+                     (self.cc_accel * stamina_factor / 2) - 
                      self.speed * (1 - (self.cc_dragC / 500)) * (0.10 + 0.31 * ((self.speed**0.5 - 100) / 1500)) - 
                      self.speed * (self.cc_downC / 5000))
         self.speed = min(new_speed, self.cc_maxSpd)
@@ -74,6 +80,12 @@ class Car:
         elif self.overtake_penalty > 0:
             self.speed -= 20
             self.overtake_penalty -= 1
+            
+            # Calculate additional stamina penalty based on cc_stam
+            additional_penalty = 0.001 * (1 - self.cc_stam / 100)  # Up to 5% additional penalty
+            total_penalty = 0.001 + additional_penalty  # 0.5% base penalty + additional penalty
+            
+            self.stamina_pool = max(0, self.stamina_pool - total_penalty * 100)  # Convert to percentage and deduct
 
     def check_for_random_event(self, is_turning):
         if self.current_event:
@@ -94,13 +106,13 @@ class Car:
 
     def trigger_random_event(self, is_turning):
         events = [
-            ("Lock up", lambda: is_turning and random.random() < 0.3, -30, 3),
-            ("Handling malfunction", lambda: True, -5, 30),
-            ("Throttle malfunction", lambda: not is_turning and random.random() < 0.3, -40, 5),
-            ("Electrical reset", lambda: self.speed > 300 and random.random() < 0.2, -150, 3),
-            ("Fuel flow issue", lambda: self.speed < 150 and random.random() < 0.2, -5, 100),
-            ("Inspired", lambda: random.random() < 0.1, 30, 10),
-            ("God mode", lambda: 110 < self.speed < 124 and random.random() < 0.05, 69, 26)
+            ("Lock up", lambda: is_turning and random.random() < 0.01, -30, 5),
+            ("Handling malfunction", lambda: random.random() < 0.02, -5, 40),
+            ("Throttle malfunction", lambda: not is_turning and random.random() < 0.03, -40, 20),
+            ("Electrical reset", lambda: self.speed > 300 and random.random() < 0.02, -150, 17),
+            ("Fuel flow issue", lambda: self.speed < 150 and random.random() < 0.01, -5, 100),
+            ("Inspired", lambda: random.random() < 0.05, 33, 15),
+            (" --- GOD MODE !!!!!!!! --- ", lambda: 110 < self.speed < 124 and random.random() < 0.01, 69, 26)
         ]
 
         possible_events = [event for event in events if event[1]()]
@@ -116,7 +128,6 @@ class Car:
             current_tile = track_sequence[current_tile_index]
             is_turning = current_tile == 'U'
         
-            # Check for random events
             self.check_for_random_event(is_turning)
 
             if is_turning:
@@ -124,32 +135,28 @@ class Car:
             else:
                 self.update_speed_straight(random.uniform(0.8, 1.2))
 
-            # Apply event effect
             if self.current_event:
                 self.speed += self.event_effect
         
-            # Ensure speed doesn't go below 0
             self.speed = max(0, self.speed)
 
-            # Calculate distance moved in this time step
             distance_moved = (self.speed * 1000 / 3600) * time_step
             self.distance += distance_moved
+            
+            self.update_stamina(distance_moved)
         
-            # Check for overtaking
             self.check_overtaking(cars)
 
-            # Update overtaking cooldown
             if self.overtake_cooldown > 0:
                 self.overtake_cooldown -= 1
 
-            # Check if a lap is completed
             if self.distance >= track_length:
                 self.laps_completed += 1
                 self.distance %= track_length
         
                 lap_time = current_time - self.current_lap_start_time
                 if lap_time > 0:
-                    self.lap_times.append(lap_time)
+                    self.lap_times.appendleft(lap_time)  # Add new lap time to the beginning
                     if lap_time < self.best_lap_time:
                         self.best_lap_time = lap_time
         
@@ -183,7 +190,7 @@ class Car:
                         self.overtake_penalty = 20  # Doubled from 10
 
                     # Set cooldown
-                    self.overtake_cooldown = 30
+                    self.overtake_cooldown = 50
                     break  # Only attempt one overtake per move
 
 def load_track_visual(file_path):
@@ -202,6 +209,7 @@ def render_race_progress(cars, track_length, display_width=80):
     for i, car in enumerate(sorted_cars, 1):
         progress = int((car.distance / track_length) * display_width)
         best_lap = f"{car.best_lap_time:.2f} s" if car.best_lap_time != float('inf') else "N/A"
+        last_lap = f"{car.lap_times[0]:.2f} s" if car.lap_times else "N/A"
         
         if car.finished:
             bounce_pos = int(time.time() * 5) % display_width
@@ -219,11 +227,14 @@ def render_race_progress(cars, track_length, display_width=80):
         elif car.current_event:
             status = Colors.BLUE + f" [{car.current_event.upper()}]" + Colors.RESET
         
-        print(f"{Colors.WHITE}{i:2d}. {Colors.BLUE}{car.symbol} {Colors.WHITE}|{line}| Lap {car.laps_completed + 1} - Best Lap: {best_lap}{status}")
+        stamina_color = Colors.GREEN if car.stamina_pool > 66 else Colors.YELLOW if car.stamina_pool > 33 else Colors.RED
+        print(f"{Colors.WHITE}{i:2d}. {Colors.BLUE}{car.symbol} {Colors.WHITE}|{line}| Lap {car.laps_completed + 1} - Best: {best_lap} - Last: {last_lap} - Stamina: {stamina_color}{car.stamina_pool:.1f}%{Colors.RESET}{status}")
     
     print(f"\n{Colors.WHITE}Car Details:")
     for i, car in enumerate(sorted_cars, 1):
-        print(f"{Colors.WHITE}{i:2d}. {Colors.BLUE}{car.symbol}: {Colors.WHITE}Distance: {Colors.YELLOW}{car.distance:.2f} m, {Colors.WHITE}Speed: {Colors.GREEN}{car.speed:.2f} km/h")
+        print(f"{Colors.WHITE}{i:2d}. {Colors.BLUE}{car.symbol}: {Colors.WHITE}{car.first_name} {car.last_name}")
+        print(f"   Distance: {Colors.YELLOW}{car.distance:.2f} m, {Colors.WHITE}Speed: {Colors.GREEN}{car.speed:.2f} km/h")
+        print(f"   Last 10 laps: {', '.join([f'{lap:.2f}s' for lap in car.lap_times])}")
     
     time.sleep(0.1)
 
@@ -262,6 +273,7 @@ def write_race_results(cars, filename, track_length, track_name):
             total_time = f"{car.total_race_time:.2f} s" if car.finished else "DNF"
             driver_name = f"{car.first_name} {car.last_name}"
             f.write(f"{car.finish_position:3d} | {car.symbol:3s} | {driver_name:20s} | {best_lap:10s} | {total_time:10s}\n")
+
 
 def load_drivers(file_path):
     cars = []
@@ -304,7 +316,7 @@ def main():
     drivers_filename = 'drivers.csv'
     cars = load_drivers(os.path.join(current_dir, drivers_filename))
 
-    simulate_race(track_sequence, cars, num_laps=5)
+    simulate_race(track_sequence, cars, num_laps=10)  # Increased to 10 laps for more data
 
     log_filename = f"race_results_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
     write_race_results(cars, os.path.join(current_dir, log_filename), track_length, track_filename)

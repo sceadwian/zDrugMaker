@@ -3,11 +3,15 @@
 #version 3d Added new attributes + load driver attributes + fixed reporting position to txt
 #version 3e+3f overtaking + 3f colour
 #version 3g events
+#version 3h performance pop up box
 import os
 import time
 import random
 import csv
 from datetime import datetime
+import tkinter as tk
+from tkinter import ttk
+
 
 # ANSI color codes
 class Colors:
@@ -55,7 +59,7 @@ class Car:
         self.event_effect = 0
 
     def update_speed_turn(self):
-        self.speed = self.speed * (0.6 + (self.cc_cornr / 200) + (self.cc_downC / 2000))
+        self.speed = self.speed * (0.4 + (self.cc_cornr / 200) + (self.cc_downC / 2000))
         if self.speed < 50:
             self.speed = 50
 
@@ -94,13 +98,13 @@ class Car:
 
     def trigger_random_event(self, is_turning):
         events = [
-            ("Lock up", lambda: is_turning and random.random() < 0.3, -30, 3),
-            ("Handling malfunction", lambda: True, -5, 30),
-            ("Throttle malfunction", lambda: not is_turning and random.random() < 0.3, -40, 5),
-            ("Electrical reset", lambda: self.speed > 300 and random.random() < 0.2, -150, 3),
-            ("Fuel flow issue", lambda: self.speed < 150 and random.random() < 0.2, -5, 100),
-            ("Inspired", lambda: random.random() < 0.1, 30, 10),
-            ("God mode", lambda: 110 < self.speed < 124 and random.random() < 0.05, 69, 26)
+            ("Lock up", lambda: is_turning and random.random() < 0.01, -30, 5),
+            ("Handling malfunction", lambda: random.random() < 0.02, -5, 40),
+            ("Throttle malfunction", lambda: not is_turning and random.random() < 0.03, -40, 20),
+            ("Electrical reset", lambda: self.speed > 300 and random.random() < 0.02, -150, 17),
+            ("Fuel flow issue", lambda: self.speed < 150 and random.random() < 0.01, -5, 100),
+            ("Inspired", lambda: random.random() < 0.05, 33, 15),
+            (" --- GOD MODE !!!!!!!! --- ", lambda: 110 < self.speed < 124 and random.random() < 0.01, 69, 26)
         ]
 
         possible_events = [event for event in events if event[1]()]
@@ -283,6 +287,153 @@ def load_drivers(file_path):
                 cc_stam=int(row[11])
             ))
     return cars
+class Graph(tk.Canvas):
+    def __init__(self, master, width, height, x_label, y_label, title):
+        super().__init__(master, width=width, height=height)
+        self.width = width
+        self.height = height
+        self.margin = 40
+        self.plot_width = self.width - 2 * self.margin
+        self.plot_height = self.height - 2 * self.margin
+
+        self.create_text(self.width // 2, 20, text=title)
+        self.create_text(self.width // 2, self.height - 10, text=x_label)
+        self.create_text(10, self.height // 2, text=y_label, angle=90)
+
+        self.plot_area = self.create_rectangle(
+            self.margin, self.margin,
+            self.width - self.margin, self.height - self.margin
+        )
+
+        self.lines = {}
+        self.max_points = 100
+        self.data = {}
+
+    def update_data(self, car, x, y):
+        if car not in self.data:
+            self.data[car] = {'x': [], 'y': []}
+        
+        self.data[car]['x'].append(x)
+        self.data[car]['y'].append(y)
+        
+        if len(self.data[car]['x']) > self.max_points:
+            self.data[car]['x'].pop(0)
+            self.data[car]['y'].pop(0)
+        
+        self.plot()
+
+    def plot(self):
+        if not self.data:
+            return
+
+        all_x = [x for car_data in self.data.values() for x in car_data['x']]
+        all_y = [y for car_data in self.data.values() for y in car_data['y']]
+
+        x_min, x_max = min(all_x), max(all_x)
+        y_min, y_max = min(all_y), max(all_y)
+
+        x_range = max(x_max - x_min, 1)
+        y_range = max(y_max - y_min, 1)
+
+        colors = ['red', 'blue', 'green', 'orange']
+
+        for line in self.lines.values():
+            self.delete(line)
+        self.lines.clear()
+
+        for i, (car, car_data) in enumerate(self.data.items()):
+            coords = []
+            for j in range(len(car_data['x'])):
+                x = self.margin + (car_data['x'][j] - x_min) / x_range * self.plot_width
+                y = self.height - self.margin - (car_data['y'][j] - y_min) / y_range * self.plot_height
+                coords.extend([x, y])
+
+            if len(coords) >= 4:
+                self.lines[car] = self.create_line(coords, fill=colors[i], width=2, smooth=True)
+
+class RaceGUI:
+    def __init__(self, master, cars):
+        self.master = master
+        self.cars = cars
+        self.master.title("Race Monitor")
+        self.master.geometry("800x700")
+
+        self.selected_cars = []
+        self.paused = False
+
+        # Create checkboxes for car selection
+        self.car_vars = {}
+        self.car_frame = ttk.Frame(self.master)
+        self.car_frame.pack(pady=10)
+        
+        for car in self.cars:
+            var = tk.BooleanVar()
+            ttk.Checkbutton(self.car_frame, text=f"{car.last_name}", variable=var, command=self.update_selected_cars).pack(side=tk.LEFT, padx=5)
+            self.car_vars[car] = var
+
+        # Create pause button
+        self.pause_button = ttk.Button(self.master, text="Pause", command=self.toggle_pause)
+        self.pause_button.pack(pady=5)
+
+        # Create graphs
+        self.speed_graph = Graph(self.master, 700, 300, "Time (s)", "Speed (km/h)", "Speed over Time")
+        self.speed_graph.pack(side=tk.TOP, pady=5)
+
+        self.distance_graph = Graph(self.master, 700, 300, "Time (s)", "Distance (m)", "Distance over Time")
+        self.distance_graph.pack(side=tk.TOP, pady=5)
+
+    def update_selected_cars(self):
+        self.selected_cars = [car for car, var in self.car_vars.items() if var.get()]
+        self.selected_cars = self.selected_cars[:4]  # Limit to 4 cars
+        
+        for car in self.car_vars:
+            if car not in self.selected_cars:
+                self.car_vars[car].set(False)
+        
+        self.speed_graph.data.clear()
+        self.distance_graph.data.clear()
+
+    def toggle_pause(self):
+        self.paused = not self.paused
+        self.pause_button.config(text="Resume" if self.paused else "Pause")
+
+    def update_plots(self):
+        if not self.paused:
+            current_time = time.time() - start_time
+            for car in self.selected_cars:
+                self.speed_graph.update_data(car, current_time, car.speed)
+                self.distance_graph.update_data(car, current_time, car.distance)
+
+def simulate_race(track_sequence, cars, num_laps, time_step=0.1, gui=None):
+    global start_time
+    track_length = len(track_sequence) * 20
+    start_time = time.time()
+    
+    for car in cars:
+        car.current_lap_start_time = start_time
+    
+    finish_position = 1
+    while any(not car.finished for car in cars):
+        if gui and gui.paused:
+            gui.master.update()
+            time.sleep(0.1)
+            continue
+
+        current_time = time.time() - start_time
+        for car in cars:
+            if not car.finished:
+                car.move(track_sequence, track_length, time_step, current_time, num_laps, cars)
+                if car.finished and car.finish_position == 0:
+                    car.finish_position = finish_position
+                    finish_position += 1
+        
+        render_race_progress(cars, track_length)
+        
+        if gui:
+            gui.update_plots()
+            gui.master.update()
+
+        time.sleep(time_step)
 
 def main():
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -304,7 +455,20 @@ def main():
     drivers_filename = 'drivers.csv'
     cars = load_drivers(os.path.join(current_dir, drivers_filename))
 
-    simulate_race(track_sequence, cars, num_laps=5)
+    # Create Tkinter window and RaceGUI instance
+    root = tk.Tk()
+    gui = RaceGUI(root, cars)
+
+    # Run the race simulation in a separate thread
+    import threading
+    race_thread = threading.Thread(target=simulate_race, args=(track_sequence, cars, 5, 0.1, gui))
+    race_thread.start()
+
+    # Start the Tkinter main loop
+    root.mainloop()
+
+    # Wait for the race thread to finish
+    race_thread.join()
 
     log_filename = f"race_results_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
     write_race_results(cars, os.path.join(current_dir, log_filename), track_length, track_filename)

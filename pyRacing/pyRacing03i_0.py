@@ -3,6 +3,10 @@
 #version 3d Added new attributes + load driver attributes + fixed reporting position to txt
 #version 3e+3f overtaking + 3f colour
 #version 3g events
+#version 3h performance pop up box + added 4 car comparissons)
+#version 3h performance pop up box
+#version 3h performance pop up box + added 4 car comparissons) - !!! dis implemented !!!!!  Maybe introduce later... I saved Claude prompt on EV
+#version 3i Stamina
 import os
 import time
 import random
@@ -53,16 +57,26 @@ class Car:
         self.current_event = None
         self.event_duration = 0
         self.event_effect = 0
+        self.stamina_pool = 100  # Start with 100% stamina
+        self.distance_since_last_stamina_decrease = 0
+
+    def update_stamina(self, distance_moved):
+        self.distance_since_last_stamina_decrease += distance_moved
+        if self.distance_since_last_stamina_decrease >= 3000:  # changed from 200 track segments * 20 meters per segment = 4000 for 10 stam
+            self.stamina_pool = max(0, self.stamina_pool - 5)
+            self.distance_since_last_stamina_decrease = 0
 
     def update_speed_turn(self):
-        self.speed = self.speed * (0.6 + (self.cc_cornr / 200) + (self.cc_downC / 2000))
+        stamina_factor = self.stamina_pool / 100
+        self.speed = self.speed * (0.4 + (self.cc_cornr / 200) * stamina_factor + (self.cc_downC / 2000))
         if self.speed < 50:
             self.speed = 50
 
     def update_speed_straight(self, random_factor):
+        stamina_factor = self.stamina_pool / 100
         new_speed = (self.speed + 
-                     0.2 * random_factor * (self.cc_downC + self.cc_dragC - self.cc_accel) + 
-                     (self.cc_accel / 2) - 
+                     0.2 * random_factor * (self.cc_downC + self.cc_dragC - self.cc_accel * stamina_factor) + 
+                     (self.cc_accel * stamina_factor / 2) - # next version changed this to 1.7
                      self.speed * (1 - (self.cc_dragC / 500)) * (0.10 + 0.31 * ((self.speed**0.5 - 100) / 1500)) - 
                      self.speed * (self.cc_downC / 5000))
         self.speed = min(new_speed, self.cc_maxSpd)
@@ -74,6 +88,12 @@ class Car:
         elif self.overtake_penalty > 0:
             self.speed -= 20
             self.overtake_penalty -= 1
+            
+            # Calculate additional stamina penalty based on cc_stam
+            additional_penalty = 0.001 * (1 - self.cc_stam / 100)  # Up to 5% additional penalty
+            total_penalty = 0.001 + additional_penalty  # 0.5% base penalty + additional penalty
+            
+            self.stamina_pool = max(0, self.stamina_pool - total_penalty * 100)  # Convert to percentage and deduct
 
     def check_for_random_event(self, is_turning):
         if self.current_event:
@@ -94,13 +114,13 @@ class Car:
 
     def trigger_random_event(self, is_turning):
         events = [
-            ("Lock up", lambda: is_turning and random.random() < 0.3, -30, 3),
-            ("Handling malfunction", lambda: True, -5, 30),
-            ("Throttle malfunction", lambda: not is_turning and random.random() < 0.3, -40, 5),
-            ("Electrical reset", lambda: self.speed > 300 and random.random() < 0.2, -150, 3),
-            ("Fuel flow issue", lambda: self.speed < 150 and random.random() < 0.2, -5, 100),
-            ("Inspired", lambda: random.random() < 0.1, 30, 10),
-            ("God mode", lambda: 110 < self.speed < 124 and random.random() < 0.05, 69, 26)
+            ("Lock up", lambda: is_turning and random.random() < 0.01, -30, 5),
+            ("Handling malfunction", lambda: random.random() < 0.02, -5, 40),
+            ("Throttle malfunction", lambda: not is_turning and random.random() < 0.03, -40, 20),
+            ("Electrical reset", lambda: self.speed > 300 and random.random() < 0.02, -150, 17),
+            ("Fuel flow issue", lambda: self.speed < 150 and random.random() < 0.01, -5, 100),
+            ("Inspired", lambda: random.random() < 0.05, 33, 15),
+            (" --- GOD MODE !!!!!!!! --- ", lambda: 110 < self.speed < 124 and random.random() < 0.01, 69, 26)
         ]
 
         possible_events = [event for event in events if event[1]()]
@@ -116,7 +136,6 @@ class Car:
             current_tile = track_sequence[current_tile_index]
             is_turning = current_tile == 'U'
         
-            # Check for random events
             self.check_for_random_event(is_turning)
 
             if is_turning:
@@ -124,25 +143,21 @@ class Car:
             else:
                 self.update_speed_straight(random.uniform(0.8, 1.2))
 
-            # Apply event effect
             if self.current_event:
                 self.speed += self.event_effect
         
-            # Ensure speed doesn't go below 0
             self.speed = max(0, self.speed)
 
-            # Calculate distance moved in this time step
             distance_moved = (self.speed * 1000 / 3600) * time_step
             self.distance += distance_moved
+            
+            self.update_stamina(distance_moved)
         
-            # Check for overtaking
             self.check_overtaking(cars)
 
-            # Update overtaking cooldown
             if self.overtake_cooldown > 0:
                 self.overtake_cooldown -= 1
 
-            # Check if a lap is completed
             if self.distance >= track_length:
                 self.laps_completed += 1
                 self.distance %= track_length
@@ -183,7 +198,7 @@ class Car:
                         self.overtake_penalty = 20  # Doubled from 10
 
                     # Set cooldown
-                    self.overtake_cooldown = 30
+                    self.overtake_cooldown = 50
                     break  # Only attempt one overtake per move
 
 def load_track_visual(file_path):
@@ -219,7 +234,8 @@ def render_race_progress(cars, track_length, display_width=80):
         elif car.current_event:
             status = Colors.BLUE + f" [{car.current_event.upper()}]" + Colors.RESET
         
-        print(f"{Colors.WHITE}{i:2d}. {Colors.BLUE}{car.symbol} {Colors.WHITE}|{line}| Lap {car.laps_completed + 1} - Best Lap: {best_lap}{status}")
+        stamina_color = Colors.GREEN if car.stamina_pool > 66 else Colors.YELLOW if car.stamina_pool > 33 else Colors.RED
+        print(f"{Colors.WHITE}{i:2d}. {Colors.BLUE}{car.symbol} {Colors.WHITE}|{line}| Lap {car.laps_completed + 1} - Best Lap: {best_lap} - Stamina: {stamina_color}{car.stamina_pool:.1f}%{Colors.RESET}{status}")
     
     print(f"\n{Colors.WHITE}Car Details:")
     for i, car in enumerate(sorted_cars, 1):

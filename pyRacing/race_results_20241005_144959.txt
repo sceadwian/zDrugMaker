@@ -1,0 +1,28 @@
+Race Results
+============
+
+Date: 2024-10-05 14:49:59
+Track: track_2.csv
+
+Pos | Car | Driver                | Best Lap   | Total Time
+----+-----+----------------------+------------+------------
+  1 | GUY | Guy Lorcaserin       | 86.16 s    | 470.39 s  
+  2 | DOP | Dopa Mina            | 93.94 s    | 493.04 s  
+  3 | VOH | Marta Vovoh          | 98.00 s    | 500.95 s  
+  4 | JOJ | Johanna Jojo         | 93.92 s    | 510.04 s  
+  5 | ZOA | Zoah Sceadwian       | 100.12 s   | 524.58 s  
+  6 | SCH | Heidel Schatten      | 101.61 s   | 534.09 s  
+  7 | DIK | Sain Dicklass        | 105.43 s   | 543.49 s  
+  8 | ALC | Alice Seraphina      | 105.96 s   | 548.41 s  
+  9 | SPD | Speedy Gonzalez      | 112.82 s   | 564.32 s  
+ 10 | ELT | Elliot Sweenieks     | 110.25 s   | 570.74 s  
+ 11 | SHT | Sero Tonin           | 111.10 s   | 580.49 s  
+ 12 | BAH | Bah Ocha             | 113.68 s   | 587.12 s  
+ 13 | VAN | Evander Van          | 113.07 s   | 589.36 s  
+ 14 | TON | Tony Figate          | 116.68 s   | 591.61 s  
+ 15 | MED | Vah Medoh            | 115.96 s   | 600.81 s  
+ 16 | RUA | Vah Ruta             | 117.67 s   | 607.12 s  
+ 17 | VOV | Pai Vovo             | 116.25 s   | 610.22 s  
+ 18 | BTZ | Cordelius Botzinger  | 117.14 s   | 610.54 s  
+ 19 | ATH | Fifi Athena          | 118.63 s   | 613.96 s  
+ 20 | MIN | Yuki Minato          | 118.74 s   | 624.22 s  

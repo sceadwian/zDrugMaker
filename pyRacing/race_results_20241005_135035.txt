@@ -1,0 +1,28 @@
+Race Results
+============
+
+Date: 2024-10-05 13:50:35
+Track: track_1.csv
+
+Pos | Car | Driver                | Best Lap   | Total Time
+----+-----+----------------------+------------+------------
+  1 | ZOA | Zoah Sceadwian       | 101.37 s   | 538.72 s  
+  2 | MIN | Yuki Minato          | 108.13 s   | 562.75 s  
+  3 | BTZ | Cordelius Botzinger  | 114.78 s   | 605.19 s  
+  4 | SPD | Speedy Gonzalez      | 115.42 s   | 607.86 s  
+  5 | SCH | Heidel Schatten      | 118.32 s   | 611.81 s  
+  6 | MED | Vah Medoh            | 118.64 s   | 626.15 s  
+  7 | VOH | Marta Vovoh          | 124.10 s   | 633.76 s  
+  8 | ALC | Alice Seraphina      | 129.45 s   | 649.35 s  
+  9 | JOJ | Johanna Jojo         | 127.95 s   | 667.61 s  
+ 10 | DOP | Dopa Mina            | 127.73 s   | 669.32 s  
+ 11 | VAN | Evander Van          | 129.59 s   | 669.75 s  
+ 12 | DIK | Sain Dicklass        | 127.95 s   | 670.81 s  
+ 13 | RUA | Vah Ruta             | 132.26 s   | 679.67 s  
+ 14 | TON | Tony Figate          | 136.76 s   | 700.71 s  
+ 15 | VOV | Pai Vovo             | 135.38 s   | 702.96 s  
+ 16 | GUY | Guy Lorcaserin       | 136.11 s   | 706.80 s  
+ 17 | BAH | Bah Ocha             | 137.84 s   | 710.43 s  
+ 18 | ATH | Fifi Athena          | 132.69 s   | 712.24 s  
+ 19 | SHT | Sero Tonin           | 138.80 s   | 718.33 s  
+ 20 | ELT | Elliot Sweenieks     | 136.75 s   | 720.36 s  

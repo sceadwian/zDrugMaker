@@ -1,0 +1,28 @@
+Race Results
+============
+
+Date: 2024-10-05 21:50:33
+Track: track_2.csv
+
+Pos | Car | Driver                | Best Lap   | Total Time
+----+-----+----------------------+------------+------------
+  1 | JOJ | Johanna Jojo         | 87.13 s    | 1120.62 s 
+  2 | BTZ | Cordelius Botzinger  | 98.16 s    | 1126.25 s 
+  3 | VOH | Marta Vovoh          | 94.58 s    | 1144.97 s 
+  4 | ZOA | Zoah Sceadwian       | 90.08 s    | 1147.16 s 
+  5 | GUY | Guy Lorcaserin       | 91.78 s    | 1155.14 s 
+  6 | SHT | Sero Tonin           | 107.59 s   | 1205.21 s 
+  7 | ALC | Alice Seraphina      | 105.38 s   | 1218.55 s 
+  8 | DOP | Dopa Mina            | 109.04 s   | 1220.30 s 
+  9 | MIN | Yuki Minato          | 104.16 s   | 1225.77 s 
+ 10 | SPD | Speedy Gonzalez      | 114.16 s   | 1232.13 s 
+ 11 | MED | Vah Medoh            | 109.35 s   | 1254.68 s 
+ 12 | SCH | Heidel Schatten      | 116.22 s   | 1261.21 s 
+ 13 | ATH | Fifi Athena          | 115.34 s   | 1271.71 s 
+ 14 | VOV | Pai Vovo             | 112.07 s   | 1275.64 s 
+ 15 | RUA | Vah Ruta             | 113.18 s   | 1284.78 s 
+ 16 | DIK | Sain Dicklass        | 118.73 s   | 1286.21 s 
+ 17 | VAN | Evander Van          | 119.27 s   | 1295.71 s 
+ 18 | ELT | Elliot Sweenieks     | 121.02 s   | 1307.59 s 
+ 19 | BAH | Bah Ocha             | 119.66 s   | 1325.73 s 
+ 20 | TON | Tony Figate          | 120.18 s   | 1342.76 s 

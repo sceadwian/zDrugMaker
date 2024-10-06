@@ -3,6 +3,11 @@
 #version 3d Added new attributes + load driver attributes + fixed reporting position to txt
 #version 3e+3f overtaking + 3f colour
 #version 3g events
+#version 3h performance pop up box + added 4 car comparissons)
+#version 3h performance pop up box
+#version 3h performance pop up box + added 4 car comparissons) - !!! dis implemented !!!!!  Maybe introduce later... I saved Claude prompt on EV
+#version 3i Stamina (03i_1 version was not used ... 10 lap with more output... there is a season tested with this version.)
+#v03i_0_1 - added pit stops + made cars a bit faster
 import os
 import time
 import random
@@ -55,7 +60,7 @@ class Car:
         self.event_effect = 0
 
     def update_speed_turn(self):
-        self.speed = self.speed * (0.4 + (self.cc_cornr / 200) + (self.cc_downC / 2000))
+        self.speed = self.speed * (0.6 + (self.cc_cornr / 200) + (self.cc_downC / 2000))
         if self.speed < 50:
             self.speed = 50
 
