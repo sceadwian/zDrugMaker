@@ -209,57 +209,78 @@ def report_hours_by_client_over_time(input_file, output_file):
 
     sorted_dates = sorted(dates)
     
+    # Create the date range for the new filename
+    if sorted_dates:
+        start_date_str = sorted_dates[0].strftime('%Y-%m-%d')
+        end_date_str = sorted_dates[-1].strftime('%Y-%m-%d')
+        new_output_file = f"{start_date_str}-{end_date_str}-function5output.csv"
+    else:
+        new_output_file = "no-dates-function5output.csv"
+
+    # Original output file
     with open(output_file, 'w', newline='') as out_file:
         csv_writer = csv.writer(out_file)
         csv_writer.writerow(['Date', 'Client/Category/Study', 'Hours', 'Percentage', 'Suggested Time Window'])
 
-        print("\n--- Hours by Client, Category, and Study over Time ---")
-        
-        for date in sorted_dates:
-            print(f"\nDate: {date.strftime('%Y-%m-%d')}")
-            print("-" * 60)
-            
-            total_duration = timedelta()
-            earliest_start_after_6am = None
-            
-            for entry_data in data[date].values():
-                for start, end, duration in entry_data:
-                    total_duration += duration
-                    if start.time() >= datetime_time(6, 0):
-                        if earliest_start_after_6am is None or start < earliest_start_after_6am:
-                            earliest_start_after_6am = start
-            
-            if earliest_start_after_6am is None:
-                earliest_start_after_6am = datetime.combine(date, datetime_time(6, 0))
-            
-            sorted_entries = sorted(data[date].items(), key=lambda x: reduce(operator.add, (duration for _, _, duration in x[1]), timedelta()), reverse=True)
-            
-            for entry, entry_data in sorted_entries:
-                total_entry_duration = reduce(operator.add, (duration for _, _, duration in entry_data), timedelta())
-                hours = total_entry_duration.total_seconds() / 3600
-                percentage = (total_entry_duration / total_duration) * 100 if total_duration else 0
-                
-                entry_start = min(start for start, _, _ in entry_data)
-                if entry_start.time() < datetime_time(6, 0):
-                    entry_start = earliest_start_after_6am
-                suggested_end = entry_start + total_entry_duration
-                time_window_str = f"{entry_start.strftime('%H:%M')}-{suggested_end.strftime('%H:%M')}"
-                
-                print(f"{entry.ljust(30)}: {hours:.2f} hours ({percentage:.2f}%) - {time_window_str}")
-                
-                csv_writer.writerow([date.strftime('%Y-%m-%d'), entry, f"{hours:.2f}", f"{percentage:.2f}", time_window_str])
-            
-            total_hours = total_duration.total_seconds() / 3600
-            suggested_end_total = earliest_start_after_6am + total_duration
-            total_time_window = f"{earliest_start_after_6am.strftime('%H:%M')}-{suggested_end_total.strftime('%H:%M')}"
-            
-            print("-" * 60)
-            print(f"{'Total'.ljust(30)}: {total_hours:.2f} hours - {total_time_window}")
-            
-            csv_writer.writerow([date.strftime('%Y-%m-%d'), 'Total', f"{total_hours:.2f}", "100.00", total_time_window])
-            csv_writer.writerow([])  # Empty row for readability
+        # New output file
+        with open(new_output_file, 'w', newline='') as new_out_file:
+            new_csv_writer = csv.writer(new_out_file)
+            new_csv_writer.writerow(['YYYYMMDD', 'Client/Category/Study', 'Hours', 'Percentage', 'TotalOfDay'])
 
-    print(f"\nReport has been written to {output_file}")
+            print("\n--- Hours by Client, Category, and Study over Time ---")
+            
+            for date in sorted_dates:
+                print(f"\nDate: {date.strftime('%Y-%m-%d')}")
+                print("-" * 60)
+                
+                total_duration = timedelta()
+                earliest_start_after_6am = None
+                
+                for entry_data in data[date].values():
+                    for start, end, duration in entry_data:
+                        total_duration += duration
+                        if start.time() >= datetime_time(6, 0):
+                            if earliest_start_after_6am is None or start < earliest_start_after_6am:
+                                earliest_start_after_6am = start
+                
+                if earliest_start_after_6am is None:
+                    earliest_start_after_6am = datetime.combine(date, datetime_time(6, 0))
+                
+                sorted_entries = sorted(data[date].items(), key=lambda x: reduce(operator.add, (duration for _, _, duration in x[1]), timedelta()), reverse=True)
+                
+                # Calculate total hours for the day
+                total_hours = total_duration.total_seconds() / 3600
+                
+                for entry, entry_data in sorted_entries:
+                    total_entry_duration = reduce(operator.add, (duration for _, _, duration in entry_data), timedelta())
+                    hours = total_entry_duration.total_seconds() / 3600
+                    percentage = (total_entry_duration / total_duration) * 100 if total_duration else 0
+                    
+                    entry_start = min(start for start, _, _ in entry_data)
+                    if entry_start.time() < datetime_time(6, 0):
+                        entry_start = earliest_start_after_6am
+                    suggested_end = entry_start + total_entry_duration
+                    time_window_str = f"{entry_start.strftime('%H:%M')}-{suggested_end.strftime('%H:%M')}"
+                    
+                    print(f"{entry.ljust(30)}: {hours:.2f} hours ({percentage:.2f}%) - {time_window_str}")
+                    
+                    # Write to original output file
+                    csv_writer.writerow([date.strftime('%Y-%m-%d'), entry, f"{hours:.2f}", f"{percentage:.2f}", time_window_str])
+                    
+                    # Write to new output file
+                    new_csv_writer.writerow([date.strftime('%Y%m%d'), entry, f"{hours:.2f}", f"{percentage:.2f}", f"{total_hours:.2f}"])
+                
+                suggested_end_total = earliest_start_after_6am + total_duration
+                total_time_window = f"{earliest_start_after_6am.strftime('%H:%M')}-{suggested_end_total.strftime('%H:%M')}"
+                
+                print("-" * 60)
+                print(f"{'Total'.ljust(30)}: {total_hours:.2f} hours - {total_time_window}")
+                
+                csv_writer.writerow([date.strftime('%Y-%m-%d'), 'Total', f"{total_hours:.2f}", "100.00", total_time_window])
+                csv_writer.writerow([])  # Empty row for readability
+
+    print(f"\nOriginal report has been written to {output_file}")
+    print(f"Additional report has been written to {new_output_file}")
 
 
 def report_metelao_instances(input_file):
