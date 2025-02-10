@@ -1,9 +1,0 @@
-Behavior Observation Log
-Session Date: 2025-02-10 01:35:50
-Total Session Duration: 6.43 seconds
-
-Recorded Events:
-Start(s)	End(s)	Duration(s)
-2.86	3.81	0.94
-4.09	5.42	1.33
-5.61	5.76	0.15
