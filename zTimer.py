@@ -173,8 +173,8 @@ class BehaviorTimer:
 
     def save_log(self, log_dir='logs'):
         """
-        Save a log file that summarizes the session and details each event.
-        Uses the key labels when generating the log.
+        Save a log file that summarizes the session and details each event,
+        including a visual timeline representation.
         """
         try:
             if not os.path.exists(log_dir):
@@ -198,6 +198,8 @@ class BehaviorTimer:
                 f.write(f"Trial: {self.trial_name}\n")
                 f.write(f"Session Date: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
                 f.write(f"Total Session Duration: {session_duration:.2f} seconds\n\n")
+
+                # Key events summary
                 f.write("Key events summary:\n")
                 for key in self.record_keys:
                     total_time = total_recorded_time_by_key[key]
@@ -208,6 +210,12 @@ class BehaviorTimer:
                     f.write(f"  Key '{key}' ({self.key_labels[key]}): {count} events, "
                             f"total held {total_time:.2f} seconds, "
                             f"average held {avg_time:.2f} seconds ({percentage:.2f}%)\n")
+
+                # Generate visual timeline
+                f.write("\nVisual Timeline:\n")
+                self._generate_visual_timeline(f, session_duration)
+
+                # Detailed event log
                 f.write("\nDetailed Event Log:\n")
                 f.write("Event#\tKey\tLabel\tStart(s)\tEnd(s)\tDuration(s)\n")
                 for i, event in enumerate(self.events, 1):
@@ -218,6 +226,52 @@ class BehaviorTimer:
         except Exception as e:
             print(f"\n\nError saving log file: {e}")
 
+    def _generate_visual_timeline(self, file, total_duration):
+            """
+            Generate a visual timeline representation for the entire session.
+            Each line represents 1 minute, with consistent line length.
+            """
+            # Constants for timeline generation
+            LINE_DURATION = 60   # 1 minute in seconds
+            LINE_LENGTH = 100    # characters per line
+            
+            # Prepare key events for timeline plotting
+            key_events = {}
+            for key in self.record_keys:
+                key_events[key] = [False] * int(total_duration / LINE_DURATION + 1)
+            
+            # Mark key press events in the timeline
+            for event in self.events:
+                start_line = int(event['start'] / LINE_DURATION)
+                end_line = int(event['end'] / LINE_DURATION)
+                
+                # Mark the lines where this event occurs
+                for line in range(start_line, end_line + 1):
+                    key_events[event['key']][line] = True
+            
+            # Generate and write the timeline
+            for line_num in range(int(total_duration / LINE_DURATION) + 1):
+                # Create a line of dots
+                timeline_line = ['.'] * LINE_LENGTH
+                
+                # Mark key presses on this line
+                for key in self.record_keys:
+                    if key_events[key][line_num]:
+                        # Replace some dots with key letter 
+                        replace_indices = [
+                            self.record_keys.index(key) * (LINE_LENGTH // len(self.record_keys)),
+                            self.record_keys.index(key) * (LINE_LENGTH // len(self.record_keys)) + 1
+                        ]
+                        for idx in replace_indices:
+                            timeline_line[idx] = key
+                
+                # Convert line to string and add time annotation
+                line_start_time = line_num * LINE_DURATION
+                line_end_time = min((line_num + 1) * LINE_DURATION, total_duration)
+                
+                timeline_str = ''.join(timeline_line)
+                file.write(f"{timeline_str}  [{line_start_time:.0f}s - {line_end_time:.0f}s]\n")
+    
 if __name__ == "__main__":
     # Prompt the user for animal and trial information before starting.
     animal_name = input("Enter animal name: ")
