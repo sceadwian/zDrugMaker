@@ -1,0 +1,4 @@
+x = twitch
+m = freeze
+z = chew
+k = moving

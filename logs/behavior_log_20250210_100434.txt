@@ -1,0 +1,22 @@
+Behavior Observation Log
+Animal: test011
+Trial: 022
+Session Date: 2025-02-10 10:04:34
+Total Session Duration: 20.80 seconds
+
+Key events summary:
+  Key 'X' (twitch): 1 events, total held 0.96 seconds, average held 0.96 seconds (4.61%)
+  Key 'M' (freeze): 2 events, total held 2.28 seconds, average held 1.14 seconds (10.95%)
+  Key 'Z' (chew): 1 events, total held 1.16 seconds, average held 1.16 seconds (5.59%)
+  Key 'K' (moving): 4 events, total held 3.95 seconds, average held 0.99 seconds (18.97%)
+
+Detailed Event Log:
+Event#	Key	Label	Start(s)	End(s)	Duration(s)
+1	Z	chew	1.57	2.73	1.16
+2	X	twitch	3.74	4.70	0.96
+3	M	freeze	9.11	10.17	1.06
+4	M	freeze	11.08	12.30	1.21
+5	K	moving	13.26	14.27	1.01
+6	K	moving	15.13	16.09	0.96
+7	K	moving	16.90	17.91	1.01
+8	K	moving	18.72	19.69	0.96
