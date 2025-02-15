@@ -1,0 +1,54 @@
+Date: 2025/02/13 - 16:37:23
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: ANGELINIcohort3
+BEW: 1
+Dose: 14 mg/kg
+========================================
+Drug amount needed: 126 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 9 ml
+- Oral (5 ml/kg): 45 ml
+- Mice (10 ml/kg): 90 ml
+========================================
+
+==================================================
+
+Date: 2025/02/13 - 17:08:17
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: ANGELINIcohort3
+BEW: 1
+Dose: 14 mg/kg
+========================================
+Drug amount needed: 168 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 12 ml
+- Oral (5 ml/kg): 60 ml
+- Mice (10 ml/kg): 120 ml
+========================================
+
+==================================================
+
+Date: 2025/02/14 - 15:33:04
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: CurieCellgate
+BEW: 1
+Dose: 100 mg/kg
+========================================
+Drug amount needed: 28 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.28 ml
+- Oral (5 ml/kg): 1.4 ml
+- Mice (10 ml/kg): 2.8 ml
+========================================
+
+==================================================
+

@@ -191,7 +191,7 @@ class BehaviorTimer:
                 total_recorded_time_by_key[event['key']] += event['duration']
                 count_by_key[event['key']] += 1
 
-            with open(filename, 'w') as f:
+            with open(filename, 'w', encoding='utf-8') as f:
                 # Session summary.
                 f.write("Behavior Observation Log\n")
                 f.write(f"Animal: {self.animal_name}\n")
@@ -227,51 +227,58 @@ class BehaviorTimer:
             print(f"\n\nError saving log file: {e}")
 
     def _generate_visual_timeline(self, file, total_duration):
-            """
-            Generate a visual timeline representation for the entire session.
-            Each line represents 1 minute, with consistent line length.
-            """
-            # Constants for timeline generation
-            LINE_DURATION = 60   # 1 minute in seconds
-            LINE_LENGTH = 100    # characters per line
-            
-            # Prepare key events for timeline plotting
-            key_events = {}
-            for key in self.record_keys:
-                key_events[key] = [False] * int(total_duration / LINE_DURATION + 1)
-            
-            # Mark key press events in the timeline
+        """
+        Generate an improved visual timeline representation for the entire session.
+        The timeline is represented as a fixed-width bar (default 100 characters) for the entire session.
+        A separate timeline is produced for each key, with each event painted as a block
+        from its start to its end time.
+        """
+        TIMELINE_WIDTH = 100  # Number of characters representing the entire session
+
+        # Write a header showing the overall timeline scale.
+        file.write("Overall Timeline Scale (each column ≈ {:.1f} sec):\n".format(total_duration / TIMELINE_WIDTH))
+        # Create a scale line: mark every 10th column with a rough time indicator.
+        scale_line = [' '] * TIMELINE_WIDTH
+        for i in range(TIMELINE_WIDTH):
+            if i % 10 == 0:
+                # Calculate the approximate time (in seconds) at this column.
+                time_sec = (i / TIMELINE_WIDTH) * total_duration
+                # Use minutes:seconds format for the marker.
+                minutes = int(time_sec // 60)
+                seconds = int(time_sec % 60)
+                marker = f"{minutes:02d}:{seconds:02d}"
+                # Insert the marker (if it fits); otherwise just mark a '|'
+                marker_len = len(marker)
+                if i + marker_len <= TIMELINE_WIDTH:
+                    for j, ch in enumerate(marker):
+                        scale_line[i + j] = ch
+                else:
+                    scale_line[i] = '|'
+            else:
+                # Optionally fill with a light marker (or leave it as a space)
+                if scale_line[i] == ' ':
+                    scale_line[i] = '.'
+        file.write(''.join(scale_line) + "\n\n")
+
+        # For each key, create a timeline line.
+        for key in self.record_keys:
+            # Start with a line of dots.
+            timeline = ['.'] * TIMELINE_WIDTH
+            # For each event for this key, calculate the start and end positions on the timeline.
             for event in self.events:
-                start_line = int(event['start'] / LINE_DURATION)
-                end_line = int(event['end'] / LINE_DURATION)
-                
-                # Mark the lines where this event occurs
-                for line in range(start_line, end_line + 1):
-                    key_events[event['key']][line] = True
-            
-            # Generate and write the timeline
-            for line_num in range(int(total_duration / LINE_DURATION) + 1):
-                # Create a line of dots
-                timeline_line = ['.'] * LINE_LENGTH
-                
-                # Mark key presses on this line
-                for key in self.record_keys:
-                    if key_events[key][line_num]:
-                        # Replace some dots with key letter 
-                        replace_indices = [
-                            self.record_keys.index(key) * (LINE_LENGTH // len(self.record_keys)),
-                            self.record_keys.index(key) * (LINE_LENGTH // len(self.record_keys)) + 1
-                        ]
-                        for idx in replace_indices:
-                            timeline_line[idx] = key
-                
-                # Convert line to string and add time annotation
-                line_start_time = line_num * LINE_DURATION
-                line_end_time = min((line_num + 1) * LINE_DURATION, total_duration)
-                
-                timeline_str = ''.join(timeline_line)
-                file.write(f"{timeline_str}  [{line_start_time:.0f}s - {line_end_time:.0f}s]\n")
-    
+                if event['key'] == key:
+                    # Scale the event times to timeline positions.
+                    start_idx = int(event['start'] / total_duration * TIMELINE_WIDTH)
+                    end_idx = int(event['end'] / total_duration * TIMELINE_WIDTH)
+                    # Ensure we mark at least one character.
+                    if end_idx <= start_idx:
+                        end_idx = start_idx + 1
+                    # Mark the event duration with the key letter.
+                    for idx in range(start_idx, min(end_idx, TIMELINE_WIDTH)):
+                        timeline[idx] = key
+            file.write(f"{key} ({self.key_labels[key]}): " + ''.join(timeline) + "\n")
+
+
 if __name__ == "__main__":
     # Prompt the user for animal and trial information before starting.
     animal_name = input("Enter animal name: ")

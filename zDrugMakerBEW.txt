@@ -75,3 +75,6 @@ BH-015060 - 1
 Scopolamine - 1.42
 Scopolamine - 1.42
 Scopolamine - 1.42
+ANGELINIcohort3 - 1
+ANGELINIcohort3 - 1
+CurieCellgate - 1
