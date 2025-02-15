@@ -225,46 +225,67 @@ class BehaviorTimer:
 
     def _generate_visual_timeline(self, file, total_duration):
         """
-        Generate an improved visual timeline representation for the entire session.
-        The timeline is represented as a fixed-width bar (default 100 characters) for the entire session.
-        A separate timeline is produced for each key, with each event painted as a block
-        from its start to its end time.
+        Generate a visual timeline with improved resolution for long experiments.
+        Each key gets its own set of timeline strips, with each strip representing
+        a 15-minute segment of the experiment. This allows for better resolution
+        and readability for long experiments.
         """
-        TIMELINE_WIDTH = 100  # Number of characters representing the entire session
-
-        # Write a header showing the overall timeline scale.
-        file.write("Overall Timeline Scale (each column ≈ {:.1f} sec):\n".format(total_duration / TIMELINE_WIDTH))
-        # Create a scale line: mark every 10th column with a rough time indicator.
-        scale_line = [' '] * TIMELINE_WIDTH
-        for i in range(TIMELINE_WIDTH):
-            if i % 10 == 0:
-                time_sec = (i / TIMELINE_WIDTH) * total_duration
-                minutes = int(time_sec // 60)
-                seconds = int(time_sec % 60)
-                marker = f"{minutes:02d}:{seconds:02d}"
-                marker_len = len(marker)
-                if i + marker_len <= TIMELINE_WIDTH:
-                    for j, ch in enumerate(marker):
-                        scale_line[i + j] = ch
-                else:
-                    scale_line[i] = '|'
-            else:
-                if scale_line[i] == ' ':
-                    scale_line[i] = '.'
-        file.write(''.join(scale_line) + "\n\n")
-
-        # For each key, create a timeline line.
+        SEGMENT_DURATION = 900  # 15 minutes in seconds
+        LINE_WIDTH = 100       # Characters per line
+        
+        # Calculate how many segments we need
+        num_segments = int(total_duration / SEGMENT_DURATION) + 1
+        
+        file.write("\nDetailed Visual Timeline (each line represents 15 minutes):\n")
+        file.write("Legend: '.' = no activity, letter = key pressed\n\n")
+        
+        # For each key, create a series of timeline strips
         for key in self.record_keys:
-            timeline = ['.'] * TIMELINE_WIDTH
-            for event in self.events:
-                if event['key'] == key:
-                    start_idx = int(event['start'] / total_duration * TIMELINE_WIDTH)
-                    end_idx = int(event['end'] / total_duration * TIMELINE_WIDTH)
-                    if end_idx <= start_idx:
-                        end_idx = start_idx + 1
-                    for idx in range(start_idx, min(end_idx, TIMELINE_WIDTH)):
-                        timeline[idx] = key
-            file.write(f"{key} ({self.key_labels[key]}): " + ''.join(timeline) + "\n")
+            # Write header for this key
+            file.write(f"\n{key} ({self.key_labels[key]}):\n")
+            
+            # Process each 15-minute segment
+            for segment in range(num_segments):
+                segment_start = segment * SEGMENT_DURATION
+                segment_end = min((segment + 1) * SEGMENT_DURATION, total_duration)
+                
+                # Create the timeline for this segment
+                timeline = ['.'] * LINE_WIDTH
+                
+                # Fill in events that occur in this segment
+                for event in self.events:
+                    if event['key'] == key:
+                        # Check if event overlaps with this segment
+                        if (event['start'] <= segment_end and 
+                            event['end'] >= segment_start):
+                            # Calculate relative positions within this segment
+                            start_pos = max(0, event['start'] - segment_start)
+                            end_pos = min(SEGMENT_DURATION, event['end'] - segment_start)
+                            
+                            # Convert to timeline indices
+                            start_idx = int((start_pos / SEGMENT_DURATION) * LINE_WIDTH)
+                            end_idx = int((end_pos / SEGMENT_DURATION) * LINE_WIDTH)
+                            
+                            # Ensure at least one character is marked for very short events
+                            if end_idx <= start_idx:
+                                end_idx = start_idx + 1
+                                
+                            # Mark the event in the timeline
+                            for idx in range(start_idx, min(end_idx, LINE_WIDTH)):
+                                timeline[idx] = key
+                
+                # Calculate time range for this segment
+                start_min = int(segment_start / 60)
+                start_sec = int(segment_start % 60)
+                end_min = int(segment_end / 60)
+                end_sec = int(segment_end % 60)
+                
+                # Write the timeline with time range
+                timeline_str = ''.join(timeline)
+                time_range = f"[{start_min:02d}:{start_sec:02d} - {end_min:02d}:{end_sec:02d}]"
+                file.write(f"{timeline_str} {time_range}\n")
+            
+            file.write("\n")  # Add extra line between keys
 
 
 if __name__ == "__main__":
