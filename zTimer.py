@@ -107,8 +107,6 @@ class BehaviorTimer:
         print(f"Measuring keys: {key_label_str}. Press '{self.quit_key}' to quit.")
         print("Timeline: ", end="", flush=True)
 
-        # Rest of the method remains the same as in the original implementation
-        # (start() method is unchanged from the previous version)
         while self.is_running:
             elapsed = time.time() - self.start_time
 
@@ -205,7 +203,6 @@ class BehaviorTimer:
                     total_time = total_recorded_time_by_key[key]
                     count = count_by_key[key]
                     percentage = (total_time / session_duration * 100) if session_duration > 0 else 0
-                    # Calculate average held time with error handling if count is 0.
                     avg_time = total_time / count if count > 0 else 0
                     f.write(f"  Key '{key}' ({self.key_labels[key]}): {count} events, "
                             f"total held {total_time:.2f} seconds, "
@@ -241,13 +238,10 @@ class BehaviorTimer:
         scale_line = [' '] * TIMELINE_WIDTH
         for i in range(TIMELINE_WIDTH):
             if i % 10 == 0:
-                # Calculate the approximate time (in seconds) at this column.
                 time_sec = (i / TIMELINE_WIDTH) * total_duration
-                # Use minutes:seconds format for the marker.
                 minutes = int(time_sec // 60)
                 seconds = int(time_sec % 60)
                 marker = f"{minutes:02d}:{seconds:02d}"
-                # Insert the marker (if it fits); otherwise just mark a '|'
                 marker_len = len(marker)
                 if i + marker_len <= TIMELINE_WIDTH:
                     for j, ch in enumerate(marker):
@@ -255,32 +249,39 @@ class BehaviorTimer:
                 else:
                     scale_line[i] = '|'
             else:
-                # Optionally fill with a light marker (or leave it as a space)
                 if scale_line[i] == ' ':
                     scale_line[i] = '.'
         file.write(''.join(scale_line) + "\n\n")
 
         # For each key, create a timeline line.
         for key in self.record_keys:
-            # Start with a line of dots.
             timeline = ['.'] * TIMELINE_WIDTH
-            # For each event for this key, calculate the start and end positions on the timeline.
             for event in self.events:
                 if event['key'] == key:
-                    # Scale the event times to timeline positions.
                     start_idx = int(event['start'] / total_duration * TIMELINE_WIDTH)
                     end_idx = int(event['end'] / total_duration * TIMELINE_WIDTH)
-                    # Ensure we mark at least one character.
                     if end_idx <= start_idx:
                         end_idx = start_idx + 1
-                    # Mark the event duration with the key letter.
                     for idx in range(start_idx, min(end_idx, TIMELINE_WIDTH)):
                         timeline[idx] = key
             file.write(f"{key} ({self.key_labels[key]}): " + ''.join(timeline) + "\n")
 
 
 if __name__ == "__main__":
-    # Prompt the user for animal and trial information before starting.
+    # Display a welcome message and an explanation of what the script does.
+    welcome_message = (
+        "Welcome to the Behavior Observation Timer!\n"
+        "This tool allows you to record and analyze behavior by monitoring key presses.\n"
+        "You will be prompted to enter the animal's name and the trial information.\n"
+        "The script reads key labels from 'zTimer.txt' (or uses default labels if the file is not found).\n"
+        "It then starts monitoring specific keys (by default, X, Z, M, and K),\n"
+        "and logs the duration each key is pressed. A visual timeline is displayed in real time,\n"
+        "and you can end the session by pressing the quit key (default: Q).\n"
+        "After quitting, a detailed log file will be saved.\n"
+    )
+    print(welcome_message)
+
+    # Prompt the user for animal and trial information.
     animal_name = input("Enter animal name: ")
     trial_name = input("Enter trial name: ")
 
