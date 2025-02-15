@@ -1,0 +1,73 @@
+Behavior Observation Log
+Animal: 202502151256
+Trial: pause now
+Session Date: 2025-02-15 12:57:45
+Total Session Duration (excluding pauses): 78.07 seconds
+Total Pause Time: 6.80 seconds
+
+Key events summary:
+  Key 'X' (twitch): 2 events, total held 0.10 seconds, average held 0.05 seconds (0.13%)
+  Key 'M' (freeze): 3 events, total held 0.25 seconds, average held 0.08 seconds (0.32%)
+  Key 'Z' (chew): 1 events, total held 0.05 seconds, average held 0.05 seconds (0.06%)
+  Key 'K' (moving): 30 events, total held 1.97 seconds, average held 0.07 seconds (2.53%)
+
+Visual Timeline:
+
+Detailed Visual Timeline (each line represents 15 minutes):
+Legend: '.' = no activity, letter = key pressed
+
+
+X (twitch):
+.X.................................................................................................. [00:00 - 01:18]
+
+
+M (freeze):
+.M.................................................................................................. [00:00 - 01:18]
+
+
+Z (chew):
+Z................................................................................................... [00:00 - 01:18]
+
+
+K (moving):
+..K................................................................................................. [00:00 - 01:18]
+
+
+Detailed Event Log:
+Event#	Key	Label	Start(s)	End(s)	Duration(s)
+1	Z	chew	8.74	8.79	0.05
+2	X	twitch	11.37	11.42	0.05
+3	X	twitch	11.57	11.62	0.05
+4	M	freeze	15.91	15.96	0.05
+5	M	freeze	16.31	16.42	0.10
+6	M	freeze	16.77	16.87	0.10
+7	K	moving	20.76	20.81	0.05
+8	K	moving	20.86	20.91	0.05
+9	K	moving	21.01	21.06	0.05
+10	K	moving	21.16	21.21	0.05
+11	K	moving	21.31	21.37	0.05
+12	K	moving	21.57	21.62	0.05
+13	K	moving	21.72	21.77	0.05
+14	K	moving	21.82	21.92	0.10
+15	K	moving	22.02	22.07	0.05
+16	K	moving	22.12	22.17	0.05
+17	K	moving	22.28	22.33	0.05
+18	K	moving	22.43	22.48	0.05
+19	K	moving	22.58	22.63	0.05
+20	K	moving	22.68	22.78	0.10
+21	K	moving	22.83	22.93	0.10
+22	K	moving	22.98	23.03	0.05
+23	K	moving	23.14	23.19	0.05
+24	K	moving	23.29	23.34	0.05
+25	K	moving	23.44	23.49	0.05
+26	K	moving	23.59	23.64	0.05
+27	K	moving	23.74	23.84	0.10
+28	K	moving	23.89	23.99	0.10
+29	K	moving	24.04	24.15	0.10
+30	K	moving	24.20	24.30	0.10
+31	K	moving	24.35	24.40	0.05
+32	K	moving	24.50	24.55	0.05
+33	K	moving	24.65	24.70	0.05
+34	K	moving	24.80	24.90	0.10
+35	K	moving	24.95	25.01	0.05
+36	K	moving	25.11	25.21	0.10

@@ -16,7 +16,9 @@ Welcome to Leo's Preclinical Pharmacology Companion Scripts! This collection of 
 
 5. **zFarseta_v0_3.py** - zCypher with a GUI: Building upon the previous version (version 0_1), this encryption tool does a live encryption/decryption using the same algorith as above. It also includes a nice interface.
 
-6. **zFileAnal** - File Analysis Script: Currently a work in progress, this script aims to provide file analysis capabilities. Reports on media files (video and images) contained in the folder.
+6. **zFileAnal.py** - File Analysis Script: Currently a work in progress, this script aims to provide file analysis capabilities. Reports on media files (video and images) contained in the folder.
+
+7. **zTimer.py** - Behavioral Timer and Event Logger: This script allows researchers to track and log specific behavioral events during preclinical experiments. It monitors key presses associated with predefined behaviors, records event durations, and generates detailed logs with time block summaries for easy analysis. Features include a real-time visual timeline, pause/resume functionality, and customizable event tracking.
 
 ## Usage
 
