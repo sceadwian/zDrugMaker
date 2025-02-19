@@ -8,7 +8,7 @@ Welcome to Leo's Preclinical Pharmacology Companion Scripts! This collection of 
 
 2. **zAllocator_v1_0.py** - Leo's Group Allocator Script v1: This script facilitates the allocation of subjects into well-balanced test groups based on a single variable. You can input subject IDs and their respective data (e.g., body weight) and specify the final number of groups to be tested. The output is saved in a separate file.
 
-3. **zToggl.py** - Toggl Time Tracker Export Parser: Currently a work in progress, this script aims to parse the detailed Toggl Time Tracker export CSV file and extract hours worked at the lab. It provides a convenient way to analyze your time tracking data. Stay tuned for updates! https://toggl.com/track/
+3. **zToggl.py** - Toggl Time Tracker Export Parser: Currently a work in progress, this script aims to parse the detailed Toggl Time Tracker export CSV file and extract hours worked at the lab. It provides a convenient way to analyze your time tracking data. https://toggl.com/track/
 
 4. **zFarseta_v0_1.py** - zCypher v1: This simple encryption tool transforms legible digital text into an encrypted document that can be decrypted using the same Python script. Version 1 allows for reading sections of the encrypted document at a time.
 
