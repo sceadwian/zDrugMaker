@@ -2,6 +2,7 @@ import time
 import datetime
 import os
 import ctypes
+from collections import defaultdict
 
 class BehaviorTimer:
     """
@@ -13,26 +14,30 @@ class BehaviorTimer:
     Press 'W' to pause/unpause the session.
     """
     
+class BehaviorTimer:
     def __init__(self, animal_name, trial_name, key_labels_file='zTimer.txt', 
                  record_keys=None, quit_key='Q', pause_key='W',
                  timeline_interval=0.05, dots_per_line=100):
-        # Set animal and trial info
+        # Previous initialization code remains the same
         self.animal_name = animal_name
         self.trial_name = trial_name
-        
-        # Read key labels from file
         self.key_labels = self.read_key_labels(key_labels_file)
-        
-        # Define which keys to measure
         if record_keys is None:
             record_keys = list(self.key_labels.keys())
         self.record_keys = [key.upper() for key in record_keys]
         self.quit_key = quit_key.upper()
         self.pause_key = pause_key.upper()
-        
-        # Timeline display parameters
         self.timeline_interval = timeline_interval
         self.dots_per_line = dots_per_line
+
+        # Add color codes for each key
+        self.key_colors = {
+            'X': '\033[93m',  # Yellow
+            'Z': '\033[92m',  # Green
+            'M': '\033[94m',  # Blue
+            'K': '\033[91m',  # Red
+        }
+        self.reset_color = '\033[0m'  # Reset color code
 
         self.start_time = None
         self.is_running = False
@@ -41,17 +46,14 @@ class BehaviorTimer:
         self.pause_start_time = None
         self.events = []
 
-        # Track key states
         self.key_down = {key: False for key in self.record_keys}
         self.current_event_start = {key: None for key in self.record_keys}
         self.dot_count = 0
 
-        # Create mappings for virtual key codes
         self.record_vk = {key: ord(key) for key in self.record_keys}
         self.quit_vk = ord(self.quit_key)
         self.pause_vk = ord(self.pause_key)
 
-        # Windows API access
         self.GetAsyncKeyState = ctypes.windll.user32.GetAsyncKeyState
 
     # [Previous methods remain unchanged: read_key_labels, key_pressed]
@@ -83,10 +85,10 @@ class BehaviorTimer:
         # Default to uppercase keys if no labels found
         if not key_labels:
             key_labels = {
-                'X': 'twitches',
+                'X': 'twitchs',
                 'Z': 'chewing',
-                'M': 'freezing',
-                'K': 'ambulation'
+                'M': 'freezng',
+                'K': ' active'
             }
         
         return key_labels
@@ -139,19 +141,26 @@ class BehaviorTimer:
         self.is_running = True
         self.total_pause_time = 0
         self.is_paused = False
+        
+        self.current_segment_behaviors = defaultdict(int)
+        self.segment_start_time = time.time()
+        self.SEGMENT_DURATION = self.dots_per_line * self.timeline_interval
 
         # Print initial instructions with key labels
         print(f"\nTimer started for animal '{self.animal_name}' and trial '{self.trial_name}'.")
-        key_label_str = ", ".join([f"{key} = {self.key_labels[key]}" for key in self.record_keys])
+        key_label_str = ", ".join([
+            f"{self.key_colors.get(key, '')}{key}{self.reset_color} = {self.key_labels[key]}"
+            for key in self.record_keys
+        ])
         print(f"Measuring keys: {key_label_str}")
         print(f"Press '{self.quit_key}' to quit, '{self.pause_key}' to pause/unpause")
-        print("Timeline: ", end="", flush=True)
+        print("Most frequent: None | ", end="", flush=True)
 
         last_pause_state = False
         while self.is_running:
             current_time = time.time()
             
-            # Check for pause key press (detect transition from not pressed to pressed)
+            # Check for pause key press
             pause_pressed = self.key_pressed(self.pause_vk)
             if pause_pressed and not last_pause_state:
                 self.handle_pause()
@@ -167,7 +176,6 @@ class BehaviorTimer:
 
                 # Check if the quit key is pressed
                 if self.key_pressed(self.quit_vk):
-                    # Finalize any key that is still pressed
                     for key in self.record_keys:
                         if self.key_down[key] and self.current_event_start[key] is not None:
                             end_time = elapsed
@@ -178,21 +186,21 @@ class BehaviorTimer:
                                 'end': end_time,
                                 'duration': duration
                             })
-                            self.current_event_start[key] = None
-                            self.key_down[key] = False
                     self.is_running = False
                     break
 
-                # Check the state for each key being monitored
+                # Check each key's state
                 for key in self.record_keys:
                     vk = self.record_vk[key]
                     pressed = self.key_pressed(vk)
-                    if pressed and not self.key_down[key]:
-                        # Key transitioned from not pressed to pressed
-                        self.key_down[key] = True
-                        self.current_event_start[key] = elapsed
-                    elif not pressed and self.key_down[key]:
-                        # Key transitioned from pressed to released
+                    
+                    # Update behavior tracking
+                    if pressed:
+                        self.current_segment_behaviors[key] += 1
+                        if not self.key_down[key]:
+                            self.key_down[key] = True
+                            self.current_event_start[key] = elapsed
+                    elif self.key_down[key]:
                         self.key_down[key] = False
                         if self.current_event_start[key] is not None:
                             end_time = elapsed
@@ -205,22 +213,42 @@ class BehaviorTimer:
                             })
                             self.current_event_start[key] = None
 
-                # Build timeline marker
+                # Build colored timeline marker
                 pressed_keys = [key for key in self.record_keys if self.key_down[key]]
-                marker = ''.join(pressed_keys) if pressed_keys else "."
+                if pressed_keys:
+                    marker = ''
+                    for key in pressed_keys:
+                        marker += f"{self.key_colors.get(key, '')}{key}{self.reset_color}"
+                else:
+                    marker = "."
                 print(marker, end="", flush=True)
                 self.dot_count += 1
 
-                # Print elapsed time every dots_per_line markers
+                # Print elapsed time and most frequent behavior
                 if self.dot_count % self.dots_per_line == 0:
                     minutes = int(elapsed // 60)
                     seconds = elapsed % 60
+                    
+                    most_frequent = max(self.current_segment_behaviors.items(), 
+                                     key=lambda x: x[1], 
+                                     default=(None, 0))
+                    
+                    if most_frequent[0] is not None and most_frequent[1] > 0:
+                        key = most_frequent[0]
+                        behavior_label = f"{self.key_colors.get(key, '')}{self.key_labels[key]} ({key}){self.reset_color}"
+                    else:
+                        behavior_label = "None"
+                    
                     print(f" {minutes:02d}:{seconds:05.2f}")
-                    print("Timeline: ", end="", flush=True)
+                    print(f"Most frequent: {behavior_label} | ", end="", flush=True)
+                    
+                    self.current_segment_behaviors.clear()
 
             time.sleep(self.timeline_interval)
 
         print("\n\nTimer stopped.")
+
+
 
     # [Previous methods remain unchanged: save_log, _generate_visual_timeline]
     def save_log(self, log_dir='logs'):
