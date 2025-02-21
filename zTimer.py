@@ -250,7 +250,7 @@ class BehaviorTimer:
 
 
 
-    # [Previous methods remain unchanged: save_log, _generate_visual_timeline]
+        # [_generate_visual_timeline]
     def save_log(self, log_dir='logs'):
         """
         Save a log file that summarizes the session and details each event,
@@ -260,8 +260,14 @@ class BehaviorTimer:
             if not os.path.exists(log_dir):
                 os.makedirs(log_dir)
 
+            # Generate a timestamp
             timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-            filename = os.path.join(log_dir, f"behavior_log_{timestamp}.txt")
+
+            # Format the filename with animal name and trial name
+            sanitized_animal_name = "".join(c if c.isalnum() else "_" for c in self.animal_name)
+            sanitized_trial_name = "".join(c if c.isalnum() else "_" for c in self.trial_name)
+
+            filename = os.path.join(log_dir, f"behavior_log_{sanitized_animal_name}_{sanitized_trial_name}_{timestamp}.txt")
             session_duration = time.time() - self.start_time - self.total_pause_time
 
             # Calculate total recorded time and event counts for each key

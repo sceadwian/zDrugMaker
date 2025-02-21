@@ -1,0 +1,41 @@
+Behavior Observation Log
+Animal: s
+Trial: ss
+Session Date: 2025-02-20 21:12:30
+Total Session Duration (excluding pauses): 9.69 seconds
+Total Pause Time: 0.00 seconds
+
+Key events summary:
+  Key 'X' (twitch): 0 events, total held 0.00 seconds, average held 0.00 seconds (0.00%)
+  Key 'M' (freeze): 0 events, total held 0.00 seconds, average held 0.00 seconds (0.00%)
+  Key 'Z' (chew): 4 events, total held 0.97 seconds, average held 0.24 seconds (10.06%)
+  Key 'K' (moving): 0 events, total held 0.00 seconds, average held 0.00 seconds (0.00%)
+
+Visual Timeline:
+
+Detailed Visual Timeline (each line represents 15 minutes):
+Legend: '.' = no activity, letter = key pressed
+
+
+X (twitch):
+.................................................................................................... [00:00 - 00:09]
+
+
+M (freeze):
+.................................................................................................... [00:00 - 00:09]
+
+
+Z (chew):
+Z................................................................................................... [00:00 - 00:09]
+
+
+K (moving):
+.................................................................................................... [00:00 - 00:09]
+
+
+Detailed Event Log:
+Event#	Key	Label	Start(s)	End(s)	Duration(s)
+1	Z	chew	2.33	2.63	0.30
+2	Z	chew	2.83	2.93	0.10
+3	Z	chew	3.04	3.14	0.10
+4	Z	chew	3.24	3.71	0.47
