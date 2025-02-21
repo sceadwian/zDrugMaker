@@ -9,33 +9,32 @@ class BehaviorTimer:
     A timer to record durations for which specific keys are held.
     The user is prompted for animal name and trial info before the timer starts.
     Key labels are read from zTimer.txt file.
-    Measured keys (by default: X, Z, M, K) are polled via the Windows API.
-    Press the quit key (default: Q) to end the session.
-    Press 'W' to pause/unpause the session.
+    Measured keys (by default: W, A, S, D) are polled via the Windows API.
+    Press the quit key (default: I) to end the session.
+    Press 'P' to pause/unpause the session.
     """
     
-class BehaviorTimer:
     def __init__(self, animal_name, trial_name, key_labels_file='zTimer.txt', 
-                 record_keys=None, quit_key='Q', pause_key='W',
+                 record_keys=None, quit_key='I', pause_key='P',
                  timeline_interval=0.05, dots_per_line=100):
-        # Previous initialization code remains the same
         self.animal_name = animal_name
         self.trial_name = trial_name
         self.key_labels = self.read_key_labels(key_labels_file)
+        # Use default record keys of W, A, S, D if none provided.
         if record_keys is None:
-            record_keys = list(self.key_labels.keys())
+            record_keys = ['W', 'A', 'S', 'D']
         self.record_keys = [key.upper() for key in record_keys]
         self.quit_key = quit_key.upper()
         self.pause_key = pause_key.upper()
         self.timeline_interval = timeline_interval
         self.dots_per_line = dots_per_line
 
-        # Add color codes for each key
+        # Update color codes for each record key (W, A, S, D)
         self.key_colors = {
-            'X': '\033[93m',  # Yellow
-            'Z': '\033[92m',  # Green
-            'M': '\033[94m',  # Blue
-            'K': '\033[91m',  # Red
+            'W': '\033[93m',  # Yellow
+            'A': '\033[92m',  # Green
+            'S': '\033[94m',  # Blue
+            'D': '\033[91m',  # Red
         }
         self.reset_color = '\033[0m'  # Reset color code
 
@@ -56,7 +55,6 @@ class BehaviorTimer:
 
         self.GetAsyncKeyState = ctypes.windll.user32.GetAsyncKeyState
 
-    # [Previous methods remain unchanged: read_key_labels, key_pressed]
     def read_key_labels(self, filename):
         """
         Read key labels from a text file. 
@@ -66,12 +64,9 @@ class BehaviorTimer:
         try:
             with open(filename, 'r') as f:
                 for line in f:
-                    # Strip whitespace and skip empty lines
                     line = line.strip()
                     if not line:
                         continue
-                    
-                    # Split into key and label
                     try:
                         key, label = line.split('=')
                         key = key.strip().upper()
@@ -82,13 +77,13 @@ class BehaviorTimer:
         except FileNotFoundError:
             print(f"Warning: Key labels file {filename} not found. Using default keys.")
         
-        # Default to uppercase keys if no labels found
+        # Default to WASD if no labels found.
         if not key_labels:
             key_labels = {
-                'X': 'twitchs',
-                'Z': 'chewing',
-                'M': 'freezng',
-                'K': ' active'
+                'W': 'forward',
+                'A': 'left',
+                'S': 'backward',
+                'D': 'right'
             }
         
         return key_labels
@@ -106,7 +101,6 @@ class BehaviorTimer:
         Returns the current pause state.
         """
         if not self.is_paused:
-            # Entering pause state
             print("\nSession paused")
             self.is_paused = True
             self.pause_start_time = time.time()
@@ -125,7 +119,6 @@ class BehaviorTimer:
                     self.current_event_start[key] = None
                     self.key_down[key] = False
         else:
-            # Resuming from pause
             print("\nSession resumed")
             self.is_paused = False
             pause_duration = time.time() - self.pause_start_time
@@ -146,10 +139,9 @@ class BehaviorTimer:
         self.segment_start_time = time.time()
         self.SEGMENT_DURATION = self.dots_per_line * self.timeline_interval
 
-        # Print initial instructions with key labels
         print(f"\nTimer started for animal '{self.animal_name}' and trial '{self.trial_name}'.")
         key_label_str = ", ".join([
-            f"{self.key_colors.get(key, '')}{key}{self.reset_color} = {self.key_labels[key]}"
+            f"{self.key_colors.get(key, '')}{key}{self.reset_color} = {self.key_labels.get(key, '')}"
             for key in self.record_keys
         ])
         print(f"Measuring keys: {key_label_str}")
@@ -235,7 +227,7 @@ class BehaviorTimer:
                     
                     if most_frequent[0] is not None and most_frequent[1] > 0:
                         key = most_frequent[0]
-                        behavior_label = f"{self.key_colors.get(key, '')}{self.key_labels[key]} ({key}){self.reset_color}"
+                        behavior_label = f"{self.key_colors.get(key, '')}{self.key_labels.get(key, '')} ({key}){self.reset_color}"
                     else:
                         behavior_label = "None"
                     
@@ -248,9 +240,6 @@ class BehaviorTimer:
 
         print("\n\nTimer stopped.")
 
-
-
-    # [Previous methods remain unchanged: save_log, _generate_visual_timeline]
     def save_log(self, log_dir='logs'):
         """
         Save a log file that summarizes the session and details each event,
@@ -261,10 +250,12 @@ class BehaviorTimer:
                 os.makedirs(log_dir)
 
             timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-            filename = os.path.join(log_dir, f"behavior_log_{timestamp}.txt")
+            sanitized_animal_name = "".join(c if c.isalnum() else "_" for c in self.animal_name)
+            sanitized_trial_name = "".join(c if c.isalnum() else "_" for c in self.trial_name)
+
+            filename = os.path.join(log_dir, f"behavior_log_{sanitized_animal_name}_{sanitized_trial_name}_{timestamp}.txt")
             session_duration = time.time() - self.start_time - self.total_pause_time
 
-            # Calculate total recorded time and event counts for each key
             total_recorded_time_by_key = {key: 0.0 for key in self.record_keys}
             count_by_key = {key: 0 for key in self.record_keys}
             for event in self.events:
@@ -272,7 +263,6 @@ class BehaviorTimer:
                 count_by_key[event['key']] += 1
 
             with open(filename, 'w', encoding='utf-8') as f:
-                # Session summary
                 f.write("Behavior Observation Log\n")
                 f.write(f"Animal: {self.animal_name}\n")
                 f.write(f"Trial: {self.trial_name}\n")
@@ -280,26 +270,23 @@ class BehaviorTimer:
                 f.write(f"Total Session Duration (excluding pauses): {session_duration:.2f} seconds\n")
                 f.write(f"Total Pause Time: {self.total_pause_time:.2f} seconds\n\n")
 
-                # Key events summary
                 f.write("Key events summary:\n")
                 for key in self.record_keys:
                     total_time = total_recorded_time_by_key[key]
                     count = count_by_key[key]
                     percentage = (total_time / session_duration * 100) if session_duration > 0 else 0
                     avg_time = total_time / count if count > 0 else 0
-                    f.write(f"  Key '{key}' ({self.key_labels[key]}): {count} events, "
+                    f.write(f"  Key '{key}' ({self.key_labels.get(key, '')}): {count} events, "
                             f"total held {total_time:.2f} seconds, "
                             f"average held {avg_time:.2f} seconds ({percentage:.2f}%)\n")
 
-                # Generate visual timeline
                 f.write("\nVisual Timeline:\n")
                 self._generate_visual_timeline(f, session_duration)
 
-                # Detailed event log
                 f.write("\nDetailed Event Log:\n")
                 f.write("Event#\tKey\tLabel\tStart(s)\tEnd(s)\tDuration(s)\n")
                 for i, event in enumerate(self.events, 1):
-                    f.write(f"{i}\t{event['key']}\t{self.key_labels[event['key']]}\t"
+                    f.write(f"{i}\t{event['key']}\t{self.key_labels.get(event['key'], '')}\t"
                             f"{event['start']:.2f}\t{event['end']:.2f}\t{event['duration']:.2f}\n")
 
             print(f"\n\nLog file saved as: {filename}")
@@ -319,7 +306,7 @@ class BehaviorTimer:
         file.write("Legend: '.' = no activity, letter = key pressed\n\n")
         
         for key in self.record_keys:
-            file.write(f"\n{key} ({self.key_labels[key]}):\n")
+            file.write(f"\n{key} ({self.key_labels.get(key, '')}):\n")
             
             for segment in range(num_segments):
                 segment_start = segment * SEGMENT_DURATION
@@ -355,24 +342,21 @@ class BehaviorTimer:
             file.write("\n")
 
 if __name__ == "__main__":
-    # Display a welcome message and an explanation of what the script does.
     welcome_message = (
         "Welcome to the Behavior Observation Timer!\n"
         "This tool allows you to record and analyze behavior by monitoring key presses.\n"
         "You will be prompted to enter the animal's name and the trial information.\n"
         "The script reads key labels from 'zTimer.txt' (or uses default labels if the file is not found).\n"
-        "It then starts monitoring specific keys (by default, X, Z, M, and K),\n"
+        "It then starts monitoring specific keys (by default, W, A, S, and D),\n"
         "and logs the duration each key is pressed. A visual timeline is displayed in real time,\n"
-        "and you can end the session by pressing the quit key (default: Q).\n"
+        "and you can end the session by pressing the quit key (default: I).\n"
         "After quitting, a detailed log file will be saved.\n"
     )
     print(welcome_message)
 
-    # Prompt the user for animal and trial information.
     animal_name = input("Enter animal name: ")
     trial_name = input("Enter trial name: ")
 
-    # Create and start the behavior timer.
     timer = BehaviorTimer(animal_name, trial_name)
     try:
         timer.start()
