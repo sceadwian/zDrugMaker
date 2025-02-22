@@ -249,6 +249,7 @@ class BehaviorTimer:
             if not os.path.exists(log_dir):
                 os.makedirs(log_dir)
 
+            # Generate a timestamp
             timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
             sanitized_animal_name = "".join(c if c.isalnum() else "_" for c in self.animal_name)
             sanitized_trial_name = "".join(c if c.isalnum() else "_" for c in self.trial_name)
