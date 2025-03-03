@@ -14,29 +14,30 @@ class BehaviorTimer:
     Press 'P' to pause/unpause the session.
     """
     
+    DEFAULT_RECORD_KEYS = ['W', 'A', 'S', 'D']
+    DEFAULT_QUIT_KEY = 'I'
+    DEFAULT_PAUSE_KEY = 'P'
+    TIMELINE_INTERVAL = 0.05
+    DOTS_PER_LINE = 100
+    SEGMENT_DURATION = 900  # 15 minutes in seconds
+    LINE_WIDTH = 100        # Characters per line
+
+    KEY_COLORS = {
+        'W': '\033[93m',  # Yellow
+        'A': '\033[92m',  # Green
+        'S': '\033[94m',  # Blue
+        'D': '\033[91m',  # Red
+    }
+    RESET_COLOR = '\033[0m'  # Reset color code
+
     def __init__(self, animal_name, trial_name, key_labels_file='zTimer.txt', 
-                 record_keys=None, quit_key='I', pause_key='P',
-                 timeline_interval=0.05, dots_per_line=100):
+                 record_keys=None, quit_key=DEFAULT_QUIT_KEY, pause_key=DEFAULT_PAUSE_KEY):
         self.animal_name = animal_name
         self.trial_name = trial_name
         self.key_labels = self.read_key_labels(key_labels_file)
-        # Use default record keys of W, A, S, D if none provided.
-        if record_keys is None:
-            record_keys = ['W', 'A', 'S', 'D']
-        self.record_keys = [key.upper() for key in record_keys]
+        self.record_keys = [key.upper() for key in (record_keys or self.DEFAULT_RECORD_KEYS)]
         self.quit_key = quit_key.upper()
         self.pause_key = pause_key.upper()
-        self.timeline_interval = timeline_interval
-        self.dots_per_line = dots_per_line
-
-        # Update color codes for each record key (W, A, S, D)
-        self.key_colors = {
-            'W': '\033[93m',  # Yellow
-            'A': '\033[92m',  # Green
-            'S': '\033[94m',  # Blue
-            'D': '\033[91m',  # Red
-        }
-        self.reset_color = '\033[0m'  # Reset color code
 
         self.start_time = None
         self.is_running = False
@@ -104,20 +105,7 @@ class BehaviorTimer:
             print("\nSession paused")
             self.is_paused = True
             self.pause_start_time = time.time()
-            # End any currently pressed keys
-            for key in self.record_keys:
-                if self.key_down[key] and self.current_event_start[key] is not None:
-                    elapsed = time.time() - self.start_time - self.total_pause_time
-                    end_time = elapsed
-                    duration = end_time - self.current_event_start[key]
-                    self.events.append({
-                        'key': key,
-                        'start': self.current_event_start[key],
-                        'end': end_time,
-                        'duration': duration
-                    })
-                    self.current_event_start[key] = None
-                    self.key_down[key] = False
+            self.end_current_events()
         else:
             print("\nSession resumed")
             self.is_paused = False
@@ -125,6 +113,24 @@ class BehaviorTimer:
             self.total_pause_time += pause_duration
             self.pause_start_time = None
         return self.is_paused
+
+    def end_current_events(self):
+        """
+        End any currently pressed keys.
+        """
+        elapsed = time.time() - self.start_time - self.total_pause_time
+        for key in self.record_keys:
+            if self.key_down[key] and self.current_event_start[key] is not None:
+                end_time = elapsed
+                duration = end_time - self.current_event_start[key]
+                self.events.append({
+                    'key': key,
+                    'start': self.current_event_start[key],
+                    'end': end_time,
+                    'duration': duration
+                })
+                self.current_event_start[key] = None
+                self.key_down[key] = False
 
     def start(self):
         """
@@ -137,11 +143,10 @@ class BehaviorTimer:
         
         self.current_segment_behaviors = defaultdict(int)
         self.segment_start_time = time.time()
-        self.SEGMENT_DURATION = self.dots_per_line * self.timeline_interval
 
         print(f"\nTimer started for animal '{self.animal_name}' and trial '{self.trial_name}'.")
         key_label_str = ", ".join([
-            f"{self.key_colors.get(key, '')}{key}{self.reset_color} = {self.key_labels.get(key, '')}"
+            f"{self.KEY_COLORS.get(key, '')}{key}{self.RESET_COLOR} = {self.key_labels.get(key, '')}"
             for key in self.record_keys
         ])
         print(f"Measuring keys: {key_label_str}")
@@ -168,16 +173,7 @@ class BehaviorTimer:
 
                 # Check if the quit key is pressed
                 if self.key_pressed(self.quit_vk):
-                    for key in self.record_keys:
-                        if self.key_down[key] and self.current_event_start[key] is not None:
-                            end_time = elapsed
-                            duration = end_time - self.current_event_start[key]
-                            self.events.append({
-                                'key': key,
-                                'start': self.current_event_start[key],
-                                'end': end_time,
-                                'duration': duration
-                            })
+                    self.end_current_events()
                     self.is_running = False
                     break
 
@@ -207,17 +203,12 @@ class BehaviorTimer:
 
                 # Build colored timeline marker
                 pressed_keys = [key for key in self.record_keys if self.key_down[key]]
-                if pressed_keys:
-                    marker = ''
-                    for key in pressed_keys:
-                        marker += f"{self.key_colors.get(key, '')}{key}{self.reset_color}"
-                else:
-                    marker = "."
+                marker = ''.join(f"{self.KEY_COLORS.get(key, '')}{key}{self.RESET_COLOR}" for key in pressed_keys) if pressed_keys else "."
                 print(marker, end="", flush=True)
                 self.dot_count += 1
 
                 # Print elapsed time and most frequent behavior
-                if self.dot_count % self.dots_per_line == 0:
+                if self.dot_count % self.DOTS_PER_LINE == 0:
                     minutes = int(elapsed // 60)
                     seconds = elapsed % 60
                     
@@ -227,7 +218,7 @@ class BehaviorTimer:
                     
                     if most_frequent[0] is not None and most_frequent[1] > 0:
                         key = most_frequent[0]
-                        behavior_label = f"{self.key_colors.get(key, '')}{self.key_labels.get(key, '')} ({key}){self.reset_color}"
+                        behavior_label = f"{self.KEY_COLORS.get(key, '')}{self.key_labels.get(key, '')} ({key}){self.RESET_COLOR}"
                     else:
                         behavior_label = "None"
                     
@@ -236,7 +227,7 @@ class BehaviorTimer:
                     
                     self.current_segment_behaviors.clear()
 
-            time.sleep(self.timeline_interval)
+            time.sleep(self.TIMELINE_INTERVAL)
 
         print("\n\nTimer stopped.")
 
@@ -298,10 +289,7 @@ class BehaviorTimer:
         """
         Generate a visual timeline with improved resolution for long experiments.
         """
-        SEGMENT_DURATION = 900  # 15 minutes in seconds
-        LINE_WIDTH = 100       # Characters per line
-        
-        num_segments = int(total_duration / SEGMENT_DURATION) + 1
+        num_segments = int(total_duration / self.SEGMENT_DURATION) + 1
         
         file.write("\nDetailed Visual Timeline (each line represents 15 minutes):\n")
         file.write("Legend: '.' = no activity, letter = key pressed\n\n")
@@ -310,25 +298,25 @@ class BehaviorTimer:
             file.write(f"\n{key} ({self.key_labels.get(key, '')}):\n")
             
             for segment in range(num_segments):
-                segment_start = segment * SEGMENT_DURATION
-                segment_end = min((segment + 1) * SEGMENT_DURATION, total_duration)
+                segment_start = segment * self.SEGMENT_DURATION
+                segment_end = min((segment + 1) * self.SEGMENT_DURATION, total_duration)
                 
-                timeline = ['.'] * LINE_WIDTH
+                timeline = ['.'] * self.LINE_WIDTH
                 
                 for event in self.events:
                     if event['key'] == key:
                         if (event['start'] <= segment_end and 
                             event['end'] >= segment_start):
                             start_pos = max(0, event['start'] - segment_start)
-                            end_pos = min(SEGMENT_DURATION, event['end'] - segment_start)
+                            end_pos = min(self.SEGMENT_DURATION, event['end'] - segment_start)
                             
-                            start_idx = int((start_pos / SEGMENT_DURATION) * LINE_WIDTH)
-                            end_idx = int((end_pos / SEGMENT_DURATION) * LINE_WIDTH)
+                            start_idx = int((start_pos / self.SEGMENT_DURATION) * self.LINE_WIDTH)
+                            end_idx = int((end_pos / self.SEGMENT_DURATION) * self.LINE_WIDTH)
                             
                             if end_idx <= start_idx:
                                 end_idx = start_idx + 1
                                 
-                            for idx in range(start_idx, min(end_idx, LINE_WIDTH)):
+                            for idx in range(start_idx, min(end_idx, self.LINE_WIDTH)):
                                 timeline[idx] = key
                 
                 start_min = int(segment_start / 60)
@@ -342,7 +330,7 @@ class BehaviorTimer:
             
             file.write("\n")
 
-if __name__ == "__main__":
+def main():
     welcome_message = (
         "Welcome to the Behavior Observation Timer!\n"
         "This tool allows you to record and analyze behavior by monitoring key presses.\n"
@@ -367,3 +355,6 @@ if __name__ == "__main__":
         timer.save_log()
         time.sleep(10)
         print("Program ended.")
+
+if __name__ == "__main__":
+    main()
