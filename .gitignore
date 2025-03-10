@@ -1,0 +1,6 @@
+# Ignore sensitive configuration files
+zFarseta_*
+#config.json
+
+# Ignore all log files
+#*.log
