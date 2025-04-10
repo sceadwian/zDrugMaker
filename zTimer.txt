@@ -1,4 +1,8 @@
 w = twitch
-a = freeze
-s = chew
-d = moving
+a = active
+s = freeze
+d = chew
+i = twitch2
+j = active2
+k = freeze2
+l = chew2

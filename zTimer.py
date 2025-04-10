@@ -426,7 +426,7 @@ def main():
     )
     print(welcome_message)
 
-    animal_name = input("Enter animal name: ")
+    animal_name = input("Enter animal name: ID1 ID2")
     trial_name = input("Enter trial name: ")
 
     timer = BehaviorTimer(animal_name, trial_name)

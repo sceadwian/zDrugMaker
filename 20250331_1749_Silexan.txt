@@ -1,5 +1,6 @@
 Date: 2025/03/31 - 17:08:16
 Calculation Type: Estimate Drug Amount
+Comments: 
 Estimated Drug Amount and Volumes
 ========================================
 Compound: Silexan
@@ -13,11 +14,14 @@ Volumes:
 - Oral (5 ml/kg): 14 ml
 - Mice (10 ml/kg): 28 ml
 ========================================
-
+11.2 mL for 4 groups of 350g rats
 ==================================================
+
+
 
 Date: 2025/03/31 - 17:25:58
 Calculation Type: Estimate Drug Amount
+Comments: 
 Estimated Drug Amount and Volumes
 ========================================
 Compound: Silexan
@@ -36,6 +40,7 @@ Volumes:
 
 Date: 2025/03/31 - 17:31:11
 Calculation Type: Estimate Drug Amount
+Comments: 
 Estimated Drug Amount and Volumes
 ========================================
 Compound: Silexan
@@ -54,6 +59,7 @@ Volumes:
 
 Date: 2025/03/31 - 17:32:01
 Calculation Type: Estimate Drug Amount
+Comments: 
 Estimated Drug Amount and Volumes
 ========================================
 Compound: Silexan
@@ -72,6 +78,7 @@ Volumes:
 
 Date: 2025/03/31 - 17:32:46
 Calculation Type: Estimate Drug Amount
+Comments: 
 Estimated Drug Amount and Volumes
 ========================================
 Compound: Silexan
@@ -90,6 +97,7 @@ Volumes:
 
 Date: 2025/03/31 - 17:33:19
 Calculation Type: Estimate Drug Amount
+Comments: 
 Estimated Drug Amount and Volumes
 ========================================
 Compound: Silexan
@@ -108,6 +116,7 @@ Volumes:
 
 Date: 2025/03/31 - 17:36:08
 Calculation Type: Estimate Drug Amount
+Comments: 
 Estimated Drug Amount and Volumes
 ========================================
 Compound: Silexan
@@ -126,6 +135,7 @@ Volumes:
 
 Date: 2025/03/31 - 17:36:28
 Calculation Type: Estimate Drug Amount
+Comments: 
 Estimated Drug Amount and Volumes
 ========================================
 Compound: Silexan
@@ -144,6 +154,7 @@ Volumes:
 
 Date: 2025/03/31 - 17:36:58
 Calculation Type: Estimate Drug Amount
+Comments: 
 Estimated Drug Amount and Volumes
 ========================================
 Compound: Silexan
@@ -162,6 +173,7 @@ Volumes:
 
 Date: 2025/03/31 - 17:37:03
 Calculation Type: Estimate Drug Amount
+Comments: 
 Estimated Drug Amount and Volumes
 ========================================
 Compound: Silexan
@@ -180,6 +192,7 @@ Volumes:
 
 Date: 2025/03/31 - 17:37:41
 Calculation Type: Estimate Drug Amount
+Comments: 
 Estimated Drug Amount and Volumes
 ========================================
 Compound: Silexan
@@ -198,6 +211,7 @@ Volumes:
 
 Date: 2025/03/31 - 17:38:03
 Calculation Type: Estimate Drug Amount
+Comments: 
 Estimated Drug Amount and Volumes
 ========================================
 Compound: Silexan
@@ -216,6 +230,7 @@ Volumes:
 
 Date: 2025/03/31 - 17:38:33
 Calculation Type: Estimate Drug Amount
+Comments: 
 Estimated Drug Amount and Volumes
 ========================================
 Compound: Silexan
@@ -232,21 +247,4 @@ Volumes:
 
 ==================================================
 
-Date: 2025/04/08 - 12:37:49
-Calculation Type: Estimate Drug Amount
-Estimated Drug Amount and Volumes
-========================================
-Compound: RTA 408
-BEW: 1
-Dose: 50 mg/kg
-========================================
-Drug amount needed: 240 mg
-========================================
-Volumes:
-- Rats (1 ml/kg): 4.8 ml
-- Oral (5 ml/kg): 24 ml
-- Mice (10 ml/kg): 48 ml
-========================================
-
-==================================================
 
