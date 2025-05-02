@@ -20,7 +20,7 @@ Welcome to Leo's Preclinical Pharmacology Companion Scripts! This collection of 
 
 7. **zTimer.py** - Behavioral Timer and Event Logger: This script allows researchers to track and log specific behavioral events during preclinical experiments. It monitors key presses associated with predefined behaviors, records event durations, and generates detailed logs with time block summaries for easy analysis. Features include a real-time visual timeline, pause/resume functionality, and customizable event tracking.
 
-8. **zChronoSplit_v1_0.py** – Chronological Event Splitter and Extractor:
+8. **zTimerOutput2Matcher3.py** – Chronological Event Splitter and Extractor:
 This script assists in organizing extracted event data from CSV files generated during preclinical EEG and behavioral studies. It removes redundant headers, checks for chronological consistency across events, and automatically separates the data into categorized CSV outputs based on event type and seizure labeling. The script also prompts users to assign animal IDs for more intuitive file naming and generates a detailed extraction report summarizing the process, including any detected timeline errors. It is designed to streamline the preprocessing of complex event tracking datasets.
 
 ## Usage
