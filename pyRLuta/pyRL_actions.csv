@@ -41,3 +41,5 @@ actionID,Name,DMG,BaseDMG,selfBUFF,selfDEBUFF,DEBUFF,Duration,Timing
 40,Eye of the Tiger,,5,AtkPw,,AtkSp,20,start
 41,Bleed,,30,,,HP,20,start
 42,Freeze,,20,,,AtkSp,10,start
+43,Deathclaw,AtkPw,30,,,,,
+44,Stink,MgcPw,10,,,,,

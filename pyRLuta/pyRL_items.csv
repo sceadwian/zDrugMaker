@@ -69,3 +69,11 @@ ItemID,Slot,Name,Bonus1id,Bonus1add,Bonus2id,Bonus2add,ActionID,Action,SkillChec
 68,6,Holy Mace,BLS,4,STR,1,27,Smite,BLS,1,min,magic,-
 69,7,Symbol of Faith,BLS,4,WIL,1,34,Heal,BLS,1,min,magic,20
 70,8,Ring of Protection,FOR,2,BLS,2,31,Soothe,FOR,1,min,magic,20
+71,1,Touque,PSY,1,STA,1,-,-,STA,1,min,-,-
+72,2,Shirt,BAL,1,STA,1,-,-,STA,1,min,-,-
+73,3,Pants,MAN,1,STA,1,-,-,STA,1,min,-,-
+74,4,Boots,DEX,1,STA,1,-,-,STA,1,min,-,-
+75,5,Pack of Gum,CUR,1,FOC,1,10,Shield Slam,STA,1,min,magic,-
+76,6,Hard Stick,STR,1,WIL,1,1,Punch,STA,1,min,melee,-
+77,7,String,BLS,1,SUM,1,31,Soothe,STA,1,min,magic,20
+78,8,PopCap,ALC,1,AGI,1,33,Feint,STA,1,min,melee,20
