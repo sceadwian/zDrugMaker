@@ -1,2 +1,9 @@
 timestamp,toon_name,level,kills,damage_done,damage_received,item1,item2,item3,item4,item5,item6,item7,item8,STA,STR,AGI,DEX,HIT,BAL,WGT,HEI,INT,WIL,FOR,FOC,PSY,ARC,BLS,MAN,ALC,CUR,COR,SUM,HEX
 2025-05-16 10:20:01,Elliot,1,1,157,136,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
+2025-05-16 14:06:16,test1,1,1,157,44,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 14:06:56,test1,1,1,157,37,None,None,None,None,None,None,None,None,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 14:08:03,test2,1,1,157,157,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,10,10,10,10,10,10,50,150,10,10,10,10,10,10,10,10,10,10,10,10,10
+2025-05-16 14:09:01,test2,1,1,157,110,None,None,None,None,None,None,None,None,10,10,10,10,10,10,50,150,10,10,10,10,10,10,10,10,10,10,10,10,10
+2025-05-16 14:11:43,test3,1,1,157,144,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,11,11,11,11,11,11,50,150,10,10,10,10,10,10,10,10,10,11,11,11,11
+2025-05-16 16:10:48,test4,1,0,58,110,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,5,5,5,5,5,5,50,150,5,5,5,5,5,5,5,5,5,5,5,5,5
+2025-05-16 16:11:55,test1,1,1,157,50,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15

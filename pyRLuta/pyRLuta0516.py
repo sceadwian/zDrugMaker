@@ -535,12 +535,42 @@ def initialize_game_data():
     for action_id, action_data in raw_actions.items():
         ALL_ACTIONS[action_id] = Action(action_data)
 
-    TOONS_DATA = load_csv_data(CSV_FILES["toons"], key_column='Name')
-#    print("TOONS_DATA loaded:", TOONS_DATA)  # Add this for debugging
-    print("DEBUG TOONS_DATA loaded:", TOONS_DATA)
+    # --- Start of Added/Modified Section ---
+    essential_data_loaded_successfully = True
+    error_messages = []
 
-    NPCS_DATA = load_csv_data(CSV_FILES["npcs"], key_column='npcID') # npcID should be int after loading if numeric
+    if not ALL_ITEMS:
+        error_messages.append("FATAL ERROR: Essential item data (pyRL_items.csv) not found or is empty.")
+        essential_data_loaded_successfully = False
+    if not ALL_ACTIONS:
+        error_messages.append("FATAL ERROR: Essential action data (pyRL_actions.csv) not found or is empty.")
+        essential_data_loaded_successfully = False
+
+    TOONS_DATA = load_csv_data(CSV_FILES["toons"], key_column='Name')
+    if not TOONS_DATA:
+        error_messages.append("FATAL ERROR: Essential character template data (pyRL_toons.csv) not found or is empty.")
+        essential_data_loaded_successfully = False
+    # print("DEBUG TOONS_DATA loaded:", TOONS_DATA) # Your existing debug line
+
+    NPCS_DATA = load_csv_data(CSV_FILES["npcs"], key_column='npcID') 
+    if not NPCS_DATA:
+        error_messages.append("FATAL ERROR: Essential NPC data (pyRL_npcs.csv) not found or is empty.")
+        essential_data_loaded_successfully = False
     
+    if not essential_data_loaded_successfully:
+        print("\n--- CRITICAL DATA LOADING FAILURE ---")
+        for msg in error_messages:
+            print(msg)
+        print("The game cannot continue without these essential data files.")
+        print("Please ensure the CSV files are present in the same directory as the script and are correctly formatted.")
+        
+        # If on posix, ensure tty is restored before exiting, as _init_tty might have been called.
+        # This is a safeguard, though typically initialize_game_data runs before interactive parts.
+        if os.name == 'posix' and _old_settings_tty is not None: # Check if tty was ever changed
+            _restore_tty_settings_non_blocking()
+        sys.exit(1) # Exit with a non-zero status code to indicate an error
+    # --- End of Added/Modified Section ---
+        
     raw_saved_chars = load_csv_data(CSV_FILES["saved"]) # List of dicts
     SAVED_CHARS_DATA = [char_row for char_row in raw_saved_chars if char_row]
 
