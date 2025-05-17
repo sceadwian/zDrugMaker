@@ -792,66 +792,64 @@ def resolve_attack(attacker, target, action_id):
                 add_to_combat_log(f"{item_in_slot.name} is now on cooldown ({item_in_slot.cooldown_time}s).")
 
 def handle_loot_drop(player, defeated_npc):
+    # Log defeat and grant XP
     add_to_combat_log(f"{player.name} defeated {defeated_npc.name}!")
-    xp_yield = defeated_npc.npc_data_source.get('XPYield', 0) if defeated_npc.npc_data_source.get('XPYield') is not None else 0
+    xp_yield = defeated_npc.npc_data_source.get('XPYield', 0) or 0
     player.xp += xp_yield
     add_to_combat_log(f"Gained {xp_yield} XP. Total XP: {player.xp}")
 
-    dropped_items_this_fight = []
-    for i in range(1, 6):
-        item_key_in_npc = f"Item{i}ID"
-        item_id_on_npc = defeated_npc.npc_data_source.get(item_key_in_npc)
-        if not item_id_on_npc: continue
+    # Build the drop table (3 commons, 1 rare, 1 epic)
+    drop_keys = [f"Item{i}ID" for i in range(1, 6)]
+    item_ids  = [defeated_npc.npc_data_source.get(key) for key in drop_keys]
+    weights   = [30, 30, 30, 8, 2]  # must sum to 100
 
-        drop_chance_percent = 0
-        if i <= 3: drop_chance_percent = 30 # Common as per prompt
-        elif i == 4: drop_chance_percent = 8  # Uncommon
-        elif i == 5: drop_chance_percent = 2  # Rare
-        
-        if random.random() * 100 < drop_chance_percent:
-            if item_id_on_npc in ALL_ITEMS:
-                 dropped_items_this_fight.append(ALL_ITEMS[item_id_on_npc])
+    # Make one weighted choice
+    chosen_id = random.choices(item_ids, weights=weights, k=1)[0]
 
-    if not dropped_items_this_fight:
-        add_to_combat_log("No items dropped.")
+    # Validate the drop
+    if not chosen_id or chosen_id not in ALL_ITEMS:
+        add_to_combat_log("No valid loot dropped.")
         return
 
-    for dropped_item_blueprint in dropped_items_this_fight:
-        # Create a new instance for the player from the blueprint
-        dropped_item_instance = Item(dropped_item_blueprint.__dict__)
+    # Instantiate the dropped item
+    blueprint      = ALL_ITEMS[chosen_id]
+    dropped_item   = Item(blueprint.__dict__)
+    slot_name      = SLOT_NAMES.get(dropped_item.slot, "Unknown")
+    add_to_combat_log(f"{defeated_npc.name} dropped: {dropped_item.name} (Slot: {slot_name})!")
 
-        add_to_combat_log(f"{defeated_npc.name} dropped: {dropped_item_instance.name} (Slot: {SLOT_NAMES.get(dropped_item_instance.slot, 'Unknown')})!")
+    # Check equip requirements
+    if not player.can_equip_item(dropped_item):
+        req_attr = dropped_item.skill_check_attr
+        req_val  = dropped_item.skill_check_amount
+        add_to_combat_log(
+            f"You don't meet requirements for {dropped_item.name} "
+            f"({req_attr} ≥ {req_val}). It is discarded."
+        )
+        return
 
-        can_equip_now = player.can_equip_item(dropped_item_instance)
-        
-        if not can_equip_now:
-            # "If the roll is an item that the player cannot equip then roll again until the drop can be equipped."
-            # This rule is complex with multiple independent drops.
-            # Simplification: Inform player they can't equip THIS specific item.
-            # A true "roll again" would need to pick another valid item from NPC's loot table or global list.
-            # For now, we just tell them and they don't get this particular non-equippable item from this drop instance.
-            add_to_combat_log(f"You don't meet requirements for {dropped_item_instance.name} ({dropped_item_instance.skill_check_attr} {dropped_item_instance.skill_check_amount}+). It is discarded.")
-            continue 
+    # Prompt the player to equip
+    current = player.equipped_items.get(dropped_item.slot)
+    current_name = current.name if current else "Nothing"
+    print(f"\nDo you want to equip {dropped_item.name} (Slot {slot_name})?")
+    print(f"It will replace: {current_name}.")
+    print(f"New item bonuses: {dropped_item.bonus1_id} +{dropped_item.bonus1_add}, "
+          f"{dropped_item.bonus2_id} +{dropped_item.bonus2_add}")
+    if current:
+        print(f"Old item bonuses: {current.bonus1_id} +{current.bonus1_add}, "
+              f"{current.bonus2_id} +{current.bonus2_add}")
 
-        # Offer to equip
-        current_equipped_item = player.equipped_items.get(dropped_item_instance.slot)
-        current_item_name = current_equipped_item.name if current_equipped_item else "Nothing"
-        
-        print(f"\nDo you want to equip {dropped_item_instance.name} (Slot {SLOT_NAMES.get(dropped_item_instance.slot)})?")
-        print(f"It will replace: {current_item_name}.")
-        print(f"New item stats: Bonuses {dropped_item_instance.bonus1_id}: {dropped_item_instance.bonus1_add}, {dropped_item_instance.bonus2_id}: {dropped_item_instance.bonus2_add}")
-        if current_equipped_item:
-            print(f"Old item stats: Bonuses {current_equipped_item.bonus1_id}: {current_equipped_item.bonus1_add}, {current_equipped_item.bonus2_id}: {current_equipped_item.bonus2_add}")
-        
-        if os.name == 'posix': _restore_tty_settings_non_blocking()
-        equip_choice_idx = display_options(["Yes", "No"], "Equip it?")
-        if os.name == 'posix': _init_tty_for_input_non_blocking()
+    if os.name == 'posix':
+        _restore_tty_settings_non_blocking()
+    equip_choice = display_options(["Yes", "No"], "Equip it?")
+    if os.name == 'posix':
+        _init_tty_for_input_non_blocking()
 
-        if equip_choice_idx == 0: # Yes
-            player.equip_item(dropped_item_instance, dropped_item_instance.slot)
-            add_to_combat_log(f"Equipped {dropped_item_instance.name}.")
-        else:
-            add_to_combat_log(f"Kept {current_item_name} instead of {dropped_item_instance.name}.")
+    if equip_choice == 0:
+        player.equip_item(dropped_item, dropped_item.slot)
+        add_to_combat_log(f"Equipped {dropped_item.name}.")
+    else:
+        add_to_combat_log(f"Kept {current_name} instead of {dropped_item.name}.")
+
 
 
 def save_player_character(player):
