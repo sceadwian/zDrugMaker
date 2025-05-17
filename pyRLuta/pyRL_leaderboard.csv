@@ -48,3 +48,51 @@ timestamp,toon_name,level,kills,damage_done,damage_received,item1,item2,item3,it
 2025-05-16 22:28:13,Elliot,1,1,206,149,Iron Helmet,Robe,Sorcerer Leggings,None,Crystal Orb,Silver Dagger,None,Ring of Swiftness,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
 2025-05-16 22:28:45,Elliot,1,1,157,41,Iron Helmet,Robe,Sorcerer Leggings,None,Crystal Orb,Silver Dagger,None,Ring of Swiftness,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
 2025-05-16 22:30:49,Elliot,1,1,157,134,Iron Helmet,Robe,Sorcerer Leggings,None,Crystal Orb,Silver Dagger,None,Ring of Swiftness,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
+2025-05-16 22:44:41,Zoah,1,1,157,55,Iron Helmet,None,None,None,None,None,None,None,12,14,10,9,16,11,68,168,15,12,13,11,11,11,13,4,10,7,5,6,10
+2025-05-16 22:45:00,Zoah,1,1,66,26,Iron Helmet,None,None,None,None,None,Shitty Necklace,None,12,14,10,9,16,11,68,168,15,12,13,11,11,11,13,4,10,7,5,6,10
+2025-05-16 22:46:57,Zoah,1,1,148,44,Iron Helmet,None,None,None,Snakey Stick,None,Shitty Necklace,None,12,14,10,9,16,11,68,168,15,12,13,11,11,11,13,4,10,7,5,6,10
+2025-05-16 22:47:43,Zoah,1,1,157,70,Iron Helmet,Iron Breastplate,None,None,Snakey Stick,None,Shitty Necklace,None,12,14,10,9,16,11,68,168,15,12,13,11,11,11,13,4,10,7,5,6,10
+2025-05-16 22:51:43,Zoah,1,1,66,44,Iron Helmet,Iron Breastplate,None,None,Snakey Stick,None,Shitty Necklace,None,12,14,10,9,16,11,68,168,15,12,13,11,11,11,13,4,10,7,5,6,10
+2025-05-16 22:53:40,Zoah,1,1,182,166,Unknown Item,Steel Platebody,None,None,Unknown Item,None,Unknown Item,None,12,14,10,9,16,11,68,168,15,12,13,11,11,11,13,4,10,7,5,6,10
+2025-05-16 22:54:36,Zoah,1,1,182,131,Unknown Item,Steel Platebody,None,None,Unknown Item,None,Unknown Item,None,12,14,10,9,16,11,68,168,15,12,13,11,11,11,13,4,10,7,5,6,10
+2025-05-16 22:55:37,Zoah,1,1,100,44,None,Unknown Item,None,None,None,None,None,Ring of Swiftness,12,14,10,9,16,11,68,168,15,12,13,11,11,11,13,4,10,7,5,6,10
+2025-05-16 22:57:00,Zoah,1,1,151,71,Witch Hat,Unknown Item,None,None,None,None,None,Ring of Swiftness,12,14,10,9,16,11,68,168,15,12,13,11,11,11,13,4,10,7,5,6,10
+2025-05-16 22:57:49,Zoah,1,1,182,108,Witch Hat,Unknown Item,None,None,None,Short Sword,None,Ring of Swiftness,12,14,10,9,16,11,68,168,15,12,13,11,11,11,13,4,10,7,5,6,10
+2025-05-16 23:00:18,Zoah,1,1,157,145,Unknown Item,Iron Breastplate,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,12,14,10,9,16,11,68,168,15,12,13,11,11,11,13,4,10,7,5,6,10
+2025-05-16 23:01:08,Zoah,1,1,182,121,Unknown Item,Iron Breastplate,Unknown Item,Unknown Item,Unknown Item,Warhammer,Unknown Item,Unknown Item,12,14,10,9,16,11,68,168,15,12,13,11,11,11,13,4,10,7,5,6,10
+2025-05-16 23:02:02,Zoah,1,1,182,42,Unknown Item,Iron Breastplate,Unknown Item,Unknown Item,Unknown Item,Short Sword,Unknown Item,Unknown Item,12,14,10,9,16,11,68,168,15,12,13,11,11,11,13,4,10,7,5,6,10
+2025-05-16 23:03:02,Zoah,1,1,182,106,Steel Helm,Iron Breastplate,Unknown Item,Unknown Item,Unknown Item,Short Sword,Unknown Item,Unknown Item,12,14,10,9,16,11,68,168,15,12,13,11,11,11,13,4,10,7,5,6,10
+2025-05-16 23:05:11,test1,1,1,157,22,Iron Helmet,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:05:56,test1,1,1,157,70,Iron Helmet,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:06:37,test1,1,1,169,82,Iron Helmet,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Silver Dagger,Unknown Item,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:07:11,test1,1,1,157,43,Iron Helmet,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Silver Dagger,Unknown Item,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:07:43,test1,1,1,182,29,Steel Helm,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Silver Dagger,Unknown Item,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:08:14,test1,1,1,182,27,Steel Helm,Steel Platebody,Unknown Item,Unknown Item,Unknown Item,Silver Dagger,Unknown Item,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:08:59,test1,1,1,182,35,Steel Helm,Steel Platebody,Unknown Item,Unknown Item,Unknown Item,Warhammer,Unknown Item,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:09:41,test1,1,1,182,75,Steel Helm,Steel Platebody,Unknown Item,Unknown Item,Unknown Item,Short Sword,Unknown Item,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:10:30,test1,1,1,182,98,Steel Helm,Steel Platebody,Unknown Item,Unknown Item,Unknown Item,Short Sword,Unknown Item,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:11:04,test1,1,1,182,19,Steel Helm,Steel Platebody,Unknown Item,Unknown Item,Unknown Item,Short Sword,Unknown Item,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:11:36,test1,1,1,182,55,Steel Helm,Steel Platebody,Unknown Item,Unknown Item,Unknown Item,Short Sword,Unknown Item,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:12:11,test1,1,1,182,23,Steel Helm,Steel Platebody,Unknown Item,Unknown Item,Unknown Item,Short Sword,Unknown Item,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:12:51,test1,1,1,157,38,Steel Helm,Iron Breastplate,Unknown Item,Unknown Item,Unknown Item,Short Sword,Unknown Item,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:13:19,test1,1,1,66,46,Leather Cap,Iron Breastplate,Unknown Item,Unknown Item,Unknown Item,Short Sword,Unknown Item,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:13:37,test1,1,1,123,8,Leather Cap,Iron Breastplate,Leather Breeches,Unknown Item,Unknown Item,Short Sword,Unknown Item,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:14:16,test1,1,1,151,46,Leather Cap,Iron Breastplate,Leather Breeches,Unknown Item,Unknown Item,Wooden Stick,Unknown Item,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:16:32,test1,1,1,169,38,Leather Cap,Iron Breastplate,Leather Breeches,Unknown Item,Unknown Item,Wooden Stick,Pendant of Focus,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:18:15,test1,1,1,206,195,Leather Cap,Iron Breastplate,Leather Breeches,Unknown Item,Unknown Item,Wooden Stick,Pendant of Focus,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:19:57,test1,1,1,182,63,Steel Helm,Iron Breastplate,Leather Breeches,Unknown Item,Unknown Item,Wooden Stick,Pendant of Focus,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:20:25,test1,1,1,182,47,Steel Helm,Iron Breastplate,Leather Breeches,Unknown Item,Unknown Item,Wooden Stick,Pendant of Focus,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:21:02,test1,1,1,182,40,Steel Helm,Iron Breastplate,Leather Breeches,Unknown Item,Unknown Item,Short Sword,Pendant of Focus,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:21:40,test1,1,1,123,25,Steel Helm,Iron Breastplate,Leather Breeches,Mystic Boots,Unknown Item,Short Sword,Pendant of Focus,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:22:15,test1,1,1,182,14,Steel Helm,Steel Platebody,Leather Breeches,Mystic Boots,Unknown Item,Short Sword,Pendant of Focus,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:22:53,test1,1,1,182,51,Steel Helm,Steel Platebody,Leather Breeches,Mystic Boots,Unknown Item,Short Sword,Pendant of Focus,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:23:32,test1,1,1,151,71,Steel Helm,Steel Platebody,Leather Breeches,Mystic Boots,Unknown Item,Short Sword,Pendant of Focus,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:24:18,test1,1,1,206,59,Steel Helm,Steel Platebody,Leather Breeches,Mystic Boots,Unknown Item,Short Sword,Pendant of Focus,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:25:04,test1,1,1,206,133,Steel Helm,Steel Platebody,Leather Breeches,Mystic Boots,Unknown Item,Short Sword,Pendant of Focus,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:25:51,test1,1,1,206,155,Steel Helm,Steel Platebody,Leather Breeches,Mystic Boots,Unknown Item,Short Sword,Pendant of Focus,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-16 23:26:18,test1,1,1,182,27,Steel Helm,Steel Platebody,Leather Breeches,Mystic Boots,Unknown Item,Short Sword,Pendant of Focus,Unknown Item,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-17 09:01:01,test1,1,1,100,20,Unknown Item,Unknown Item,Unknown Item,Unknown Item,None,Unknown Item,Unknown Item,Ring of Swiftness,15,15,15,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-17 09:01:51,Elliot,1,1,148,72,Unknown Item,None,Unknown Item,Unknown Item,Snakey Stick,Unknown Item,None,Unknown Item,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
+2025-05-17 09:02:57,Elliot,1,1,157,74,Iron Helmet,None,Unknown Item,Unknown Item,Snakey Stick,Unknown Item,None,Unknown Item,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
+2025-05-17 09:03:37,Elliot,1,1,123,18,Iron Helmet,None,Unknown Item,Mystic Boots,Snakey Stick,Unknown Item,None,Unknown Item,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
+2025-05-17 09:04:11,Elliot,1,1,182,70,Iron Helmet,None,Unknown Item,Mystic Boots,Snakey Stick,Unknown Item,None,Unknown Item,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
