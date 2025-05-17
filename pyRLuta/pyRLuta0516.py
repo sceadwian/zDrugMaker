@@ -3,6 +3,7 @@ import os
 import sys
 import time
 import random
+import copy
 
 # For non-blocking input on POSIX systems
 if os.name == 'posix':
@@ -812,8 +813,8 @@ def handle_loot_drop(player, defeated_npc):
         return
 
     # Instantiate the dropped item
-    blueprint      = ALL_ITEMS[chosen_id]
-    dropped_item   = Item(blueprint.__dict__)
+    blueprint    = ALL_ITEMS[chosen_id]
+    dropped_item = copy.deepcopy(blueprint)
     slot_name      = SLOT_NAMES.get(dropped_item.slot, "Unknown")
     add_to_combat_log(f"{defeated_npc.name} dropped: {dropped_item.name} (Slot: {slot_name})!")
 
