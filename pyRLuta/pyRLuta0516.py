@@ -855,13 +855,11 @@ def handle_loot_drop(player, defeated_npc):
 
 
 def save_player_character(player):
-    global SAVED_CHARS_DATA # Ensure we're modifying the global list
+    global SAVED_CHARS_DATA
 
-    player_save_data = {'Name': player.name} # Name is primary for TOONS_DATA, good to have
-    # SaveID needs to be first for consistency if we treat it as a primary key
-    
-    add_new_save = False
-    if player.save_id is None: # New character or default character being saved first time
+    # 1. Determine SaveID (generate if new)
+    is_new_character_entry = False
+    if player.save_id is None:
         max_id = 0
         if SAVED_CHARS_DATA:
             for char_d in SAVED_CHARS_DATA:
@@ -869,43 +867,49 @@ def save_player_character(player):
                 if isinstance(sid, (int, str)) and str(sid).isdigit():
                     max_id = max(max_id, int(sid))
         player.save_id = max_id + 1
-        add_new_save = True
+        is_new_character_entry = True
         print(f"Assigning new SaveID {player.save_id} to {player.name}.")
-    
-    player_save_data['SaveID'] = player.save_id # Ensure SaveID is in the dict
 
+    # 2. Prepare the complete data dictionary for the current player
+    current_player_data_to_save = {'SaveID': player.save_id, 'Name': player.name}
     for attr in ATTRIBUTES:
-        player_save_data[attr] = player.base_attributes.get(attr, 0)
+        current_player_data_to_save[attr] = player.base_attributes.get(attr, 0)
     for i in range(1, 9):
         item = player.equipped_items.get(i)
-        player_save_data[f'Slot{i}'] = item.id if item else None # Store item ID
-    player_save_data['XP'] = player.xp
+        current_player_data_to_save[f'Slot{i}'] = item.id if item else None
+    current_player_data_to_save['XP'] = player.xp
 
-    updated_saves_list = []
-    found_and_updated = False
-    if not add_new_save:
+    # 3. Build the new list of all saved characters
+    new_full_saves_list = []
+    character_was_updated_in_list = False
+    
+    if not is_new_character_entry: # If updating an existing character
         for char_d in SAVED_CHARS_DATA:
-            # Compare by SaveID
             if str(char_d.get('SaveID')) == str(player.save_id):
-                updated_saves_list.append(player_save_data) # Replace with new data
-                found_and_updated = True
+                new_full_saves_list.append(current_player_data_to_save) # Use updated data
+                character_was_updated_in_list = True
             else:
-                updated_saves_list.append(char_d) # Keep existing
-    
-    if add_new_save or not found_and_updated:
-        updated_saves_list.append(player_save_data)
+                new_full_saves_list.append(char_d) # Keep other character's data
+    else: # If it's a brand new character entry, start with existing data
+        new_full_saves_list = list(SAVED_CHARS_DATA) # Make a copy
 
-    SAVED_CHARS_DATA = updated_saves_list # Update in-memory list
+    # 4. Add the character if it's new, or if it was supposed to be an update but wasn't found
+    if is_new_character_entry:
+        new_full_saves_list.append(current_player_data_to_save)
+    elif not character_was_updated_in_list: # Was an update, but ID not found in list
+        # This implies the save_id existed on the player object but not in SAVED_CHARS_DATA.
+        # Add it to ensure it's saved.
+        new_full_saves_list.append(current_player_data_to_save)
+        
+    SAVED_CHARS_DATA = new_full_saves_list
 
-    # Define fieldnames ensuring SaveID is first, then Name, then others
+    # 5. Write to CSV
     fieldnames = ['SaveID', 'Name'] + ATTRIBUTES + [f'Slot{i}' for i in range(1,9)] + ['XP']
-    
     try:
         with open(CSV_FILES["saved"], 'w', newline='', encoding='utf-8') as f:
-            writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction='ignore') # Ignore extra fields not in header
+            writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction='ignore')
             writer.writeheader()
-            for row_data in SAVED_CHARS_DATA:
-                writer.writerow(row_data)
+            writer.writerows(SAVED_CHARS_DATA) # writerows expects a list of dicts
         add_to_combat_log(f"Character {player.name} saved (ID: {player.save_id}).")
     except Exception as e:
         add_to_combat_log(f"Error saving character: {e}")
@@ -1073,46 +1077,46 @@ def combat_loop(player, opponent):
 
 
 def main_game_loop():
-    global source_was_default_and_we_want_to_save # Make sure to use the global
-
+    # global source_was_default_and_we_want_to_save # This variable seems unused or its intent misaligned.
+                                                  # Player save decisions should be based on player.save_id state.
     initialize_game_data()
     
-    while True:
-        player, is_saved_char = select_character()
-        if not player:
+    while True: # Outer loop: Character Selection / Exit
+        current_player, is_saved_char = select_character()
+        if not current_player:
             print("Failed to select a character. Exiting game.")
-            break
-        
-        source_was_default_and_we_want_to_save = not is_saved_char
+            break # Exit outer loop, and thus game
 
-        opponent = select_opponent()
-        if not opponent:
-            print("Failed to select an opponent. Returning to character selection.")
-            continue # Loop back to character selection
+        # source_was_default_and_we_want_to_save = not is_saved_char # If needed, manage here
 
-        combat_loop(player, opponent)
+        while True: # Inner loop: Combat with current_player / Change Character / Exit Game
+            opponent = select_opponent()
+            if not opponent:
+                print("Failed to select an opponent. Returning to character selection.")
+                break # Exit inner loop, go back to select_character()
 
-        # After combat, before next action choice, restore terminal for input()
-        if os.name == 'posix': _restore_tty_settings_non_blocking()
-        print("\nWhat would you like to do next?")
-        next_action_idx = display_options(["Fight Again (Same Character)", "Change Character", "Exit Game"])
-        # Re-enable non-blocking for game loop if continuing
-        if os.name == 'posix' and next_action_idx != 2 : _init_tty_for_input_non_blocking()
+            combat_loop(current_player, opponent) # Pass current_player
 
+            if os.name == 'posix': _restore_tty_settings_non_blocking()
+            print("\nWhat would you like to do next?")
+            next_action_idx = display_options(["Fight Again (Same Character)", "Change Character", "Exit Game"])
+            if os.name == 'posix' and next_action_idx != 2: _init_tty_for_input_non_blocking()
 
-        if next_action_idx == 0: # Fight Again
-            player.current_hp = player.max_hp
-            player.attack_bar_progress = 0
-            player.active_effects.clear()
-            for item_id_key in list(player.item_cooldowns.keys()): player.item_cooldowns[item_id_key] = 0
-            player.update_stats_and_effects()
-            # player object persists with XP, items etc.
-            continue
-        elif next_action_idx == 1: # Change Character
-            continue
-        else: # Exit
-            print("Thanks for playing!")
-            break
+            if next_action_idx == 0: # Fight Again
+                current_player.current_hp = current_player.max_hp
+                current_player.attack_bar_progress = 0
+                current_player.active_effects.clear()
+                for item_id_key in list(current_player.item_cooldowns.keys()): 
+                    current_player.item_cooldowns[item_id_key] = 0
+                current_player.update_stats_and_effects()
+                # current_player object persists.
+                # The 'continue' will restart the inner loop, prompting for a new opponent.
+                continue # Restart inner loop (select opponent, then fight)
+            elif next_action_idx == 1: # Change Character
+                break # Exit inner loop, will go to outer loop's select_character()
+            else: # Exit Game (next_action_idx == 2)
+                print("Thanks for playing!")
+                return # Exit main_game_loop entirely
 
 if __name__ == "__main__":
     if os.name == 'posix':
