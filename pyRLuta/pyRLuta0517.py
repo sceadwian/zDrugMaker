@@ -251,21 +251,30 @@ class Entity:
         self.text_win = ""
 
     def load_char_data(self, char_data_dict, is_saved_char=False):
-        self.name = char_data_dict.get('Name', 'Unnamed Character') # Ensure name is set
+        # Basic stats & name
+        self.name = char_data_dict.get('Name', 'Unnamed Character')
         for attr in ATTRIBUTES:
-            self.base_attributes[attr] = char_data_dict.get(attr, 0) if char_data_dict.get(attr) is not None else 0
-        
-        if is_saved_char:
-            # SaveID is the first column, but DictReader uses header names.
-            # Assuming 'SaveID' is the actual column name in pyRL_saved.csv
-            self.save_id = char_data_dict.get('SaveID') 
-            self.xp = char_data_dict.get('XP', 0) if char_data_dict.get('XP') is not None else 0
+            self.base_attributes[attr] = (
+                char_data_dict.get(attr, 0)
+                if char_data_dict.get(attr) is not None else 0
+            )
 
+        # Saved-character bookkeeping
+        if is_saved_char:
+            self.save_id = char_data_dict.get('SaveID')
+            self.xp = (
+                char_data_dict.get('XP', 0)
+                if char_data_dict.get('XP') is not None else 0
+            )
+
+        # Equip each slot by deep-copying the Item instance
         for i in range(1, 9):
             item_id_val = char_data_dict.get(f'Slot{i}')
             if item_id_val is not None and item_id_val in ALL_ITEMS:
-                self.equipped_items[i] = Item(ALL_ITEMS[item_id_val].__dict__) # Create new instance
-        
+                # Clone the original Item so all its data comes along
+                self.equipped_items[i] = copy.deepcopy(ALL_ITEMS[item_id_val])
+
+        # Recalculate derived stats (with gear bonuses) and HP
         self.update_stats_and_effects()
         self.current_hp = self.max_hp
 
