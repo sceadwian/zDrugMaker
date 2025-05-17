@@ -31,3 +31,20 @@ timestamp,toon_name,level,kills,damage_done,damage_received,item1,item2,item3,it
 2025-05-16 21:37:33,Elliot,1,1,169,68,Iron Helmet,Unknown Item,Iron Leggings,Sandals,Wooden Buckler,Short Sword,Unknown Item,Ring of Intellect,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
 2025-05-16 21:37:56,Elliot,1,1,148,26,Iron Helmet,Unknown Item,Iron Leggings,Sandals,Wooden Buckler,Short Sword,Unknown Item,Ring of Intellect,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
 2025-05-16 21:38:27,Elliot,1,1,123,21,Iron Helmet,Unknown Item,Iron Leggings,Sandals,Wooden Buckler,Short Sword,Unknown Item,Ring of Intellect,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
+2025-05-16 22:19:44,Elliot,1,1,157,127,Iron Helmet,None,None,None,None,None,None,None,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
+2025-05-16 22:20:27,Elliot,1,1,157,126,Iron Helmet,None,None,None,None,None,None,None,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
+2025-05-16 22:20:54,Elliot,1,1,157,54,Iron Helmet,None,None,None,None,None,None,None,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
+2025-05-16 22:21:40,Elliot,1,1,157,115,Iron Helmet,None,None,None,None,None,None,None,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
+2025-05-16 22:22:10,Elliot,1,1,157,54,Iron Helmet,None,None,None,Iron Shield,None,None,None,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
+2025-05-16 22:22:56,Elliot,1,1,151,57,Iron Helmet,Robe,None,None,Iron Shield,None,None,None,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
+2025-05-16 22:23:34,Elliot,1,1,151,64,Iron Helmet,Robe,None,None,Iron Shield,None,None,None,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
+2025-05-16 22:24:42,Elliot,1,1,157,46,Iron Helmet,Robe,Iron Leggings,None,Iron Shield,None,None,None,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
+2025-05-16 22:25:16,Elliot,1,1,187,54,Iron Helmet,Robe,Iron Leggings,None,Crystal Orb,None,None,None,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
+2025-05-16 22:25:43,Elliot,1,1,169,37,Iron Helmet,Robe,Iron Leggings,None,Crystal Orb,Silver Dagger,None,None,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
+2025-05-16 22:26:14,Elliot,1,1,157,46,Iron Helmet,Robe,Iron Leggings,None,Crystal Orb,Silver Dagger,None,None,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
+2025-05-16 22:26:58,Elliot,1,1,206,83,Iron Helmet,Robe,Iron Leggings,None,Crystal Orb,Silver Dagger,None,None,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
+2025-05-16 22:27:22,Elliot,1,1,123,18,Iron Helmet,Robe,Leather Breeches,None,Crystal Orb,Silver Dagger,None,None,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
+2025-05-16 22:27:40,Elliot,1,1,100,9,Iron Helmet,Robe,Leather Breeches,None,Crystal Orb,Silver Dagger,None,Ring of Swiftness,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
+2025-05-16 22:28:13,Elliot,1,1,206,149,Iron Helmet,Robe,Sorcerer Leggings,None,Crystal Orb,Silver Dagger,None,Ring of Swiftness,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
+2025-05-16 22:28:45,Elliot,1,1,157,41,Iron Helmet,Robe,Sorcerer Leggings,None,Crystal Orb,Silver Dagger,None,Ring of Swiftness,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
+2025-05-16 22:30:49,Elliot,1,1,157,134,Iron Helmet,Robe,Sorcerer Leggings,None,Crystal Orb,Silver Dagger,None,Ring of Swiftness,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2

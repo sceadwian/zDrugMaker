@@ -160,21 +160,34 @@ def display_options(options, title="Choose an option:"):
 
 # --- Data Models (formerly data_models.py) ---
 class Item:
-    def __init__(self, data): # data is a dict from CSV
+    def __init__(self, data):  # data is a dict from CSV
         self.id = data.get('ItemID')
         self.slot = data.get('Slot')
         self.name = data.get('Name', 'Unknown Item')
+
         self.bonus1_id = data.get('Bonus1id')
-        self.bonus1_add = data.get('Bonus1add', 0) if data.get('Bonus1add') is not None else 0
+        bonus1 = data.get('Bonus1add', 0) or 0
+        if isinstance(bonus1, str):
+            bonus1 = bonus1.replace('+-', '-')
+        self.bonus1_add = int(bonus1)
+
         self.bonus2_id = data.get('Bonus2id')
-        self.bonus2_add = data.get('Bonus2add', 0) if data.get('Bonus2add') is not None else 0
+        bonus2 = data.get('Bonus2add', 0) or 0
+        if isinstance(bonus2, str):
+            bonus2 = bonus2.replace('+-', '-')
+        self.bonus2_add = int(bonus2)
+
         self.action_id = data.get('ActionID')
+
         self.skill_check_attr = data.get('SkillCheck')
-        self.skill_check_amount = data.get('SklChkAmount', 0) if data.get('SklChkAmount') is not None else 0
+        skl = data.get('SklChkAmount', 0) or 0
+        self.skill_check_amount = int(skl)
         self.skill_check_opr = data.get('SklChkOpr', 'min')
-        self.type = data.get('Type') # "melee" or "magic"
-        self.cooldown_time = data.get('Cooldown', 0) if data.get('Cooldown') is not None else 0
-        self.current_cooldown = 0 # Instance specific
+
+        cd = data.get('Cooldown', 0) or 0
+        self.cooldown_time = int(cd)
+        self.current_cooldown = 0  # instance‐specific
+
 
 class Action:
     def __init__(self, data): # data is a dict from CSV
