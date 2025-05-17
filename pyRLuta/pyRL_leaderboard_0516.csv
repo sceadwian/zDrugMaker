@@ -96,3 +96,11 @@ timestamp,toon_name,level,kills,damage_done,damage_received,item1,item2,item3,it
 2025-05-17 09:02:57,Elliot,1,1,157,74,Iron Helmet,None,Unknown Item,Unknown Item,Snakey Stick,Unknown Item,None,Unknown Item,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
 2025-05-17 09:03:37,Elliot,1,1,123,18,Iron Helmet,None,Unknown Item,Mystic Boots,Snakey Stick,Unknown Item,None,Unknown Item,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
 2025-05-17 09:04:11,Elliot,1,1,182,70,Iron Helmet,None,Unknown Item,Mystic Boots,Snakey Stick,Unknown Item,None,Unknown Item,9,5,12,16,19,3,40,150,18,17,6,19,10,11,7,9,8,12,14,3,2
+2025-05-17 14:18:53,Zoah,1,1,157,98,Unknown Item,None,Iron Leggings,None,None,Unknown Item,None,Unknown Item,13,14,10,9,16,11,68,168,15,12,14,11,11,11,13,4,10,7,5,6,10
+2025-05-17 14:20:21,Elsa,1,1,187,137,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Unknown Item,Bronze Ring,10,3,9,5,7,3,5,50,12,21,12,15,11,12,18,12,12,4,19,2,15
+2025-05-17 14:21:41,Zoah,1,1,100,44,None,None,Unknown Item,Steel Sabatons,None,None,None,None,13,14,10,9,16,13,68,168,15,12,13,11,11,11,13,4,10,7,5,6,10
+2025-05-17 14:22:25,Zoah,1,1,157,136,None,None,Iron Leggings,Steel Sabatons,None,None,None,None,14,14,10,9,16,13,68,168,15,12,14,11,11,11,13,4,10,7,5,6,10
+2025-05-17 14:23:06,test1,1,1,157,45,None,None,None,None,Iron Shield,None,None,Unknown Item,19,15,14,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-17 14:23:32,test1,1,1,157,19,None,None,None,None,Iron Shield,None,None,Unknown Item,19,15,14,15,15,15,50,150,15,15,15,15,15,15,15,15,15,15,15,15,15
+2025-05-17 14:24:30,test1,1,1,157,50,None,Iron Breastplate,None,None,Iron Shield,None,None,Unknown Item,20,15,14,15,15,15,50,150,15,15,16,15,15,15,15,15,15,15,15,15,15
+2025-05-17 14:25:15,test1,1,1,187,39,None,Iron Breastplate,None,None,Iron Shield,None,None,Iron Ring,20,15,14,15,15,15,50,150,16,16,16,15,15,15,15,15,15,15,15,15,15
