@@ -741,78 +741,105 @@ def resolve_attack(attacker, target, action_id):
         add_to_combat_log(f"{attacker.name} tries to use unknown action ID {action_id}!")
         return
 
-    add_to_combat_log(f"{attacker.name} uses {action.name} on {target.name}!")
-
-    # Apply self_buff/self_debuff to attacker
+    # Apply self_buff/self_debuff to attacker first
     effect_log_attacker = attacker.apply_effect(action, source_entity_is_self=True)
     if effect_log_attacker: add_to_combat_log(effect_log_attacker)
     
-    # If action is meant for the target (damage or enemy_debuff)
+    # Proceed if action is meant for the target (damage or enemy_debuff)
     if action.dmg_stat_source or action.enemy_debuff_target_stat:
         # Dodge Check
         dodge_chance = target.dodge_val / 10.0
         if random.random() * 100 < dodge_chance:
+            # For dodges, we still log the initial action attempt then the dodge.
+            add_to_combat_log(f"{attacker.name} uses {action.name} on {target.name}!")
             add_to_combat_log(f"{target.name} dodges {action.name}!")
             return
 
-        base_damage = 0
-        is_magic_attack = False
-        if action.dmg_stat_source == "AtkPw":
-            base_damage = action.base_val + (attacker.atk_pw * 0.2) # Example scaling
-        elif action.dmg_stat_source == "MgcPw":
-            base_damage = action.base_val + (attacker.mgc_pw * 0.2)
-            is_magic_attack = True
+        # --- Damage Calculation Logic (if action.dmg_stat_source is not None) ---
+        if action.dmg_stat_source:
+            base_damage = 0
+            is_magic_attack = False
+            if action.dmg_stat_source == "AtkPw":
+                base_damage = action.base_val + (attacker.atk_pw * 0.2) # Example scaling
+            elif action.dmg_stat_source == "MgcPw":
+                base_damage = action.base_val + (attacker.mgc_pw * 0.2)
+                is_magic_attack = True
+            
+            crit_multiplier = 1.0
+            crit_message_part = "" 
+            if base_damage > 0: # Crits only possible on positive base damage
+                crit_chance = attacker.crits_val / 3.0
+                if random.random() * 100 < crit_chance:
+                    crit_multiplier = 2.0
+                    crit_message_part = " (Critical Hit!)" # Store crit info
+            
+            damage_before_mitigation = base_damage * crit_multiplier
+            
+            final_damage_after_mitigation = damage_before_mitigation 
+            mitigation_percent_for_log = 0.0
+
+            if damage_before_mitigation > 0: # Only apply mitigation if there's damage to mitigate
+                mitigation_percent_calc = 0.0
+                if is_magic_attack:
+                    mitigation_percent_calc = random.uniform(0.01, target.mgc_rs_val / 100.0) if target.mgc_rs_val > 1 else 0
+                else: # Physical
+                    block_mit_val = random.uniform(0.01, target.block_val / 100.0) if target.block_val > 1 else 0
+                    armor_reduction_factor = target.armor_val / (target.armor_val + 200.0) if target.armor_val > 0 else 0
+                    mitigation_percent_calc = block_mit_val + armor_reduction_factor
+
+                mitigation_percent_calc = max(0, min(0.95, mitigation_percent_calc)) # Cap mitigation
+                mitigation_percent_for_log = mitigation_percent_calc * 100 # For logging
+                
+                final_damage_after_mitigation *= (1 - mitigation_percent_calc)
+            
+            # Ensure damage is not negative and round it
+            final_damage_after_mitigation = max(0, int(round(final_damage_after_mitigation)))
+            
+            actual_damage_dealt = 0
+            if final_damage_after_mitigation > 0:
+                actual_damage_dealt = min(final_damage_after_mitigation, target.current_hp) # Damage cannot exceed current HP
+                target.current_hp -= actual_damage_dealt
+                attacker.total_damage_dealt_session += actual_damage_dealt
+                target.total_damage_taken_session += actual_damage_dealt
+
+                # CONDENSED LOG FOR SUCCESSFUL DAMAGE
+                raw_damage_val_log = int(round(damage_before_mitigation))
+                log_message = (f"{attacker.name} uses {action.name} on {target.name}!{crit_message_part} "
+                               f"({raw_damage_val_log}/{mitigation_percent_for_log:.1f}%/{actual_damage_dealt})")
+                add_to_combat_log(log_message)
+            else: 
+                # Attack was made, but resulted in 0 actual damage (e.g. fully mitigated, or initial damage was <=0)
+                # This replaces the old "uses action" + "hits but deals no damage" logs
+                add_to_combat_log(f"{attacker.name} uses {action.name} on {target.name}!{crit_message_part} but deals no damage.")
         
-        crit_multiplier = 1.0
-        if base_damage > 0:
-            crit_chance = attacker.crits_val / 3.0
-            if random.random() * 100 < crit_chance:
-                crit_multiplier = 2.0
-                add_to_combat_log("Critical Hit!")
-        final_damage = base_damage * crit_multiplier
+        else: # Action has no dmg_stat_source (e.g. pure buff/debuff on enemy)
+              # Log the action use normally, as there's no damage/mitigation data.
+            add_to_combat_log(f"{attacker.name} uses {action.name} on {target.name}!")
 
-        if final_damage > 0:
-            mitigation_percent = 0
-            if is_magic_attack:
-                mitigation_percent = random.uniform(0.01, target.mgc_rs_val / 100.0) if target.mgc_rs_val > 1 else 0 # Min 1 for calc
-            else: # Physical
-                # Block contributes to mitigation pool
-                block_mit_val = random.uniform(0.01, target.block_val / 100.0) if target.block_val > 1 else 0
-                # Armor gives damage reduction (example: Armor / (Armor + 200))
-                armor_reduction_factor = target.armor_val / (target.armor_val + 200.0) if target.armor_val > 0 else 0
-                # Combine block and armor (additive for simplicity, or multiplicative)
-                mitigation_percent = block_mit_val + armor_reduction_factor # Simplified combination
-
-            mitigation_percent = max(0, min(0.95, mitigation_percent))
-            final_damage *= (1 - mitigation_percent)
-            if mitigation_percent > 0: add_to_combat_log(f"Mitigation reduces damage by {mitigation_percent*100:.1f}%.")
-        
-        final_damage = max(0, int(round(final_damage)))
-
-        if final_damage > 0:
-            actual_damage_dealt = min(final_damage, target.current_hp) # Damage cannot exceed current HP
-            target.current_hp -= actual_damage_dealt
-            attacker.total_damage_dealt_session += actual_damage_dealt
-            target.total_damage_taken_session += actual_damage_dealt
-            add_to_combat_log(f"{action.name} hits {target.name} for {actual_damage_dealt} damage.")
-        elif action.dmg_stat_source:
-             add_to_combat_log(f"{action.name} hits {target.name} but deals no damage.")
-
-        # Apply enemy_debuff part of the action to target
+        # Apply enemy_debuff part of the action to target (this applies after damage calc, if any)
         effect_log_target = target.apply_effect(action, source_entity_is_self=False)
         if effect_log_target: add_to_combat_log(effect_log_target)
 
-    # Item Cooldowns for Player
+    # Item Cooldowns for Player (this part is outside the target-affecting block, affects player if action was used)
     if attacker.is_player:
         used_item_slot_key = None
-        if attacker.queued_action_key == 'd': used_item_slot_key = 7
-        elif attacker.queued_action_key == 'c': used_item_slot_key = 8
+        # Check which action key corresponds to an item slot
+        if attacker.queued_action_key == 'z': used_item_slot_key = 6 # Main-Hand (Slot 6)
+        elif attacker.queued_action_key == 'x': used_item_slot_key = 5 # Off-Hand (Slot 5)
+        elif attacker.queued_action_key == 'd': used_item_slot_key = 7 # Neck (Slot 7)
+        elif attacker.queued_action_key == 'c': used_item_slot_key = 8 # Ring (Slot 8)
         
+        # Only apply cooldown if the action used corresponds to an item that has a cooldown
+        # And the action_id matches the item's action_id
         if used_item_slot_key:
             item_in_slot = attacker.equipped_items.get(used_item_slot_key)
+            # Check if the item exists, its action_id matches the one resolved, and it has a cooldown_time
             if item_in_slot and item_in_slot.action_id == action_id and item_in_slot.cooldown_time > 0:
-                attacker.item_cooldowns[item_in_slot.id] = item_in_slot.cooldown_time
-                add_to_combat_log(f"{item_in_slot.name} is now on cooldown ({item_in_slot.cooldown_time}s).")
+                # Ensure it's a consumable item (slot 7 or 8) or any item whose action was just used
+                 if item_in_slot.slot in [7, 8] or action.id == item_in_slot.action_id : # Check if it's a trinket or if its direct action was used
+                    attacker.item_cooldowns[item_in_slot.id] = item_in_slot.cooldown_time
+                    add_to_combat_log(f"{item_in_slot.name} is now on cooldown ({item_in_slot.cooldown_time}s).")
+                    
 
 def handle_loot_drop(player, defeated_npc):
     # Log defeat and grant XP

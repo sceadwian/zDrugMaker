@@ -25,3 +25,21 @@ timestamp,toon_name,level,kills,damage_done,damage_received,item1,item2,item3,it
 2025-05-17 14:51:27,TST15,1,1,66,20,Leather Cap,Robe,Leather Breeches,Mystic Boots,Snakey Stick,Mace,Shitty Necklace,Ring of Swiftness,16,18,20,18,15,17,50,150,18,15,15,16,15,16,15,16,15,15,15,15,15
 2025-05-17 14:54:32,Evander,1,1,157,152,Touque,Iron Breastplate,Pants,Boots,Pack of Gum,Hard Stick,String,PopCap,14,19,11,8,13,10,33,135,3,4,10,4,9,11,6,16,11,18,20,16,13
 2025-05-17 14:57:25,TST15,1,1,157,12,Iron Helmet,Robe,Leather Breeches,Mystic Boots,Snakey Stick,Mace,Shitty Necklace,Ring of Swiftness,17,19,19,17,15,17,50,150,18,15,15,16,15,16,15,16,15,15,15,15,15
+2025-05-17 22:38:03,Evander,1,0,141,186,Touque,Iron Breastplate,Pants,Boots,Pack of Gum,Hard Stick,String,PopCap,14,19,11,8,13,10,33,135,3,4,10,4,9,11,6,16,11,18,20,16,13
+2025-05-17 22:38:59,Elliot,1,1,157,75,Touque,Robe,Iron Leggings,Boots,Pack of Gum,Hard Stick,String,PopCap,13,6,13,17,19,3,40,150,19,18,7,20,11,11,8,9,9,13,14,4,2
+2025-05-17 22:39:36,Elliot,1,1,66,33,Touque,Leather Jerkin,Iron Leggings,Boots,Pack of Gum,Hard Stick,String,PopCap,11,6,15,17,19,3,40,150,18,18,7,20,11,11,8,9,9,13,14,4,2
+2025-05-17 22:40:13,Elliot,1,1,206,121,Touque,Leather Jerkin,Iron Leggings,Boots,Pack of Gum,Hard Stick,String,PopCap,11,6,15,17,19,3,40,150,18,18,7,20,11,11,8,9,9,13,14,4,2
+2025-05-17 22:41:12,Elliot,1,1,66,32,Touque,Leather Jerkin,Iron Leggings,Boots,Pack of Gum,Hard Stick,Shitty Necklace,PopCap,11,6,15,17,19,3,40,150,19,18,7,21,11,11,7,9,9,13,14,3,2
+2025-05-17 22:41:55,Elliot,1,1,157,48,Touque,Leather Jerkin,Iron Leggings,Boots,Iron Shield,Hard Stick,Shitty Necklace,PopCap,15,6,14,17,19,3,40,150,19,18,7,20,11,11,7,9,9,12,14,3,2
+2025-05-17 22:43:08,Elliot,1,1,187,50,Touque,Leather Jerkin,Iron Leggings,Sandals,Iron Shield,Hard Stick,Shitty Necklace,PopCap,14,6,15,16,19,3,40,150,20,18,7,20,11,11,7,9,9,12,14,3,2
+2025-05-17 22:43:42,Elliot,1,1,206,100,Touque,Leather Jerkin,Iron Leggings,Sandals,Iron Shield,Hard Stick,Shitty Necklace,PopCap,14,6,15,16,19,3,40,150,20,18,7,20,11,11,7,9,9,12,14,3,2
+2025-05-17 22:44:41,TST11,1,1,157,104,Touque,Shirt,Iron Leggings,Boots,Pack of Gum,Hard Stick,String,PopCap,15,12,12,12,11,12,50,150,10,11,11,11,11,10,11,10,11,12,11,12,11
+2025-05-17 22:45:32,TST11,1,1,151,116,Touque,Shirt,Iron Leggings,Boots,Pack of Gum,Wooden Stick,String,PopCap,15,12,13,12,11,12,50,150,10,10,11,11,11,10,11,10,11,12,11,12,11
+2025-05-17 23:07:06,Sceadwian,1,1,157,91,Touque,Iron Breastplate,Pants,Boots,Pack of Gum,Hard Stick,String,PopCap,15,12,10,7,15,9,77,170,17,16,15,9,15,11,14,7,13,6,5,7,13
+2025-05-17 23:12:52,Sceadwian,1,1,187,157,Touque,Iron Breastplate,Pants,Boots,Pack of Gum,Hard Stick,String,Iron Ring,15,12,9,7,15,9,77,170,18,17,15,9,15,11,14,7,12,6,5,7,13
+2025-05-17 23:13:31,Sceadwian,1,1,148,40,Touque,Iron Breastplate,Pants,Boots,Pack of Gum,Hard Stick,String,Iron Ring,15,12,9,7,15,9,77,170,18,17,15,9,15,11,14,7,12,6,5,7,13
+2025-05-17 23:26:21,Sceadwian,1,1,187,100,Touque,Iron Breastplate,Pants,Boots,Pack of Gum,Hard Stick,String,Iron Ring,15,12,9,7,15,9,77,170,18,17,15,9,15,11,14,7,12,6,5,7,13
+2025-05-17 23:27:16,Sceadwian,1,1,169,41,Touque,Iron Breastplate,Pants,Boots,Pack of Gum,Silver Dagger,String,Iron Ring,15,11,10,9,15,9,77,170,18,16,15,9,15,11,14,7,12,6,5,7,13
+2025-05-17 23:28:16,TST05,1,0,39,136,Touque,Shirt,Pants,Boots,Pack of Gum,Hard Stick,String,PopCap,9,6,6,6,5,6,50,150,5,6,5,6,6,5,6,6,6,6,5,6,5
+2025-05-17 23:29:51,TST15,1,1,206,123,Iron Helmet,Robe,Leather Breeches,Mystic Boots,Snakey Stick,Mace,Shitty Necklace,Ring of Swiftness,17,19,19,17,15,17,50,150,18,15,15,16,15,16,15,16,15,15,15,15,15
+2025-05-17 23:30:34,TST15,1,1,169,32,Iron Helmet,Robe,Leather Breeches,Mystic Boots,Snakey Stick,Mace,Shitty Necklace,Ring of Swiftness,17,19,19,17,15,17,50,150,18,15,15,16,15,16,15,16,15,15,15,15,15
