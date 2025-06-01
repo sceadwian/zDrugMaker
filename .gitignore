@@ -1,5 +1,7 @@
 # Ignore sensitive configuration files
 zFarseta_*
+20250529_2*
+20250331_*
 #config.json
 
 # Ignore all log files

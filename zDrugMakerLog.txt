@@ -250,3 +250,129 @@ Volumes:
 
 ==================================================
 
+Date: 2025/05/29 - 22:34:37
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: Solgate2
+BEW: 1
+Dose: 100 mg/kg
+========================================
+Drug amount needed: 24 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.24 ml
+- Oral (5 ml/kg): 1.2 ml
+- Mice (10 ml/kg): 2.4 ml
+========================================
+
+==================================================
+
+Date: 2025/05/29 - 22:34:59
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: Solgate2
+BEW: 1
+Dose: 30 mg/kg
+========================================
+Drug amount needed: 7.2 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.24 ml
+- Oral (5 ml/kg): 1.2 ml
+- Mice (10 ml/kg): 2.4 ml
+========================================
+
+==================================================
+
+Date: 2025/05/29 - 22:36:30
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: Solgate2
+BEW: 1
+Dose: 100 mg/kg
+========================================
+Drug amount needed: 24 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.24 ml
+- Oral (5 ml/kg): 1.2 ml
+- Mice (10 ml/kg): 2.4 ml
+========================================
+
+==================================================
+
+Date: 2025/05/29 - 22:37:11
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: Solgate2
+BEW: 1
+Dose: 35 mg/kg
+========================================
+Drug amount needed: 8.4 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.24 ml
+- Oral (5 ml/kg): 1.2 ml
+- Mice (10 ml/kg): 2.4 ml
+========================================
+
+==================================================
+
+Date: 2025/05/29 - 22:37:28
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: Solgate1_IV
+BEW: 1
+Dose: 35 mg/kg
+========================================
+Drug amount needed: 8.4 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.24 ml
+- Oral (5 ml/kg): 1.2 ml
+- Mice (10 ml/kg): 2.4 ml
+========================================
+
+==================================================
+
+Date: 2025/05/29 - 22:45:43
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: Curie/Cellgate
+BEW: 1
+Dose: 10 mg/kg
+========================================
+Drug amount needed: 2.4 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.24 ml
+- Oral (5 ml/kg): 1.2 ml
+- Mice (10 ml/kg): 2.4 ml
+========================================
+
+==================================================
+
+Date: 2025/05/29 - 22:51:24
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: Curie/Cellgate
+BEW: 1
+Dose: 25 mg/kg
+========================================
+Drug amount needed: 6 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.24 ml
+- Oral (5 ml/kg): 1.2 ml
+- Mice (10 ml/kg): 2.4 ml
+========================================
+
+==================================================
+

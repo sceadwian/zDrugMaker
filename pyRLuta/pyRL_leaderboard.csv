@@ -1,56 +1,21 @@
-timestamp,toon_name,level,kills,damage_done,damage_received,item1,item2,item3,item4,item5,item6,item7,item8,STA,STR,AGI,DEX,HIT,BAL,WGT,HEI,INT,WIL,FOR,FOC,PSY,ARC,BLS,MAN,ALC,CUR,COR,SUM,HEX
-2025-05-17 14:34:39,Elliot,1,1,157,55,Touque,Iron Breastplate,Pants,Boots,Pack of Gum,Hard Stick,String,PopCap,13,6,13,17,19,3,40,150,18,18,7,20,11,11,8,10,9,13,14,4,2
-2025-05-17 14:35:51,Elliot,1,1,151,45,Touque,Robe,Pants,Boots,Pack of Gum,Hard Stick,String,PopCap,13,6,13,17,19,3,40,150,19,18,6,20,11,11,8,10,9,13,14,4,2
-2025-05-17 14:38:42,TST15,1,1,187,83,Iron Helmet,Iron Breastplate,Iron Leggings,Iron Boots,Wooden Buckler,Short Sword,Amulet of Strength,Ring of Swiftness,20,19,17,18,15,17,50,150,15,15,18,15,15,15,15,15,15,15,15,15,15
-2025-05-17 14:39:24,TST15,1,1,123,8,Iron Helmet,Iron Breastplate,Iron Leggings,Iron Boots,Wooden Buckler,Short Sword,Amulet of Strength,Ring of Swiftness,20,19,17,18,15,17,50,150,15,15,18,15,15,15,15,15,15,15,15,15,15
-2025-05-17 14:40:20,TST15,1,1,206,139,Iron Helmet,Iron Breastplate,Iron Leggings,Iron Boots,Wooden Buckler,Short Sword,Amulet of Strength,Ring of Swiftness,20,19,17,18,15,17,50,150,15,15,18,15,15,15,15,15,15,15,15,15,15
-2025-05-17 14:40:51,TST15,1,1,169,44,Iron Helmet,Iron Breastplate,Iron Leggings,Iron Boots,Wooden Buckler,Short Sword,Amulet of Strength,Ring of Swiftness,20,19,17,18,15,17,50,150,15,15,18,15,15,15,15,15,15,15,15,15,15
-2025-05-17 14:41:18,TST15,1,1,148,5,Iron Helmet,Iron Breastplate,Iron Leggings,Iron Boots,Wooden Buckler,Short Sword,Amulet of Strength,Ring of Swiftness,20,19,17,18,15,17,50,150,15,15,18,15,15,15,15,15,15,15,15,15,15
-2025-05-17 14:41:58,TST15,1,1,169,13,Iron Helmet,Iron Breastplate,Iron Leggings,Iron Boots,Wooden Buckler,Short Sword,Amulet of Strength,Ring of Swiftness,20,19,17,18,15,17,50,150,15,15,18,15,15,15,15,15,15,15,15,15,15
-2025-05-17 14:42:36,TST15,1,1,206,55,Iron Helmet,Iron Breastplate,Steel Platelegs,Iron Boots,Wooden Buckler,Short Sword,Amulet of Strength,Ring of Swiftness,19,19,17,18,15,18,50,150,15,15,19,15,15,15,15,15,15,15,15,15,15
-2025-05-17 14:43:20,TST15,1,1,206,50,Iron Helmet,Iron Breastplate,Steel Platelegs,Iron Boots,Wooden Buckler,Short Sword,Amulet of Strength,Ring of Swiftness,19,19,17,18,15,18,50,150,15,15,19,15,15,15,15,15,15,15,15,15,15
-2025-05-17 14:43:48,TST15,1,1,100,0,Iron Helmet,Iron Breastplate,Steel Platelegs,Iron Boots,Wooden Buckler,Short Sword,Amulet of Strength,Ring of Swiftness,19,19,17,18,15,18,50,150,15,15,19,15,15,15,15,15,15,15,15,15,15
-2025-05-17 14:44:47,TST15,1,1,169,36,Iron Helmet,Iron Breastplate,Steel Platelegs,Iron Boots,Wooden Buckler,Short Sword,Amulet of Strength,Ring of Swiftness,19,19,17,18,15,18,50,150,15,15,19,15,15,15,15,15,15,15,15,15,15
-2025-05-17 14:45:10,TST15,1,1,100,18,Iron Helmet,Iron Breastplate,Steel Platelegs,Iron Boots,Wooden Buckler,Short Sword,Amulet of Strength,Ring of Swiftness,19,19,17,18,15,18,50,150,15,15,19,15,15,15,15,15,15,15,15,15,15
-2025-05-17 14:45:39,TST15,1,1,182,19,Iron Helmet,Iron Breastplate,Steel Platelegs,Iron Boots,Wooden Buckler,Short Sword,Amulet of Strength,Ring of Swiftness,19,19,17,18,15,18,50,150,15,15,19,15,15,15,15,15,15,15,15,15,15
-2025-05-17 14:46:27,TST15,1,1,148,12,Iron Helmet,Iron Breastplate,Steel Platelegs,Iron Boots,Wooden Buckler,Short Sword,Amulet of Strength,Ring of Swiftness,19,19,17,18,15,18,50,150,15,15,19,15,15,15,15,15,15,15,15,15,15
-2025-05-17 14:47:02,TST15,1,1,123,9,Iron Helmet,Iron Breastplate,Leather Breeches,Iron Boots,Wooden Buckler,Short Sword,Amulet of Strength,Ring of Swiftness,19,19,17,19,15,18,50,150,15,15,17,15,15,15,15,15,15,15,15,15,15
-2025-05-17 14:47:29,TST15,1,1,157,33,Iron Helmet,Iron Breastplate,Leather Breeches,Iron Boots,Wooden Buckler,Short Sword,Amulet of Strength,Ring of Swiftness,19,19,17,19,15,18,50,150,15,15,17,15,15,15,15,15,15,15,15,15,15
-2025-05-17 14:48:22,TST15,1,1,151,15,Iron Helmet,Iron Breastplate,Leather Breeches,Iron Boots,Wooden Buckler,Short Sword,Amulet of Strength,Ring of Swiftness,19,19,17,19,15,18,50,150,15,15,17,15,15,15,15,15,15,15,15,15,15
-2025-05-17 14:48:52,TST15,1,1,151,36,Iron Helmet,Robe,Leather Breeches,Iron Boots,Wooden Buckler,Short Sword,Amulet of Strength,Ring of Swiftness,19,19,17,19,15,18,50,150,16,15,16,15,15,15,15,15,15,15,15,15,15
-2025-05-17 14:49:31,TST15,1,1,148,8,Iron Helmet,Robe,Leather Breeches,Iron Boots,Snakey Stick,Short Sword,Amulet of Strength,Ring of Swiftness,18,19,17,19,15,17,50,150,17,15,16,15,15,15,15,16,15,15,15,15,15
-2025-05-17 14:50:02,TST15,1,1,66,11,Iron Helmet,Robe,Leather Breeches,Iron Boots,Snakey Stick,Short Sword,Shitty Necklace,Ring of Swiftness,18,17,17,19,15,17,50,150,18,15,15,16,15,15,15,16,15,15,15,15,15
-2025-05-17 14:50:28,TST15,1,1,123,5,Iron Helmet,Robe,Leather Breeches,Mystic Boots,Snakey Stick,Short Sword,Shitty Necklace,Ring of Swiftness,17,17,19,19,15,16,50,150,18,15,15,16,15,16,15,16,15,15,15,15,15
-2025-05-17 14:51:05,TST15,1,1,206,32,Iron Helmet,Robe,Leather Breeches,Mystic Boots,Snakey Stick,Mace,Shitty Necklace,Ring of Swiftness,17,19,19,17,15,17,50,150,18,15,15,16,15,16,15,16,15,15,15,15,15
-2025-05-17 14:51:27,TST15,1,1,66,20,Leather Cap,Robe,Leather Breeches,Mystic Boots,Snakey Stick,Mace,Shitty Necklace,Ring of Swiftness,16,18,20,18,15,17,50,150,18,15,15,16,15,16,15,16,15,15,15,15,15
-2025-05-17 14:54:32,Evander,1,1,157,152,Touque,Iron Breastplate,Pants,Boots,Pack of Gum,Hard Stick,String,PopCap,14,19,11,8,13,10,33,135,3,4,10,4,9,11,6,16,11,18,20,16,13
-2025-05-17 14:57:25,TST15,1,1,157,12,Iron Helmet,Robe,Leather Breeches,Mystic Boots,Snakey Stick,Mace,Shitty Necklace,Ring of Swiftness,17,19,19,17,15,17,50,150,18,15,15,16,15,16,15,16,15,15,15,15,15
-2025-05-17 22:38:03,Evander,1,0,141,186,Touque,Iron Breastplate,Pants,Boots,Pack of Gum,Hard Stick,String,PopCap,14,19,11,8,13,10,33,135,3,4,10,4,9,11,6,16,11,18,20,16,13
-2025-05-17 22:38:59,Elliot,1,1,157,75,Touque,Robe,Iron Leggings,Boots,Pack of Gum,Hard Stick,String,PopCap,13,6,13,17,19,3,40,150,19,18,7,20,11,11,8,9,9,13,14,4,2
-2025-05-17 22:39:36,Elliot,1,1,66,33,Touque,Leather Jerkin,Iron Leggings,Boots,Pack of Gum,Hard Stick,String,PopCap,11,6,15,17,19,3,40,150,18,18,7,20,11,11,8,9,9,13,14,4,2
-2025-05-17 22:40:13,Elliot,1,1,206,121,Touque,Leather Jerkin,Iron Leggings,Boots,Pack of Gum,Hard Stick,String,PopCap,11,6,15,17,19,3,40,150,18,18,7,20,11,11,8,9,9,13,14,4,2
-2025-05-17 22:41:12,Elliot,1,1,66,32,Touque,Leather Jerkin,Iron Leggings,Boots,Pack of Gum,Hard Stick,Shitty Necklace,PopCap,11,6,15,17,19,3,40,150,19,18,7,21,11,11,7,9,9,13,14,3,2
-2025-05-17 22:41:55,Elliot,1,1,157,48,Touque,Leather Jerkin,Iron Leggings,Boots,Iron Shield,Hard Stick,Shitty Necklace,PopCap,15,6,14,17,19,3,40,150,19,18,7,20,11,11,7,9,9,12,14,3,2
-2025-05-17 22:43:08,Elliot,1,1,187,50,Touque,Leather Jerkin,Iron Leggings,Sandals,Iron Shield,Hard Stick,Shitty Necklace,PopCap,14,6,15,16,19,3,40,150,20,18,7,20,11,11,7,9,9,12,14,3,2
-2025-05-17 22:43:42,Elliot,1,1,206,100,Touque,Leather Jerkin,Iron Leggings,Sandals,Iron Shield,Hard Stick,Shitty Necklace,PopCap,14,6,15,16,19,3,40,150,20,18,7,20,11,11,7,9,9,12,14,3,2
-2025-05-17 22:44:41,TST11,1,1,157,104,Touque,Shirt,Iron Leggings,Boots,Pack of Gum,Hard Stick,String,PopCap,15,12,12,12,11,12,50,150,10,11,11,11,11,10,11,10,11,12,11,12,11
-2025-05-17 22:45:32,TST11,1,1,151,116,Touque,Shirt,Iron Leggings,Boots,Pack of Gum,Wooden Stick,String,PopCap,15,12,13,12,11,12,50,150,10,10,11,11,11,10,11,10,11,12,11,12,11
-2025-05-17 23:07:06,Sceadwian,1,1,157,91,Touque,Iron Breastplate,Pants,Boots,Pack of Gum,Hard Stick,String,PopCap,15,12,10,7,15,9,77,170,17,16,15,9,15,11,14,7,13,6,5,7,13
-2025-05-17 23:12:52,Sceadwian,1,1,187,157,Touque,Iron Breastplate,Pants,Boots,Pack of Gum,Hard Stick,String,Iron Ring,15,12,9,7,15,9,77,170,18,17,15,9,15,11,14,7,12,6,5,7,13
-2025-05-17 23:13:31,Sceadwian,1,1,148,40,Touque,Iron Breastplate,Pants,Boots,Pack of Gum,Hard Stick,String,Iron Ring,15,12,9,7,15,9,77,170,18,17,15,9,15,11,14,7,12,6,5,7,13
-2025-05-17 23:26:21,Sceadwian,1,1,187,100,Touque,Iron Breastplate,Pants,Boots,Pack of Gum,Hard Stick,String,Iron Ring,15,12,9,7,15,9,77,170,18,17,15,9,15,11,14,7,12,6,5,7,13
-2025-05-17 23:27:16,Sceadwian,1,1,169,41,Touque,Iron Breastplate,Pants,Boots,Pack of Gum,Silver Dagger,String,Iron Ring,15,11,10,9,15,9,77,170,18,16,15,9,15,11,14,7,12,6,5,7,13
-2025-05-17 23:28:16,TST05,1,0,39,136,Touque,Shirt,Pants,Boots,Pack of Gum,Hard Stick,String,PopCap,9,6,6,6,5,6,50,150,5,6,5,6,6,5,6,6,6,6,5,6,5
-2025-05-17 23:29:51,TST15,1,1,206,123,Iron Helmet,Robe,Leather Breeches,Mystic Boots,Snakey Stick,Mace,Shitty Necklace,Ring of Swiftness,17,19,19,17,15,17,50,150,18,15,15,16,15,16,15,16,15,15,15,15,15
-2025-05-17 23:30:34,TST15,1,1,169,32,Iron Helmet,Robe,Leather Breeches,Mystic Boots,Snakey Stick,Mace,Shitty Necklace,Ring of Swiftness,17,19,19,17,15,17,50,150,18,15,15,16,15,16,15,16,15,15,15,15,15
-2025-05-18 03:15:49,Elliot,1,1,182,118,Touque,Leather Jerkin,Iron Leggings,Sandals,Iron Shield,Short Sword,Shitty Necklace,PopCap,14,6,15,18,19,3,40,150,20,17,7,20,11,11,7,9,9,12,14,3,2
-2025-05-18 03:16:35,Elliot,1,1,100,28,Touque,Leather Jerkin,Iron Leggings,Sandals,Iron Shield,Short Sword,Shitty Necklace,Ring of Intellect,14,6,14,18,19,3,40,150,23,17,7,21,11,11,7,9,8,12,14,3,2
-2025-05-18 03:17:25,Elliot,1,1,100,38,Touque,Leather Jerkin,Iron Leggings,Sandals,Iron Shield,Short Sword,Shitty Necklace,Ring of Intellect,14,6,14,18,19,3,40,150,23,17,7,21,11,11,7,9,8,12,14,3,2
-2025-05-18 03:18:20,Elliot,1,1,206,133,Touque,Leather Jerkin,Sorcerer Leggings,Sandals,Iron Shield,Short Sword,Shitty Necklace,Ring of Intellect,13,6,14,18,19,3,40,150,23,19,6,22,11,11,7,9,8,12,14,3,2
-2025-05-18 03:19:00,Elliot,1,1,123,47,Touque,Enchanted Robes,Sorcerer Leggings,Sandals,Iron Shield,Short Sword,Shitty Necklace,Ring of Intellect,14,6,12,18,19,3,40,150,23,19,6,22,11,13,7,11,8,12,14,3,2
-2025-05-18 03:20:20,Elliot,1,1,169,44,Touque,Enchanted Robes,Sorcerer Leggings,Sandals,Iron Shield,Short Sword,Shitty Necklace,Ring of Intellect,14,6,12,18,19,3,40,150,23,19,6,22,11,13,7,11,8,12,14,3,2
-2025-05-18 03:21:03,Elliot,1,1,148,40,Touque,Enchanted Robes,Sorcerer Leggings,Sandals,Iron Shield,Short Sword,Shitty Necklace,Ring of Intellect,14,6,12,18,19,3,40,150,23,19,6,22,11,13,7,11,8,12,14,3,2
-2025-05-18 03:22:17,Zoah,1,1,157,86,Touque,Shirt,Pants,Boots,Pack of Gum,Hard Stick,String,PopCap,16,15,11,10,16,12,68,168,15,13,13,12,12,11,14,5,11,8,5,7,10
-2025-05-18 03:23:09,Zoah,1,1,66,41,Touque,Shirt,Pants,Boots,Pack of Gum,Hard Stick,Shitty Necklace,PopCap,16,15,11,10,16,12,68,168,16,13,13,13,12,11,13,5,11,8,5,6,10
-2025-05-18 03:33:49,Zoah,1,1,157,65,Touque,Shirt,Pants,Boots,Pack of Gum,Hard Stick,Shitty Necklace,PopCap,16,15,11,10,16,12,68,168,16,13,13,13,12,11,13,5,11,8,5,6,10
-2025-05-18 03:34:42,Zoah,1,1,100,38,Touque,Shirt,Pants,Boots,Pack of Gum,Hard Stick,Shitty Necklace,Ring of Intellect,16,15,10,10,16,12,68,168,19,13,13,14,12,11,13,5,10,8,5,6,10
+timestamp,toon_name,opponent_name,fight_duration_seconds,level,kills,damage_done,damage_received,item1,item2,item3,item4,item5,item6,item7,item8,STA,STR,AGI,DEX,HIT,BAL,WGT,HEI,INT,WIL,FOR,FOC,PSY,ARC,BLS,MAN,ALC,CUR,COR,SUM,HEX
+2025-06-01 15:28:52,Elliot,Skeleton,20.97,1,1,148,47,Touque,Enchanted Robes,Sorcerer Leggings,Sandals,Iron Shield,Short Sword,Symbol of Faith,Ring of Intellect,14,6,12,18,19,3,40,150,22,20,6,21,11,13,11,11,8,12,14,3,2
+2025-06-01 15:29:37,Zoah,Goat,18.25,1,1,123,15,Touque,Steel Platebody,Sorcerer Leggings,Mystic Boots,Wooden Buckler,Silver Dagger,Symbol of Faith,Ring of Intellect,15,14,13,11,16,12,68,168,18,15,16,13,12,12,17,4,10,7,5,6,10
+2025-06-01 15:30:52,Zoah,Slime,57.57,1,1,187,85,Touque,Steel Platebody,Sorcerer Leggings,Mystic Boots,Wooden Buckler,Silver Dagger,Symbol of Faith,Ring of Intellect,15,14,13,11,16,12,68,168,18,15,16,13,12,12,17,4,10,7,5,6,10
+2025-06-01 15:31:18,Zoah,Imp,7.77,1,1,66,38,Touque,Steel Platebody,Sorcerer Leggings,Mystic Boots,Wooden Buckler,Silver Dagger,Symbol of Faith,Ring of Intellect,15,14,13,11,16,12,68,168,18,15,16,13,12,12,17,4,10,7,5,6,10
+2025-06-01 15:32:04,TST05,Gnome,24.61,1,0,32,136,Touque,Shirt,Pants,Boots,Pack of Gum,Hard Stick,String,PopCap,9,6,6,6,5,6,50,150,5,6,5,6,6,5,6,6,6,6,5,6,5
+2025-06-01 15:32:46,TST05,Strange Meal,23.49,1,1,100,74,Touque,Shirt,Pants,Boots,Pack of Gum,Hard Stick,String,Ring of Intellect,9,6,5,6,5,6,50,150,8,6,5,7,6,5,6,6,5,6,5,6,5
+2025-06-01 15:33:43,TST05,Slime,37.64,1,0,113,137,Touque,Shirt,Pants,Boots,Pack of Gum,Hard Stick,String,Ring of Intellect,9,6,5,6,5,6,50,150,8,6,5,7,6,5,6,6,5,6,5,6,5
+2025-06-01 15:34:24,TST05,Strange Meal,32.81,1,0,80,137,Touque,Shirt,Pants,Boots,Pack of Gum,Hard Stick,String,Ring of Intellect,9,6,5,6,5,6,50,150,8,6,5,7,6,5,6,6,5,6,5,6,5
+2025-06-01 15:35:25,TST05,Strange Meal,35.29,1,1,100,71,Touque,Shirt,Pants,Boots,Pack of Gum,Hard Stick,String,Ring of Intellect,9,6,5,6,5,6,50,150,8,6,5,7,6,5,6,6,5,6,5,6,5
+2025-06-01 15:36:12,Sceadwian,Goblin,24.9,1,1,157,45,Touque,Robe,Iron Leggings,Boots,Iron Shield,Silver Dagger,String,Iron Ring,19,11,9,9,15,9,77,170,19,16,15,8,15,11,14,6,12,5,5,7,13
+2025-06-01 15:36:51,Sceadwian,Goblin,31.16,1,1,157,87,Touque,Robe,Iron Leggings,Boots,Iron Shield,Silver Dagger,String,Iron Ring,19,11,9,9,15,9,77,170,19,16,15,8,15,11,14,6,12,5,5,7,13
+2025-06-01 15:37:24,Sceadwian,Goblin,28.03,1,1,157,69,Touque,Robe,Iron Leggings,Boots,Iron Shield,Silver Dagger,String,Iron Ring,19,11,9,9,15,9,77,170,19,16,15,8,15,11,14,6,12,5,5,7,13
+2025-06-01 15:38:18,Sceadwian,Goblin,40.54,1,1,157,104,Touque,Robe,Iron Leggings,Boots,Iron Shield,Silver Dagger,String,Iron Ring,19,11,9,9,15,9,77,170,19,16,15,8,15,11,14,6,12,5,5,7,13
+2025-06-01 15:38:49,Sceadwian,Goblin,21.78,1,1,157,54,Touque,Robe,Iron Leggings,Boots,Iron Shield,Silver Dagger,String,Iron Ring,19,11,9,9,15,9,77,170,19,16,15,8,15,11,14,6,12,5,5,7,13
+2025-06-01 15:39:27,Sceadwian,Goblin,31.16,1,1,157,73,Touque,Robe,Iron Leggings,Boots,Iron Shield,Silver Dagger,String,Iron Ring,19,11,9,9,15,9,77,170,19,16,15,8,15,11,14,6,12,5,5,7,13
+2025-06-01 15:40:15,Zoah,Goblin,20.9,1,1,157,85,Touque,Steel Platebody,Sorcerer Leggings,Mystic Boots,Iron Shield,Silver Dagger,Symbol of Faith,Ring of Intellect,18,14,12,11,16,11,68,168,18,15,16,13,12,12,17,4,10,7,5,6,10
+2025-06-01 15:40:56,Zoah,Goblin,26.13,1,1,157,41,Touque,Steel Platebody,Sorcerer Leggings,Mystic Boots,Iron Shield,Silver Dagger,Symbol of Faith,Ring of Intellect,18,14,12,11,16,11,68,168,18,15,16,13,12,12,17,4,10,7,5,6,10
+2025-06-01 15:41:33,Zoah,Goblin,26.11,1,1,157,54,Touque,Steel Platebody,Sorcerer Leggings,Mystic Boots,Iron Shield,Silver Dagger,Symbol of Faith,Ring of Intellect,18,14,12,11,16,11,68,168,18,15,16,13,12,12,17,4,10,7,5,6,10
+2025-06-01 15:42:05,Zoah,Goblin,26.12,1,1,157,64,Touque,Steel Platebody,Sorcerer Leggings,Mystic Boots,Iron Shield,Silver Dagger,Symbol of Faith,Ring of Intellect,18,14,12,11,16,11,68,168,18,15,16,13,12,12,17,4,10,7,5,6,10
+2025-06-01 15:42:39,Zoah,Goblin,23.5,1,1,157,53,Touque,Steel Platebody,Sorcerer Leggings,Mystic Boots,Iron Shield,Silver Dagger,Symbol of Faith,Ring of Intellect,18,14,12,11,16,11,68,168,18,15,16,13,12,12,17,4,10,7,5,6,10
