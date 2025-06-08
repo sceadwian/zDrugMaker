@@ -60,3 +60,6 @@ Solgate2 - 1
 Solgate1_IV - 1
 Curie/Cellgate - 1
 Curie/Cellgate - 1
+JZ250602 - 1
+JZ250602 - 1
+JZ250602 - 1

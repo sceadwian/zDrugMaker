@@ -29,9 +29,9 @@ actionID,Name,DMG,BaseDMG,selfBUFF,selfDEBUFF,DEBUFF,Duration,Timing
 28,Spleefs,MgcPw,10,,,,,
 29,Dark Pulse,MgcPw,15,,,,,
 30,Apparition,MgcPw,15,,,,,
-31,Soothe,,5,MgcRs,,,5,end
+31,Soothe,,5,MgcRs,,,10,end
 32,Distract,,5,,,Block,15,start
-33,Feint,,5,AtkSp,,,5,start
+33,Feint,,5,AtkSp,,,10,start
 34,Heal,,50,HP,,,5,end
 35,Enrage,,5,AtkSp,,Dodge,15,start
 36,Sunder Armor,,5,Armor,AtkSp,,15,start

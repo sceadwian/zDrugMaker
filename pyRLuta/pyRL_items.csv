@@ -32,7 +32,7 @@ ItemID,Slot,Name,Bonus1id,Bonus1add,Bonus2id,Bonus2add,ActionID,Action,SkillChec
 31,7,Necklace of Warding,WIL,2,BLS,2,,Arcane Shield,WIL,1,min,magic,20
 32,8,Ring of Intellect,INT,3,FOC,1,,Mind Flay,INT,1,min,magic,20
 33,5,Talisman of Healing,BLS,3,WIL,1,,Heal,BLS,1,min,magic,-
-34,6,Warhammer,STR,4,STA,1,,Crush,STR,1,min,melee,-
+34,6,Warhammer,STR,4,STA,1,5,Crush,STR,1,min,melee,-
 35,1,Acolyte Hood,INT,2,PSY,1,-,-,INT,1,min,-,-
 36,2,Enchanted Robes,MAN,2,ARC,2,-,-,MAN,1,min,-,-
 37,3,Sorcerer Leggings,WIL,2,FOC,1,-,-,WIL,1,min,-,-
@@ -59,7 +59,7 @@ ItemID,Slot,Name,Bonus1id,Bonus1add,Bonus2id,Bonus2add,ActionID,Action,SkillChec
 58,8,Band of Resilience,STA,2,FOR,2,-,-,STA,1,min,-,20
 59,5,Scroll of Ice,INT,2,MAN,1,24,Ice Needle,INT,1,min,magic,-
 60,6,Mace,STR,3,BAL,1,17,Overhead Crush,STR,1,min,melee,-
-61,7,Amulet of Alchemy,ALC,3,INT,1,-,-,ALC,1,min,-,20
+61,7,Amulet of Alchemy,ALC,3,INT,1,22,Mana Burn,ALC,1,min,magic,20
 62,8,Ring of Corruption,COR,3,PSY,1,41,Bleed,COR,1,min,magic,20
 63,1,Barbarian Helm,STR,2,STA,2,-,-,STR,1,min,-,-
 64,2,Berserker Chestplate,STR,3,AGI,1,-,-,STR,1,min,-,-
