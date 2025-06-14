@@ -19,19 +19,19 @@ ItemID,Slot,Name,Bonus1id,Bonus1add,Bonus2id,Bonus2add,ActionID,Action,SkillChec
 18,2,Leather Jerkin,AGI,2,STA,-1,-,-,AGI,1,min,-,-
 19,3,Leather Breeches,DEX,1,BAL,1,-,-,DEX,1,min,-,-
 20,4,Leather Boots,AGI,2,HIT,1,-,-,AGI,1,min,-,-
-21,5,Iron Shield,STA,4,AGI,-1,,Bash,STA,1,min,melee,-
-22,6,Short Sword,DEX,2,STR,1,,Quick Thrust,DEX,1,min,melee,-
-23,7,Amulet of Strength,STR,2,FOR,1,,Berseker,STR,1,min,melee,-
-24,8,Ring of Swiftness,AGI,2,DEX,1,,Blade Dancer,AGI,1,min,melee,-
+21,5,Iron Shield,STA,4,AGI,-1,6,Bash,STA,1,min,melee,-
+22,6,Short Sword,DEX,2,STR,1,13,Quick Thrust,DEX,1,min,melee,-
+23,7,Amulet of Strength,STR,2,FOR,1,39,Berseker,STR,1,min,melee,-
+24,8,Ring of Swiftness,AGI,2,DEX,1,38,Blade Dancer,AGI,1,min,melee,-
 25,1,Steel Helm,STR,2,FOR,1,-,-,STR,1,min,-,-
 26,2,Steel Platebody,FOR,3,STA,1,-,-,FOR,1,min,-,-
 27,3,Steel Platelegs,FOR,2,BAL,1,-,-,FOR,1,min,-,-
 28,4,Steel Sabatons,BAL,2,STA,1,-,-,BAL,1,min,-,-
-29,5,Crystal Orb,MAN,2,INT,2,,Spark,MAN,1,min,magic,-
-30,6,Wizard Staff,INT,3,ARC,1,,Fire Blast,INT,1,min,magic,-
-31,7,Necklace of Warding,WIL,2,BLS,2,,Arcane Shield,WIL,1,min,magic,20
-32,8,Ring of Intellect,INT,3,FOC,1,,Mind Flay,INT,1,min,magic,20
-33,5,Talisman of Healing,BLS,3,WIL,1,,Heal,BLS,1,min,magic,-
+29,5,Crystal Orb,MAN,2,INT,2,26,Spark,MAN,1,min,magic,-
+30,6,Wizard Staff,INT,3,ARC,1,23,Fire Blast,INT,1,min,magic,-
+31,7,Necklace of Warding,WIL,2,BLS,2,37,Arcane Shield,WIL,1,min,magic,20
+32,8,Ring of Intellect,INT,3,FOC,1,25,Mind Flay,INT,1,min,magic,20
+33,5,Talisman of Healing,BLS,3,WIL,1,34,Heal,BLS,1,min,magic,-
 34,6,Warhammer,STR,4,STA,1,5,Crush,STR,1,min,melee,-
 35,1,Acolyte Hood,INT,2,PSY,1,-,-,INT,1,min,-,-
 36,2,Enchanted Robes,MAN,2,ARC,2,-,-,MAN,1,min,-,-
@@ -65,7 +65,7 @@ ItemID,Slot,Name,Bonus1id,Bonus1add,Bonus2id,Bonus2add,ActionID,Action,SkillChec
 64,2,Berserker Chestplate,STR,3,AGI,1,-,-,STR,1,min,-,-
 65,3,Kilt of the Highlands,AGI,2,STA,1,-,-,AGI,1,min,-,-
 66,4,Sturdy Boots,STA,3,BAL,1,-,-,STA,1,min,-,-
-67,5,Blessed Shield,BLS,3,FOR,1,10,Shield Slam,BLS,1,min,melee,-
+67,5,Blessed Shield,BLS,5,FOR,1,10,Shield Slam,BLS,1,min,melee,-
 68,6,Holy Mace,BLS,4,STR,1,27,Smite,BLS,1,min,magic,-
 69,7,Symbol of Faith,BLS,4,WIL,1,34,Heal,BLS,1,min,magic,20
 70,8,Ring of Protection,FOR,2,BLS,2,31,Soothe,FOR,1,min,magic,20
@@ -77,3 +77,16 @@ ItemID,Slot,Name,Bonus1id,Bonus1add,Bonus2id,Bonus2add,ActionID,Action,SkillChec
 76,6,Hard Stick,STR,1,WIL,1,1,Punch,STA,1,min,melee,-
 77,7,String,BLS,1,SUM,1,31,Soothe,STA,1,min,magic,20
 78,8,PopCap,ALC,1,AGI,1,33,Feint,STA,1,min,melee,20
+79,7,Symbol of Zeal,BLS,8,WIL,4,34,Heal,BLS,1,min,magic,20
+80,5,Fragmented Reflection,WIL,5,HIT,5,26,Spark,MAN,1,min,magic,-
+81,1,Echojaw Fetish,STR,5,STA,5,-,-,STR,1,min,-,-
+82,8,Glass Vein Ring,FOR,5,BLS,5,37,Arcane Shield,FOR,1,min,magic,20
+83,7,Hexwomb Charm,ARC,5,MAN,5,22,Mana Burn,ARC,1,min,magic,20
+84,2,Faggy Flannel Shirt,BAL,7,STA,2,-,-,STA,1,min,-,-
+85,5,Slushcore of Lazyness,SUM,5,MAN,3,30,Apparition,SUM,1,min,magic,-
+86,6,Seal of the Unseen,STR,5,BAL,5,45,Destruction,STR,1,min,melee,-
+87,6,Hammer of Blightwake,STR,5,FOR,5,45,Destruction,STR,1,min,melee,-
+88,6,Galdrien Sunlance,DEX,5,STR,5,45,Destruction,DEX,1,min,melee,-
+89,8,testicular ring,HEX,1,WIL,1,46,TESTsp,HEX,1,min,magic,20
+90,8,Ballsac ring,HEX,1,WIL,1,47,TESTpw,HEX,1,min,magic,20
+91,8,Anushole Powerflexy,HEX,1,WIL,1,48,TESTarm,HEX,1,min,magic,20

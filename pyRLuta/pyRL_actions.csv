@@ -25,7 +25,7 @@ actionID,Name,DMG,BaseDMG,selfBUFF,selfDEBUFF,DEBUFF,Duration,Timing
 24,Ice Needle,MgcPw,10,,,,,
 25,Mind Flay,MgcPw,15,,,,,
 26,Spark,MgcPw,10,,,,,
-27,Smite,MgcPw,15,,,,,
+27,Smite,MgcPw,17,,,,,
 28,Spleefs,MgcPw,10,,,,,
 29,Dark Pulse,MgcPw,15,,,,,
 30,Apparition,MgcPw,15,,,,,
@@ -43,3 +43,7 @@ actionID,Name,DMG,BaseDMG,selfBUFF,selfDEBUFF,DEBUFF,Duration,Timing
 42,Freeze,,20,,,AtkSp,10,start
 43,Deathclaw,AtkPw,30,,,,,
 44,Stink,MgcPw,10,,,,,
+45,Destruction,AtkPw,30,,,,,
+46,TESTsp,,100,AtkSp,,,20,start
+47,TESTpw,,100,AtkPw,,,20,start
+48,TESTarm,,100,Armor,,,20,start
