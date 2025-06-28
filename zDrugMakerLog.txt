@@ -430,3 +430,21 @@ Volumes:
 
 ==================================================
 
+Date: 2025/06/26 - 15:49:01
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: Kainic Acid
+BEW: 1
+Dose: 30 mg/kg
+========================================
+Drug amount needed: 14.4 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.48 ml
+- Oral (5 ml/kg): 2.4 ml
+- Mice (10 ml/kg): 4.8 ml
+========================================
+
+==================================================
+
