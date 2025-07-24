@@ -1,0 +1,16 @@
+{
+  "Name": "Viktor",
+  "Surname": "Gyokeres",
+  "CountryCode": "se",
+  "PortraitPath": "Textures/Portraits/StefanNilsson.png",
+  "Traits": [
+    "EarlyCareer",
+    "Privateer",
+    "SpeedFreak"
+  ],
+  "Speed": 3,
+  "MaxSpeed": 9,
+  "Focus": 3,
+  "MaxFocus": 7,
+  "DecadeStartContent": false
+}

@@ -1,0 +1,16 @@
+{
+  "Name": "Sigur",
+  "Surname": "Ros",
+  "CountryCode": "fi",
+  "PortraitPath": "Textures/Portraits/AntoineMorel.png",
+  "Traits": [
+    "EarlyCareer",
+    "RichParents",
+    "Handy"
+  ],
+  "Speed": 5,
+  "MaxSpeed": 8,
+  "Focus": 5,
+  "MaxFocus": 6,
+  "DecadeStartContent": false
+}

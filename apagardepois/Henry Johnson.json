@@ -1,0 +1,16 @@
+{
+  "Name": "Henry",
+  "Surname": "Johnson",
+  "CountryCode": "gb",
+  "PortraitPath": "Textures/Portraits/HenryJohnson.png",
+  "Traits": [
+    "EarlyCareer",
+    "RichParents",
+    "Jerk"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 2,
+  "Focus": 1,
+  "MaxFocus": 2,
+  "DecadeStartContent": false
+}

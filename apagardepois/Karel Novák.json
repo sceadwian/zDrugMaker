@@ -1,0 +1,16 @@
+{
+  "Name": "Karel",
+  "Surname": "Novák",
+  "CountryCode": "cz",
+  "PortraitPath": "Textures/Portraits/KarelNovák.png",
+  "Traits": [
+    "MidCareer",
+    "Meditator",
+    "Careful"
+  ],
+  "Speed": 3,
+  "MaxSpeed": 5,
+  "Focus": 5,
+  "MaxFocus": 7,
+  "DecadeStartContent": false
+}

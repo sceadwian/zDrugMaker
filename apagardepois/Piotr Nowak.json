@@ -1,0 +1,17 @@
+{
+  "Name": "Piotr",
+  "Surname": "Nowak",
+  "CountryCode": "pl",
+  "PortraitPath": "Textures/Portraits/PiotrNowak.png",
+  "Traits": [
+    "MidCareer",
+    "Duellist",
+    "PartyAnimal",
+    "Jerk"
+  ],
+  "Speed": 6,
+  "MaxSpeed": 8,
+  "Focus": 4,
+  "MaxFocus": 6,
+  "DecadeStartContent": false
+}

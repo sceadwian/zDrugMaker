@@ -1,0 +1,18 @@
+{
+  "Name": "Franco",
+  "Surname": "Rinaldi",
+  "CountryCode": "it",
+  "PortraitPath": "Textures/Portraits/FrancoRinaldi.png",
+  "Traits": [
+    "MidCareer",
+    "Silkworm",
+    "Jerk",
+    "Duellist",
+    "Patriotic"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 5,
+  "Focus": 4,
+  "MaxFocus": 7,
+  "DecadeStartContent": false
+}

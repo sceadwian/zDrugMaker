@@ -1,0 +1,18 @@
+{
+  "Name": "Kaito",
+  "Surname": "Kazuma",
+  "CountryCode": "jp",
+  "PortraitPath": "Textures/Portraits/KaitoKazuma.png",
+  "Traits": [
+    "EarlyCareer",
+    "Privateer",
+    "Jerk",
+    "EfficientDriver",
+    "Patriotic"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 3,
+  "Focus": 1,
+  "MaxFocus": 3,
+  "DecadeStartContent": false
+}

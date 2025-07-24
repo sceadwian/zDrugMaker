@@ -1,0 +1,18 @@
+{
+  "Name": "Luis",
+  "Surname": "Espino",
+  "CountryCode": "es",
+  "PortraitPath": "Textures/Portraits/GerardoSilva.png",
+  "Traits": [
+    "EarlyCareer",
+    "Privateer",
+    "Jerk",
+    "EfficientDriver",
+    "Patriotic"
+  ],
+  "Speed": 4,
+  "MaxSpeed": 8,
+  "Focus": 4,
+  "MaxFocus": 8,
+  "DecadeStartContent": false
+}

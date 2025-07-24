@@ -1,0 +1,17 @@
+{
+  "Name": "Luca",
+  "Surname": "Lombardi",
+  "CountryCode": "it",
+  "PortraitPath": "Textures/Portraits/LucaLombardi.png",
+  "Traits": [
+    "EarlyCareer",
+    "RichParents",
+    "Silkworm",
+    "Patriotic"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 2,
+  "Focus": 1,
+  "MaxFocus": 2,
+  "DecadeStartContent": false
+}

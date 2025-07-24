@@ -1,0 +1,16 @@
+{
+  "Name": "Jean",
+  "Surname": "Croissant",
+  "CountryCode": "fr",
+  "PortraitPath": "Textures/Portraits/PaulGirard.png",
+  "Traits": [
+    "EarlyCareer",
+    "Jealous",
+    "SpeedFreak"
+  ],
+  "Speed": 4,
+  "MaxSpeed": 7,
+  "Focus": 7,
+  "MaxFocus": 8,
+  "DecadeStartContent": false
+}

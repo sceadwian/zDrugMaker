@@ -1,0 +1,16 @@
+{
+  "Name": "Grotum",
+  "Surname": "Lokkok",
+  "CountryCode": "nz",
+  "PortraitPath": "Textures/Portraits/BryanWatson.png",
+  "Traits": [
+    "EarlyCareer",
+    "Silkworm",
+    "Reckless"
+  ],
+  "Speed": 6,
+  "MaxSpeed": 8,
+  "Focus": 3,
+  "MaxFocus": 9,
+  "DecadeStartContent": false
+}

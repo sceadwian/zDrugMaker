@@ -1,0 +1,16 @@
+{
+  "Name": "Gustavo",
+  "Surname": "Castro",
+  "CountryCode": "br",
+  "PortraitPath": "Textures/Portraits/GustavoCastro.png",
+  "Traits": [
+    "EarlyCareer",
+    "RichParents",
+    "PartyAnimal"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 2,
+  "Focus": 1,
+  "MaxFocus": 2,
+  "DecadeStartContent": false
+}

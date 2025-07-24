@@ -1,0 +1,16 @@
+{
+  "Name": "Matteo",
+  "Surname": "Pacini",
+  "CountryCode": "it",
+  "PortraitPath": "Textures/Portraits/MatteoPacini.png",
+  "Traits": [
+    "EarlyCareer",
+    "Careful",
+    "Patriotic"
+  ],
+  "Speed": 6,
+  "MaxSpeed": 7,
+  "Focus": 6,
+  "MaxFocus": 8,
+  "DecadeStartContent": false
+}

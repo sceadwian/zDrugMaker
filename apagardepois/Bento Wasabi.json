@@ -1,0 +1,16 @@
+{
+  "Name": "Bento",
+  "Surname": "Wasabi",
+  "CountryCode": "jp",
+  "PortraitPath": "Textures/Portraits/CarlosRodrigues.png",
+  "Traits": [
+    "EarlyCareer",
+    "Privateer",
+    "Meditator"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 8,
+  "Focus": 2,
+  "MaxFocus": 8,
+  "DecadeStartContent": false
+}

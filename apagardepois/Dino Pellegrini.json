@@ -1,0 +1,17 @@
+{
+  "Name": "Dino",
+  "Surname": "Pellegrini",
+  "CountryCode": "ch",
+  "PortraitPath": "Textures/Portraits/DinoPellegrini.png",
+  "Traits": [
+    "MidCareer",
+    "Aggressive",
+    "Reckless",
+    "Handy"
+  ],
+  "Speed": 6,
+  "MaxSpeed": 8,
+  "Focus": 2,
+  "MaxFocus": 5,
+  "DecadeStartContent": true
+}

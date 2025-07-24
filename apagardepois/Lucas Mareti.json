@@ -1,0 +1,18 @@
+{
+  "Name": "Lucas",
+  "Surname": "Mareti",
+  "CountryCode": "br",
+  "PortraitPath": "Textures/Portraits/DivanBouwer.png",
+  "Traits": [
+    "MidCareer",
+    "BusinessMinded",
+    "Reckless",
+    "Rainmeister",
+    "Patriotic"
+  ],
+  "Speed": 8,
+  "MaxSpeed": 9,
+  "Focus": 6,
+  "MaxFocus": 9,
+  "DecadeStartContent": true
+}

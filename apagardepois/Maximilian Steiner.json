@@ -1,0 +1,16 @@
+{
+  "Name": "Maximilian",
+  "Surname": "Steiner",
+  "CountryCode": "ch",
+  "PortraitPath": "Textures/Portraits/MaximilianSteiner.png",
+  "Traits": [
+    "EarlyCareer",
+    "MonacoNose",
+    "Handy"
+  ],
+  "Speed": 4,
+  "MaxSpeed": 6,
+  "Focus": 5,
+  "MaxFocus": 7,
+  "DecadeStartContent": false
+}

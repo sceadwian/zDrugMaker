@@ -1,0 +1,18 @@
+{
+  "Name": "Slimy",
+  "Surname": "Moistwick",
+  "CountryCode": "gb",
+  "PortraitPath": "Textures/Portraits/DavidEdwards.png",
+  "Traits": [
+    "EarlyCareer",
+    "Privateer",
+    "Jerk",
+    "EfficientDriver",
+    "Patriotic"
+  ],
+  "Speed": 6,
+  "MaxSpeed": 7,
+  "Focus": 6,
+  "MaxFocus": 7,
+  "DecadeStartContent": false
+}

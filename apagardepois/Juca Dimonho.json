@@ -1,0 +1,16 @@
+{
+  "Name": "Juca",
+  "Surname": "Dimonho",
+  "CountryCode": "br",
+  "PortraitPath": "Textures/Portraits/ThoreauMaldonado.png",
+  "Traits": [
+    "MidCareer",
+    "Rainmeister",
+    "Patriotic"
+  ],
+  "Speed": 5,
+  "MaxSpeed": 8,
+  "Focus": 6,
+  "MaxFocus": 9,
+  "DecadeStartContent": true
+}

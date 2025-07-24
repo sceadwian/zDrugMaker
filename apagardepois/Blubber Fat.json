@@ -1,0 +1,17 @@
+{
+  "Name": "Blubber",
+  "Surname": "Fat",
+  "CountryCode": "gb",
+  "PortraitPath": "Textures/Portraits/SimonBrooks.png",
+  "Traits": [
+    "EarlyCareer",
+    "Jerk",
+    "Handy",
+    "Patriotic"
+  ],
+  "Speed": 6,
+  "MaxSpeed": 7,
+  "Focus": 1,
+  "MaxFocus": 8,
+  "DecadeStartContent": false
+}

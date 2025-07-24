@@ -1,0 +1,17 @@
+{
+  "Name": "James",
+  "Surname": "Anderson",
+  "CountryCode": "gb",
+  "PortraitPath": "Textures/Portraits/JamesAnderson.png",
+  "Traits": [
+    "MidCareer",
+    "EfficientDriver",
+    "Reckless",
+    "Patriotic"
+  ],
+  "Speed": 2,
+  "MaxSpeed": 4,
+  "Focus": 5,
+  "MaxFocus": 7,
+  "DecadeStartContent": false
+}

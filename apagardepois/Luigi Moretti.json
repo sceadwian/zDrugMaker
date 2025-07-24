@@ -1,0 +1,17 @@
+{
+  "Name": "Luigi",
+  "Surname": "Moretti",
+  "CountryCode": "us",
+  "PortraitPath": "Textures/Portraits/LuigiMoretti.png",
+  "Traits": [
+    "EarlyCareer",
+    "Personable",
+    "Handy",
+    "Patriotic"
+  ],
+  "Speed": 7,
+  "MaxSpeed": 9,
+  "Focus": 6,
+  "MaxFocus": 8,
+  "DecadeStartContent": true
+}

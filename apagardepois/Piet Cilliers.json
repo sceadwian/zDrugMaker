@@ -1,0 +1,17 @@
+{
+  "Name": "Piet",
+  "Surname": "Cilliers",
+  "CountryCode": "za",
+  "PortraitPath": "Textures/Portraits/PietCilliers.png",
+  "Traits": [
+    "EarlyCareer",
+    "Hooner",
+    "SpeedFreak",
+    "Patriotic"
+  ],
+  "Speed": 4,
+  "MaxSpeed": 7,
+  "Focus": 4,
+  "MaxFocus": 7,
+  "DecadeStartContent": true
+}

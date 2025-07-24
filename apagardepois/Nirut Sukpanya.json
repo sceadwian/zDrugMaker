@@ -1,0 +1,16 @@
+{
+  "Name": "Nirut",
+  "Surname": "Sukpanya",
+  "CountryCode": "th",
+  "PortraitPath": "Textures/Portraits/NirutSukpanya.png",
+  "Traits": [
+    "MidCareer",
+    "Jealous",
+    "Careful"
+  ],
+  "Speed": 4,
+  "MaxSpeed": 7,
+  "Focus": 4,
+  "MaxFocus": 6,
+  "DecadeStartContent": false
+}

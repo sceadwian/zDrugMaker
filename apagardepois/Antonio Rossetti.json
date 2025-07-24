@@ -1,0 +1,17 @@
+{
+  "Name": "Antonio",
+  "Surname": "Rossetti",
+  "CountryCode": "it",
+  "PortraitPath": "Textures/Portraits/AntonioRossetti.png",
+  "Traits": [
+    "MidCareer",
+    "Personable",
+    "Reckless",
+    "Patriotic"
+  ],
+  "Speed": 7,
+  "MaxSpeed": 9,
+  "Focus": 4,
+  "MaxFocus": 7,
+  "DecadeStartContent": false
+}

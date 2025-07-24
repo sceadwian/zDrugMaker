@@ -1,0 +1,17 @@
+{
+  "Name": "Kurt",
+  "Surname": "Vektorhirn",
+  "CountryCode": "de",
+  "PortraitPath": "Textures/Portraits/MatthiasKeller.png",
+  "Traits": [
+    "EarlyCareer",
+    "RichParents",
+    "WeakDefense",
+    "Patriotic"
+  ],
+  "Speed": 4,
+  "MaxSpeed": 7,
+  "Focus": 4,
+  "MaxFocus": 5,
+  "DecadeStartContent": false
+}

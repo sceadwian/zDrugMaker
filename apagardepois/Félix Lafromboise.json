@@ -1,0 +1,16 @@
+{
+  "Name": "Félix",
+  "Surname": "Lafromboise",
+  "CountryCode": "ca",
+  "PortraitPath": "Textures/Portraits/FélixLafromboise.png",
+  "Traits": [
+    "MidCareer",
+    "Reckless",
+    "Personable"
+  ],
+  "Speed": 5,
+  "MaxSpeed": 8,
+  "Focus": 4,
+  "MaxFocus": 6,
+  "DecadeStartContent": true
+}

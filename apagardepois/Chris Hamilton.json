@@ -1,0 +1,17 @@
+{
+  "Name": "Chris",
+  "Surname": "Hamilton",
+  "CountryCode": "us",
+  "PortraitPath": "Textures/Portraits/ChrisHamilton.png",
+  "Traits": [
+    "EarlyCareer",
+    "QualiIssues",
+    "Personable",
+    "Patriotic"
+  ],
+  "Speed": 5,
+  "MaxSpeed": 8,
+  "Focus": 5,
+  "MaxFocus": 7,
+  "DecadeStartContent": false
+}

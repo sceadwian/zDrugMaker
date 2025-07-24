@@ -1,0 +1,17 @@
+{
+  "Name": "Hans",
+  "Surname": "Becker",
+  "CountryCode": "de",
+  "PortraitPath": "Textures/Portraits/HansBecker.png",
+  "Traits": [
+    "EarlyCareer",
+    "Hooner",
+    "Handy",
+    "Patriotic"
+  ],
+  "Speed": 3,
+  "MaxSpeed": 6,
+  "Focus": 1,
+  "MaxFocus": 4,
+  "DecadeStartContent": false
+}

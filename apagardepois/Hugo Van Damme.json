@@ -1,0 +1,16 @@
+{
+  "Name": "Hugo",
+  "Surname": "Van Damme",
+  "CountryCode": "be",
+  "PortraitPath": "Textures/Portraits/HugoVanDamme.png",
+  "Traits": [
+    "MidCareer",
+    "AeroMaster",
+    "BusinessMinded"
+  ],
+  "Speed": 4,
+  "MaxSpeed": 7,
+  "Focus": 7,
+  "MaxFocus": 9,
+  "DecadeStartContent": false
+}

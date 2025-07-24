@@ -1,0 +1,18 @@
+{
+  "Name": "Carlos",
+  "Surname": "Mendes",
+  "CountryCode": "br",
+  "PortraitPath": "Textures/Portraits/CarlosMendes.png",
+  "Traits": [
+    "MidCareer",
+    "Handy",
+    "Personable",
+    "Rainmeister",
+    "Patriotic"
+  ],
+  "Speed": 5,
+  "MaxSpeed": 7,
+  "Focus": 6,
+  "MaxFocus": 9,
+  "DecadeStartContent": false
+}

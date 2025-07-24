@@ -1,0 +1,16 @@
+{
+  "Name": "Elliot",
+  "Surname": "Silenieks",
+  "CountryCode": "ca",
+  "PortraitPath": "Textures/Portraits/ChandlerDupont.png",
+  "Traits": [
+    "EarlyCareer",
+    "Careful",
+    "Silkworm"
+  ],
+  "Speed": 8,
+  "MaxSpeed": 9,
+  "Focus": 3,
+  "MaxFocus": 9,
+  "DecadeStartContent": true
+}

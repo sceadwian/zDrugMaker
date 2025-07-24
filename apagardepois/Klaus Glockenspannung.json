@@ -1,0 +1,16 @@
+{
+  "Name": "Klaus",
+  "Surname": "Glockenspannung",
+  "CountryCode": "de",
+  "PortraitPath": "Textures/Portraits/RolandSchreiber.png",
+  "Traits": [
+    "EarlyCareer",
+    "Rainmeister",
+    "Patriotic"
+  ],
+  "Speed": 7,
+  "MaxSpeed": 9,
+  "Focus": 5,
+  "MaxFocus": 9,
+  "DecadeStartContent": false
+}

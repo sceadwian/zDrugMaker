@@ -1,0 +1,17 @@
+{
+  "Name": "Eric",
+  "Surname": "Palmer",
+  "CountryCode": "us",
+  "PortraitPath": "Textures/Portraits/EricPalmer.png",
+  "Traits": [
+    "MidCareer",
+    "Meditator",
+    "Handy",
+    "Patriotic"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 3,
+  "Focus": 4,
+  "MaxFocus": 7,
+  "DecadeStartContent": false
+}

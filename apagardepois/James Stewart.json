@@ -1,0 +1,17 @@
+{
+  "Name": "James",
+  "Surname": "Stewart",
+  "CountryCode": "gb",
+  "PortraitPath": "Textures/Portraits/JamesStewart.png",
+  "Traits": [
+    "EarlyCareer",
+    "RichParents",
+    "WeakDefense",
+    "Patriotic"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 2,
+  "Focus": 1,
+  "MaxFocus": 2,
+  "DecadeStartContent": false
+}

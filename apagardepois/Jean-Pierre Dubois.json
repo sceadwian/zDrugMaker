@@ -1,0 +1,15 @@
+{
+  "Name": "Jean-Pierre",
+  "Surname": "Dubois",
+  "CountryCode": "fr",
+  "PortraitPath": "Textures/Portraits/Jean-PierreDubois.png",
+  "Traits": [
+    "MidCareer",
+    "Personable"
+  ],
+  "Speed": 6,
+  "MaxSpeed": 8,
+  "Focus": 7,
+  "MaxFocus": 9,
+  "DecadeStartContent": false
+}

@@ -1,0 +1,16 @@
+{
+  "Name": "Levi",
+  "Surname": "Mach",
+  "CountryCode": "at",
+  "PortraitPath": "Textures/Portraits/LeviMach.png",
+  "Traits": [
+    "EarlyCareer",
+    "Handy",
+    "Jerk"
+  ],
+  "Speed": 6,
+  "MaxSpeed": 8,
+  "Focus": 7,
+  "MaxFocus": 10,
+  "DecadeStartContent": true
+}

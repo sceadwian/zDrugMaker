@@ -1,0 +1,16 @@
+{
+  "Name": "Rodrigo",
+  "Surname": "Salazar",
+  "CountryCode": "cl",
+  "PortraitPath": "Textures/Portraits/RodrigoSalazar.png",
+  "Traits": [
+    "EarlyCareer",
+    "Meditator",
+    "TechnicallyInept"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 6,
+  "Focus": 3,
+  "MaxFocus": 7,
+  "DecadeStartContent": false
+}

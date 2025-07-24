@@ -1,0 +1,17 @@
+{
+  "Name": "Richard",
+  "Surname": "Bennett",
+  "CountryCode": "gb",
+  "PortraitPath": "Textures/Portraits/RichardBennett.png",
+  "Traits": [
+    "MidCareer",
+    "Jerk",
+    "Handy",
+    "Patriotic"
+  ],
+  "Speed": 6,
+  "MaxSpeed": 8,
+  "Focus": 6,
+  "MaxFocus": 8,
+  "DecadeStartContent": false
+}

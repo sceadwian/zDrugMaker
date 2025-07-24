@@ -1,0 +1,16 @@
+{
+  "Name": "Nils",
+  "Surname": "Zeitlucke",
+  "CountryCode": "ch",
+  "PortraitPath": "Textures/Portraits/JanSchaub.png",
+  "Traits": [
+    "LateCareer",
+    "Hooner",
+    "Reckless"
+  ],
+  "Speed": 5,
+  "MaxSpeed": 7,
+  "Focus": 3,
+  "MaxFocus": 6,
+  "DecadeStartContent": true
+}

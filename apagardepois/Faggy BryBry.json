@@ -1,0 +1,16 @@
+{
+  "Name": "Faggy",
+  "Surname": "BryBry",
+  "CountryCode": "ca",
+  "PortraitPath": "Textures/Portraits/ChristopheMartin.png",
+  "Traits": [
+    "EarlyCareer",
+    "RichParents",
+    "Reckless"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 2,
+  "Focus": 1,
+  "MaxFocus": 2,
+  "DecadeStartContent": false
+}

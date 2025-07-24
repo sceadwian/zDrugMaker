@@ -1,0 +1,17 @@
+{
+  "Name": "Ramiro",
+  "Surname": "Gotea",
+  "CountryCode": "es",
+  "PortraitPath": "Textures/Portraits/GiovanniRusso.png",
+  "Traits": [
+    "EarlyCareer",
+    "Aggressive",
+    "Reckless",
+    "Patriotic"
+  ],
+  "Speed": 6,
+  "MaxSpeed": 7,
+  "Focus": 3,
+  "MaxFocus": 8,
+  "DecadeStartContent": false
+}

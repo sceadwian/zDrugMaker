@@ -1,0 +1,17 @@
+{
+  "Name": "Lucien",
+  "Surname": "Moreau",
+  "CountryCode": "be",
+  "PortraitPath": "Textures/Portraits/LucienMoreau.png",
+  "Traits": [
+    "EarlyCareer",
+    "RichParents",
+    "PartyAnimal",
+    "Patriotic"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 2,
+  "Focus": 1,
+  "MaxFocus": 2,
+  "DecadeStartContent": false
+}

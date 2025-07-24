@@ -1,0 +1,16 @@
+{
+  "Name": "Takeshi",
+  "Surname": "Nakamura",
+  "CountryCode": "jp",
+  "PortraitPath": "Textures/Portraits/TakeshiNakamura.png",
+  "Traits": [
+    "MidCareer",
+    "InefficientDriver",
+    "Aggressive"
+  ],
+  "Speed": 3,
+  "MaxSpeed": 4,
+  "Focus": 1,
+  "MaxFocus": 6,
+  "DecadeStartContent": false
+}

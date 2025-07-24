@@ -1,0 +1,16 @@
+{
+  "Name": "Erik",
+  "Surname": "Lindberg",
+  "CountryCode": "se",
+  "PortraitPath": "Textures/Portraits/ErikLindberg.png",
+  "Traits": [
+    "EarlyCareer",
+    "Hooner",
+    "Reckless"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 4,
+  "Focus": 3,
+  "MaxFocus": 6,
+  "DecadeStartContent": false
+}

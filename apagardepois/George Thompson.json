@@ -1,0 +1,17 @@
+{
+  "Name": "George",
+  "Surname": "Thompson",
+  "CountryCode": "us",
+  "PortraitPath": "Textures/Portraits/GeorgeThompson.png",
+  "Traits": [
+    "Jealous",
+    "MidCareer",
+    "Duellist",
+    "Patriotic"
+  ],
+  "Speed": 4,
+  "MaxSpeed": 7,
+  "Focus": 5,
+  "MaxFocus": 7,
+  "DecadeStartContent": false
+}

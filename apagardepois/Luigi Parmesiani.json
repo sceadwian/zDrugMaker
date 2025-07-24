@@ -1,0 +1,16 @@
+{
+  "Name": "Luigi",
+  "Surname": "Parmesiani",
+  "CountryCode": "it",
+  "PortraitPath": "Textures/Portraits/LuanaLovera.png",
+  "Traits": [
+    "MidCareer",
+    "Personable",
+    "Patriotic"
+  ],
+  "Speed": 6,
+  "MaxSpeed": 8,
+  "Focus": 5,
+  "MaxFocus": 7,
+  "DecadeStartContent": true
+}

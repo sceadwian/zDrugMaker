@@ -1,0 +1,16 @@
+{
+  "Name": "Daan",
+  "Surname": "Jansen",
+  "CountryCode": "nl",
+  "PortraitPath": "Textures/Portraits/DaanJansen.png",
+  "Traits": [
+    "EarlyCareer",
+    "Hooner",
+    "Handy"
+  ],
+  "Speed": 5,
+  "MaxSpeed": 6,
+  "Focus": 3,
+  "MaxFocus": 5,
+  "DecadeStartContent": false
+}

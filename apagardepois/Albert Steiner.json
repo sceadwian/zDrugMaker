@@ -1,0 +1,16 @@
+{
+  "Name": "Albert",
+  "Surname": "Steiner",
+  "CountryCode": "ch",
+  "PortraitPath": "Textures/Portraits/AlbertSteiner.png",
+  "Traits": [
+    "MidCareer",
+    "Passive",
+    "Unshakeable"
+  ],
+  "Speed": 3,
+  "MaxSpeed": 7,
+  "Focus": 2,
+  "MaxFocus": 5,
+  "DecadeStartContent": true
+}

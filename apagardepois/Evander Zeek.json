@@ -1,0 +1,16 @@
+{
+  "Name": "Evander",
+  "Surname": "Zeek",
+  "CountryCode": "li",
+  "PortraitPath": "Textures/Portraits/ArtieVonHeim.png",
+  "Traits": [
+    "EarlyCareer",
+    "Jealous",
+    "Reckless"
+  ],
+  "Speed": 7,
+  "MaxSpeed": 8,
+  "Focus": 2,
+  "MaxFocus": 4,
+  "DecadeStartContent": true
+}

@@ -1,0 +1,17 @@
+{
+  "Name": "Maximilian",
+  "Surname": "Weber",
+  "CountryCode": "ch",
+  "PortraitPath": "Textures/Portraits/MaximilianWeber.png",
+  "Traits": [
+    "EarlyCareer",
+    "MonacoNose",
+    "Personable",
+    "Handy"
+  ],
+  "Speed": 6,
+  "MaxSpeed": 9,
+  "Focus": 7,
+  "MaxFocus": 9,
+  "DecadeStartContent": false
+}

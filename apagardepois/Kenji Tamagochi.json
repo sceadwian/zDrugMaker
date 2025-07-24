@@ -1,0 +1,17 @@
+{
+  "Name": "Kenji",
+  "Surname": "Tamagochi",
+  "CountryCode": "jp",
+  "PortraitPath": "Textures/Portraits/KenjiSuzuhira.png",
+  "Traits": [
+    "EarlyCareer",
+    "RichParents",
+    "PartyAnimal",
+    "Patriotic"
+  ],
+  "Speed": 5,
+  "MaxSpeed": 9,
+  "Focus": 6,
+  "MaxFocus": 7,
+  "DecadeStartContent": false
+}

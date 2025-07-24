@@ -1,0 +1,16 @@
+{
+  "Name": "John",
+  "Surname": "Thompson",
+  "CountryCode": "us",
+  "PortraitPath": "Textures/Portraits/JohnThompson.png",
+  "Traits": [
+    "EarlyCareer",
+    "RichParents",
+    "Reckless"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 2,
+  "Focus": 1,
+  "MaxFocus": 2,
+  "DecadeStartContent": false
+}

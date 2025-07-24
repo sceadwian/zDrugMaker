@@ -1,0 +1,16 @@
+{
+  "Name": "Li",
+  "Surname": "Wei",
+  "CountryCode": "cn",
+  "PortraitPath": "Textures/Portraits/LiWei.png",
+  "Traits": [
+    "MidCareer",
+    "Picky",
+    "Passive"
+  ],
+  "Speed": 5,
+  "MaxSpeed": 8,
+  "Focus": 3,
+  "MaxFocus": 6,
+  "DecadeStartContent": false
+}

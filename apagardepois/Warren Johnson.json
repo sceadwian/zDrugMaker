@@ -1,0 +1,16 @@
+{
+  "Name": "Warren",
+  "Surname": "Johnson",
+  "CountryCode": "au",
+  "PortraitPath": "Textures/Portraits/WarrenJohnson.png",
+  "Traits": [
+    "MidCareer",
+    "Hooner",
+    "Rainmeister"
+  ],
+  "Speed": 5,
+  "MaxSpeed": 8,
+  "Focus": 2,
+  "MaxFocus": 6,
+  "DecadeStartContent": false
+}

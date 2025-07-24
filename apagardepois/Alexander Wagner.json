@@ -1,0 +1,17 @@
+{
+  "Name": "Alexander",
+  "Surname": "Wagner",
+  "CountryCode": "de",
+  "PortraitPath": "Textures/Portraits/AlexanderWagner.png",
+  "Traits": [
+    "MidCareer",
+    "WeakDefense",
+    "Handy",
+    "Patriotic"
+  ],
+  "Speed": 3,
+  "MaxSpeed": 4,
+  "Focus": 2,
+  "MaxFocus": 4,
+  "DecadeStartContent": false
+}

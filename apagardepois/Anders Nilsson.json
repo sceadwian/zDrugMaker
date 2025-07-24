@@ -1,0 +1,16 @@
+{
+  "Name": "Anders",
+  "Surname": "Nilsson",
+  "CountryCode": "se",
+  "PortraitPath": "Textures/Portraits/AndersNilsson.png",
+  "Traits": [
+    "EarlyCareer",
+    "QualiMaster",
+    "Rainmeister"
+  ],
+  "Speed": 8,
+  "MaxSpeed": 10,
+  "Focus": 6,
+  "MaxFocus": 9,
+  "DecadeStartContent": false
+}

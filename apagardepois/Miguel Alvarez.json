@@ -1,0 +1,17 @@
+{
+  "Name": "Miguel",
+  "Surname": "Alvarez",
+  "CountryCode": "ar",
+  "PortraitPath": "Textures/Portraits/MiguelAlvarez.png",
+  "Traits": [
+    "EarlyCareer",
+    "Jerk",
+    "Handy",
+    "Patriotic"
+  ],
+  "Speed": 5,
+  "MaxSpeed": 7,
+  "Focus": 5,
+  "MaxFocus": 7,
+  "DecadeStartContent": false
+}

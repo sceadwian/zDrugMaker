@@ -1,0 +1,16 @@
+{
+  "Name": "Fuji",
+  "Surname": "Nakombi",
+  "CountryCode": "jp",
+  "PortraitPath": "Textures/Portraits/RodneyCampbell.png",
+  "Traits": [
+    "MidCareer",
+    "EfficientDriver",
+    "Reckless"
+  ],
+  "Speed": 5,
+  "MaxSpeed": 8,
+  "Focus": 8,
+  "MaxFocus": 10,
+  "DecadeStartContent": true
+}

@@ -1,0 +1,16 @@
+{
+  "Name": "Asuka",
+  "Surname": "Shikinami",
+  "CountryCode": "jp",
+  "PortraitPath": "Textures/Portraits/AsukaShikinami.png",
+  "Traits": [
+    "EarlyCareer",
+    "RichParents",
+    "Jerk"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 2,
+  "Focus": 1,
+  "MaxFocus": 2,
+  "DecadeStartContent": false
+}

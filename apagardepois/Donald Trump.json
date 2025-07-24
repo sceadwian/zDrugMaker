@@ -1,0 +1,17 @@
+{
+  "Name": "Donald",
+  "Surname": "Trump",
+  "CountryCode": "us",
+  "PortraitPath": "Textures/Portraits/PatrickWilliams.png",
+  "Traits": [
+    "EarlyCareer",
+    "Privateer",
+    "Meditator",
+    "Patriotic"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 9,
+  "Focus": 1,
+  "MaxFocus": 9,
+  "DecadeStartContent": false
+}

@@ -1,0 +1,17 @@
+{
+  "Name": "Mateo",
+  "Surname": "Álvarez",
+  "CountryCode": "ar",
+  "PortraitPath": "Textures/Portraits/MateoÁlvarez.png",
+  "Traits": [
+    "MidCareer",
+    "Silkworm",
+    "Rainmeister",
+    "Patriotic"
+  ],
+  "Speed": 7,
+  "MaxSpeed": 9,
+  "Focus": 5,
+  "MaxFocus": 8,
+  "DecadeStartContent": false
+}

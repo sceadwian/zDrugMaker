@@ -1,0 +1,18 @@
+{
+  "Name": "Leo",
+  "Surname": "Silenieks",
+  "CountryCode": "br",
+  "PortraitPath": "Textures/Portraits/ChristophFischer.png",
+  "Traits": [
+    "EarlyCareer",
+    "Privateer",
+    "Meditator",
+    "Patriotic",
+    "Rainmeister"
+  ],
+  "Speed": 8,
+  "MaxSpeed": 10,
+  "Focus": 5,
+  "MaxFocus": 10,
+  "DecadeStartContent": false
+}

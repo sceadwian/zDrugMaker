@@ -1,0 +1,16 @@
+{
+  "Name": "Lothar",
+  "Surname": "Schmerzgeist",
+  "CountryCode": "de",
+  "PortraitPath": "Textures/Portraits/KurtSchmid.png",
+  "Traits": [
+    "EarlyCareer",
+    "StayingPower",
+    "Duellist"
+  ],
+  "Speed": 5,
+  "MaxSpeed": 8,
+  "Focus": 6,
+  "MaxFocus": 7,
+  "DecadeStartContent": false
+}

@@ -1,0 +1,16 @@
+{
+  "Name": "Hernando",
+  "Surname": "Cabron",
+  "CountryCode": "mx",
+  "PortraitPath": "Textures/Portraits/JacquesDupont.png",
+  "Traits": [
+    "EarlyCareer",
+    "Privateer",
+    "SpeedFreak"
+  ],
+  "Speed": 5,
+  "MaxSpeed": 7,
+  "Focus": 4,
+  "MaxFocus": 6,
+  "DecadeStartContent": false
+}

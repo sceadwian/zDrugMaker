@@ -448,3 +448,57 @@ Volumes:
 
 ==================================================
 
+Date: 2025/07/24 - 00:39:58
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: LiPi UK - Phenobarbital
+BEW: 1
+Dose: 100 mg/kg
+========================================
+Drug amount needed: 560 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 5.6 ml
+- Oral (5 ml/kg): 28 ml
+- Mice (10 ml/kg): 56 ml
+========================================
+
+==================================================
+
+Date: 2025/07/24 - 00:41:10
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: LiPi UK - Phenobarbital
+BEW: 1
+Dose: 100 mg/kg
+========================================
+Drug amount needed: 490 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 4.9 ml
+- Oral (5 ml/kg): 24.5 ml
+- Mice (10 ml/kg): 49 ml
+========================================
+
+==================================================
+
+Date: 2025/07/24 - 01:24:12
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: LiPi UK - Brilliant Blue G
+BEW: 1
+Dose: 100 mg/kg
+========================================
+Drug amount needed: 1.96e+03 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 19.6 ml
+- Oral (5 ml/kg): 98 ml
+- Mice (10 ml/kg): 196 ml
+========================================
+
+==================================================
+

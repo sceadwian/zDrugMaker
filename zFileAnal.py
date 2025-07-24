@@ -6,6 +6,7 @@
 # 5. Reports on images and video files by date
 # 6. List sub folder structure
 # 7. Replace empty spaces in file names with underscores. Only current folder or directory.
+# 8. Scan for Study IDs in filenames and content.
 # The user can select the desired function from the main menu.
 # The script prompts for user input and performs the chosen operation.
 
@@ -13,6 +14,7 @@
 import os
 import math
 import re
+import datetime
 
 def get_directory_size(path):
     total_size = 0
@@ -67,7 +69,7 @@ def list_files():
     print("\nFiles in the current directory:")
     for file, size, red in files:
         size_string = get_size_string(size)
-        percentage = (size / total_size) * 100
+        percentage = (size / total_size) * 100 if total_size > 0 else 0
         if red:
             print(f"\033[91m{file}\033[0m ({size_string}) [{percentage:.2f}%]")  # Print executables and .py files in red
         else:
@@ -87,7 +89,7 @@ def list_files():
                 file_path = os.path.join(dirpath, f)
                 size = os.path.getsize(file_path)
                 size_string = get_size_string(size)
-                percentage = (size / total_size) * 100
+                percentage = (size / total_size) * 100 if total_size > 0 else 0
                 if f.endswith((".exe", ".py")):
                     print(f"{subindent}\033[91m{f}\033[0m ({size_string}) [{percentage:.2f}%]")  # Print executables and .py files in red
                 else:
@@ -286,19 +288,163 @@ def replace_spaces_in_filenames():
     else:
         print("No changes were made.")
 
+def find_study_ids():
+    # Get the current working directory, which will be our base path.
+    base_path = os.getcwd()
+    
+    # Regex to be more flexible with the number of digits.
+    study_id_pattern = re.compile(
+        r'TSA-\d{5,6}-[a-zA-Z]{3}|'   # Matches TSA-#####-XXX or TSA-######-XXX
+        r'TPC\d{1,3}-\d{5}-[a-zA-Z]{2,3}'  # Matches TPC#-#####-XX(X), TPC##-..., TPC###-...
+    )
+    
+    # Dictionary to store locations. The value is a set of tuples (context, full_path)
+    found_locations = {}
+    
+    # Skip files larger than 100 MB
+    MAX_SIZE = 100 * 1024 * 1024  # bytes
+    
+    print(f"Starting scan in: {base_path}\n", flush=True)
+    
+    dir_count = 0
+    for root, dirs, files in os.walk(base_path):
+        dir_count += 1
+        print(f"[{dir_count}] Scanning directory: {root}", flush=True)
+        
+        # 1. Check all directory names
+        for name in dirs:
+            for match in study_id_pattern.finditer(name):
+                sid = match.group()
+                found_locations.setdefault(sid, set()).add(
+                    ('in Folder Name', os.path.join(root, name))
+                )
+
+        # 2. Check all file names and their content
+        for name in files:
+            filepath = os.path.join(root, name)
+
+            # 2a. Check the filename itself
+            for match in study_id_pattern.finditer(name):
+                sid = match.group()
+                found_locations.setdefault(sid, set()).add(
+                    ('in File Name', filepath)
+                )
+            
+            # 2b. Check the content within the file (line‑by‑line)
+            try:
+                size = os.path.getsize(filepath)
+                if size <= MAX_SIZE:
+                    with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+                        for line in f:
+                            for match in study_id_pattern.finditer(line):
+                                sid = match.group()
+                                found_locations.setdefault(sid, set()).add(
+                                    ('in File Content', filepath)
+                                )
+                else:
+                    print(f"    ↳ Skipped large file (>100 MB): {os.path.relpath(filepath, base_path)}", flush=True)
+            except (IOError, OSError):
+                print(f"    ↳ Could not read: {os.path.relpath(filepath, base_path)}", flush=True)
+                continue
+        
+        print(f"    → Unique IDs found so far: {len(found_locations)}\n", flush=True)
+
+    if not found_locations:
+        print("No Study IDs found matching the specified formats.", flush=True)
+        return
+
+    # --- File output logic ---
+    timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M")
+    output_filename = f"zFileAnal_Studies_{timestamp}.txt"
+    
+    header = "--- Scan Complete. Found the following Study IDs ---"
+    console_header = f"Base Directory: \033[92m{base_path}\033[0m"
+    file_header = f"Base Directory: {base_path}"
+
+    print(f"\n{header}")
+    print(console_header + "\n")
+    
+    try:
+        with open(output_filename, 'w', encoding='utf-8') as f:
+            f.write(f"{header}\n{file_header}\n\n")
+            
+            for study_id, locations in sorted(found_locations.items()):
+                print(f"\033[93mID: {study_id}\033[0m")
+                f.write(f"\nID: {study_id}\n")
+                
+                for context, full_path in sorted(locations):
+                    rel = os.path.relpath(full_path, base_path)
+                    line = f"  • Found {context}: {rel}"
+                    print(line)
+                    f.write(f"{line}\n")
+        
+        print(f"\n\033[92mResults also saved to: {output_filename}\033[0m")
+    except IOError:
+        print(f"\n\033[91mError: Could not write results to file: {output_filename}\033[0m")
+        return
+
+    # --- Interactive filter ---
+    substr = input("\nEnter any part of a Study ID to filter (or press Enter to exit): ").strip()
+    if substr:
+        print(f"\nFiltering for IDs containing \"{substr}\":\n")
+        found_any = False
+        for study_id, locations in sorted(found_locations.items()):
+            if substr in study_id:
+                found_any = True
+                print(f"\033[93mID: {study_id}\033[0m")
+                for context, full_path in sorted(locations):
+                    rel = os.path.relpath(full_path, base_path)
+                    print(f"  • Found {context}: {rel}")
+                print()
+        if not found_any:
+            print(f"No Study IDs containing \"{substr}\" were found.")
+    else:
+        print("No filter entered; exiting.")
+
 
 def main():
     while True:
-        print("\nSelect a function:")
-        print("1. List files in the current directory and display folder structure")
-        print("2. list_files function")       
-        print("3. Rename files in the current directory with a prefix")
-        print("4. Remove prefix from files in the current directory")
-        print("5. Group image and video files by date")
-        print("6. List all subfolders and save to a text file")
-        print("7. Replace spaces in filenames with underscores")        
-        print("0. Exit")
-        choice = input("Enter your choice: ")
+        menu = """
+    Select a function:
+    ------------------------------------------------------------
+    1) FILES/FOLDERS - List files alphabetically
+       • Print every filename in the current directory, A → Z
+
+    2) FILES/FOLDERS - List files & folder structure
+       • Run your full list_files() routine:
+         – Show sizes of each top‑level folder (largest first)
+         – List every file with its share of the directory’s total size
+         – Display a two‑level deep tree view of folders & files
+
+    3) NAMING - Rename files with prefix
+       • Add a date prefix (YYYYMMDD or YYYYMMXX) + custom description
+       • Preview proposed names before renaming
+
+    4) NAMING - Remove prefix from files
+       • Strip an existing date_prefix_description_ from filenames
+       • Preview proposed names before renaming
+
+    5) MEDIA - Group image/video files by date
+       • Detect media files whose names start with date prefixes
+       • Group them per-date and show count & total size
+
+    6) List subfolders & save to file
+       • Enumerate all subfolders under the current directory
+       • Write the sorted list to "zfileanaloutput_subfolders_list.txt"
+
+    7) NAMING/MEDIA - Replace spaces in filenames
+       • Find files with spaces in their names
+       • Replace spaces with underscores on confirmation
+    
+    8) SCANNING - Find Study IDs
+       • Scan all files and folders for Study IDs
+       • Searches filenames and file content for specific patterns
+
+    0) Exit
+    ------------------------------------------------------------
+    """
+        print(menu)
+        choice = input("Enter your choice [0–8]: ").strip()
 
         if choice == "1":
             list_files_alphabetical()
@@ -314,11 +460,18 @@ def main():
             list_subfolders_and_save()
         elif choice == "7":
             replace_spaces_in_filenames()
+        elif choice == "8":
+            find_study_ids()
         elif choice == "0":
             print("Exiting the script.")
             break
         else:
             print("Invalid choice. Please try again.")
+        
+        # This part makes the script wait for user input before showing the menu again
+        if choice != "0":
+            input("\nPress Enter to return to the main menu...")
+
 
 if __name__ == "__main__":
     main()

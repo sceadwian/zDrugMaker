@@ -1,0 +1,17 @@
+{
+  "Name": "Roger",
+  "Surname": "Clark",
+  "CountryCode": "gb",
+  "PortraitPath": "Textures/Portraits/RogerClark.png",
+  "Traits": [
+    "MidCareer",
+    "Unshakeable",
+    "Duellist",
+    "Patriotic"
+  ],
+  "Speed": 3,
+  "MaxSpeed": 4,
+  "Focus": 3,
+  "MaxFocus": 6,
+  "DecadeStartContent": false
+}

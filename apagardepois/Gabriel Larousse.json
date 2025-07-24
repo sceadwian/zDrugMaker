@@ -1,0 +1,16 @@
+{
+  "Name": "Gabriel",
+  "Surname": "Larousse",
+  "CountryCode": "fr",
+  "PortraitPath": "Textures/Portraits/GabrielLarousse.png",
+  "Traits": [
+    "MidCareer",
+    "Handy",
+    "Personable"
+  ],
+  "Speed": 5,
+  "MaxSpeed": 7,
+  "Focus": 6,
+  "MaxFocus": 7,
+  "DecadeStartContent": true
+}

@@ -1,0 +1,17 @@
+{
+  "Name": "Ian",
+  "Surname": "MacDonald",
+  "CountryCode": "za",
+  "PortraitPath": "Textures/Portraits/IanMacDonald.png",
+  "Traits": [
+    "EarlyCareer",
+    "Hooner",
+    "Aggressive",
+    "Patriotic"
+  ],
+  "Speed": 4,
+  "MaxSpeed": 5,
+  "Focus": 4,
+  "MaxFocus": 5,
+  "DecadeStartContent": false
+}

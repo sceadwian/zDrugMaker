@@ -1,0 +1,17 @@
+{
+  "Name": "Lucien",
+  "Surname": "Lavorre",
+  "CountryCode": "be",
+  "PortraitPath": "Textures/Portraits/LucienLavorre.png",
+  "Traits": [
+    "EarlyCareer",
+    "EfficientDriver",
+    "Silkworm",
+    "Rainmeister"
+  ],
+  "Speed": 7,
+  "MaxSpeed": 9,
+  "Focus": 7,
+  "MaxFocus": 10,
+  "DecadeStartContent": false
+}

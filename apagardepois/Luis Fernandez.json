@@ -1,0 +1,17 @@
+{
+  "Name": "Luis",
+  "Surname": "Fernandez",
+  "CountryCode": "br",
+  "PortraitPath": "Textures/Portraits/LuisFernandez.png",
+  "Traits": [
+    "EarlyCareer",
+    "RichParents",
+    "Handy",
+    "Patriotic"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 2,
+  "Focus": 1,
+  "MaxFocus": 2,
+  "DecadeStartContent": false
+}

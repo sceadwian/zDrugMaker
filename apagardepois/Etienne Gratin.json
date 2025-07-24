@@ -1,0 +1,16 @@
+{
+  "Name": "Etienne",
+  "Surname": "Gratin",
+  "CountryCode": "fr",
+  "PortraitPath": "Textures/Portraits/PatrickLambert.png",
+  "Traits": [
+    "MidCareer",
+    "Jerk",
+    "Duellist"
+  ],
+  "Speed": 4,
+  "MaxSpeed": 7,
+  "Focus": 3,
+  "MaxFocus": 9,
+  "DecadeStartContent": false
+}

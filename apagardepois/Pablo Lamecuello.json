@@ -1,0 +1,17 @@
+{
+  "Name": "Pablo",
+  "Surname": "Lamecuello",
+  "CountryCode": "ar",
+  "PortraitPath": "Textures/Portraits/ManuelOrtega.png",
+  "Traits": [
+    "EarlyCareer",
+    "SpeedFreak",
+    "WeakDefense",
+    "Patriotic"
+  ],
+  "Speed": 5,
+  "MaxSpeed": 7,
+  "Focus": 5,
+  "MaxFocus": 6,
+  "DecadeStartContent": false
+}

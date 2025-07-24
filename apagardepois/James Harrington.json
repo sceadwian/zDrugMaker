@@ -1,0 +1,16 @@
+{
+  "Name": "James",
+  "Surname": "Harrington",
+  "CountryCode": "gb",
+  "PortraitPath": "Textures/Portraits/JamesHarrington.png",
+  "Traits": [
+    "EarlyCareer",
+    "RichParents",
+    "Jerk"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 2,
+  "Focus": 1,
+  "MaxFocus": 2,
+  "DecadeStartContent": false
+}

@@ -1,0 +1,17 @@
+{
+  "Name": "Eduardo",
+  "Surname": "Varalonga",
+  "CountryCode": "ar",
+  "PortraitPath": "Textures/Portraits/EduardoOrtiz.png",
+  "Traits": [
+    "EarlyCareer",
+    "RichParents",
+    "Silkworm",
+    "Patriotic"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 5,
+  "Focus": 1,
+  "MaxFocus": 5,
+  "DecadeStartContent": false
+}

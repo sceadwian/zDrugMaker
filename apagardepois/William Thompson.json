@@ -1,0 +1,17 @@
+{
+  "Name": "William",
+  "Surname": "Thompson",
+  "CountryCode": "gb",
+  "PortraitPath": "Textures/Portraits/WilliamThompson.png",
+  "Traits": [
+    "EarlyCareer",
+    "SpeedFreak",
+    "Reckless",
+    "Patriotic"
+  ],
+  "Speed": 5,
+  "MaxSpeed": 8,
+  "Focus": 1,
+  "MaxFocus": 3,
+  "DecadeStartContent": false
+}

@@ -1,0 +1,17 @@
+{
+  "Name": "Donatello",
+  "Surname": "Spaghetiolini",
+  "CountryCode": "it",
+  "PortraitPath": "Textures/Portraits/AlessandroAmbrosio.png",
+  "Traits": [
+    "Jealous",
+    "EfficientDriver",
+    "EarlyCareer",
+    "Patriotic"
+  ],
+  "Speed": 5,
+  "MaxSpeed": 8,
+  "Focus": 2,
+  "MaxFocus": 7,
+  "DecadeStartContent": false
+}

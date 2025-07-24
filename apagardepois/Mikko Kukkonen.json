@@ -1,0 +1,16 @@
+{
+  "Name": "Mikko",
+  "Surname": "Kukkonen",
+  "CountryCode": "fi",
+  "PortraitPath": "Textures/Portraits/MikkoKukkonen.png",
+  "Traits": [
+    "MidCareer",
+    "Meditator",
+    "WeakDefense"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 4,
+  "Focus": 5,
+  "MaxFocus": 7,
+  "DecadeStartContent": true
+}

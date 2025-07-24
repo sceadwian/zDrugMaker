@@ -1,0 +1,17 @@
+{
+  "Name": "James",
+  "Surname": "Fletcher",
+  "CountryCode": "gb",
+  "PortraitPath": "Textures/Portraits/JamesFletcher.png",
+  "Traits": [
+    "EarlyCareer",
+    "Rainmeister",
+    "Aggressive",
+    "Patriotic"
+  ],
+  "Speed": 6,
+  "MaxSpeed": 9,
+  "Focus": 3,
+  "MaxFocus": 6,
+  "DecadeStartContent": false
+}

@@ -1,0 +1,17 @@
+{
+  "Name": "Marco",
+  "Surname": "De Santis",
+  "CountryCode": "it",
+  "PortraitPath": "Textures/Portraits/MarcoDeSantis.png",
+  "Traits": [
+    "EarlyCareer",
+    "Privateer",
+    "SpeedFreak",
+    "Patriotic"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 3,
+  "Focus": 1,
+  "MaxFocus": 2,
+  "DecadeStartContent": false
+}

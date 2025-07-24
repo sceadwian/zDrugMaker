@@ -1,0 +1,16 @@
+{
+  "Name": "Jadeu",
+  "Surname": "Bundinha",
+  "CountryCode": "pt",
+  "PortraitPath": "Textures/Portraits/BrunoRibeiro.png",
+  "Traits": [
+    "EarlyCareer",
+    "RichParents",
+    "Silkworm"
+  ],
+  "Speed": 2,
+  "MaxSpeed": 7,
+  "Focus": 6,
+  "MaxFocus": 10,
+  "DecadeStartContent": false
+}

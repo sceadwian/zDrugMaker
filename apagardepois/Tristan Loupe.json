@@ -1,0 +1,16 @@
+{
+  "Name": "Tristan",
+  "Surname": "Loupe",
+  "CountryCode": "fr",
+  "PortraitPath": "Textures/Portraits/TristanLoupe.png",
+  "Traits": [
+    "EarlyCareer",
+    "Handy",
+    "Personable"
+  ],
+  "Speed": 5,
+  "MaxSpeed": 8,
+  "Focus": 5,
+  "MaxFocus": 7,
+  "DecadeStartContent": true
+}

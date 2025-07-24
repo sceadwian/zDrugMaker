@@ -1,0 +1,16 @@
+{
+  "Name": "Björn",
+  "Surname": "Johansson",
+  "CountryCode": "se",
+  "PortraitPath": "Textures/Portraits/BjörnJohansson.png",
+  "Traits": [
+    "MidCareer",
+    "Hooner",
+    "EatMyDust"
+  ],
+  "Speed": 5,
+  "MaxSpeed": 7,
+  "Focus": 6,
+  "MaxFocus": 7,
+  "DecadeStartContent": false
+}

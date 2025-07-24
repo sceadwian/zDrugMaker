@@ -1,0 +1,17 @@
+{
+  "Name": "Diego",
+  "Surname": "Batistuta",
+  "CountryCode": "ar",
+  "PortraitPath": "Textures/Portraits/MarioAcosta.png",
+  "Traits": [
+    "MidCareer",
+    "InefficientDriver",
+    "Unshakeable",
+    "Patriotic"
+  ],
+  "Speed": 7,
+  "MaxSpeed": 8,
+  "Focus": 6,
+  "MaxFocus": 8,
+  "DecadeStartContent": true
+}

@@ -1,0 +1,16 @@
+{
+  "Name": "Andre",
+  "Surname": "Berardo",
+  "CountryCode": "br",
+  "PortraitPath": "Textures/Portraits/AgungPratama.png",
+  "Traits": [
+    "EarlyCareer",
+    "RichParents",
+    "Aggressive"
+  ],
+  "Speed": 6,
+  "MaxSpeed": 9,
+  "Focus": 5,
+  "MaxFocus": 6,
+  "DecadeStartContent": false
+}

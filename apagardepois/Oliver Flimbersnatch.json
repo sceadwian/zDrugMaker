@@ -1,0 +1,18 @@
+{
+  "Name": "Oliver",
+  "Surname": "Flimbersnatch",
+  "CountryCode": "gb",
+  "PortraitPath": "Textures/Portraits/PaulWoods.png",
+  "Traits": [
+    "MidCareer",
+    "Aggressive",
+    "Reckless",
+    "BusinessMinded",
+    "Patriotic"
+  ],
+  "Speed": 7,
+  "MaxSpeed": 10,
+  "Focus": 5,
+  "MaxFocus": 7,
+  "DecadeStartContent": true
+}

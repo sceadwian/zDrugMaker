@@ -1,0 +1,58 @@
+Date: 2025/07/24 - 00:39:58
+Calculation Type: Estimate Drug Amount
+Comments: Day -1: Li chloride administered Day 0: Methyl scopolamine administered 30 minutes before Pilocarpine. Day 0: TA will be administered prior to pilocarpine. Pre-treatment time TBD. Day 0: 30 minutes after scopolamine induction animals will be administered 300 mg/kg (TBD) pilocarpine. The animals will be observed for 60 mins. Day 0: TA will be administered 60 mins post Diazepam (60 mins post termination of SE) Day1: TA will be administered. Dosing time TBD (12 – 2 pm). Day2: TA will be administered. Dosing time TBD (12 – 2 pm). Day3: TA will be administered. Dosing time TBD (12 – 2 pm). Day3: Blood and Brains will be collected 1hour post final dose of TA.
+Estimated Drug Amount and Volumes
+========================================
+Compound: LiPi UK - Phenobarbital
+BEW: 1
+Dose: 100 mg/kg
+========================================
+Drug amount needed: 560 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 5.6 ml
+- Oral (5 ml/kg): 28 ml
+- Mice (10 ml/kg): 56 ml
+========================================
+
+==================================================
+
+Date: 2025/07/24 - 00:41:10
+Calculation Type: Estimate Drug Amount
+Comments: Day -1: Li chloride administered Day 0: Methyl scopolamine administered 30 minutes before Pilocarpine. Day 0: TA will be administered prior to pilocarpine. Pre-treatment time TBD. Day 0: 30 minutes after scopolamine induction animals will be administered 300 mg/kg (TBD) pilocarpine. The animals will be observed for 60 mins. Day 0: TA will be administered 60 mins post Diazepam (60 mins post termination of SE) Day1: TA will be administered. Dosing time TBD (12 – 2 pm). Day2: TA will be administered. Dosing time TBD (12 – 2 pm). Day3: TA will be administered. Dosing time TBD (12 – 2 pm). Day3: Blood and Brains will be collected 1hour post final dose of TA.
+Estimated Drug Amount and Volumes
+========================================
+Compound: LiPi UK - Phenobarbital
+BEW: 1
+Dose: 100 mg/kg
+========================================
+Drug amount needed: 490 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 4.9 ml
+- Oral (5 ml/kg): 24.5 ml
+- Mice (10 ml/kg): 49 ml
+========================================
+
+==================================================
+
+Date: 2025/07/24 - 01:24:12
+Calculation Type: Estimate Drug Amount
+Comments: Day -1: Li chloride administered Day 0: Methyl scopolamine administered 30 minutes before Pilocarpine. Day 0: TA will be administered prior to pilocarpine. Pre-treatment time TBD. Day 0: 30 minutes after scopolamine induction animals will be administered 300 mg/kg (TBD) pilocarpine. The animals will be observed for 60 mins. Day 0: TA will be administered 60 mins post Diazepam (60 mins post termination of SE) Day1: TA will be administered. Dosing time TBD (12 – 2 pm). Day2: TA will be administered. Dosing time TBD (12 – 2 pm). Day3: TA will be administered. Dosing time TBD (12 – 2 pm). Day3: Blood and Brains will be collected 1hour post final dose of TA.
+Estimated Drug Amount and Volumes
+========================================
+Compound: LiPi UK - Brilliant Blue G
+BEW: 1
+Dose: 100 mg/kg
+========================================
+Drug amount needed: 1.96e+03 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 19.6 ml
+- Oral (5 ml/kg): 98 ml
+- Mice (10 ml/kg): 196 ml
+========================================
+
+==================================================
+
+

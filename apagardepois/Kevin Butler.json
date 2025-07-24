@@ -1,0 +1,17 @@
+{
+  "Name": "Kevin",
+  "Surname": "Butler",
+  "CountryCode": "za",
+  "PortraitPath": "Textures/Portraits/KevinButler.png",
+  "Traits": [
+    "EarlyCareer",
+    "Privateer",
+    "SpeedFreak",
+    "Patriotic"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 3,
+  "Focus": 1,
+  "MaxFocus": 2,
+  "DecadeStartContent": false
+}

@@ -1,0 +1,17 @@
+{
+  "Name": "Roberto",
+  "Surname": "Santos",
+  "CountryCode": "br",
+  "PortraitPath": "Textures/Portraits/RobertoSantos.png",
+  "Traits": [
+    "WeakDefense",
+    "Jerk",
+    "MidCareer",
+    "Patriotic"
+  ],
+  "Speed": 3,
+  "MaxSpeed": 5,
+  "Focus": 7,
+  "MaxFocus": 8,
+  "DecadeStartContent": false
+}

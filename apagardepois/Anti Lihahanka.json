@@ -1,0 +1,16 @@
+{
+  "Name": "Anti",
+  "Surname": "Lihahanka",
+  "CountryCode": "fi",
+  "PortraitPath": "Textures/Portraits/JukkaKorhonen.png",
+  "Traits": [
+    "MidCareer",
+    "WeakDefense",
+    "Duellist"
+  ],
+  "Speed": 5,
+  "MaxSpeed": 8,
+  "Focus": 7,
+  "MaxFocus": 8,
+  "DecadeStartContent": false
+}

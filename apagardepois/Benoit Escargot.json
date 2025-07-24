@@ -1,0 +1,18 @@
+{
+  "Name": "Benoit",
+  "Surname": "Escargot",
+  "CountryCode": "fr",
+  "PortraitPath": "Textures/Portraits/JohnCartwright.png",
+  "Traits": [
+    "EarlyCareer",
+    "Handy",
+    "AeroMaster",
+    "BusinessMinded",
+    "Patriotic"
+  ],
+  "Speed": 6,
+  "MaxSpeed": 8,
+  "Focus": 5,
+  "MaxFocus": 8,
+  "DecadeStartContent": false
+}

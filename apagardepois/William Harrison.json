@@ -1,0 +1,17 @@
+{
+  "Name": "William",
+  "Surname": "Harrison",
+  "CountryCode": "gb",
+  "PortraitPath": "Textures/Portraits/WilliamHarrison.png",
+  "Traits": [
+    "EarlyCareer",
+    "RichParents",
+    "Handy",
+    "Patriotic"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 2,
+  "Focus": 1,
+  "MaxFocus": 2,
+  "DecadeStartContent": false
+}

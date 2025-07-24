@@ -1,0 +1,16 @@
+{
+  "Name": "Christopher",
+  "Surname": "Johnson",
+  "CountryCode": "us",
+  "PortraitPath": "Textures/Portraits/ChristopherJohnson.png",
+  "Traits": [
+    "EarlyCareer",
+    "RichParents",
+    "TestDriver"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 2,
+  "Focus": 1,
+  "MaxFocus": 2,
+  "DecadeStartContent": false
+}

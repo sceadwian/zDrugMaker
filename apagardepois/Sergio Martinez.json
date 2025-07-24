@@ -1,0 +1,17 @@
+{
+  "Name": "Sergio",
+  "Surname": "Martinez",
+  "CountryCode": "ar",
+  "PortraitPath": "Textures/Portraits/SergioMartinez.png",
+  "Traits": [
+    "MidCareer",
+    "Meditator",
+    "Handy",
+    "Patriotic"
+  ],
+  "Speed": 2,
+  "MaxSpeed": 6,
+  "Focus": 7,
+  "MaxFocus": 8,
+  "DecadeStartContent": false
+}

@@ -1,0 +1,18 @@
+{
+  "Name": "Jojo",
+  "Surname": "Koestel",
+  "CountryCode": "nl",
+  "PortraitPath": "Textures/Portraits/HansMüller.png",
+  "Traits": [
+    "MidCareer",
+    "Silkworm",
+    "EfficientDriver",
+    "Rainmeister",
+    "Patriotic"
+  ],
+  "Speed": 7,
+  "MaxSpeed": 10,
+  "Focus": 6,
+  "MaxFocus": 8,
+  "DecadeStartContent": false
+}

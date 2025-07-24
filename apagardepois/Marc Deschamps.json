@@ -1,0 +1,16 @@
+{
+  "Name": "Marc",
+  "Surname": "Deschamps",
+  "CountryCode": "fr",
+  "PortraitPath": "Textures/Portraits/MarcDeschamps.png",
+  "Traits": [
+    "EarlyCareer",
+    "Privateer",
+    "SpeedFreak"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 3,
+  "Focus": 1,
+  "MaxFocus": 2,
+  "DecadeStartContent": false
+}

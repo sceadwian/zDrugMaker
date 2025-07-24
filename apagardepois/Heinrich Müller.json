@@ -1,0 +1,16 @@
+{
+  "Name": "Heinrich",
+  "Surname": "Müller",
+  "CountryCode": "ch",
+  "PortraitPath": "Textures/Portraits/HeinrichMüller.png",
+  "Traits": [
+    "EarlyCareer",
+    "RichParents",
+    "TestDriver"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 2,
+  "Focus": 1,
+  "MaxFocus": 2,
+  "DecadeStartContent": false
+}

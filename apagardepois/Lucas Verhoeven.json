@@ -1,0 +1,16 @@
+{
+  "Name": "Lucas",
+  "Surname": "Verhoeven",
+  "CountryCode": "be",
+  "PortraitPath": "Textures/Portraits/LucasVerhoeven.png",
+  "Traits": [
+    "EarlyCareer",
+    "Prodigy",
+    "Rainmeister"
+  ],
+  "Speed": 8,
+  "MaxSpeed": 9,
+  "Focus": 7,
+  "MaxFocus": 9,
+  "DecadeStartContent": false
+}

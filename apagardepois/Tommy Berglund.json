@@ -1,0 +1,16 @@
+{
+  "Name": "Tommy",
+  "Surname": "Berglund",
+  "CountryCode": "se",
+  "PortraitPath": "Textures/Portraits/TommyBerglund.png",
+  "Traits": [
+    "EarlyCareer",
+    "RichParents",
+    "WeakDefense"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 2,
+  "Focus": 1,
+  "MaxFocus": 2,
+  "DecadeStartContent": false
+}

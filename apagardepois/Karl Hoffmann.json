@@ -1,0 +1,18 @@
+{
+  "Name": "Karl",
+  "Surname": "Hoffmann",
+  "CountryCode": "de",
+  "PortraitPath": "Textures/Portraits/KarlHoffmann.png",
+  "Traits": [
+    "EarlyCareer",
+    "Privateer",
+    "Jerk",
+    "EfficientDriver",
+    "Patriotic"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 3,
+  "Focus": 1,
+  "MaxFocus": 3,
+  "DecadeStartContent": false
+}

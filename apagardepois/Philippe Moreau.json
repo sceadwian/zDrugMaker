@@ -1,0 +1,17 @@
+{
+  "Name": "Philippe",
+  "Surname": "Moreau",
+  "CountryCode": "fr",
+  "PortraitPath": "Textures/Portraits/PhilippeMoreau.png",
+  "Traits": [
+    "EarlyCareer",
+    "Careful",
+    "NaturalStar",
+    "Rainmeister"
+  ],
+  "Speed": 7,
+  "MaxSpeed": 10,
+  "Focus": 6,
+  "MaxFocus": 8,
+  "DecadeStartContent": false
+}

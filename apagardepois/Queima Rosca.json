@@ -1,0 +1,17 @@
+{
+  "Name": "Queima",
+  "Surname": "Rosca",
+  "CountryCode": "br",
+  "PortraitPath": "Textures/Portraits/DaviFonseca.png",
+  "Traits": [
+    "MidCareer",
+    "Silkworm",
+    "Passive",
+    "Patriotic"
+  ],
+  "Speed": 5,
+  "MaxSpeed": 7,
+  "Focus": 5,
+  "MaxFocus": 7,
+  "DecadeStartContent": true
+}

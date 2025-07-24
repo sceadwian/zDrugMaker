@@ -1,0 +1,16 @@
+{
+  "Name": "Al",
+  "Surname": "Ice",
+  "CountryCode": "se",
+  "PortraitPath": "Textures/Portraits/HennyHolgersson.png",
+  "Traits": [
+    "MidCareer",
+    "Handy",
+    "Personable"
+  ],
+  "Speed": 7,
+  "MaxSpeed": 9,
+  "Focus": 5,
+  "MaxFocus": 7,
+  "DecadeStartContent": true
+}

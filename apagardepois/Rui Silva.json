@@ -1,0 +1,17 @@
+{
+  "Name": "Rui",
+  "Surname": "Silva",
+  "CountryCode": "br",
+  "PortraitPath": "Textures/Portraits/RuiSilva.png",
+  "Traits": [
+    "EarlyCareer",
+    "Privateer",
+    "Meditator",
+    "Patriotic"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 3,
+  "Focus": 2,
+  "MaxFocus": 3,
+  "DecadeStartContent": false
+}

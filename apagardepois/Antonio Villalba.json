@@ -1,0 +1,16 @@
+{
+  "Name": "Antonio",
+  "Surname": "Villalba",
+  "CountryCode": "es",
+  "PortraitPath": "Textures/Portraits/AntonioVillalba.png",
+  "Traits": [
+    "MidCareer",
+    "Jealous",
+    "Unshakeable"
+  ],
+  "Speed": 3,
+  "MaxSpeed": 4,
+  "Focus": 5,
+  "MaxFocus": 7,
+  "DecadeStartContent": true
+}

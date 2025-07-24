@@ -1,0 +1,17 @@
+{
+  "Name": "Giuseppe",
+  "Surname": "Izzo",
+  "CountryCode": "it",
+  "PortraitPath": "Textures/Portraits/GiuseppeIzzo.png",
+  "Traits": [
+    "EarlyCareer",
+    "RichParents",
+    "Handy",
+    "Patriotic"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 2,
+  "Focus": 1,
+  "MaxFocus": 2,
+  "DecadeStartContent": false
+}

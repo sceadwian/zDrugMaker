@@ -1,0 +1,17 @@
+{
+  "Name": "Börje",
+  "Surname": "Rosenqvist",
+  "CountryCode": "se",
+  "PortraitPath": "Textures/Portraits/BörjeRosenqvist.png",
+  "Traits": [
+    "MidCareer",
+    "Jealous",
+    "Jerk",
+    "EatMyDust"
+  ],
+  "Speed": 3,
+  "MaxSpeed": 8,
+  "Focus": 1,
+  "MaxFocus": 6,
+  "DecadeStartContent": true
+}

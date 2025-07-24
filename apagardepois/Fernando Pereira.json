@@ -1,0 +1,16 @@
+{
+  "Name": "Fernando",
+  "Surname": "Pereira",
+  "CountryCode": "br",
+  "PortraitPath": "Textures/Portraits/FernandoPereira.png",
+  "Traits": [
+    "Aggressive",
+    "EarlyCareer",
+    "Patriotic"
+  ],
+  "Speed": 6,
+  "MaxSpeed": 8,
+  "Focus": 5,
+  "MaxFocus": 6,
+  "DecadeStartContent": false
+}

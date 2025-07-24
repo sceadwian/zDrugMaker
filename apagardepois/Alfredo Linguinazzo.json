@@ -1,0 +1,17 @@
+{
+  "Name": "Alfredo",
+  "Surname": "Linguinazzo",
+  "CountryCode": "it",
+  "PortraitPath": "Textures/Portraits/AntonioRomano.png",
+  "Traits": [
+    "EarlyCareer",
+    "RichParents",
+    "Silkworm",
+    "Patriotic"
+  ],
+  "Speed": 6,
+  "MaxSpeed": 7,
+  "Focus": 7,
+  "MaxFocus": 8,
+  "DecadeStartContent": false
+}

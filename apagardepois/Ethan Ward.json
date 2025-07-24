@@ -1,0 +1,14 @@
+{
+  "Name": "Ethan",
+  "Surname": "Ward",
+  "CountryCode": "nz",
+  "PortraitPath": "Textures/Portraits/EthanWard.png",
+  "Traits": [
+    "EarlyCareer"
+  ],
+  "Speed": 7,
+  "MaxSpeed": 10,
+  "Focus": 8,
+  "MaxFocus": 9,
+  "DecadeStartContent": false
+}

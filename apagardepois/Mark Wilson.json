@@ -1,0 +1,16 @@
+{
+  "Name": "Mark",
+  "Surname": "Wilson",
+  "CountryCode": "nz",
+  "PortraitPath": "Textures/Portraits/MarkWilson.png",
+  "Traits": [
+    "EarlyCareer",
+    "RichParents",
+    "TestDriver"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 2,
+  "Focus": 1,
+  "MaxFocus": 2,
+  "DecadeStartContent": false
+}

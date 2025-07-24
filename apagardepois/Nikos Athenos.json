@@ -1,0 +1,16 @@
+{
+  "Name": "Nikos",
+  "Surname": "Athenos",
+  "CountryCode": "ca",
+  "PortraitPath": "Textures/Portraits/RajeshKumar.png",
+  "Traits": [
+    "MidCareer",
+    "Aggressive",
+    "EfficientDriver"
+  ],
+  "Speed": 6,
+  "MaxSpeed": 8,
+  "Focus": 5,
+  "MaxFocus": 7,
+  "DecadeStartContent": false
+}

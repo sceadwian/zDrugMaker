@@ -1,0 +1,16 @@
+{
+  "Name": "Lucas",
+  "Surname": "Van den Berg",
+  "CountryCode": "be",
+  "PortraitPath": "Textures/Portraits/LucasVandenBerg.png",
+  "Traits": [
+    "EarlyCareer",
+    "Silkworm",
+    "Passive"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 3,
+  "Focus": 3,
+  "MaxFocus": 5,
+  "DecadeStartContent": false
+}

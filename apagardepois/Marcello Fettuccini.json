@@ -1,0 +1,18 @@
+{
+  "Name": "Marcello",
+  "Surname": "Fettuccini",
+  "CountryCode": "it",
+  "PortraitPath": "Textures/Portraits/VittorioConti.png",
+  "Traits": [
+    "EarlyCareer",
+    "TestDriver",
+    "StayingPower",
+    "QualiMaster",
+    "Patriotic"
+  ],
+  "Speed": 6,
+  "MaxSpeed": 8,
+  "Focus": 6,
+  "MaxFocus": 8,
+  "DecadeStartContent": false
+}

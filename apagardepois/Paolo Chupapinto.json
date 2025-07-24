@@ -1,0 +1,17 @@
+{
+  "Name": "Paolo",
+  "Surname": "Chupapinto",
+  "CountryCode": "ar",
+  "PortraitPath": "Textures/Portraits/JorgeBregmann.png",
+  "Traits": [
+    "EarlyCareer",
+    "Personable",
+    "BusinessMinded",
+    "Patriotic"
+  ],
+  "Speed": 7,
+  "MaxSpeed": 8,
+  "Focus": 2,
+  "MaxFocus": 7,
+  "DecadeStartContent": true
+}

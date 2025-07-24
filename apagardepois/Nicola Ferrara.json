@@ -1,0 +1,17 @@
+{
+  "Name": "Nicola",
+  "Surname": "Ferrara",
+  "CountryCode": "it",
+  "PortraitPath": "Textures/Portraits/NicolaFerrara.png",
+  "Traits": [
+    "EarlyCareer",
+    "Privateer",
+    "Meditator",
+    "Patriotic"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 3,
+  "Focus": 2,
+  "MaxFocus": 3,
+  "DecadeStartContent": false
+}

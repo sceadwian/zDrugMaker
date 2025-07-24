@@ -1,0 +1,17 @@
+{
+  "Name": "Yoshihiro",
+  "Surname": "Sato",
+  "CountryCode": "jp",
+  "PortraitPath": "Textures/Portraits/YoshihiroSato.png",
+  "Traits": [
+    "EarlyCareer",
+    "RichParents",
+    "PartyAnimal",
+    "Patriotic"
+  ],
+  "Speed": 1,
+  "MaxSpeed": 2,
+  "Focus": 1,
+  "MaxFocus": 2,
+  "DecadeStartContent": false
+}

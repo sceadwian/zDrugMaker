@@ -1,0 +1,15 @@
+{
+  "Name": "Felix",
+  "Surname": "Gruber",
+  "CountryCode": "at",
+  "PortraitPath": "Textures/Portraits/FelixGruber.png",
+  "Traits": [
+    "MidCareer",
+    "Prodigy"
+  ],
+  "Speed": 7,
+  "MaxSpeed": 9,
+  "Focus": 4,
+  "MaxFocus": 6,
+  "DecadeStartContent": false
+}

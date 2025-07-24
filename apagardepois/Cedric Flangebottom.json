@@ -1,0 +1,16 @@
+{
+  "Name": "Cedric",
+  "Surname": "Flangebottom",
+  "CountryCode": "gb",
+  "PortraitPath": "Textures/Portraits/EdwardKing.png",
+  "Traits": [
+    "MidCareer",
+    "Aggressive",
+    "Patriotic"
+  ],
+  "Speed": 7,
+  "MaxSpeed": 9,
+  "Focus": 6,
+  "MaxFocus": 7,
+  "DecadeStartContent": false
+}

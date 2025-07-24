@@ -1,0 +1,16 @@
+{
+  "Name": "Zoah",
+  "Surname": "Sceadwian",
+  "CountryCode": "ca",
+  "PortraitPath": "Textures/Portraits/RyanMitchell.png",
+  "Traits": [
+    "MidCareer",
+    "Silkworm",
+    "Careful"
+  ],
+  "Speed": 8,
+  "MaxSpeed": 9,
+  "Focus": 6,
+  "MaxFocus": 10,
+  "DecadeStartContent": false
+}

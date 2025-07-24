@@ -1,0 +1,16 @@
+{
+  "Name": "Javier",
+  "Surname": "López",
+  "CountryCode": "es",
+  "PortraitPath": "Textures/Portraits/JavierLópez.png",
+  "Traits": [
+    "MidCareer",
+    "SpeedFreak",
+    "Silkworm"
+  ],
+  "Speed": 4,
+  "MaxSpeed": 7,
+  "Focus": 2,
+  "MaxFocus": 4,
+  "DecadeStartContent": false
+}
