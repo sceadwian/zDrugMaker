@@ -502,3 +502,183 @@ Volumes:
 
 ==================================================
 
+Date: 2025/07/31 - 10:57:31
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: Angelini-LiPi
+BEW: 1
+Dose: 40 mg/kg
+========================================
+Drug amount needed: 224 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 5.6 ml
+- Oral (5 ml/kg): 28 ml
+- Mice (10 ml/kg): 56 ml
+========================================
+
+==================================================
+
+Date: 2025/07/31 - 10:58:02
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: Angelini-LiPi
+BEW: 1
+Dose: 40 mg/kg
+========================================
+Drug amount needed: 896 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 22.4 ml
+- Oral (5 ml/kg): 112 ml
+- Mice (10 ml/kg): 224 ml
+========================================
+
+==================================================
+
+Date: 2025/07/31 - 10:58:37
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: Angelini-LiPi
+BEW: 1
+Dose: 40 mg/kg
+========================================
+Drug amount needed: 768 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 19.2 ml
+- Oral (5 ml/kg): 96 ml
+- Mice (10 ml/kg): 192 ml
+========================================
+
+==================================================
+
+Date: 2025/07/31 - 10:59:25
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: Angelini-LiPi
+BEW: 1
+Dose: 40 mg/kg
+========================================
+Drug amount needed: 960 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 24 ml
+- Oral (5 ml/kg): 120 ml
+- Mice (10 ml/kg): 240 ml
+========================================
+
+==================================================
+
+Date: 2025/07/31 - 11:04:28
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: Angelini-LiPi
+BEW: 1
+Dose: 13 mg/kg
+========================================
+Drug amount needed: 312 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 24 ml
+- Oral (5 ml/kg): 120 ml
+- Mice (10 ml/kg): 240 ml
+========================================
+
+==================================================
+
+Date: 2025/07/31 - 11:04:51
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: Angelini-LiPi
+BEW: 1
+Dose: 33 mg/kg
+========================================
+Drug amount needed: 792 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 24 ml
+- Oral (5 ml/kg): 120 ml
+- Mice (10 ml/kg): 240 ml
+========================================
+
+==================================================
+
+Date: 2025/08/01 - 09:01:37
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: LiPi Angelini
+BEW: 1
+Dose: 40 mg/kg
+========================================
+Drug amount needed: 900 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 22.5 ml
+- Oral (5 ml/kg): 112 ml
+- Mice (10 ml/kg): 225 ml
+========================================
+
+==================================================
+
+Date: 2025/08/01 - 09:01:55
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: LiPi Angelini
+BEW: 1
+Dose: 40 mg/kg
+========================================
+Drug amount needed: 840 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 21 ml
+- Oral (5 ml/kg): 105 ml
+- Mice (10 ml/kg): 210 ml
+========================================
+
+==================================================
+
+Date: 2025/08/01 - 09:02:04
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: LiPi Angelini
+BEW: 1
+Dose: 40 mg/kg
+========================================
+Drug amount needed: 720 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 18 ml
+- Oral (5 ml/kg): 90 ml
+- Mice (10 ml/kg): 180 ml
+========================================
+
+==================================================
+
+Date: 2025/08/01 - 09:05:02
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: LiPi Angelini
+BEW: 1
+Dose: 40 mg/kg
+========================================
+Drug amount needed: 720 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 18 ml
+- Oral (5 ml/kg): 90 ml
+- Mice (10 ml/kg): 180 ml
+========================================
+
+==================================================
+
