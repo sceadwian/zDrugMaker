@@ -368,19 +368,28 @@ def main():
         
         report_hours_by_client_category(input_file)
     
+
     elif choice == '5':
-        input_file = input("Enter the name of the input CSV file: ")
-        output_file = input("Enter the name of the output CSV file: ")
+        print("\n--- Client Hours Report ---")
+        print("Instructions:")
+        print("  • Copy/paste the name of the extracted legacy .csv file you wish to process.")
+        print("  • For the output, it is recommended to use the same base name")
+        print("    but with a .txt extension (e.g., input.csv → input.txt).")
+        print("  • If you leave a field blank, default names will be used.\n")
+
+        input_file = input("Enter the name of the input CSV file [default: input_zT.csv]: ")
+        output_file = input("Enter the name of the output file (e.g., my_report.txt) [default: client_hours_report.csv]: ")
 
         # If no input file is provided, use a default name.
         if not input_file.strip():
             input_file = "input_zT.csv"
-        
+
         # If no output file is provided, use a default name.
         if not output_file.strip():
             output_file = "client_hours_report.csv"
-        
+
         report_hours_by_client_over_time(input_file, output_file)
+
 
     elif choice == '6':
         input_file = input("Enter the name of the input CSV file: ")
