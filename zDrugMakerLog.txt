@@ -682,3 +682,111 @@ Volumes:
 
 ==================================================
 
+Date: 2025/08/28 - 13:54:21
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: AUTxxx
+BEW: 1
+Dose: 1 mg/kg
+========================================
+Drug amount needed: 0.42 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.42 ml
+- Oral (5 ml/kg): 2.1 ml
+- Mice (10 ml/kg): 4.2 ml
+========================================
+
+==================================================
+
+Date: 2025/08/28 - 13:56:33
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: AUTxxx
+BEW: 1
+Dose: 20 mg/kg
+========================================
+Drug amount needed: 8.4 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.42 ml
+- Oral (5 ml/kg): 2.1 ml
+- Mice (10 ml/kg): 4.2 ml
+========================================
+
+==================================================
+
+Date: 2025/08/29 - 16:32:16
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: 
+BEW: 1
+Dose: 25 mg/kg
+========================================
+Drug amount needed: 10.5 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.42 ml
+- Oral (5 ml/kg): 2.1 ml
+- Mice (10 ml/kg): 4.2 ml
+========================================
+
+==================================================
+
+Date: 2025/08/29 - 16:33:52
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: 
+BEW: 1
+Dose: 25 mg/kg
+========================================
+Drug amount needed: 7 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.28 ml
+- Oral (5 ml/kg): 1.4 ml
+- Mice (10 ml/kg): 2.8 ml
+========================================
+
+==================================================
+
+Date: 2025/08/29 - 16:52:50
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: 
+BEW: 1
+Dose: 1 mg/kg
+========================================
+Drug amount needed: 0.28 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.28 ml
+- Oral (5 ml/kg): 1.4 ml
+- Mice (10 ml/kg): 2.8 ml
+========================================
+
+==================================================
+
+Date: 2025/08/29 - 16:53:22
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: 
+BEW: 1
+Dose: 10 mg/kg
+========================================
+Drug amount needed: 2.8 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.28 ml
+- Oral (5 ml/kg): 1.4 ml
+- Mice (10 ml/kg): 2.8 ml
+========================================
+
+==================================================
+
