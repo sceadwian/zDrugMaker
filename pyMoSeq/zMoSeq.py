@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-MoSeq Usage Tool (no external libraries)
+MoSeq Usage Tool (no external libraries) v20250907
 
 Menu options:
 1) Analyze + export:
