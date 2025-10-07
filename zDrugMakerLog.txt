@@ -790,3 +790,39 @@ Volumes:
 
 ==================================================
 
+Date: 2025/09/23 - 12:03:14
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: CV-01 Angelini
+BEW: 1
+Dose: 1 mg/kg
+========================================
+Drug amount needed: 164 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 164 ml
+- Oral (5 ml/kg): 819 ml
+- Mice (10 ml/kg): 1.64e+03 ml
+========================================
+
+==================================================
+
+Date: 2025/09/23 - 12:05:37
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: CV-01 Angelini
+BEW: 1
+Dose: 1 mg/kg
+========================================
+Drug amount needed: 176 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 176 ml
+- Oral (5 ml/kg): 882 ml
+- Mice (10 ml/kg): 1.76e+03 ml
+========================================
+
+==================================================
+
