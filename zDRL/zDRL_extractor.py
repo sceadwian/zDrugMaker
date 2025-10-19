@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
-# v2 2025-0908 - added pellet cap on top of time cap to schedule and fixed what directory this thing looks for data.
-# v3 2025-1006 - corrected the binned data sorter so that time bins are represented in seconds instead. function bin_irts(irt_strings) has been modified for this and it now filters 0.200 as well
+# v2 20250908 - added pellet cap on top of time cap to schedule and fixed what directory this thing looks for data.
+# v3 20251006 - corrected the binned data sorter so that time bins are represented in seconds instead. function bin_irts(irt_strings) has been modified for this and it now filters 0.200 as well
+# v4 20251009 - added per-animal IRT statistics (median, mean, SEM) using IRTs >= 2s, no external libraries
+
 import os
 import re
 import csv
 import sys
+import math
 
 # ----- Configuration: IRT bins -----
 BIN_LABELS = [
@@ -53,27 +56,34 @@ def parse_sessions(text):
         session['IRT_values_raw'] = t_values_raw
         yield session
 
-def bin_irts(irt_strings):
-    """Convert list of IRT strings to counts per configured bins."""
-    counts = {label: 0 for label in BIN_LABELS}
-
-    # Convert strings (tenths of a second) to floats in *seconds*
-    irts = []
+def convert_filter_irts_seconds(irt_strings):
+    """
+    Convert raw IRT tokens to seconds and filter out synthetic markers.
+    - Raw tokens are tenths-of-a-second (e.g., 254.100 -> 25.41 s).
+    - Synthetic reinforcement marker appears as '0.200' (tenths) -> 0.02 s; we drop it.
+    Returns a list of float seconds.
+    """
+    irts_sec = []
     for s in irt_strings:
         s = s.strip().rstrip(',;')
         try:
-            v = float(s) * 0.1  # Convert tenths of seconds → seconds
-            # Skip made up 0.2 markers for reinforcers
-            if abs(v - 0.02) < 1e-6:
+            raw = float(s)          # tenths of a second from MedPC export
+            if abs(raw - 0.2) < 1e-6:
+                # This is the reinforcement marker (0.2 tenths = 0.02 s) -> ignore
                 continue
-            irts.append(v)
+            v = raw * 0.1           # convert to seconds
+            irts_sec.append(v)
         except ValueError:
             continue
+    return irts_sec
+
+def bin_irts(irt_strings):
+    """Convert list of IRT strings to counts per configured bins (in seconds)."""
+    counts = {label: 0 for label in BIN_LABELS}
+    irts = convert_filter_irts_seconds(irt_strings)
 
     # Tally into bins
     for v in irts:
-        # Ignore negative or > last upper edge values
-        # (Change this behavior if you want an overflow bin)
         placed = False
         for i, (lo, hi) in enumerate(BIN_EDGES):
             if i < len(BIN_EDGES) - 1:
@@ -87,8 +97,38 @@ def bin_irts(irt_strings):
                     counts[BIN_LABELS[i]] += 1
                     placed = True
                     break
-        # If not placed, we simply ignore (out-of-range)
+        # If not placed, ignore out-of-range values
     return counts
+
+def median(values):
+    """Compute median of a non-empty list without external libs."""
+    n = len(values)
+    if n == 0:
+        return None
+    vals = sorted(values)
+    mid = n // 2
+    if n % 2 == 1:
+        return vals[mid]
+    else:
+        return (vals[mid - 1] + vals[mid]) / 2.0
+
+def mean(values):
+    """Compute mean of a non-empty list."""
+    n = len(values)
+    if n == 0:
+        return None
+    return sum(values) / n
+
+def sem(values):
+    """Compute standard error of the mean using sample SD / sqrt(n)."""
+    n = len(values)
+    if n <= 1:
+        return None
+    m = mean(values)
+    # sample variance with (n-1)
+    var = sum((x - m) ** 2 for x in values) / (n - 1)
+    sd = math.sqrt(var)
+    return sd / math.sqrt(n)
 
 def choose_file(script_dir):
     files = [f for f in os.listdir(script_dir) if os.path.isfile(os.path.join(script_dir, f))]
@@ -123,9 +163,10 @@ def main():
     root, _ = os.path.splitext(infile)
     outfile = os.path.join(script_dir, root + '.csv')
 
-    # CSV columns: session metadata + IRT bin counts
+    # CSV columns: session metadata + IRT bin counts + stats (>=2s)
     fieldnames = [
-        'Date','AnimalID','StartTime','EndTime','TotalResponses','ReinforcedResponses'
+        'Date','AnimalID','StartTime','EndTime','TotalResponses','ReinforcedResponses',
+        'Median_IRT_ge2s','Mean_IRT_ge2s','SEM_IRT_ge2s'
     ] + BIN_LABELS
 
     with open(outfile, 'w', newline='', encoding='utf-8') as csvf:
@@ -140,8 +181,24 @@ def main():
                 'TotalResponses': sess['TotalResponses'],
                 'ReinforcedResponses': sess['ReinforcedResponses'],
             }
+
+            # Stats: compute from IRTs in seconds, excluding values < 2 s
+            irts_sec = convert_filter_irts_seconds(sess.get('IRT_values_raw', []))
+            irts_ge2 = [x for x in irts_sec if x >= 2.0]
+
+            m_med = median(irts_ge2)
+            m_mean = mean(irts_ge2)
+            m_sem  = sem(irts_ge2)
+
+            # Store as strings with sensible formatting; blanks if None
+            row['Median_IRT_ge2s'] = (f"{m_med:.3f}" if m_med is not None else "")
+            row['Mean_IRT_ge2s']   = (f"{m_mean:.3f}" if m_mean is not None else "")
+            row['SEM_IRT_ge2s']    = (f"{m_sem:.3f}" if m_sem is not None else "")
+
+            # Histogram bins
             counts = bin_irts(sess.get('IRT_values_raw', []))
             row.update(counts)
+
             writer.writerow(row)
 
     print(f"✅ Summary written to {outfile}")
