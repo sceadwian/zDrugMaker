@@ -916,3 +916,93 @@ Volumes:
 
 ==================================================
 
+Date: 2025/11/28 - 12:14:18
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: 
+BEW: 1
+Dose: 60 mg/kg
+========================================
+Drug amount needed: 360 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 6 ml
+- Oral (5 ml/kg): 30 ml
+- Mice (10 ml/kg): 60 ml
+========================================
+
+==================================================
+
+Date: 2025/11/28 - 12:14:58
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: Neuroinnovatech Oricidin
+BEW: 1
+Dose: 60 mg/kg
+========================================
+Drug amount needed: 360 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 6 ml
+- Oral (5 ml/kg): 30 ml
+- Mice (10 ml/kg): 60 ml
+========================================
+
+==================================================
+
+Date: 2025/11/28 - 12:16:07
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: Neuroinnovatech Oricidin
+BEW: 1
+Dose: 60 mg/kg
+========================================
+Drug amount needed: 192 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 3.2 ml
+- Oral (5 ml/kg): 16 ml
+- Mice (10 ml/kg): 32 ml
+========================================
+
+==================================================
+
+Date: 2025/12/15 - 10:02:12
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: LiPi 
+BEW: 1
+Dose: 40 mg/kg
+========================================
+Drug amount needed: 0 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0 ml
+- Oral (5 ml/kg): 0 ml
+- Mice (10 ml/kg): 0 ml
+========================================
+
+==================================================
+
+Date: 2025/12/15 - 10:05:03
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: LiPi 
+BEW: 1
+Dose: 40 mg/kg
+========================================
+Drug amount needed: 840 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 21 ml
+- Oral (5 ml/kg): 105 ml
+- Mice (10 ml/kg): 210 ml
+========================================
+
+==================================================
+
