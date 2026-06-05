@@ -1006,3 +1006,183 @@ Volumes:
 
 ==================================================
 
+Date: 2026/01/08 - 13:31:56
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: Fenfluramine
+BEW: 1
+Dose: 15 mg/kg
+========================================
+Drug amount needed: 75.6 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 5.04 ml
+- Oral (5 ml/kg): 25.2 ml
+- Mice (10 ml/kg): 50.4 ml
+========================================
+
+==================================================
+
+Date: 2026/01/09 - 02:07:50
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: JZZ05001241
+BEW: 1
+Dose: 43 mg/kg
+========================================
+Drug amount needed: 31 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.72 ml
+- Oral (5 ml/kg): 3.6 ml
+- Mice (10 ml/kg): 7.2 ml
+========================================
+
+==================================================
+
+Date: 2026/01/09 - 02:49:46
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: 
+BEW: 1
+Dose: 43 mg/kg
+========================================
+Drug amount needed: 123 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 2.86 ml
+- Oral (5 ml/kg): 14.3 ml
+- Mice (10 ml/kg): 28.6 ml
+========================================
+
+==================================================
+
+Date: 2026/01/19 - 13:16:31
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: Minoryx
+BEW: 1
+Dose: 1 mg/kg
+========================================
+Drug amount needed: 0.35 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.35 ml
+- Oral (5 ml/kg): 1.75 ml
+- Mice (10 ml/kg): 3.5 ml
+========================================
+
+==================================================
+
+Date: 2026/01/19 - 13:18:22
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: Minoryx
+BEW: 1
+Dose: 65 mg/kg
+========================================
+Drug amount needed: 22.8 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.35 ml
+- Oral (5 ml/kg): 1.75 ml
+- Mice (10 ml/kg): 3.5 ml
+========================================
+
+==================================================
+
+Date: 2026/01/22 - 13:01:37
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: DEShaw_drug_Rusko
+BEW: 1
+Dose: 44.3 mg/kg
+========================================
+Drug amount needed: 42.5 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.96 ml
+- Oral (5 ml/kg): 4.8 ml
+- Mice (10 ml/kg): 9.6 ml
+========================================
+
+==================================================
+
+Date: 2026/04/09 - 11:18:30
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: DES063582
+BEW: 1
+Dose: 30 mg/kg
+========================================
+Drug amount needed: 22.5 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.75 ml
+- Oral (5 ml/kg): 3.75 ml
+- Mice (10 ml/kg): 7.5 ml
+========================================
+
+==================================================
+
+Date: 2026/04/09 - 11:19:59
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: DES063582
+BEW: 1
+Dose: 100 mg/kg
+========================================
+Drug amount needed: 40 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.4 ml
+- Oral (5 ml/kg): 2 ml
+- Mice (10 ml/kg): 4 ml
+========================================
+
+==================================================
+
+Date: 2026/04/09 - 11:21:20
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: DES063582
+BEW: 1
+Dose: 100 mg/kg
+========================================
+Drug amount needed: 120 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 1.2 ml
+- Oral (5 ml/kg): 6 ml
+- Mice (10 ml/kg): 12 ml
+========================================
+
+==================================================
+
+Date: 2026/04/09 - 11:23:04
+Calculation Type: Estimate Drug Amount
+Estimated Drug Amount and Volumes
+========================================
+Compound: DES063582
+BEW: 1
+Dose: 130 mg/kg
+========================================
+Drug amount needed: 52 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 0.4 ml
+- Oral (5 ml/kg): 2 ml
+- Mice (10 ml/kg): 4 ml
+========================================
+
+==================================================
+
