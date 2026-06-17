@@ -12,7 +12,8 @@
 # The user can select the desired function from the main menu.
 # The script prompts for user input and performs the chosen operation.
 # v2 - introduces new AI, it was a Claude revamped version. feels like an upgrade. there is still an issue with function 9, it could be improved as well. and function 4 which is removing first tag after date as well.
-# v3 - added [tag] management (view / edit / add / reorder) as menu item 6, everything after it shifted +1.
+# v2.1 - added [tag] management (view / edit / add / reorder) as menu item 6, everything after it shifted +1. Printout function extended to files as well
+# v2.2 - 
 
 """
 finalAnalisis.py
@@ -701,32 +702,62 @@ def group_files_by_date():
 
 
 # ─────────────────────────────────────────────
-# 8 — LIST SUBFOLDERS & SAVE
+# 8 — LIST SUBFOLDERS / FILES & SAVE
 # ─────────────────────────────────────────────
 def list_subfolders_and_save():
     os.system("cls")
-    banner("Subfolders — List & Save")
-    path = os.getcwd()
-    subfolders = sorted(
-        os.path.join(root, d)
-        for root, dirs, _ in os.walk(path)
-        for d in dirs
-    )
+    banner("List & Save — Folders or Files")
+    print()
+    print(c("  What would you like to list?", BOLD))
+    print()
+    print(f"  {c('[1]', CYAN)} Subfolders (recursive)")
+    print(f"  {c('[2]', CYAN)} Files (recursive)")
+    print()
+    mode = input(c("  Choice [1-2, default 1]: ", BOLD)).strip() or "1"
+    if mode not in {"1", "2"}:
+        mode = "1"
 
-    print(c(f"  Found {len(subfolders):,} subfolders under:", YELLOW))
+    path = os.getcwd()
+    script_file = os.path.basename(__file__)
+
+    if mode == "1":
+        items = sorted(
+            os.path.join(root, d)
+            for root, dirs, _ in os.walk(path)
+            for d in dirs
+        )
+        noun, out_tag, icon = "subfolders", "subfolders", "▶"
+    else:
+        items = sorted(
+            os.path.join(root, f)
+            for root, _, files in os.walk(path)
+            for f in files
+            if not (root == path and f == script_file)
+        )
+        noun, out_tag, icon = "files", "files", "·"
+
+    os.system("cls")
+    banner(f"{'Subfolders' if mode == '1' else 'Files'} — List & Save")
+
+    print(c(f"  Found {len(items):,} {noun} under:", YELLOW))
     print(f"  {path}")
     print()
     divider()
-    for sf in subfolders:
-        rel = os.path.relpath(sf, path)
+    for it in items:
+        rel = os.path.relpath(it, path)
         depth = rel.count(os.sep)
         indent = "  " + "    " * depth
-        name = os.path.basename(sf)
-        print(f"{indent}{c('▶', DIM)} {c(name, CYAN)}")
+        name = os.path.basename(it)
+        if mode == "1":
+            print(f"{indent}{c(icon, DIM)} {c(name, CYAN)}")
+        else:
+            colour = RED if name.endswith((".exe", ".py")) else GREEN
+            print(f"{indent}{c(icon, DIM)} {c(name, colour)}")
 
-    out = "zfileanaloutput_subfolders_list.txt"
+    ts = datetime.datetime.now().strftime("%Y%m%d%H%M")
+    out = f"zfileanaloutput_{out_tag}_list_{ts}.txt"
     with open(out, "w", encoding="utf-8") as fh:
-        fh.write("\n".join(subfolders) + "\n")
+        fh.write("\n".join(items) + "\n")
 
     print()
     print(c(f"  ✓ Saved to: {out}", GREEN))
@@ -1055,7 +1086,7 @@ MENU = [
     ("5",  None,               "Replace spaces in filenames",         replace_spaces_in_filenames),
     ("6",  "TAGGING",          "Manage [tags] in filenames",          manage_tags),
     ("7",  "MEDIA",            "Group image/video files by date",     group_files_by_date),
-    ("8",  "SCANNING",         "List subfolders & save to file",      list_subfolders_and_save),
+    ("8",  "SCANNING",         "List subfolders or files & save",     list_subfolders_and_save),
     ("9",  None,               "Find Study IDs in files & folders",   find_study_ids),
     ("10", "COMPARISON",       "Compare two folders (recursive)",     compare_two_folders),
     ("0",  None,               "Exit",                                None),
