@@ -4,18 +4,23 @@ A text-based five-a-side soccer tournament simulator.
 """
 
 import csv
+import json
 import os
 import random
+import sys
 import time
 from datetime import datetime
 from dataclasses import dataclass, field
-from typing import List, Dict, Optional, Tuple
+from typing import List, Dict, Optional, Set, Tuple
 
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
 
-CSV_NAME_FILE = "toon_names_.csv"
+CSV_NAME_FILE      = "toon_names_.csv"
+SEASON_ID_FILE     = "pyCldFooty_season_id.txt"
+SEASON_LOG_FILE    = "pyCldFooty_season_log.txt"
+PLAYER_ROSTER_FILE = "pyCldFooty_players.jsonl"
 
 NUM_USER_POOL_PLAYERS = 20
 NUM_CPU_TEAMS = 3
@@ -65,6 +70,105 @@ FALLBACK_LAST_NAMES = [
     "King", "Lee", "Moore", "Nash", "Owen",
     "Park", "Quinn", "Reed", "Smith", "Turner",
 ]
+
+# ---------------------------------------------------------------------------
+# Terminal styling — ANSI colours + Unicode glyphs, stdlib only
+# ---------------------------------------------------------------------------
+
+UI_WIDTH = 72
+COLOR_ENABLED = True
+
+_CODES: Dict[str, str] = {
+    "reset":     "\033[0m",   "bold":     "\033[1m",   "dim":      "\033[2m",
+    "red":       "\033[31m",  "green":    "\033[32m",  "yellow":   "\033[33m",
+    "blue":      "\033[34m",  "magenta":  "\033[35m",  "cyan":     "\033[36m",
+    "white":     "\033[37m",  "grey":     "\033[90m",
+    "bred":      "\033[91m",  "bgreen":   "\033[92m",  "byellow":  "\033[93m",
+    "bblue":     "\033[94m",  "bmagenta": "\033[95m",  "bcyan":    "\033[96m",
+}
+
+_GLYPHS_UNI: Dict[str, str] = {
+    "tl": "╔", "tr": "╗", "bl": "╚", "br": "╝", "h": "═", "v": "║",
+    "rule": "─",
+    "goal":     "◉",  "save":   "✓",  "foul":   "⚡",
+    "ycard":    "▪",  "rcard":  "▪",
+    "star":     "✦",  "bullet": "▸",  "trophy": "✦",  "vs": "✦",
+    "bar_full": "█",  "bar_empty": "░",
+}
+_GLYPHS_ASCII: Dict[str, str] = {
+    "tl": "+", "tr": "+", "bl": "+", "br": "+", "h": "=", "v": "|",
+    "rule": "-",
+    "goal":     "[G]",  "save":  "[s]",  "foul":  "[F]",
+    "ycard":    "[Y]",  "rcard": "[R]",
+    "star":     "*",    "bullet": ">",   "trophy": "*",  "vs": "vs",
+    "bar_full": "#",    "bar_empty": ".",
+}
+GLY: Dict[str, str] = dict(_GLYPHS_UNI)
+
+
+def enable_terminal() -> None:
+    global COLOR_ENABLED, GLY
+    if os.environ.get("NO_COLOR"):
+        COLOR_ENABLED = False
+        return
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+    if os.name == "nt":
+        try:
+            import ctypes
+            ctypes.windll.kernel32.SetConsoleMode(
+                ctypes.windll.kernel32.GetStdHandle(-11), 7)
+        except Exception:
+            COLOR_ENABLED = False
+    enc = getattr(sys.stdout, "encoding", None) or "ascii"
+    try:
+        "".join(_GLYPHS_UNI.values()).encode(enc)
+    except (UnicodeEncodeError, LookupError):
+        GLY = dict(_GLYPHS_ASCII)
+
+
+def col(text: str, *styles: str) -> str:
+    if not COLOR_ENABLED or not styles:
+        return str(text)
+    pre = "".join(_CODES.get(s, "") for s in styles)
+    return f"{pre}{text}{_CODES['reset']}" if pre else str(text)
+
+
+def rating_col(v: float) -> str:
+    if v >= 15: return "bgreen"
+    if v >= 12: return "byellow"
+    if v >= 9:  return "yellow"
+    return "grey"
+
+
+def col_rating(v: float, width: int = 5) -> str:
+    return col(f"{v:{width}.1f}", rating_col(v))
+
+
+def stat_bar(v: float, max_v: float = 20.0, width: int = 10) -> str:
+    filled = max(0, min(width, round(v / max_v * width)))
+    bar = GLY["bar_full"] * filled + GLY["bar_empty"] * (width - filled)
+    return col(bar, rating_col(v))
+
+
+def banner(title: str, style: str = "bcyan", width: int = UI_WIDTH) -> str:
+    inner = width - 2
+    top = GLY["tl"] + GLY["h"] * inner + GLY["tr"]
+    mid = GLY["v"] + title.center(inner) + GLY["v"]
+    bot = GLY["bl"] + GLY["h"] * inner + GLY["br"]
+    return col(top + "\n" + mid + "\n" + bot, style, "bold")
+
+
+def hrule(width: int = UI_WIDTH, style: str = "grey") -> str:
+    return col(GLY["rule"] * width, style)
+
+
+def section(title: str, style: str = "cyan") -> str:
+    pad = col(GLY["rule"] * 3, style)
+    return f"{pad} {col(title, style, 'bold')} {pad}"
+
 
 # ---------------------------------------------------------------------------
 # Data classes
@@ -367,75 +471,122 @@ def generate_cpu_team(team_name: str, first_names: List[str], last_names: List[s
 # Display utilities
 # ---------------------------------------------------------------------------
 
+_ROLE_BADGE: Dict[str, Tuple[str, str]] = {
+    "Goalie":   ("GK ", "cyan"),
+    "Defender": ("DF ", "bgreen"),
+    "Attacker": ("AT ", "byellow"),
+}
+_FIT_COLOR: Dict[str, str] = {"Goalie": "cyan", "Defender": "bgreen", "Attacker": "byellow"}
+
+
 def _player_row(p: Player, show_role: bool = False) -> str:
-    gk = format_rating(goalie_rating(p))
-    df = format_rating(defender_rating(p))
-    at = format_rating(attacker_rating(p))
-    ov = format_rating(overall_rating(p))
+    gk_v = goalie_rating(p);  df_v = defender_rating(p)
+    at_v = attacker_rating(p); ov_v = overall_rating(p)
+    gk = col_rating(gk_v); df = col_rating(df_v)
+    at = col_rating(at_v); ov = col_rating(ov_v)
     kt = top_key_traits(p)
     name = p.full_name()[:22].ljust(22)
+    age_s = col(str(p.age).rjust(3), "grey")
     if show_role:
-        role = p.assigned_role[:4].ljust(4)
-        return f"{role} {name} {p.age:>3}  {gk:>5} {df:>5} {at:>5} {ov:>5}  {kt}"
+        badge, bc = _ROLE_BADGE.get(p.assigned_role, (p.assigned_role[:3] + " ", "white"))
+        role_s = col(badge, bc, "bold")
+        return f"{role_s} {name} {age_s}  {gk} {df} {at} {ov}  {kt}"
     else:
-        pid = str(p.id).zfill(2)
-        bf = best_fit(p)[:8].ljust(8)
-        return f"{pid}  {name} {p.age:>3}  {gk:>5} {df:>5} {at:>5} {ov:>5}  {bf}  {kt}"
+        pid = col(str(p.id).zfill(2), "grey")
+        bf = best_fit(p)
+        bf_s = col(bf[:8].ljust(8), _FIT_COLOR.get(bf, "white"))
+        return f"{pid}  {name} {age_s}  {gk} {df} {at} {ov}  {bf_s}  {kt}"
 
 
 def display_player_pool(players: List[Player]) -> None:
-    print("\nYOUR PLAYER POOL\n")
-    print(f"{'ID':<4} {'Name':<22} {'Age':>3}  {'GK':>5} {'DEF':>5} {'ATT':>5} {'OVR':>5}  {'Best Fit':<8}  Key Traits")
-    print("-" * 90)
+    print()
+    print(banner("YOUR PLAYER POOL", style="bcyan"))
+    print()
+    hdr = (f"  {col('ID','grey'):<14} {'Name':<22} {col('Age','grey'):>3}  "
+           f"{col('GK','cyan'):>5} {col('DEF','bgreen'):>5} {col('ATT','byellow'):>5} "
+           f"{col('OVR','white'):>5}  {col('Best Fit','grey'):<20}  {col('Key Traits','grey')}")
+    print(hdr)
+    print(hrule())
     for p in players:
-        print(_player_row(p, show_role=False))
+        print("  " + _player_row(p, show_role=False))
+    print()
 
 
 def display_team(team: Team) -> None:
-    print(f"\n{team.name.upper()}\n")
-    print(f"{'Role':<4} {'Name':<22} {'Age':>3}  {'GK':>5} {'DEF':>5} {'ATT':>5} {'OVR':>5}  Key Traits")
-    print("-" * 85)
+    color = "bblue" if team.controlled_by_user else "magenta"
+    tag = col("  (YOU)", "bcyan") if team.controlled_by_user else ""
+    print()
+    print(col(f"  {team.name.upper()}", color, "bold") + tag)
+    print(hrule())
+    hdr = (f"  {col('Role','grey'):<14} {'Name':<22} {col('Age','grey'):>3}  "
+           f"{col('GK','cyan'):>5} {col('DEF','bgreen'):>5} {col('ATT','byellow'):>5} "
+           f"{col('OVR','white'):>5}  {col('Key Traits','grey')}")
+    print(hdr)
+    print(hrule())
     for p in team.players:
-        print(_player_row(p, show_role=True))
+        print("  " + _player_row(p, show_role=True))
 
 
 def display_player_detail(player: Player) -> None:
     t = player.traits
-    print(f"\n{player.full_name()}, age {player.age}")
-    print(f"Assigned role: {player.assigned_role}")
-    print(f"Best fit: {best_fit(player)}")
-    print(f"\nRatings:")
-    print(f"  Goalie:   {format_rating(goalie_rating(player))}")
-    print(f"  Defender: {format_rating(defender_rating(player))}")
-    print(f"  Attacker: {format_rating(attacker_rating(player))}")
-    print(f"  Overall:  {format_rating(overall_rating(player))}")
-    print(f"\nPhysical:")
-    print(f"  Speed {t['Speed']}, Stamina {t['Stamina']}, Strength {t['Strength']}, Agility {t['Agility']}")
-    print(f"\nTechnical:")
-    print(f"  Shooting {t['Shooting']}, Passing {t['Passing']}, Dribbling {t['Dribbling']}")
-    print(f"  Tackling {t['Tackling']}, Marking {t['Marking']}, Goalkeeping {t['Goalkeeping']}")
-    print(f"\nMental:")
-    print(f"  Vision {t['Vision']}, Composure {t['Composure']}, Discipline {t['Discipline']}")
-    print(f"  Teamwork {t['Teamwork']}, Aggression {t['Aggression']}")
+    print()
+    print(section(f"{player.full_name()}   age {player.age}", "bcyan"))
+    bf = best_fit(player)
+    print(f"  Best fit: {col(bf, _FIT_COLOR.get(bf,'white'), 'bold')}   "
+          f"Role: {col(player.assigned_role, 'grey')}")
+    print()
+    print(col("  Ratings", "cyan", "bold"))
+    for label, v in [("Goalie", goalie_rating(player)), ("Defender", defender_rating(player)),
+                     ("Attacker", attacker_rating(player)), ("Overall", overall_rating(player))]:
+        print(f"    {label:<10} {stat_bar(v)}  {col_rating(v)}")
+    print()
+    print(col("  Physical", "cyan", "bold"))
+    for tr in ["Speed", "Stamina", "Strength", "Agility"]:
+        v = t[tr]
+        print(f"    {tr:<14} {stat_bar(v)}  {col(str(v).rjust(2), rating_col(v))}")
+    print()
+    print(col("  Technical", "cyan", "bold"))
+    for tr in ["Shooting", "Passing", "Dribbling", "Tackling", "Marking", "Goalkeeping"]:
+        v = t[tr]
+        print(f"    {tr:<14} {stat_bar(v)}  {col(str(v).rjust(2), rating_col(v))}")
+    print()
+    print(col("  Mental", "cyan", "bold"))
+    for tr in ["Vision", "Composure", "Discipline", "Teamwork", "Aggression"]:
+        v = t[tr]
+        print(f"    {tr:<14} {stat_bar(v)}  {col(str(v).rjust(2), rating_col(v))}")
 
 
 def display_standings(teams: List[Team]) -> None:
-    print("\nGROUP STANDINGS\n")
-    print(f"{'Pos':<4} {'Team':<22} {'P':>3} {'W':>3} {'D':>3} {'L':>3} {'GF':>4} {'GA':>4} {'GD':>4} {'Pts':>4}")
-    print("-" * 60)
-    sorted_teams = sort_standings(teams)
-    for i, t in enumerate(sorted_teams, start=1):
+    print()
+    print(section("STANDINGS", "bcyan"))
+    print()
+    print(col(f"  {'Pos':<4} {'Team':<22} {'P':>3} {'W':>3} {'D':>3} {'L':>3}"
+              f" {'GF':>4} {'GA':>4} {'GD':>5} {'Pts':>5}", "grey"))
+    print(hrule())
+    pos_styles = ["byellow", "bgreen", "white", "grey"]
+    for i, t in enumerate(sort_standings(teams), start=1):
         gd = t.goal_difference()
         gd_str = f"+{gd}" if gd > 0 else str(gd)
-        print(f"{i:<4} {t.name:<22} {t.played:>3} {t.wins:>3} {t.draws:>3} {t.losses:>3} {t.goals_for:>4} {t.goals_against:>4} {gd_str:>4} {t.points:>4}")
+        sty = pos_styles[min(i - 1, len(pos_styles) - 1)]
+        bold_flag = ("bold",) if i <= 2 else ()
+        nm  = col(t.name[:22].ljust(22), sty, *bold_flag)
+        pos = col(str(i).ljust(4), sty, *bold_flag)
+        pts = col(str(t.points).rjust(5), sty, *bold_flag)
+        gdc = col(gd_str.rjust(5), "bgreen" if gd > 0 else ("bred" if gd < 0 else "grey"))
+        mrk = col(" " + GLY["bullet"], "bcyan") if t.controlled_by_user else ""
+        print(f"  {pos} {nm} {t.played:>3} {t.wins:>3} {t.draws:>3} {t.losses:>3}"
+              f" {t.goals_for:>4} {t.goals_against:>4} {gdc} {pts}{mrk}")
+    print()
 
 
 def display_match_result(result: MatchResult) -> None:
+    def tname(t: Team) -> str:
+        return col(t.name, "bblue" if t.controlled_by_user else "white", "bold")
+    score = col(f"{result.goals_a} - {result.goals_b}", "byellow", "bold")
+    line = f"  {tname(result.team_a)}  {score}  {tname(result.team_b)}"
     if result.went_to_penalties:
-        print(f"\n{result.team_a.name} {result.goals_a} - {result.goals_b} {result.team_b.name}  "
-              f"(Pens: {result.penalty_score_a}-{result.penalty_score_b})")
-    else:
-        print(f"\n{result.team_a.name} {result.goals_a} - {result.goals_b} {result.team_b.name}")
+        line += "  " + col(f"(pens {result.penalty_score_a}-{result.penalty_score_b})", "grey")
+    print(line)
 
 
 def display_round_results(results: List[MatchResult]) -> None:
@@ -511,11 +662,23 @@ def calculate_team_ratings(team: Team) -> Dict[str, float]:
 def display_team_comparison(team_a: Team, team_b: Team) -> None:
     ra = calculate_team_ratings(team_a)
     rb = calculate_team_ratings(team_b)
-    print("\nTEAM COMPARISON\n")
-    labels = [("Attack", "attack"), ("Defense", "defense"), ("Goalkeeping", "goalkeeping"),
-              ("Control", "control"), ("Chaos", "chaos")]
-    for label, key in labels:
-        print(f"  {team_a.name}: {label:<14} {ra[key]:>5.1f}   |   {team_b.name}: {label:<14} {rb[key]:>5.1f}")
+    print()
+    print(section("TEAM COMPARISON", "byellow"))
+    print()
+    ca = "bblue" if team_a.controlled_by_user else "magenta"
+    cb = "bblue" if team_b.controlled_by_user else "magenta"
+    na = team_a.name[:20]; nb = team_b.name[:20]
+    print(f"  {'':10}  {col(na, ca, 'bold'):<30}  {col(nb, cb, 'bold')}")
+    print(hrule())
+    metrics = [("Attack", "attack"), ("Defense", "defense"), ("GK", "goalkeeping"),
+               ("Control", "control"), ("Chaos", "chaos")]
+    for label, key in metrics:
+        va = ra[key]; vb = rb[key]
+        adv_a = col(GLY["bullet"], "bgreen") if va >= vb + 1.0 else " "
+        adv_b = col(GLY["bullet"], "bgreen") if vb >= va + 1.0 else " "
+        print(f"  {label:<10}  {col_rating(va)} {stat_bar(va)} {adv_a}"
+              f"    {col_rating(vb)} {stat_bar(vb)} {adv_b}")
+    print()
 
 
 # ---------------------------------------------------------------------------
@@ -539,19 +702,22 @@ def choose_event_type(attacking_team: Team, defending_team: Team) -> str:
     return random.choices(EVENT_TYPES, weights=weights, k=1)[0]
 
 
-def choose_shooter(team: Team, event_type: str) -> Player:
-    attackers = _get_role_players(team, "Attacker")
-    defenders = _get_role_players(team, "Defender")
-    non_goalies = [p for p in team.players if p.assigned_role != "Goalie"]
+def choose_shooter(team: Team, event_type: str, exclude: Optional[Set[int]] = None) -> Player:
+    ex = exclude or set()
+    attackers  = [p for p in _get_role_players(team, "Attacker") if p.id not in ex]
+    defenders  = [p for p in _get_role_players(team, "Defender") if p.id not in ex]
+    non_goalies = [p for p in team.players if p.assigned_role != "Goalie" and p.id not in ex]
+
+    if not non_goalies:
+        return team.players[0]  # extreme edge: only goalie remains
 
     if event_type == "set_piece":
-        key = lambda p: p.traits["Shooting"] + p.traits["Strength"] + p.traits["Composure"]
-        return max(non_goalies, key=key)
+        return max(non_goalies, key=lambda p: p.traits["Shooting"] + p.traits["Strength"] + p.traits["Composure"])
     elif event_type == "scramble":
         weights = [p.traits["Aggression"] + p.traits["Composure"] + p.traits["Agility"] for p in non_goalies]
         return random.choices(non_goalies, weights=weights, k=1)[0]
     elif event_type == "long_shot":
-        pool = attackers if random.random() < 0.65 else defenders
+        pool = attackers if attackers and random.random() < 0.65 else defenders
         if not pool:
             pool = non_goalies
         return random.choice(pool)
@@ -562,11 +728,15 @@ def choose_shooter(team: Team, event_type: str) -> Player:
         return random.choice(pool)
 
 
-def choose_defender(team: Team) -> Player:
-    defenders = _get_role_players(team, "Defender")
+def choose_defender(team: Team, exclude: Optional[Set[int]] = None) -> Player:
+    ex = exclude or set()
+    defenders   = [p for p in _get_role_players(team, "Defender") if p.id not in ex]
     if defenders:
         return random.choice(defenders)
-    return random.choice([p for p in team.players if p.assigned_role != "Goalie"])
+    non_goalies = [p for p in team.players if p.assigned_role != "Goalie" and p.id not in ex]
+    if non_goalies:
+        return random.choice(non_goalies)
+    return team.players[0]  # only goalie left
 
 
 def get_goalie(team: Team) -> Player:
@@ -595,18 +765,32 @@ def simulate_event(
     attacking_team: Team,
     defending_team: Team,
     minute: int,
+    sent_off_att: Set[int],
+    sent_off_def: Set[int],
     watch: bool = False,
 ) -> Optional[Tuple[bool, str, Optional[Player], Optional[Player]]]:
     """Returns (goal, event_text, scorer, goalie_who_saved) or None if broken down."""
     rat_a = calculate_team_ratings(attacking_team)
     rat_d = calculate_team_ratings(defending_team)
 
+    # Degrade ratings when players are missing from the pitch
+    if sent_off_def:
+        penalty = max(0.40, 1.0 - 0.17 * len(sent_off_def))
+        rat_d["defense"] *= penalty
+        rat_d["control"] *= penalty
+    if sent_off_att:
+        penalty = max(0.40, 1.0 - 0.17 * len(sent_off_att))
+        rat_a["attack"] *= penalty
+        rat_a["control"] *= penalty
+
     event_type = choose_event_type(attacking_team, defending_team)
     chance_score = rat_a["attack"] + random.uniform(-5, 5)
     defense_score = rat_d["defense"] + random.uniform(-5, 5)
 
     goalie = get_goalie(defending_team)
-    def_player = choose_defender(defending_team)
+    def_player = choose_defender(defending_team, exclude=sent_off_def)
+
+    mn = col(f"{minute:>3}'", "grey", "dim")
 
     if chance_score <= defense_score - 2:
         # Attack breaks down
@@ -615,27 +799,30 @@ def simulate_event(
             f"A move from {attacking_team.name} fizzles out.",
             f"{def_player.full_name()} steps in and breaks up the attack.",
         ]
-        # Check for foul
         foul_risk = clamp(
             def_player.traits["Aggression"] * 0.015 + (20 - def_player.traits["Discipline"]) * 0.015,
             0.02, 0.35
         )
         if random.random() < foul_risk:
             def_player.fouls += 1
-            foul_text = f"{minute}'  Foul by {def_player.full_name()}!"
+            foul_desc = f"Foul by {def_player.full_name()}!"
+            foul_text = f"{mn}  {col(GLY['foul'], 'yellow')} {col(foul_desc, 'yellow')}"
             yc_chance = clamp(0.20 + def_player.traits["Aggression"] * 0.01 - def_player.traits["Discipline"] * 0.005, 0, 1)
             rc_chance = 0.02 if def_player.traits["Aggression"] > 16 and def_player.traits["Discipline"] < 8 else 0.005
             card_text = ""
             if random.random() < rc_chance:
                 def_player.red_cards += 1
-                card_text = f" RED CARD for {def_player.full_name()}!"
+                sent_off_def.add(def_player.id)
+                card_text = (f"  {col(GLY['rcard'], 'bred', 'bold')} "
+                             f"{col(f'RED CARD — {def_player.full_name()} is OFF the pitch!', 'bred', 'bold')}")
             elif random.random() < yc_chance:
                 def_player.yellow_cards += 1
-                card_text = f" Yellow card for {def_player.full_name()}."
+                card_text = (f"  {col(GLY['ycard'], 'byellow', 'bold')} "
+                             f"{col(f'Yellow card — {def_player.full_name()}.', 'byellow')}")
             return (False, foul_text + card_text, None, None)
         else:
             def_player.tackles += 1
-            txt = f"{minute}'  {random.choice(templates)}"
+            txt = f"{mn}  {col(random.choice(templates), 'dim')}"
             return (False, txt, None, None)
 
     # Attack becomes a chance
@@ -645,30 +832,34 @@ def simulate_event(
     quality += random.uniform(-0.15, 0.15)
     quality = clamp(quality, 0.10, 0.90)
 
-    shooter = choose_shooter(attacking_team, event_type)
+    shooter = choose_shooter(attacking_team, event_type, exclude=sent_off_att)
     shooter.shots += 1
 
     # Credit the chance to a teammate (weighted by Passing + Vision), if any.
     passers = [p for p in attacking_team.players
-               if p.assigned_role != "Goalie" and p is not shooter]
+               if p.assigned_role != "Goalie" and p is not shooter and p.id not in sent_off_att]
     if passers:
         weights = [p.traits["Passing"] + p.traits["Vision"] for p in passers]
         random.choices(passers, weights=weights, k=1)[0].key_passes += 1
 
     # Shocking miss
     if random.random() < SHOCKING_MISS_CHANCE:
-        miss_templates = [
-            f"{minute}'  {shooter.full_name()} blazes it over from close range!",
-            f"{minute}'  Incredible miss by {shooter.full_name()}!",
-            f"{minute}'  {shooter.full_name()} somehow misses an open goal!",
+        miss_descs = [
+            f"{shooter.full_name()} blazes it over from close range!",
+            f"Incredible miss by {shooter.full_name()}!",
+            f"{shooter.full_name()} somehow misses an open goal!",
         ]
-        return (False, random.choice(miss_templates), None, None)
+        txt = f"{mn}  {col(random.choice(miss_descs), 'yellow')}"
+        return (False, txt, None, None)
 
     # Lucky goal
     if random.random() < LUCKY_GOAL_CHANCE:
         shooter.goals += 1
         goalie.goals_allowed += 1
-        return (True, f"{minute}'  A fortunate deflection falls to {shooter.full_name()}... it's in! GOAL!", shooter, None)
+        desc = f"A fortunate deflection falls to {shooter.full_name()}... it's in!"
+        txt = (f"{mn}  {col(desc, 'byellow', 'bold')}  "
+               f"{col('GOAL!', 'bgreen', 'bold')} {col(GLY['goal'], 'bgreen', 'bold')}")
+        return (True, txt, shooter, None)
 
     # Regular shot resolution
     t_s = shooter.traits
@@ -692,22 +883,27 @@ def simulate_event(
     if shot_roll > save_roll + GOAL_MARGIN:
         shooter.goals += 1
         goalie.goals_allowed += 1
-        goal_templates = [
-            f"{minute}'  {shooter.full_name()} breaks free and finishes! GOAL!",
-            f"{minute}'  {shooter.full_name()} smashes it past {goalie.full_name()}! GOAL!",
-            f"{minute}'  {shooter.full_name()} keeps calm and slots it home! GOAL!",
-            f"{minute}'  {shooter.full_name()} finds the corner! GOAL!",
+        goal_descs = [
+            f"{shooter.full_name()} breaks free and finishes!",
+            f"{shooter.full_name()} smashes it past {goalie.full_name()}!",
+            f"{shooter.full_name()} keeps calm and slots it home!",
+            f"{shooter.full_name()} finds the corner!",
         ]
-        return (True, random.choice(goal_templates), shooter, None)
+        desc = random.choice(goal_descs)
+        txt = (f"{mn}  {col(desc, 'byellow', 'bold')}  "
+               f"{col('GOAL!', 'bgreen', 'bold')} {col(GLY['goal'], 'bgreen', 'bold')}")
+        return (True, txt, shooter, None)
     else:
         goalie.saves += 1
-        save_templates = [
-            f"{minute}'  {shooter.full_name()} shoots... saved by {goalie.full_name()}.",
-            f"{minute}'  {shooter.full_name()} fires low... {goalie.full_name()} gets down well.",
-            f"{minute}'  {shooter.full_name()} tries to place it, but {goalie.full_name()} holds on.",
-            f"{minute}'  {shooter.full_name()} hits it first time... strong save by {goalie.full_name()}.",
+        save_descs = [
+            f"{shooter.full_name()} shoots... saved by {goalie.full_name()}.",
+            f"{shooter.full_name()} fires low... {goalie.full_name()} gets down well.",
+            f"{shooter.full_name()} tries to place it, but {goalie.full_name()} holds on.",
+            f"{shooter.full_name()} hits it first time... strong save by {goalie.full_name()}.",
         ]
-        return (False, random.choice(save_templates), None, goalie)
+        desc = random.choice(save_descs)
+        txt = f"{mn}  {col(GLY['save'], 'cyan')} {col(desc, 'cyan')}"
+        return (False, txt, None, goalie)
 
 
 def simulate_match(
@@ -738,14 +934,20 @@ def simulate_match(
     # each entry: (minute, text, is_goal, scored_by_a)
     all_events: List[Tuple[int, str, bool, bool]] = []
 
+    # Player IDs ejected mid-match; updated by simulate_event via set mutation
+    sent_off_a: Set[int] = set()
+    sent_off_b: Set[int] = set()
+
     teams_sequence: List[Tuple[Team, Team]] = (
         [(team_a, team_b)] * events_a + [(team_b, team_a)] * events_b
     )
     random.shuffle(teams_sequence)
 
     for i, (att, dfc) in enumerate(teams_sequence):
+        so_att = sent_off_a if att is team_a else sent_off_b
+        so_dfc = sent_off_a if dfc is team_a else sent_off_b
         minute = minutes[i] if i < len(minutes) else random.randint(1, MATCH_MINUTES)
-        result = simulate_event(att, dfc, minute, watch)
+        result = simulate_event(att, dfc, minute, so_att, so_dfc, watch)
         if result is None:
             continue
         goal, text, scorer, saved_by = result
@@ -764,6 +966,8 @@ def simulate_match(
     if watch:
         current_a = 0
         current_b = 0
+        ca = "bblue" if team_a.controlled_by_user else "magenta"
+        cb = "bblue" if team_b.controlled_by_user else "magenta"
         for _, text, is_goal, scored_by_a in all_events:
             print(text)
             time.sleep(PLAY_BY_PLAY_DELAY)
@@ -772,9 +976,13 @@ def simulate_match(
                     current_a += 1
                 else:
                     current_b += 1
-                print(f"     {team_a.name} {current_a} - {current_b} {team_b.name}")
-        print(f"\nFULL TIME")
-        print(f"{team_a.name} {goals_a} - {goals_b} {team_b.name}")
+                sc = col(f"{current_a} — {current_b}", "byellow", "bold")
+                print(f"     {col(team_a.name, ca, 'bold')}  {sc}  {col(team_b.name, cb, 'bold')}")
+        print()
+        print(banner("FULL TIME", style="bgreen"))
+        sc_final = col(f"{goals_a}  —  {goals_b}", "byellow", "bold")
+        print(col(f"  {team_a.name}  {sc_final}  {team_b.name}".center(UI_WIDTH), "white", "bold"))
+        print()
 
     went_to_penalties = False
     penalty_score_a = 0
@@ -811,7 +1019,8 @@ def resolve_penalties(
     watch: bool = False,
 ) -> Tuple[Team, int, int]:
     if watch:
-        print("\n--- PENALTY SHOOTOUT ---")
+        print()
+        print(banner("PENALTY SHOOTOUT", style="bred"))
 
     def penalty_takers(team: Team) -> List[Player]:
         non_goalies = [p for p in team.players if p.assigned_role != "Goalie"]
@@ -866,7 +1075,9 @@ def resolve_penalties(
         if ra:
             score_a += 1
         if watch:
-            print(f"  {ta.full_name()}: {'SCORED' if ra else 'MISSED'}  [{score_a}-{score_b}]")
+            res = col("SCORED", "bgreen", "bold") if ra else col("MISSED", "bred")
+            sc  = col(f"[{score_a}-{score_b}]", "byellow", "bold")
+            print(f"  {ta.full_name()}: {res}  {sc}")
         if decided():
             break
 
@@ -876,7 +1087,9 @@ def resolve_penalties(
         if rb:
             score_b += 1
         if watch:
-            print(f"  {tb.full_name()}: {'SCORED' if rb else 'MISSED'}  [{score_a}-{score_b}]")
+            res = col("SCORED", "bgreen", "bold") if rb else col("MISSED", "bred")
+            sc  = col(f"[{score_a}-{score_b}]", "byellow", "bold")
+            print(f"  {tb.full_name()}: {res}  {sc}")
         if decided():
             break
 
@@ -893,15 +1106,18 @@ def resolve_penalties(
         if rb:
             score_b += 1
         if watch:
-            res_a = "SCORED" if ra else "MISSED"
-            res_b = "SCORED" if rb else "MISSED"
-            print(f"  SD {sd_round}: {ta.full_name()}: {res_a}  |  {tb.full_name()}: {res_b}  [{score_a}-{score_b}]")
+            ra_s = col("SCORED", "bgreen", "bold") if ra else col("MISSED", "bred")
+            rb_s = col("SCORED", "bgreen", "bold") if rb else col("MISSED", "bred")
+            sc   = col(f"[{score_a}-{score_b}]", "byellow", "bold")
+            print(f"  SD {sd_round}: {ta.full_name()}: {ra_s}  |  {tb.full_name()}: {rb_s}  {sc}")
         if ra != rb:
             break
 
     winner = team_a if score_a > score_b else team_b
     if watch:
-        print(f"\n{winner.name} win on penalties {score_a}-{score_b}!")
+        print()
+        print(col(f"  {winner.name} win on penalties {score_a}-{score_b}!", "bgreen", "bold"))
+        print()
     return winner, score_a, score_b
 
 
@@ -975,38 +1191,37 @@ def play_group_stage(
     all_results: List[MatchResult] = []
 
     for round_num, round_fixtures in enumerate(schedule, start=1):
-        print(f"\n{'='*60}")
-        print(f"ROUND {round_num}")
-        print(f"{'='*60}")
+        print()
+        print(banner(f"ROUND  {round_num}  OF  6", style="cyan"))
         round_results: List[MatchResult] = []
 
         for team_a, team_b in round_fixtures:
             involves_user = (team_a is user_team or team_b is user_team)
 
             if involves_user:
-                # Ensure user team is team_a for display consistency
                 if team_b is user_team:
                     team_a, team_b = team_b, team_a
-
-                print(f"\nNEXT MATCH: {team_a.name} vs {team_b.name}")
-                display_team(team_a)
                 print()
+                print(banner(f"NEXT MATCH   {team_a.name}  {GLY['vs']}  {team_b.name}", style="byellow"))
+                display_team(team_a)
                 display_team(team_b)
                 display_team_comparison(team_a, team_b)
-                pause("Press Enter to simulate the match...")
-                print(f"\n=== {team_a.name} vs {team_b.name} ===\n")
+                pause(col("Press Enter to simulate the match...", "grey"))
+                print()
+                print(col(f"  {team_a.name}  vs  {team_b.name}", "white", "bold"))
+                print(hrule())
                 result = simulate_match(team_a, team_b, watch=True, is_final=False)
             else:
                 result = simulate_match(team_a, team_b, watch=False, is_final=False)
-                print(f"\n  {team_a.name} {result.goals_a} - {result.goals_b} {team_b.name}")
+                score = col(f"{result.goals_a} - {result.goals_b}", "byellow")
+                print(f"    {col(team_a.name,'white')}  {score}  {col(team_b.name,'white')}")
 
             update_standings(result)
             round_results.append(result)
             all_results.append(result)
 
-        print("\n")
         display_standings(teams)
-        pause()
+        pause(col("Press Enter to continue...", "grey"))
 
     return all_results
 
@@ -1020,34 +1235,36 @@ def play_final(
     finalist_b: Team,
     user_team: Team,
 ) -> MatchResult:
-    print(f"\n{'='*60}")
-    print("TOURNAMENT FINAL")
-    print(f"{'='*60}")
-    print(f"\n{finalist_a.name}  vs  {finalist_b.name}\n")
+    print()
+    print(banner("TOURNAMENT FINAL", style="bred"))
+    print(col(f"  {finalist_a.name}  {GLY['vs']}  {finalist_b.name}".center(UI_WIDTH), "byellow", "bold"))
+    print()
 
     involves_user = (finalist_a is user_team or finalist_b is user_team)
     watch = involves_user
 
     if not involves_user:
-        ans = input("Watch the final? (Y/N): ").strip().upper()
+        ans = input(col("Watch the final? (Y/N): ", "grey")).strip().upper()
         watch = ans == "Y"
 
     if watch:
         if finalist_b is user_team:
             finalist_a, finalist_b = finalist_b, finalist_a
         display_team(finalist_a)
-        print()
         display_team(finalist_b)
         display_team_comparison(finalist_a, finalist_b)
-        pause("Press Enter to simulate the final...")
-        print(f"\n=== {finalist_a.name} vs {finalist_b.name} (FINAL) ===\n")
+        pause(col("Press Enter to simulate the final...", "grey"))
+        print()
+        print(col(f"  {finalist_a.name}  vs  {finalist_b.name}  (FINAL)", "white", "bold"))
+        print(hrule())
 
     result = simulate_match(finalist_a, finalist_b, watch=watch, is_final=True)
 
     if not watch:
-        print(f"\nFINAL RESULT: {finalist_a.name} {result.goals_a} - {result.goals_b} {finalist_b.name}")
+        score = col(f"{result.goals_a} - {result.goals_b}", "byellow", "bold")
+        print(f"\n  {col('FINAL RESULT:','grey')}  {col(finalist_a.name,'white','bold')}  {score}  {col(finalist_b.name,'white','bold')}")
         if result.went_to_penalties:
-            print(f"(Penalties: {result.penalty_score_a}-{result.penalty_score_b})")
+            print(col(f"  (Penalties: {result.penalty_score_a}-{result.penalty_score_b})", "grey"))
 
     return result
 
@@ -1119,12 +1336,14 @@ def select_user_team(player_pool: List[Player], team_name: str) -> Team:
             p.team_name = team_name
             chosen.append(p)
 
-        print("\nYOUR TOURNAMENT TEAM\n")
+        print()
+        print(section("YOUR TOURNAMENT TEAM", "bcyan"))
+        print()
         for p in chosen:
-            role_short = {"Goalie": "GK", "Defender": "DF", "Attacker": "AT"}.get(p.assigned_role, "??")
-            print(f"  {role_short}: {p.full_name()}")
+            badge, bc = _ROLE_BADGE.get(p.assigned_role, ("?? ", "white"))
+            print(f"  {col(badge, bc, 'bold')} {col(p.full_name(), 'white', 'bold')}")
 
-        confirm = input("\nConfirm this team? (Y/N): ").strip().upper()
+        confirm = input(col("\nConfirm this team? (Y/N): ", "byellow")).strip().upper()
         if confirm == "Y":
             return Team(name=team_name, players=chosen, controlled_by_user=True)
         else:
@@ -1144,12 +1363,15 @@ def build_output_text(
     match_results: List[MatchResult],
     final_result: MatchResult,
     champion: Team,
+    season_id: str = "",
 ) -> str:
     lines: List[str] = []
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
 
     lines.append("CLAUDFOOTY PROTOTYPE TOURNAMENT SUMMARY")
     lines.append(f"Generated: {now_str}")
+    if season_id:
+        lines.append(f"Season:    {season_id}")
     lines.append("")
     lines.append(f"Champion: {champion.name}")
     lines.append("")
@@ -1261,16 +1483,208 @@ def generate_output_file(
     match_results: List[MatchResult],
     final_result: MatchResult,
     champion: Team,
+    season_id: str = "",
+    timestamp: str = "",
 ) -> str:
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M")
-    filename = f"{timestamp}_ClaudFootyPrototypeOutput.txt"
+    if not timestamp:
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M")
+    filename   = f"{timestamp}_{season_id}_ClaudFootyPrototypeOutput.txt"
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    filepath = os.path.join(script_dir, filename)
+    filepath   = os.path.join(script_dir, filename)
 
-    content = build_output_text(teams, user_team, match_results, final_result, champion)
+    content = build_output_text(teams, user_team, match_results, final_result, champion, season_id)
     with open(filepath, "w", encoding="utf-8") as f:
         f.write(content)
 
+    return filename
+
+
+# ---------------------------------------------------------------------------
+# Season ID
+# ---------------------------------------------------------------------------
+
+def load_season_id(script_dir: str) -> Tuple[int, str]:
+    """Read, increment, and persist the season counter. Returns (n, 'SEASON_001')."""
+    path = os.path.join(script_dir, SEASON_ID_FILE)
+    try:
+        n = int(open(path, encoding="utf-8").read().strip())
+    except Exception:
+        n = 0
+    n += 1
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(str(n))
+    return n, f"SEASON_{n:03d}"
+
+
+# ---------------------------------------------------------------------------
+# Player card
+# ---------------------------------------------------------------------------
+
+def load_saved_players(script_dir: str) -> List[Dict]:
+    """Read every player record from the cumulative roster file."""
+    path = os.path.join(script_dir, PLAYER_ROSTER_FILE)
+    if not os.path.exists(path):
+        return []
+    records: List[Dict] = []
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                try:
+                    records.append(json.loads(line))
+                except json.JSONDecodeError:
+                    pass
+    return records
+
+
+def reconstruct_player(record: Dict, new_id: int) -> Player:
+    """Rebuild a Player from a saved JSON record. Stats reset for the new season."""
+    return Player(
+        id=new_id,
+        first_name=record["first_name"],
+        last_name=record["last_name"],
+        team_name="TBD",
+        assigned_role="Unassigned",
+        age=record["age"],
+        traits=dict(record["traits"]),
+    )
+
+
+def prompt_import_player(pool: List[Player], script_dir: str) -> List[Player]:
+    """Offer to import a previously saved player into the draft pool. Returns (possibly extended) pool."""
+    saved = load_saved_players(script_dir)
+    if not saved:
+        return pool
+
+    print()
+    print(section("IMPORT A SAVED PLAYER", "bmagenta"))
+    print()
+    print(col(f"  {len(saved)} saved player(s) found from previous seasons.", "white"))
+    ans = input(col("  Import one into your pool? (Y/N): ", "byellow")).strip().upper()
+    if ans != "Y":
+        return pool
+
+    print()
+    print(col("  SAVED PLAYERS", "bmagenta", "bold"))
+    print(hrule())
+    print(col(f"  {'#':<5}{'Name':<22}{'Season':<13}{'Prev Role':<12}{'OVR':>5}", "grey"))
+    print(hrule())
+    for i, rec in enumerate(saved, start=1):
+        tmp = reconstruct_player(rec, i)
+        ov  = overall_rating(tmp)
+        role_str = rec.get("assigned_role", "?")
+        season_str = rec.get("season", "?")
+        num_s    = f"{i:>3}".ljust(5)
+        name_s   = tmp.full_name()[:21].ljust(22)
+        season_s = col(season_str[:12].ljust(13), "grey")
+        role_s   = col(role_str[:11].ljust(12), _FIT_COLOR.get(role_str, "white"))
+        print(f"  {col(num_s, 'byellow')}{name_s}{season_s}{role_s}{col_rating(ov)}")
+    print()
+
+    while True:
+        raw = input(col("  Enter number to import (or 0 to skip): ", "byellow")).strip()
+        try:
+            n = int(raw)
+            if n == 0:
+                return pool
+            if 1 <= n <= len(saved):
+                break
+            print(col(f"  Enter 1-{len(saved)} or 0 to skip.", "grey"))
+        except ValueError:
+            print(col("  Enter a number.", "grey"))
+
+    new_id   = len(pool) + 1
+    imported = reconstruct_player(saved[n - 1], new_id)
+    pool.append(imported)
+    print()
+    prev_role = saved[n - 1].get("assigned_role", "?")
+    print(col(f"  {GLY['star']} {imported.full_name()} added to your pool "
+              f"(prev role: {prev_role}). Stats reset for new season.", "bgreen", "bold"))
+    print()
+    return pool
+
+
+def build_player_json(player: Player, season_id: str) -> Dict:
+    return {
+        "schema":        "cldfooty_player_v1",
+        "season":        season_id,
+        "id":            player.id,
+        "first_name":    player.first_name,
+        "last_name":     player.last_name,
+        "team_name":     player.team_name,
+        "assigned_role": player.assigned_role,
+        "age":           player.age,
+        "traits":        dict(player.traits),
+        "stats": {
+            "goals":        player.goals,
+            "shots":        player.shots,
+            "saves":        player.saves,
+            "goals_allowed":player.goals_allowed,
+            "tackles":      player.tackles,
+            "key_passes":   player.key_passes,
+            "fouls":        player.fouls,
+            "yellow_cards": player.yellow_cards,
+            "red_cards":    player.red_cards,
+        },
+    }
+
+
+def save_player_jsonl(player: Player, season_id: str, script_dir: str) -> str:
+    record = build_player_json(player, season_id)
+    with open(os.path.join(script_dir, PLAYER_ROSTER_FILE), "a", encoding="utf-8") as f:
+        f.write(json.dumps(record, separators=(",", ":")) + "\n")
+    return PLAYER_ROSTER_FILE
+
+
+def append_season_log(player: Player, season_id: str, script_dir: str) -> None:
+    path = os.path.join(script_dir, SEASON_LOG_FILE)
+    ts   = datetime.now().strftime("%Y-%m-%d %H:%M")
+    ov   = overall_rating(player)
+    line = (f"{season_id} | {ts} | {player.full_name()} | "
+            f"{player.team_name} | {player.assigned_role} | OVR {ov:.1f}\n")
+    with open(path, "a", encoding="utf-8") as f:
+        f.write(line)
+
+
+def prompt_save_player(
+    user_team: Team, season_id: str, script_dir: str
+) -> Optional[str]:
+    """Ask whether to save a player. Returns the .jsonl filename, or None."""
+    print()
+    print(section("SAVE A PLAYER", "bcyan"))
+    print()
+    print(col("  Would you like to export a player from your squad?", "white"))
+    ans = input(col("  (Y/N): ", "byellow")).strip().upper()
+    if ans != "Y":
+        return None
+
+    print()
+    print(col("  YOUR SQUAD", "cyan", "bold"))
+    print(hrule())
+    for p in user_team.players:
+        badge, bc = _ROLE_BADGE.get(p.assigned_role, ("?? ", "white"))
+        print(f"  {col(str(p.id).zfill(2), 'grey')}  {col(badge, bc, 'bold')}"
+              f" {col(p.full_name(), 'white')}   OVR {col_rating(overall_rating(p))}")
+    print()
+
+    id_map = {p.id: p for p in user_team.players}
+    while True:
+        raw = input(col("  Enter player ID to export: ", "byellow")).strip()
+        try:
+            pid = int(raw)
+            if pid in id_map:
+                break
+            print(col("  Invalid ID.", "grey"))
+        except ValueError:
+            print(col("  Enter a number.", "grey"))
+
+    player   = id_map[pid]
+    filename = save_player_jsonl(player, season_id, script_dir)
+    append_season_log(player, season_id, script_dir)
+    print()
+    print(col(f"  {GLY['star']} Player exported:     {filename}", "bgreen", "bold"))
+    print(col(f"  {GLY['bullet']} Season log updated:  {SEASON_LOG_FILE}", "grey"))
+    print()
     return filename
 
 
@@ -1279,52 +1693,60 @@ def generate_output_file(
 # ---------------------------------------------------------------------------
 
 def main() -> None:
-    print("\n" + "=" * 60)
-    print("CLAUDFOOTY PROTOTYPE")
-    print("=" * 60)
-    print("\n1. Start new tournament")
-    print("2. Quit")
-    choice = input("\n> ").strip()
+    enable_terminal()
+
+    print()
+    print(banner("  C L A U D F O O T Y  ", style="bcyan"))
+    print(col("  five-a-side tournament simulator".center(UI_WIDTH), "grey"))
+    print()
+    print(f"  {col('1', 'byellow', 'bold')}  Start new tournament")
+    print(f"  {col('2', 'grey')}  Quit")
+    print()
+    choice = input(col("  > ", "bcyan")).strip()
     if choice != "1":
-        print("Goodbye.")
+        print(col("\n  Goodbye.\n", "grey"))
         return
 
-    # Load names
+    # Load names + assign season ID
     script_dir = os.path.dirname(os.path.abspath(__file__))
     csv_path = os.path.join(script_dir, CSV_NAME_FILE)
     male_first_names, last_names = load_name_bank(csv_path)
+    _season_num, season_id = load_season_id(script_dir)
+    print(col(f"\n  {season_id}", "grey"))
 
     # Team naming
-    raw = input(f"\nEnter your team name, or press Enter for '{DEFAULT_USER_TEAM_NAME}': ").strip()
+    print()
+    raw = input(col(f"  Enter your team name, or press Enter for '{DEFAULT_USER_TEAM_NAME}': ", "cyan")).strip()
     user_team_name = raw if raw else DEFAULT_USER_TEAM_NAME
 
     # Generate user pool
-    print("\nGenerating your 20-player pool...")
+    print(col("\n  Generating your 20-player pool...", "grey"))
     user_pool = generate_user_player_pool(male_first_names, last_names)
+    print(col("  Done.", "grey"))
 
-    print("\nYour 20-player pool has been generated.")
-    print("Review the players and choose your tournament five.\n")
+    # Offer import from previous seasons
+    user_pool = prompt_import_player(user_pool, script_dir)
 
     # User selection
     user_team = select_user_team(user_pool, user_team_name)
 
     # Generate CPU teams
-    print("\nGenerating CPU teams...")
+    print(col("\n  Generating opponent teams...", "grey"))
     cpu_teams: List[Team] = []
     for name in CPU_TEAM_NAMES:
         cpu_teams.append(generate_cpu_team(name, male_first_names, last_names))
 
     all_teams = [user_team] + cpu_teams
 
-    print(f"\n{'='*60}")
-    print("TOURNAMENT BEGINS")
-    print(f"{'='*60}")
-    print(f"\nTeams:")
+    print()
+    print(banner("TOURNAMENT BEGINS", style="bgreen"))
+    print()
     for t in all_teams:
-        tag = " (YOU)" if t.controlled_by_user else ""
-        print(f"  {t.name}{tag}")
+        bullet = col(GLY["bullet"], "grey")
+        tag = col("  ← YOU", "bcyan") if t.controlled_by_user else ""
+        print(f"  {bullet} {col(t.name, 'white', 'bold')}{tag}")
 
-    pause("\nPress Enter to start the group stage...")
+    pause(col("\n  Press Enter to start the group stage...", "grey"))
 
     # Group stage
     group_results = play_group_stage(all_teams, user_team)
@@ -1334,35 +1756,48 @@ def main() -> None:
     finalist_a = sorted_teams[0]
     finalist_b = sorted_teams[1]
 
-    print(f"\n{'='*60}")
-    print("GROUP STAGE COMPLETE")
-    print(f"{'='*60}")
-    print(f"\nFinalists: {finalist_a.name}  vs  {finalist_b.name}")
+    print()
+    print(section("GROUP STAGE COMPLETE", "bgreen"))
+    print(f"\n  Finalists: {col(finalist_a.name, 'byellow', 'bold')}  {GLY['vs']}  {col(finalist_b.name, 'byellow', 'bold')}")
 
     final_result = play_final(finalist_a, finalist_b, user_team)
     champion = final_result.winner
 
-    print(f"\n{'='*60}")
-    print("TOURNAMENT CHAMPION")
-    print(f"{'='*60}")
-    print(f"\n  *** {champion.name} ***\n")
+    print()
+    print(banner(f"  {GLY['trophy']}  TOURNAMENT CHAMPION  {GLY['trophy']}  ", style="byellow"))
+    print(col(f"  {champion.name}  ".center(UI_WIDTH), "byellow", "bold"))
+    print()
 
-    print("Final standings (group stage):")
+    print(section("FINAL STANDINGS", "cyan"))
     display_standings(all_teams)
 
-    # Output file
-    filename = generate_output_file(all_teams, user_team, group_results, final_result, champion)
-    print(f"\nTournament summary written to:\n  {filename}")
+    # Shared timestamp for all output files this run
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M")
 
-    pause("\nPress Enter to view the full tournament report...")
+    # Write tournament summary and show it
+    txt_file = generate_output_file(
+        all_teams, user_team, group_results, final_result, champion, season_id, timestamp
+    )
+    pause(col("\n  Press Enter to view the full tournament report...", "grey"))
     print()
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    report_path = os.path.join(script_dir, filename)
+    report_path = os.path.join(script_dir, txt_file)
     with open(report_path, encoding="utf-8") as f:
         print(f.read())
 
-    pause("Press Enter to close ClaudFooty...")
-    print("\nThanks for playing. See you next tournament.\n")
+    # Now offer to save a player
+    jsonl_file = prompt_save_player(user_team, season_id, script_dir)
+
+    # List output files
+    print()
+    print(col(f"  {GLY['bullet']} {txt_file}", "grey"))
+    if jsonl_file:
+        print(col(f"  {GLY['bullet']} {jsonl_file}", "grey"))
+    print()
+
+    pause(col("  Press Enter to close ClaudFooty...", "grey"))
+    print()
+    print(col("  Thanks for playing. See you next tournament.", "cyan"))
+    print()
 
 
 if __name__ == "__main__":
