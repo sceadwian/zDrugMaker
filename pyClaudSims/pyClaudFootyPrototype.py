@@ -17,10 +17,11 @@ from typing import List, Dict, Optional, Set, Tuple
 # Constants
 # ---------------------------------------------------------------------------
 
-CSV_NAME_FILE      = "toon_names_.csv"
-SEASON_ID_FILE     = "pyCldFooty_season_id.txt"
-SEASON_LOG_FILE    = "pyCldFooty_season_log.txt"
-PLAYER_ROSTER_FILE = "pyCldFooty_players.jsonl"
+CSV_NAME_FILE        = "toon_names.csv"
+SEASON_ID_FILE       = "pyCldFooty_season_id.txt"
+SEASON_LOG_FILE      = "pyCldFooty_season_log.txt"
+PLAYER_ROSTER_FILE   = "pyCldFooty_players.jsonl"
+PREMADE_TEAMS_FILE   = "pyCldFooty_premade_teams.json"
 
 NUM_USER_POOL_PLAYERS = 20
 NUM_CPU_TEAMS = 3
@@ -441,19 +442,43 @@ def generate_player(
     )
 
 
-def generate_user_player_pool(first_names: List[str], last_names: List[str]) -> List[Player]:
+def generate_user_player_pool(
+    first_names: List[str],
+    last_names: List[str],
+    saved_records: Optional[List[Dict]] = None,
+) -> List[Player]:
     pool: List[Player] = []
-    # 3 goalie-biased, 7 defender-biased, 7 attacker-biased, 3 balanced
-    biases = (
-        ["goalie"] * 3 +
-        ["defender"] * 7 +
-        ["attacker"] * 7 +
-        [None] * 3
-    )
+
+    # Pick up to 10 roster players (random sample so it varies each season)
+    roster_pick: List[Dict] = []
+    if saved_records:
+        shuffled = list(saved_records)
+        random.shuffle(shuffled)
+        roster_pick = shuffled[:10]
+
+    num_random = 20 - len(roster_pick)
+
+    # Role biases for the random slots
+    if num_random == 10:
+        biases: List[Optional[str]] = (
+            ["goalie"] * 1 + ["defender"] * 4 + ["attacker"] * 4 + [None] * 1
+        )
+    else:
+        # Proportional to full 20-player ratio (3:7:7:3) for any count 11-20
+        full: List[Optional[str]] = (
+            ["goalie"] * 3 + ["defender"] * 7 + ["attacker"] * 7 + [None] * 3
+        )
+        biases = full[:num_random]
+
     random.shuffle(biases)
     for i, bias in enumerate(biases, start=1):
         p = generate_player(i, "TBD", first_names, last_names, role_bias=bias)
         pool.append(p)
+
+    # Roster players go after the randoms with IDs continuing from where randoms ended
+    for j, rec in enumerate(roster_pick, start=len(pool) + 1):
+        pool.append(reconstruct_player(rec, j))
+
     return pool
 
 
@@ -465,6 +490,42 @@ def generate_cpu_team(team_name: str, first_names: List[str], last_names: List[s
                             role_bias=bias, assigned_role=BIAS_TO_ROLE[bias])
         players.append(p)
     return Team(name=team_name, players=players)
+
+
+def team_from_premade_data(data: Dict) -> Optional[Team]:
+    """Build a Team from a premade-teams JSON entry. Returns None if data is malformed."""
+    try:
+        name = data["name"]
+        players: List[Player] = []
+        for i, pd in enumerate(data["players"], start=1):
+            players.append(Player(
+                id=i,
+                first_name=pd["first_name"],
+                last_name=pd["last_name"],
+                team_name=name,
+                assigned_role=pd["assigned_role"],
+                age=int(pd["age"]),
+                traits={k: int(v) for k, v in pd["traits"].items()},
+            ))
+        if len(players) != 5:
+            return None
+        return Team(name=name, players=players)
+    except (KeyError, TypeError, ValueError):
+        return None
+
+
+def load_premade_teams(script_dir: str) -> List[Team]:
+    """Load all valid teams from PREMADE_TEAMS_FILE. Returns empty list if file absent/invalid."""
+    path = os.path.join(script_dir, PREMADE_TEAMS_FILE)
+    if not os.path.exists(path):
+        return []
+    try:
+        with open(path, encoding="utf-8") as f:
+            raw = json.load(f)
+        teams = [team_from_premade_data(d) for d in raw]
+        return [t for t in teams if t is not None]
+    except (json.JSONDecodeError, TypeError):
+        return []
 
 
 # ---------------------------------------------------------------------------
@@ -1636,6 +1697,16 @@ def save_player_jsonl(player: Player, season_id: str, script_dir: str) -> str:
     return PLAYER_ROSTER_FILE
 
 
+def auto_save_top_npc_players(cpu_teams: List[Team], season_id: str, script_dir: str) -> List[Player]:
+    """Append the highest-rated player from each CPU team to the roster. Returns the saved players."""
+    saved: List[Player] = []
+    for team in cpu_teams:
+        top = max(team.players, key=lambda p: overall_rating(p))
+        save_player_jsonl(top, season_id, script_dir)
+        saved.append(top)
+    return saved
+
+
 def append_season_log(player: Player, season_id: str, script_dir: str) -> None:
     path = os.path.join(script_dir, SEASON_LOG_FILE)
     ts   = datetime.now().strftime("%Y-%m-%d %H:%M")
@@ -1719,9 +1790,15 @@ def main() -> None:
     raw = input(col(f"  Enter your team name, or press Enter for '{DEFAULT_USER_TEAM_NAME}': ", "cyan")).strip()
     user_team_name = raw if raw else DEFAULT_USER_TEAM_NAME
 
-    # Generate user pool
-    print(col("\n  Generating your 20-player pool...", "grey"))
-    user_pool = generate_user_player_pool(male_first_names, last_names)
+    # Generate user pool (mix roster players in if any exist)
+    saved_records = load_saved_players(script_dir)
+    roster_count = min(10, len(saved_records)) if saved_records else 0
+    random_count = 20 - roster_count
+    if roster_count:
+        print(col(f"\n  Building pool: {random_count} random + {roster_count} from your roster...", "grey"))
+    else:
+        print(col("\n  Generating your 20-player pool...", "grey"))
+    user_pool = generate_user_player_pool(male_first_names, last_names, saved_records or None)
     print(col("  Done.", "grey"))
 
     # Offer import from previous seasons
@@ -1730,11 +1807,63 @@ def main() -> None:
     # User selection
     user_team = select_user_team(user_pool, user_team_name)
 
-    # Generate CPU teams
-    print(col("\n  Generating opponent teams...", "grey"))
+    # Generate CPU teams — premade or random
+    premade = load_premade_teams(script_dir)
     cpu_teams: List[Team] = []
-    for name in CPU_TEAM_NAMES:
-        cpu_teams.append(generate_cpu_team(name, male_first_names, last_names))
+    if premade:
+        print()
+        print(section("OPPONENT TEAMS", "cyan"))
+        print(col(f"  {len(premade)} premade team(s) found in {PREMADE_TEAMS_FILE}.", "white"))
+        ans = input(col("  Use premade teams or random? (P/R): ", "byellow")).strip().upper()
+        if ans == "P":
+            if len(premade) <= NUM_CPU_TEAMS:
+                # Fewer than or exactly 3 — use all of them
+                cpu_teams = premade[:]
+            else:
+                # More than 3 — let the user pick which 3
+                print()
+                print(col("  AVAILABLE TEAMS", "cyan", "bold"))
+                print(hrule())
+                for i, t in enumerate(premade, start=1):
+                    ovrs = [overall_rating(p) for p in t.players]
+                    avg_ov = sum(ovrs) / len(ovrs) if ovrs else 0
+                    print(f"  {col(str(i), 'byellow')}  {col(t.name, 'white')}  "
+                          f"{col(f'(avg OVR {avg_ov:.1f})', 'grey')}")
+                print()
+                chosen_indices: List[int] = []
+                for slot in range(1, NUM_CPU_TEAMS + 1):
+                    available = [i for i in range(1, len(premade) + 1)
+                                 if i not in chosen_indices]
+                    while True:
+                        raw = input(col(f"  Pick opponent {slot} of {NUM_CPU_TEAMS} "
+                                        f"(enter number): ", "byellow")).strip()
+                        try:
+                            n = int(raw)
+                            if n in available:
+                                chosen_indices.append(n)
+                                print(col(f"    {GLY['bullet']} {premade[n-1].name} added.", "grey"))
+                                break
+                            print(col(f"  Enter one of: {available}", "grey"))
+                        except ValueError:
+                            print(col("  Enter a number.", "grey"))
+                cpu_teams = [premade[i - 1] for i in chosen_indices]
+
+            # Pad with random teams if the file had fewer than 3
+            while len(cpu_teams) < NUM_CPU_TEAMS:
+                fallback_name = CPU_TEAM_NAMES[len(cpu_teams) % len(CPU_TEAM_NAMES)]
+                cpu_teams.append(generate_cpu_team(fallback_name, male_first_names, last_names))
+            print()
+            print(col("  Opponents confirmed:", "grey"))
+            for t in cpu_teams:
+                print(col(f"    {GLY['bullet']} {t.name}", "white"))
+        else:
+            print(col("\n  Generating random opponent teams...", "grey"))
+            for name in CPU_TEAM_NAMES:
+                cpu_teams.append(generate_cpu_team(name, male_first_names, last_names))
+    else:
+        print(col("\n  Generating opponent teams...", "grey"))
+        for name in CPU_TEAM_NAMES:
+            cpu_teams.append(generate_cpu_team(name, male_first_names, last_names))
 
     all_teams = [user_team] + cpu_teams
 
@@ -1784,14 +1913,26 @@ def main() -> None:
     with open(report_path, encoding="utf-8") as f:
         print(f.read())
 
-    # Now offer to save a player
+    # Auto-scout: save top player from each CPU team
+    scouted = auto_save_top_npc_players(cpu_teams, season_id, script_dir)
+    print()
+    print(section("SCOUTED PLAYERS", "grey"))
+    print(col("  Top player from each opponent scouted into your roster:", "grey"))
+    for p in scouted:
+        badge, bc = _ROLE_BADGE.get(p.assigned_role, ("?? ", "white"))
+        print(f"  {col(GLY['bullet'], 'grey')} {col(badge, bc, 'bold')}"
+              f" {col(p.full_name(), 'white')}  {col(p.team_name, 'grey')}"
+              f"  OVR {col_rating(overall_rating(p))}")
+
+    # Now offer to save a player from your own squad
     jsonl_file = prompt_save_player(user_team, season_id, script_dir)
 
     # List output files
     print()
     print(col(f"  {GLY['bullet']} {txt_file}", "grey"))
+    print(col(f"  {GLY['bullet']} {PLAYER_ROSTER_FILE}  (+{len(scouted)} scouted)", "grey"))
     if jsonl_file:
-        print(col(f"  {GLY['bullet']} {jsonl_file}", "grey"))
+        print(col(f"    {GLY['bullet']} +1 from your squad", "grey"))
     print()
 
     pause(col("  Press Enter to close ClaudFooty...", "grey"))

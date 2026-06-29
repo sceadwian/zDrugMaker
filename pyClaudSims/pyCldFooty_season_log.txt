@@ -3,3 +3,15 @@ SEASON_005 | 2026-06-27 21:11 | Tom Irwin | Test FC | Goalie | OVR 10.8
 SEASON_005 | 2026-06-27 21:14 | Quinn Lee | Zoah FC | Attacker | OVR 14.1
 SEASON_009 | 2026-06-27 21:34 | Nathan Davis | Testicularz | Defender | OVR 13.9
 SEASON_012 | 2026-06-27 21:44 | Karl Davis | OnceTV | Attacker | OVR 13.7
+SEASON_013 | 2026-06-27 23:18 | Nathan Turner | Zoah FC | Attacker | OVR 13.8
+SEASON_014 | 2026-06-27 23:36 | Tom Lee | Fartbridge North | Attacker | OVR 12.0
+SEASON_015 | 2026-06-27 23:40 | Aaron Reed | Once DiNoche | Attacker | OVR 13.9
+SEASON_016 | 2026-06-28 00:13 | Ryan Nash | Midnight Owls | Defender | OVR 12.3
+SEASON_017 | 2026-06-28 00:20 | Ivan Smith | Cleasy Athl | Attacker | OVR 15.0
+SEASON_018 | 2026-06-28 00:23 | Tom Clark | Sick Puppies FC | Defender | OVR 12.8
+SEASON_019 | 2026-06-28 00:37 | Harry Quinn | THC | Defender | OVR 14.7
+SEASON_020 | 2026-06-28 00:42 | Mill Bonneville | Ass Ine | Goalie | OVR 13.3
+SEASON_021 | 2026-06-28 00:56 | Scotty Fritz | Weed Wankers | Attacker | OVR 13.7
+SEASON_022 | 2026-06-28 02:10 | Em Suh | Segunda Feiras | Defender | OVR 14.3
+SEASON_023 | 2026-06-28 12:43 | Kipper Perrault | Epstein Island | Attacker | OVR 13.0
+SEASON_024 | 2026-06-28 16:08 | Lutero Pinel | Guelph Storm | Defender | OVR 14.6

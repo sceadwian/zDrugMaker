@@ -1,0 +1,842 @@
+[
+  {
+    "name": "Hardick FC",
+    "players": [
+      {
+        "first_name": "Jason",
+        "last_name": "Luv",
+        "age": 31,
+        "assigned_role": "Goalie",
+        "traits": {
+          "Speed": 6,
+          "Stamina": 11,
+          "Strength": 12,
+          "Agility": 14,
+          "Shooting": 5,
+          "Passing": 8,
+          "Dribbling": 8,
+          "Tackling": 8,
+          "Marking": 10,
+          "Goalkeeping": 18,
+          "Vision": 12,
+          "Composure": 16,
+          "Discipline": 14,
+          "Teamwork": 13,
+          "Aggression": 6
+        }
+      },
+      {
+        "first_name": "Johnny",
+        "last_name": "Sins",
+        "age": 27,
+        "assigned_role": "Defender",
+        "traits": {
+          "Speed": 12,
+          "Stamina": 15,
+          "Strength": 17,
+          "Agility": 12,
+          "Shooting": 8,
+          "Passing": 11,
+          "Dribbling": 9,
+          "Tackling": 17,
+          "Marking": 16,
+          "Goalkeeping": 5,
+          "Vision": 11,
+          "Composure": 14,
+          "Discipline": 16,
+          "Teamwork": 14,
+          "Aggression": 13
+        }
+      },
+      {
+        "first_name": "Rocco",
+        "last_name": "Siffredi",
+        "age": 24,
+        "assigned_role": "Defender",
+        "traits": {
+          "Speed": 14,
+          "Stamina": 14,
+          "Strength": 15,
+          "Agility": 13,
+          "Shooting": 9,
+          "Passing": 12,
+          "Dribbling": 10,
+          "Tackling": 16,
+          "Marking": 15,
+          "Goalkeeping": 4,
+          "Vision": 12,
+          "Composure": 13,
+          "Discipline": 14,
+          "Teamwork": 15,
+          "Aggression": 11
+        }
+      },
+      {
+        "first_name": "Malik",
+        "last_name": "Delgaty",
+        "age": 22,
+        "assigned_role": "Attacker",
+        "traits": {
+          "Speed": 18,
+          "Stamina": 16,
+          "Strength": 11,
+          "Agility": 17,
+          "Shooting": 16,
+          "Passing": 13,
+          "Dribbling": 16,
+          "Tackling": 7,
+          "Marking": 6,
+          "Goalkeeping": 3,
+          "Vision": 14,
+          "Composure": 13,
+          "Discipline": 10,
+          "Teamwork": 11,
+          "Aggression": 11
+        }
+      },
+      {
+        "first_name": "Skyy",
+        "last_name": "Dayski",
+        "age": 29,
+        "assigned_role": "Attacker",
+        "traits": {
+          "Speed": 15,
+          "Stamina": 13,
+          "Strength": 14,
+          "Agility": 14,
+          "Shooting": 17,
+          "Passing": 13,
+          "Dribbling": 14,
+          "Tackling": 8,
+          "Marking": 7,
+          "Goalkeeping": 4,
+          "Vision": 14,
+          "Composure": 16,
+          "Discipline": 12,
+          "Teamwork": 13,
+          "Aggression": 10
+        }
+      }
+    ]
+  },
+  {
+    "name": "Diddys XI",
+    "players": [
+      {
+        "first_name": "Earl",
+        "last_name": "Minaj",
+        "age": 26,
+        "assigned_role": "Goalie",
+        "traits": {
+          "Speed": 11,
+          "Stamina": 13,
+          "Strength": 13,
+          "Agility": 18,
+          "Shooting": 6,
+          "Passing": 9,
+          "Dribbling": 7,
+          "Tackling": 8,
+          "Marking": 10,
+          "Goalkeeping": 17,
+          "Vision": 13,
+          "Composure": 16,
+          "Discipline": 14,
+          "Teamwork": 12,
+          "Aggression": 8
+        }
+      },
+      {
+        "first_name": "Ka",
+        "last_name": "Gunn",
+        "age": 30,
+        "assigned_role": "Defender",
+        "traits": {
+          "Speed": 12,
+          "Stamina": 16,
+          "Strength": 16,
+          "Agility": 11,
+          "Shooting": 7,
+          "Passing": 13,
+          "Dribbling": 10,
+          "Tackling": 18,
+          "Marking": 17,
+          "Goalkeeping": 4,
+          "Vision": 12,
+          "Composure": 15,
+          "Discipline": 17,
+          "Teamwork": 16,
+          "Aggression": 12
+        }
+      },
+      {
+        "first_name": "Currensy",
+        "last_name": "Kinglo",
+        "age": 23,
+        "assigned_role": "Defender",
+        "traits": {
+          "Speed": 15,
+          "Stamina": 15,
+          "Strength": 14,
+          "Agility": 14,
+          "Shooting": 8,
+          "Passing": 14,
+          "Dribbling": 11,
+          "Tackling": 15,
+          "Marking": 14,
+          "Goalkeeping": 5,
+          "Vision": 13,
+          "Composure": 12,
+          "Discipline": 15,
+          "Teamwork": 14,
+          "Aggression": 10
+        }
+      },
+      {
+        "first_name": "Homey",
+        "last_name": "Nipsey",
+        "age": 25,
+        "assigned_role": "Attacker",
+        "traits": {
+          "Speed": 17,
+          "Stamina": 17,
+          "Strength": 10,
+          "Agility": 18,
+          "Shooting": 15,
+          "Passing": 16,
+          "Dribbling": 18,
+          "Tackling": 6,
+          "Marking": 5,
+          "Goalkeeping": 3,
+          "Vision": 16,
+          "Composure": 13,
+          "Discipline": 11,
+          "Teamwork": 13,
+          "Aggression": 11
+        }
+      },
+      {
+        "first_name": "Mavi",
+        "last_name": "Steelz",
+        "age": 28,
+        "assigned_role": "Attacker",
+        "traits": {
+          "Speed": 14,
+          "Stamina": 14,
+          "Strength": 15,
+          "Agility": 13,
+          "Shooting": 16,
+          "Passing": 12,
+          "Dribbling": 13,
+          "Tackling": 9,
+          "Marking": 8,
+          "Goalkeeping": 4,
+          "Vision": 13,
+          "Composure": 15,
+          "Discipline": 13,
+          "Teamwork": 12,
+          "Aggression": 13
+        }
+      }
+    ]
+  },
+  {
+    "name": "Pikachu",
+    "players": [
+      {
+        "first_name": "Squirtle",
+        "last_name": "Wartortle",
+        "age": 33,
+        "assigned_role": "Goalie",
+        "traits": {
+          "Speed": 8,
+          "Stamina": 11,
+          "Strength": 15,
+          "Agility": 15,
+          "Shooting": 8,
+          "Passing": 11,
+          "Dribbling": 7,
+          "Tackling": 10,
+          "Marking": 12,
+          "Goalkeeping": 19,
+          "Vision": 14,
+          "Composure": 18,
+          "Discipline": 16,
+          "Teamwork": 14,
+          "Aggression": 6
+        }
+      },
+      {
+        "first_name": "Clefairy",
+        "last_name": "Rattata",
+        "age": 26,
+        "assigned_role": "Defender",
+        "traits": {
+          "Speed": 14,
+          "Stamina": 15,
+          "Strength": 16,
+          "Agility": 13,
+          "Shooting": 9,
+          "Passing": 12,
+          "Dribbling": 10,
+          "Tackling": 17,
+          "Marking": 16,
+          "Goalkeeping": 4,
+          "Vision": 11,
+          "Composure": 14,
+          "Discipline": 15,
+          "Teamwork": 15,
+          "Aggression": 14
+        }
+      },
+      {
+        "first_name": "Abra",
+        "last_name": "Machamp",
+        "age": 21,
+        "assigned_role": "Defender",
+        "traits": {
+          "Speed": 16,
+          "Stamina": 16,
+          "Strength": 13,
+          "Agility": 15,
+          "Shooting": 10,
+          "Passing": 13,
+          "Dribbling": 12,
+          "Tackling": 15,
+          "Marking": 14,
+          "Goalkeeping": 5,
+          "Vision": 14,
+          "Composure": 13,
+          "Discipline": 13,
+          "Teamwork": 14,
+          "Aggression": 12
+        }
+      },
+      {
+        "first_name": "Onix",
+        "last_name": "Gengar",
+        "age": 20,
+        "assigned_role": "Attacker",
+        "traits": {
+          "Speed": 14,
+          "Stamina": 18,
+          "Strength": 10,
+          "Agility": 19,
+          "Shooting": 14,
+          "Passing": 15,
+          "Dribbling": 16,
+          "Tackling": 7,
+          "Marking": 6,
+          "Goalkeeping": 3,
+          "Vision": 15,
+          "Composure": 12,
+          "Discipline": 10,
+          "Teamwork": 12,
+          "Aggression": 14
+        }
+      },
+      {
+        "first_name": "Snorlax",
+        "last_name": "Mewtwo",
+        "age": 30,
+        "assigned_role": "Attacker",
+        "traits": {
+          "Speed": 18,
+          "Stamina": 12,
+          "Strength": 16,
+          "Agility": 12,
+          "Shooting": 18,
+          "Passing": 11,
+          "Dribbling": 13,
+          "Tackling": 9,
+          "Marking": 8,
+          "Goalkeeping": 5,
+          "Vision": 12,
+          "Composure": 17,
+          "Discipline": 14,
+          "Teamwork": 11,
+          "Aggression": 11
+        }
+      }
+    ]
+  },
+  {
+    "name": "Ali EC",
+    "players": [
+      {
+        "first_name": "Pinkie",
+        "last_name": "Pie",
+        "age": 28,
+        "assigned_role": "Goalie",
+        "traits": {
+          "Speed": 7,
+          "Stamina": 13,
+          "Strength": 16,
+          "Agility": 14,
+          "Shooting": 6,
+          "Passing": 10,
+          "Dribbling": 6,
+          "Tackling": 11,
+          "Marking": 13,
+          "Goalkeeping": 20,
+          "Vision": 13,
+          "Composure": 19,
+          "Discipline": 17,
+          "Teamwork": 15,
+          "Aggression": 5
+        }
+      },
+      {
+        "first_name": "Rarity",
+        "last_name": "Applejack",
+        "age": 28,
+        "assigned_role": "Defender",
+        "traits": {
+          "Speed": 14,
+          "Stamina": 17,
+          "Strength": 18,
+          "Agility": 12,
+          "Shooting": 7,
+          "Passing": 10,
+          "Dribbling": 8,
+          "Tackling": 19,
+          "Marking": 17,
+          "Goalkeeping": 4,
+          "Vision": 10,
+          "Composure": 13,
+          "Discipline": 18,
+          "Teamwork": 15,
+          "Aggression": 16
+        }
+      },
+      {
+        "first_name": "Spike",
+        "last_name": "Fluttershy",
+        "age": 25,
+        "assigned_role": "Defender",
+        "traits": {
+          "Speed": 15,
+          "Stamina": 16,
+          "Strength": 17,
+          "Agility": 13,
+          "Shooting": 8,
+          "Passing": 11,
+          "Dribbling": 9,
+          "Tackling": 17,
+          "Marking": 15,
+          "Goalkeeping": 4,
+          "Vision": 11,
+          "Composure": 12,
+          "Discipline": 16,
+          "Teamwork": 14,
+          "Aggression": 15
+        }
+      },
+      {
+        "first_name": "Rainbow",
+        "last_name": "Dash",
+        "age": 23,
+        "assigned_role": "Attacker",
+        "traits": {
+          "Speed": 17,
+          "Stamina": 16,
+          "Strength": 14,
+          "Agility": 16,
+          "Shooting": 15,
+          "Passing": 13,
+          "Dribbling": 15,
+          "Tackling": 9,
+          "Marking": 7,
+          "Goalkeeping": 3,
+          "Vision": 13,
+          "Composure": 14,
+          "Discipline": 12,
+          "Teamwork": 13,
+          "Aggression": 14
+        }
+      },
+      {
+        "first_name": "Twilight",
+        "last_name": "Sparkle",
+        "age": 26,
+        "assigned_role": "Attacker",
+        "traits": {
+          "Speed": 12,
+          "Stamina": 14,
+          "Strength": 18,
+          "Agility": 11,
+          "Shooting": 17,
+          "Passing": 12,
+          "Dribbling": 12,
+          "Tackling": 10,
+          "Marking": 9,
+          "Goalkeeping": 4,
+          "Vision": 12,
+          "Composure": 16,
+          "Discipline": 14,
+          "Teamwork": 13,
+          "Aggression": 13
+        }
+      }
+    ]
+  },
+  {
+    "name": "One Piece",
+    "players": [
+      {
+        "first_name": "Higuma",
+        "last_name": "Ririka",
+        "age": 29,
+        "assigned_role": "Goalie",
+        "traits": {
+          "Speed": 12,
+          "Stamina": 14,
+          "Strength": 12,
+          "Agility": 17,
+          "Shooting": 8,
+          "Passing": 13,
+          "Dribbling": 9,
+          "Tackling": 8,
+          "Marking": 10,
+          "Goalkeeping": 16,
+          "Vision": 15,
+          "Composure": 17,
+          "Discipline": 15,
+          "Teamwork": 16,
+          "Aggression": 7
+        }
+      },
+      {
+        "first_name": "Wood",
+        "last_name": "Slap",
+        "age": 27,
+        "assigned_role": "Defender",
+        "traits": {
+          "Speed": 13,
+          "Stamina": 15,
+          "Strength": 16,
+          "Agility": 14,
+          "Shooting": 9,
+          "Passing": 16,
+          "Dribbling": 13,
+          "Tackling": 15,
+          "Marking": 14,
+          "Goalkeeping": 5,
+          "Vision": 11,
+          "Composure": 15,
+          "Discipline": 15,
+          "Teamwork": 17,
+          "Aggression": 9
+        }
+      },
+      {
+        "first_name": "Mojiko",
+        "last_name": "Nako",
+        "age": 22,
+        "assigned_role": "Defender",
+        "traits": {
+          "Speed": 14,
+          "Stamina": 16,
+          "Strength": 20,
+          "Agility": 15,
+          "Shooting": 10,
+          "Passing": 17,
+          "Dribbling": 14,
+          "Tackling": 14,
+          "Marking": 13,
+          "Goalkeeping": 4,
+          "Vision": 15,
+          "Composure": 14,
+          "Discipline": 6,
+          "Teamwork": 17,
+          "Aggression": 8
+        }
+      },
+      {
+        "first_name": "Sapi",
+        "last_name": "Ipponmatsu",
+        "age": 24,
+        "assigned_role": "Attacker",
+        "traits": {
+          "Speed": 17,
+          "Stamina": 13,
+          "Strength": 19,
+          "Agility": 14,
+          "Shooting": 14,
+          "Passing": 17,
+          "Dribbling": 15,
+          "Tackling": 20,
+          "Marking": 18,
+          "Goalkeeping": 3,
+          "Vision": 18,
+          "Composure": 9,
+          "Discipline": 6,
+          "Teamwork": 17,
+          "Aggression": 20
+        }
+      },
+      {
+        "first_name": "Yu",
+        "last_name": "Ipponume",
+        "age": 26,
+        "assigned_role": "Attacker",
+        "traits": {
+          "Speed": 15,
+          "Stamina": 14,
+          "Strength": 20,
+          "Agility": 16,
+          "Shooting": 15,
+          "Passing": 16,
+          "Dribbling": 15,
+          "Tackling": 8,
+          "Marking": 7,
+          "Goalkeeping": 4,
+          "Vision": 17,
+          "Composure": 16,
+          "Discipline": 14,
+          "Teamwork": 16,
+          "Aggression": 10
+        }
+      }
+    ]
+  },
+  {
+    "name": "The Entities",
+    "players": [
+      {
+        "first_name": "Smiler",
+        "last_name": "Partygoer",
+        "age": 32,
+        "assigned_role": "Goalie",
+        "traits": {
+          "Speed": 10,
+          "Stamina": 14,
+          "Strength": 17,
+          "Agility": 13,
+          "Shooting": 7,
+          "Passing": 9,
+          "Dribbling": 7,
+          "Tackling": 12,
+          "Marking": 14,
+          "Goalkeeping": 17,
+          "Vision": 11,
+          "Composure": 16,
+          "Discipline": 18,
+          "Teamwork": 13,
+          "Aggression": 20
+        }
+      },
+      {
+        "first_name": "Faceling",
+        "last_name": "Cameraman",
+        "age": 29,
+        "assigned_role": "Defender",
+        "traits": {
+          "Speed": 13,
+          "Stamina": 16,
+          "Strength": 19,
+          "Agility": 11,
+          "Shooting": 10,
+          "Passing": 10,
+          "Dribbling": 8,
+          "Tackling": 18,
+          "Marking": 16,
+          "Goalkeeping": 3,
+          "Vision": 10,
+          "Composure": 13,
+          "Discipline": 17,
+          "Teamwork": 14,
+          "Aggression": 17
+        }
+      },
+      {
+        "first_name": "Mandela",
+        "last_name": "Clumps",
+        "age": 26,
+        "assigned_role": "Defender",
+        "traits": {
+          "Speed": 14,
+          "Stamina": 17,
+          "Strength": 17,
+          "Agility": 12,
+          "Shooting": 9,
+          "Passing": 11,
+          "Dribbling": 9,
+          "Tackling": 16,
+          "Marking": 17,
+          "Goalkeeping": 5,
+          "Vision": 11,
+          "Composure": 14,
+          "Discipline": 16,
+          "Teamwork": 15,
+          "Aggression": 15
+        }
+      },
+      {
+        "first_name": "Maws",
+        "last_name": "Peekers",
+        "age": 24,
+        "assigned_role": "Attacker",
+        "traits": {
+          "Speed": 16,
+          "Stamina": 17,
+          "Strength": 16,
+          "Agility": 14,
+          "Shooting": 16,
+          "Passing": 12,
+          "Dribbling": 14,
+          "Tackling": 10,
+          "Marking": 8,
+          "Goalkeeping": 3,
+          "Vision": 13,
+          "Composure": 15,
+          "Discipline": 13,
+          "Teamwork": 13,
+          "Aggression": 16
+        }
+      },
+      {
+        "first_name": "Reticent",
+        "last_name": "Needlelimbs",
+        "age": 30,
+        "assigned_role": "Attacker",
+        "traits": {
+          "Speed": 13,
+          "Stamina": 15,
+          "Strength": 18,
+          "Agility": 12,
+          "Shooting": 17,
+          "Passing": 11,
+          "Dribbling": 12,
+          "Tackling": 11,
+          "Marking": 19,
+          "Goalkeeping": 4,
+          "Vision": 12,
+          "Composure": 17,
+          "Discipline": 15,
+          "Teamwork": 12,
+          "Aggression": 15
+        }
+      }
+    ]
+  },
+  {
+    "name": "Hattuaria",
+    "players": [
+      {
+        "first_name": "Johan",
+        "last_name": "Munoz",
+        "age": 23,
+        "assigned_role": "Goalie",
+        "traits": {
+          "Speed": 11,
+          "Stamina": 12,
+          "Strength": 12,
+          "Agility": 16,
+          "Shooting": 14,
+          "Passing": 13,
+          "Dribbling": 10,
+          "Tackling": 12,
+          "Marking": 13,
+          "Goalkeeping": 18,
+          "Vision": 13,
+          "Composure": 13,
+          "Discipline": 15,
+          "Teamwork": 11,
+          "Aggression": 9
+        }
+      },
+      {
+        "first_name": "Koen",
+        "last_name": "Verstraete",
+        "age": 28,
+        "assigned_role": "Defender",
+        "traits": {
+          "Speed": 14,
+          "Stamina": 15,
+          "Strength": 12,
+          "Agility": 12,
+          "Shooting": 8,
+          "Passing": 16,
+          "Dribbling": 8,
+          "Tackling": 15,
+          "Marking": 13,
+          "Goalkeeping": 3,
+          "Vision": 12,
+          "Composure": 12,
+          "Discipline": 13,
+          "Teamwork": 13,
+          "Aggression": 10
+        }
+      },
+      {
+        "first_name": "Thomas",
+        "last_name": "Steegs",
+        "age": 27,
+        "assigned_role": "Defender",
+        "traits": {
+          "Speed": 14,
+          "Stamina": 14,
+          "Strength": 15,
+          "Agility": 9,
+          "Shooting": 7,
+          "Passing": 11,
+          "Dribbling": 9,
+          "Tackling": 16,
+          "Marking": 14,
+          "Goalkeeping": 15,
+          "Vision": 9,
+          "Composure": 16,
+          "Discipline": 15,
+          "Teamwork": 17,
+          "Aggression": 15
+        }
+      },
+      {
+        "first_name": "Thesteath",
+        "last_name": "Ludrurum",
+        "age": 19,
+        "assigned_role": "Attacker",
+        "traits": {
+          "Speed": 18,
+          "Stamina": 13,
+          "Strength": 9,
+          "Agility": 16,
+          "Shooting": 12,
+          "Passing": 15,
+          "Dribbling": 14,
+          "Tackling": 7,
+          "Marking": 5,
+          "Goalkeeping": 9,
+          "Vision": 15,
+          "Composure": 14,
+          "Discipline": 17,
+          "Teamwork": 13,
+          "Aggression": 8
+        }
+      },
+      {
+        "first_name": "Curtis",
+        "last_name": "Jones",
+        "age": 32,
+        "assigned_role": "Attacker",
+        "traits": {
+          "Speed": 12,
+          "Stamina": 13,
+          "Strength": 11,
+          "Agility": 15,
+          "Shooting": 13,
+          "Passing": 15,
+          "Dribbling": 14,
+          "Tackling": 8,
+          "Marking": 11,
+          "Goalkeeping": 15,
+          "Vision": 16,
+          "Composure": 16,
+          "Discipline": 16,
+          "Teamwork": 13,
+          "Aggression": 11
+        }
+      }
+    ]
+  }
+]
