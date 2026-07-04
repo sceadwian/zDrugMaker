@@ -1,0 +1,17 @@
+Animal: 20260702test
+Trial: 20260702tests
+Session Date: 2026-07-02 10:28:14
+Total Duration: 0.57 seconds
+Total Pause Time: 0.00 seconds
+
+Key Summary:
+  W (twitch): 0 events, 0.00s, avg 0.00s (0.00%)
+  A (active): 0 events, 0.00s, avg 0.00s (0.00%)
+  S (freeze): 0 events, 0.00s, avg 0.00s (0.00%)
+  D (chew): 0 events, 0.00s, avg 0.00s (0.00%)
+  1 (1): 0 events, 0.00s, avg 0.00s (0.00%)
+  2 (2): 0 events, 0.00s, avg 0.00s (0.00%)
+  3 (3): 0 events, 0.00s, avg 0.00s (0.00%)
+  5 (5): 0 events, 0.00s, avg 0.00s (0.00%)
+
+Detailed Events:
