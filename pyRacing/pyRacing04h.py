@@ -17,6 +17,7 @@
 #       to leader, position-change arrows vs grid, stamina bars, pit counts, average
 #       lap pace, fastest-lap highlight, live event feed (overtakes/pits/incidents),
 #       nicer grid/menu, podium ceremony after the race.
+#       + driver selection before the race: pick entrants by number, range, or team.
 
 import os
 import re
@@ -43,6 +44,7 @@ class Colors:
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 TILE_LENGTH = 20  # meters per track tile
+MAX_RACE_DRIVERS = 20  # the sim (UI layout, balance) is designed for at most 20 cars per race
 
 # Rolling feed of race happenings (overtakes, pits, incidents) shown live
 RACE_LOG = deque(maxlen=6)
@@ -564,7 +566,94 @@ def load_drivers(file_path):
                 cc_defnd=int(row[10]),
                 cc_stam=int(row[11])
             ))
+            # Optional 13th column: team (not used by the sim yet, shown in selection)
+            cars[-1].team = row[12].strip() if len(row) > 12 else ""
     return cars
+
+def parse_driver_selection(text, cars):
+    """Parse '1,5-8,Zelda' style input into a list of cars.
+    Returns a list on success, or an error message string."""
+    text = text.strip()
+    if not text or text.lower() == 'all':
+        return list(cars)
+
+    team_lookup = {}
+    for c in cars:
+        team = getattr(c, 'team', '')
+        if team:
+            team_lookup.setdefault(team.lower(), []).append(c)
+
+    chosen = []
+    seen = set()
+
+    def add(car):
+        if id(car) not in seen:
+            seen.add(id(car))
+            chosen.append(car)
+
+    for token in text.split(','):
+        token = token.strip()
+        if not token:
+            continue
+        if token.lower() in team_lookup:
+            for car in team_lookup[token.lower()]:
+                add(car)
+        elif token.isdigit():
+            idx = int(token)
+            if not (1 <= idx <= len(cars)):
+                return f"Driver number {idx} is out of range (1-{len(cars)})."
+            add(cars[idx - 1])
+        elif '-' in token:
+            parts = token.split('-', 1)
+            if parts[0].strip().isdigit() and parts[1].strip().isdigit():
+                a, b = int(parts[0]), int(parts[1])
+                if a > b:
+                    a, b = b, a
+                if not (1 <= a and b <= len(cars)):
+                    return f"Range {token} is out of bounds (1-{len(cars)})."
+                for i in range(a - 1, b):
+                    add(cars[i])
+            else:
+                return f"Unrecognized entry: '{token}'"
+        else:
+            return f"Unrecognized entry: '{token}' (not a number, range, or team name)"
+
+    return chosen
+
+def choose_drivers(cars):
+    C = Colors
+    print(f"\n{C.CYAN}{'─'*58}{C.RESET}")
+    print(f"{C.BOLD}{C.YELLOW}{'DRIVER ROSTER':^58}{C.RESET}")
+    print(f"{C.CYAN}{'─'*58}{C.RESET}")
+    print(f"{C.GREY}{'#':>4} {'SYM':4} {'DRIVER':24} TEAM{C.RESET}")
+    last_team = None
+    for i, car in enumerate(cars, 1):
+        team = getattr(car, 'team', '')
+        if team != last_team and last_team is not None:
+            print(f"{C.GREY}{'·'*58}{C.RESET}")
+        last_team = team
+        print(f"{C.WHITE}{i:>4} {C.BLUE}{car.symbol:4}{C.WHITE} {car.first_name + ' ' + car.last_name:24} {C.CYAN}{team}{C.RESET}")
+    print(f"{C.CYAN}{'─'*58}{C.RESET}")
+    print(f"Select entrants (2-{MAX_RACE_DRIVERS} drivers): numbers, ranges, and/or team names, comma-separated.")
+    print("Examples:  1-6,Pokemon,40   or   Zelda,Smash   or   3,7,12")
+
+    while True:
+        if len(cars) <= MAX_RACE_DRIVERS:
+            text = input("Your selection (press Enter for ALL): ")
+        else:
+            text = input("Your selection: ")
+        result = parse_driver_selection(text, cars)
+        if isinstance(result, str):
+            print(f"{Colors.RED}{result}{Colors.RESET}")
+            continue
+        if len(result) < 2:
+            print(f"{Colors.RED}Need at least 2 drivers for a race (you picked {len(result)}).{Colors.RESET}")
+            continue
+        if len(result) > MAX_RACE_DRIVERS:
+            print(f"{Colors.RED}That's {len(result)} drivers — the race supports at most {MAX_RACE_DRIVERS}. Narrow it down.{Colors.RESET}")
+            continue
+        print(f"\n{len(result)} drivers entered: {', '.join(c.symbol for c in result)}")
+        return result
 
 def parse_track_id(track_filename):
     # 'track_3.csv' -> '3'; falls back to the filename stem if no number found
@@ -623,7 +712,8 @@ def run_race():
 
     track_length = len(track_sequence) * TILE_LENGTH
 
-    cars = load_drivers(os.path.join(CURRENT_DIR, 'drivers.csv'))
+    all_cars = load_drivers(os.path.join(CURRENT_DIR, 'drivers.csv'))
+    cars = choose_drivers(all_cars)
     track_id = parse_track_id(track_filename)
 
     sorted_cars = simulate_race(track_sequence, cars, num_laps=8, track_name=track_filename)
