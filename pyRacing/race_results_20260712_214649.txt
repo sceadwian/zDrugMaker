@@ -1,0 +1,28 @@
+Race Results
+============
+
+Date: 2026-07-12 21:46:49
+Track: track_0.csv
+
+Pos | Car | Driver                | Best Lap   | Total Time
+----+-----+----------------------+------------+------------
+  1 | LUK | Lukasz Dlugosz       | 6.80 s     | 56.50 s   
+  2 | ZOA | Zoah Sceadwian       | 6.90 s     | 57.50 s   
+  3 | SCH | Heidel Schatten      | 7.00 s     | 57.60 s   
+  4 | FDR | Franklin Roosevelt   | 7.10 s     | 58.20 s   
+  5 | DOP | Dopa Mine            | 7.10 s     | 59.30 s   
+  6 | MED | Vah Medoh            | 7.20 s     | 60.10 s   
+  7 | VOV | Pai Vovo             | 7.30 s     | 60.60 s   
+  8 | DON | Don Trump            | 7.00 s     | 60.90 s   
+  9 | SHT | Sero Tony            | 7.30 s     | 61.00 s   
+ 10 | BTZ | Cordelius Botzinger  | 7.40 s     | 61.60 s   
+ 11 | ELT | Elliot Sweenieks     | 7.50 s     | 61.80 s   
+ 12 | SQU | Squirtle Wartortle   | 7.30 s     | 62.20 s   
+ 13 | MIP | Sidon Mipha          | 7.00 s     | 62.40 s   
+ 14 | ALC | Alice Seraphina      | 7.20 s     | 63.20 s   
+ 15 | VOH | Marta Vovoh          | 7.70 s     | 63.70 s   
+ 16 | LUG | Lugia HoOh           | 7.30 s     | 64.10 s   
+ 17 | BUT | Mista Stinkybutt     | 7.80 s     | 65.40 s   
+ 18 | TON | Tony Figate          | 7.60 s     | 65.80 s   
+ 19 | BAH | Bah Ocha             | 8.00 s     | 66.90 s   
+ 20 | NOF | Noffi Noff           | 7.40 s     | 67.80 s   
