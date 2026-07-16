@@ -1,0 +1,1065 @@
+zpyBattleRoyale report — seed 863515 — map zmapArenaWideTall01.zmap
+winner: Deh (05) (5 kills)
+
+FINAL PLACEMENTS
+  1. Deh (05)                 kills=5  SURVIVED
+  2. Kenji (03)               kills=0  slain by Deh (05)
+  3. Blubber (02)             kills=0  slain by Deh (05)
+  4. Sceadwian (10)           kills=5  slain by Deh (05)
+  5. Leo (15)                 kills=3  slain by Sceadwian (10)
+  6. Marcello (19)            kills=2  slain by Sceadwian (10)
+  7. Alice (16)               kills=0  slain by Leo (15)
+  8. JoJo (08)                kills=0  slain by Marcello (19)
+  9. Mareti (20)              kills=1  slain by Sceadwian (10)
+ 10. Moistwick (06)           kills=0  slain by Deh (05)
+ 11. SigurRos (01)            kills=0  slain by Mareti (20)
+ 12. Urist (12)               kills=2  slain by Sceadwian (10)
+ 13. Flimbersnatch (09)       kills=0  slain by Sceadwian (10)
+ 14. Dimonho (17)             kills=1  slain by Leo (15)
+ 15. Bundinha (11)            kills=0  slain by Dimonho (17)
+ 16. Athena (13)              kills=0  slain by Urist (12)
+ 17. Nakombi (18)             kills=0  slain by Marcello (19)
+ 18. Evander (04)             kills=0  slain by Deh (05)
+ 19. Alice (07)               kills=0  slain by Urist (12)
+ 20. Hortense (14)            kills=0  slain by Leo (15)
+
+EVENT LOG
+[t000] Match start: 20 competitors enter zmapArenaWideTall01.zmap (seed 863515)
+[t001] Kenji (03): rushing -> cautious
+[t001] Alice (16): rushing -> cautious
+[t001] Nakombi (18): rushing -> cautious
+[t001] Hortense (14) takes a axe from the stash at (27,14)
+[t001] Hortense (14): rushing -> hunting
+[t002] Hortense (14): hunting -> scouting
+[t002] Sceadwian (10) takes a knife from the stash at (13,65)
+[t002] Sceadwian (10): rushing -> hunting
+[t002] Urist (12) takes a bow from the stash at (9,41)
+[t002] Urist (12): rushing -> hunting
+[t002] Dimonho (17) takes a knife from the stash at (70,8)
+[t002] Dimonho (17): rushing -> scouting
+[t002] Hortense (14) spots Athena (13) 7 cells away
+[t002] Hortense (14): scouting -> aggressive
+[t003] Blubber (02) takes a improvised club from the stash at (114,58)
+[t003] Blubber (02): rushing -> sneaking
+[t003] Flimbersnatch (09) spots Sceadwian (10) 2 cells away
+[t003] Flimbersnatch (09): rushing -> defensive
+[t003] Sceadwian (10) spots Flimbersnatch (09) 2 cells away
+[t003] Sceadwian (10): hunting -> aggressive
+[t003] Alice (16) spots Dimonho (17) 5 cells away
+[t003] Alice (16): cautious -> defensive
+[t004] SigurRos (01) spots Blubber (02) 1 cells away
+[t004] SigurRos (01): rushing -> aggressive
+[t004] Blubber (02) spots SigurRos (01) 1 cells away
+[t004] Blubber (02): sneaking -> aggressive
+[t004] Athena (13) spots Hortense (14) 2 cells away
+[t004] Athena (13): rushing -> defensive
+[t004] Athena (13) spots Leo (15) 4 cells away
+[t004] SigurRos (01) swings at Blubber (02) but misses
+[t004] Blubber (02) swings at SigurRos (01) but misses
+[t005] Evander (04) stumbles into a trap at (93,83) [-17 hp]
+[t005] Alice (07) takes a sword from the stash at (42,78)
+[t005] Alice (07): rushing -> hunting
+[t005] JoJo (08) scavenges supplies at (35,79) [+10hp +25stam]
+[t005] Alice (07) spots JoJo (08) 5 cells away
+[t005] Alice (07): hunting -> aggressive
+[t005] JoJo (08) spots Alice (07) 5 cells away
+[t005] JoJo (08): rushing -> defensive
+[t005] Leo (15) spots Athena (13) 2 cells away
+[t005] Leo (15): rushing -> aggressive
+[t005] Dimonho (17) spots Alice (16) 4 cells away
+[t005] Dimonho (17): scouting -> aggressive
+[t006] Marcello (19) stumbles into a trap at (91,17) [-27 hp]
+[t006] Nakombi (18) spots Marcello (19) 2 cells away
+[t006] Nakombi (18): cautious -> fleeing
+[t006] Marcello (19) spots Nakombi (18) 2 cells away
+[t006] Marcello (19): rushing -> aggressive
+[t006] SigurRos (01) swings at Blubber (02) but misses
+[t006] Blubber (02) swings at SigurRos (01) but misses
+[t006] Alice (07) hits JoJo (08) with sword [-29 hp, 71 left]
+[t006] JoJo (08) swings at Alice (07) but misses
+[t006] Athena (13) swings at Leo (15) but misses
+[t006] Leo (15) hits Athena (13) with bare hands [-12 hp, 88 left]
+[t006] Alice (16) hits Dimonho (17) with bare hands [-13 hp, 87 left]
+[t006] Dimonho (17) swings at Alice (16) but misses
+[t007] JoJo (08): defensive -> fleeing
+[t007] Athena (13) spots Hortense (14) 3 cells away
+[t007] Athena (13): defensive -> fleeing
+[t007] Athena (13) spots Leo (15) 1 cells away
+[t007] Athena (13): fleeing -> defensive
+[t007] Leo (15) spots Hortense (14) 4 cells away
+[t007] Leo (15): aggressive -> defensive
+[t007] Mareti (20) spots SigurRos (01) 4 cells away
+[t007] Mareti (20): rushing -> aggressive
+[t007] Mareti (20) spots Blubber (02) 3 cells away
+[t008] Deh (05) takes a knife from the stash at (101,90)
+[t008] Deh (05): rushing -> scouting
+[t008] SigurRos (01) spots Mareti (20) 1 cells away
+[t008] SigurRos (01): aggressive -> defensive
+[t008] Blubber (02) spots Mareti (20) 2 cells away
+[t008] Urist (12) spots Bundinha (11) 5 cells away
+[t008] Urist (12): hunting -> aggressive
+[t008] Athena (13) spots Hortense (14) 3 cells away
+[t008] Athena (13): defensive -> fleeing
+[t008] Athena (13) spots Leo (15) 1 cells away
+[t008] Athena (13): fleeing -> defensive
+[t008] Leo (15) spots Athena (13) 1 cells away
+[t008] Leo (15): defensive -> aggressive
+[t008] Leo (15) spots Hortense (14) 3 cells away
+[t008] Leo (15): aggressive -> defensive
+[t008] Mareti (20) spots SigurRos (01) 1 cells away
+[t008] Mareti (20) spots Blubber (02) 2 cells away
+[t009] SigurRos (01) spots Blubber (02) 2 cells away
+[t009] SigurRos (01): defensive -> aggressive
+[t009] SigurRos (01) spots Mareti (20) 1 cells away
+[t009] SigurRos (01): aggressive -> defensive
+[t009] Blubber (02) spots SigurRos (01) 2 cells away
+[t009] Blubber (02) spots Mareti (20) 2 cells away
+[t009] Athena (13) spots Hortense (14) 1 cells away
+[t009] Athena (13): defensive -> fleeing
+[t009] Athena (13) spots Leo (15) 1 cells away
+[t009] Athena (13): fleeing -> defensive
+[t009] Hortense (14) spots Leo (15) 1 cells away
+[t009] Leo (15) spots Athena (13) 1 cells away
+[t009] Leo (15): defensive -> aggressive
+[t009] Leo (15) spots Hortense (14) 1 cells away
+[t009] Leo (15): aggressive -> defensive
+[t009] Mareti (20) spots SigurRos (01) 1 cells away
+[t009] Mareti (20) spots Blubber (02) 2 cells away
+[t009] Urist (12) hits Bundinha (11) with bow [-23 hp, 77 left]
+[t009] Hortense (14) swings at Leo (15) but misses
+[t009] Leo (15) swings at Hortense (14) but misses
+[t010] Moistwick (06) takes a bow from the stash at (42,78)
+[t010] stash at (42,78) is empty
+[t010] Moistwick (06): rushing -> hunting
+[t010] Sceadwian (10) takes a spear from the stash at (13,65)
+[t010] stash at (13,65) is empty
+[t010] SigurRos (01) spots Blubber (02) 2 cells away
+[t010] SigurRos (01): defensive -> aggressive
+[t010] SigurRos (01) spots Mareti (20) 2 cells away
+[t010] SigurRos (01): aggressive -> defensive
+[t010] Blubber (02) spots SigurRos (01) 2 cells away
+[t010] Blubber (02) spots Mareti (20) 2 cells away
+[t010] Deh (05) spots Evander (04) 7 cells away
+[t010] Deh (05): scouting -> aggressive
+[t010] Moistwick (06) spots Alice (07) 9 cells away
+[t010] Moistwick (06): hunting -> aggressive
+[t010] Athena (13) spots Hortense (14) 2 cells away
+[t010] Athena (13): defensive -> fleeing
+[t010] Athena (13) spots Leo (15) 1 cells away
+[t010] Athena (13): fleeing -> defensive
+[t010] Hortense (14) spots Athena (13) 2 cells away
+[t010] Hortense (14) spots Leo (15) 1 cells away
+[t010] Leo (15) spots Athena (13) 1 cells away
+[t010] Leo (15): defensive -> aggressive
+[t010] Leo (15) spots Hortense (14) 1 cells away
+[t010] Leo (15): aggressive -> defensive
+[t010] Mareti (20) spots SigurRos (01) 2 cells away
+[t010] Mareti (20) spots Blubber (02) 2 cells away
+[t010] Hortense (14) swings at Leo (15) but misses
+[t010] Leo (15) hits Hortense (14) with bare hands [-18 hp, 82 left]
+[t010] Alice (16) swings at Dimonho (17) but misses
+[t010] Dimonho (17) hits Alice (16) with knife [-20 hp, 80 left]
+[t010] Marcello (19) hits Nakombi (18) with bare hands [-14 hp, 86 left]
+[t010] Nakombi (18) swings at Marcello (19) but misses
+[t011] SigurRos (01) spots Blubber (02) 2 cells away
+[t011] SigurRos (01): defensive -> aggressive
+[t011] SigurRos (01) spots Mareti (20) 2 cells away
+[t011] SigurRos (01): aggressive -> defensive
+[t011] Blubber (02) spots SigurRos (01) 2 cells away
+[t011] Blubber (02) spots Mareti (20) 1 cells away
+[t011] Bundinha (11) spots Urist (12) 2 cells away
+[t011] Bundinha (11): rushing -> fleeing
+[t011] Leo (15) spots Athena (13) 1 cells away
+[t011] Leo (15): defensive -> aggressive
+[t011] Leo (15) spots Hortense (14) 1 cells away
+[t011] Leo (15): aggressive -> defensive
+[t011] Mareti (20) spots SigurRos (01) 2 cells away
+[t011] Mareti (20) spots Blubber (02) 1 cells away
+[t011] Urist (12) hits Bundinha (11) with bow [-26 hp, 51 left]
+[t011] Alice (16) hits Dimonho (17) with bare hands [-11 hp, 76 left]
+[t011] Dimonho (17) swings at Alice (16) but misses
+[t011] Marcello (19) hits Nakombi (18) with bare hands [-16 hp, 70 left]
+[t011] Nakombi (18) swings at Marcello (19) but misses
+[t012] SigurRos (01) spots Blubber (02) 1 cells away
+[t012] SigurRos (01): defensive -> aggressive
+[t012] SigurRos (01) spots Mareti (20) 2 cells away
+[t012] SigurRos (01): aggressive -> defensive
+[t012] Blubber (02) spots SigurRos (01) 1 cells away
+[t012] Blubber (02) spots Mareti (20) 1 cells away
+[t012] Athena (13) spots Hortense (14) 3 cells away
+[t012] Athena (13): defensive -> fleeing
+[t012] Athena (13) spots Leo (15) 1 cells away
+[t012] Athena (13): fleeing -> defensive
+[t012] Leo (15) spots Athena (13) 1 cells away
+[t012] Leo (15): defensive -> aggressive
+[t012] Leo (15) spots Hortense (14) 2 cells away
+[t012] Leo (15): aggressive -> defensive
+[t012] Mareti (20) spots SigurRos (01) 2 cells away
+[t012] Mareti (20) spots Blubber (02) 1 cells away
+[t012] Marcello (19) hits Nakombi (18) with bare hands [-14 hp, 56 left]
+[t012] Nakombi (18) swings at Marcello (19) but misses
+[t013] Kenji (03) takes a spear from the stash at (98,76)
+[t013] Kenji (03): cautious -> sneaking
+[t013] Athena (13) spots Hortense (14) 1 cells away
+[t013] Athena (13): defensive -> fleeing
+[t013] Athena (13) spots Leo (15) 1 cells away
+[t013] Athena (13): fleeing -> defensive
+[t013] Hortense (14) spots Athena (13) 1 cells away
+[t013] Hortense (14) spots Leo (15) 1 cells away
+[t013] Leo (15) spots Athena (13) 1 cells away
+[t013] Leo (15): defensive -> aggressive
+[t013] Leo (15) spots Hortense (14) 1 cells away
+[t013] Leo (15): aggressive -> defensive
+[t013] Mareti (20) spots SigurRos (01) 1 cells away
+[t013] Mareti (20) spots Blubber (02) 2 cells away
+[t013] SigurRos (01) hits Mareti (20) with bare hands [-11 hp, 89 left]
+[t013] Mareti (20) hits SigurRos (01) with bare hands [-16 hp, 84 left]
+[t013] Hortense (14) swings at Leo (15) but misses
+[t013] Leo (15) hits Hortense (14) with bare hands [-16 hp, 66 left]
+[t014] Leo (15): defensive -> aggressive
+[t014] SigurRos (01) spots Blubber (02) 2 cells away
+[t014] Blubber (02) spots SigurRos (01) 2 cells away
+[t014] Blubber (02) spots Mareti (20) 1 cells away
+[t014] JoJo (08) spots Sceadwian (10) 3 cells away
+[t014] Athena (13) spots Hortense (14) 2 cells away
+[t014] Athena (13) spots Leo (15) 1 cells away
+[t014] Hortense (14) spots Athena (13) 2 cells away
+[t014] Hortense (14) spots Leo (15) 2 cells away
+[t014] Leo (15) spots Athena (13) 1 cells away
+[t014] Leo (15) spots Hortense (14) 2 cells away
+[t014] Blubber (02) swings at Mareti (20) but misses
+[t014] Mareti (20) hits Blubber (02) with bare hands [-18 hp, 82 left]
+[t014] Athena (13) swings at Leo (15) but misses
+[t014] Leo (15) hits Athena (13) with bare hands [-14 hp, 74 left]
+[t015] SigurRos (01): defensive -> aggressive
+[t015] Athena (13): defensive -> fleeing
+[t015] Leo (15) takes a spear from the stash at (27,14)
+[t015] stash at (27,14) is empty
+[t015] SigurRos (01) spots Mareti (20) 1 cells away
+[t015] SigurRos (01): aggressive -> defensive
+[t015] Blubber (02) spots SigurRos (01) 2 cells away
+[t015] Blubber (02) spots Mareti (20) 1 cells away
+[t015] JoJo (08) spots Alice (07) 6 cells away
+[t015] JoJo (08) spots Bundinha (11) 5 cells away
+[t015] JoJo (08): fleeing -> aggressive
+[t015] Bundinha (11) spots JoJo (08) 5 cells away
+[t015] Bundinha (11) spots Sceadwian (10) 5 cells away
+[t015] Athena (13) spots Hortense (14) 1 cells away
+[t015] Athena (13) spots Leo (15) 4 cells away
+[t015] Hortense (14) spots Athena (13) 1 cells away
+[t015] Hortense (14) spots Leo (15) 2 cells away
+[t015] Leo (15) spots Athena (13) 4 cells away
+[t015] Leo (15) spots Hortense (14) 2 cells away
+[t015] Mareti (20) spots SigurRos (01) 1 cells away
+[t015] Mareti (20) spots Blubber (02) 1 cells away
+[t015] SigurRos (01) swings at Mareti (20) but misses
+[t015] Mareti (20) hits SigurRos (01) with bare hands [-18 hp, 67 left]
+[t016] SigurRos (01): defensive -> fleeing
+[t016] SigurRos (01) spots Blubber (02) 4 cells away
+[t016] SigurRos (01): fleeing -> defensive
+[t016] Bundinha (11) spots JoJo (08) 3 cells away
+[t016] Leo (15) spots Athena (13) 6 cells away
+[t016] Leo (15) spots Hortense (14) 1 cells away
+[t016] Blubber (02) swings at Mareti (20) but misses
+[t016] Mareti (20) hits Blubber (02) with bare hands [-12 hp, 71 left]
+[t016] Leo (15) hits Hortense (14) with spear [-28 hp, 38 left]
+[t016] Marcello (19) hits Nakombi (18) with bare hands [-12 hp, 45 left]
+[t016] Nakombi (18) swings at Marcello (19) but misses
+[t017] Blubber (02) swings at Mareti (20) but misses
+[t017] Mareti (20) hits Blubber (02) with bare hands [-15 hp, 56 left]
+[t017] Hortense (14) swings at Leo (15) but misses
+[t017] Leo (15) hits Hortense (14) with spear [-22 hp, 16 left]
+[t017] Marcello (19) hits Nakombi (18) with bare hands [-14 hp, 30 left]
+[t017] Nakombi (18) breaks off and flees
+[t017] Nakombi (18) swings at Marcello (19) but misses
+[t018] Blubber (02): aggressive -> defensive
+[t018] Hortense (14): aggressive -> defensive
+[t018] Evander (04) takes a improvised club from the stash at (98,76)
+[t018] stash at (98,76) is empty
+[t018] Evander (04): rushing -> hunting
+[t018] SigurRos (01) spots Mareti (20) 1 cells away
+[t018] SigurRos (01): defensive -> fleeing
+[t018] Kenji (03) spots Evander (04) 1 cells away
+[t018] Kenji (03): sneaking -> defensive
+[t018] Evander (04) spots Kenji (03) 1 cells away
+[t018] Evander (04): hunting -> aggressive
+[t018] Mareti (20) spots SigurRos (01) 1 cells away
+[t018] Mareti (20) spots Blubber (02) 2 cells away
+[t018] Kenji (03) swings at Evander (04) but misses
+[t018] Hortense (14) hits Leo (15) with axe [-25 hp, 75 left]
+[t018] Leo (15) hits Hortense (14) with spear [-23 hp, 0 left]
+[t018] *** Hortense (14) is eliminated by Leo (15) (kill #1) — 19 remain
+[t018] Leo (15): aggressive -> hunting
+[t019] SigurRos (01) spots Blubber (02) 4 cells away
+[t019] SigurRos (01): fleeing -> defensive
+[t019] Kenji (03) swings at Evander (04) but misses
+[t019] Evander (04) hits Kenji (03) with improvised club [-19 hp, 81 left]
+[t019] Alice (16) hits Dimonho (17) with bare hands [-12 hp, 65 left]
+[t019] Dimonho (17) swings at Alice (16) but misses
+[t020] Kenji (03): defensive -> fleeing
+[t020] Evander (04) hits Kenji (03) with improvised club [-21 hp, 60 left]
+[t020] Kenji (03) swings at Evander (04) but misses
+[t021] Athena (13) scavenges supplies at (11,26) [+10hp +25stam]
+[t021] Bundinha (11) spots Urist (12) 5 cells away
+[t021] Blubber (02) swings at Mareti (20) but misses
+[t021] Mareti (20) hits Blubber (02) with bare hands [-18 hp, 39 left]
+[t022] SigurRos (01): defensive -> aggressive
+[t022] Blubber (02): defensive -> fleeing
+[t022] Blubber (02) spots SigurRos (01) 1 cells away
+[t022] Blubber (02): fleeing -> defensive
+[t022] JoJo (08) spots Alice (07) 3 cells away
+[t022] JoJo (08): aggressive -> fleeing
+[t022] Mareti (20) spots SigurRos (01) 3 cells away
+[t022] Alice (16) hits Dimonho (17) with bare hands [-16 hp, 49 left]
+[t022] Dimonho (17) hits Alice (16) with knife [-24 hp, 56 left]
+[t023] Moistwick (06): aggressive -> hunting
+[t023] Alice (16): defensive -> fleeing
+[t023] SigurRos (01) spots Mareti (20) 1 cells away
+[t023] SigurRos (01): aggressive -> fleeing
+[t023] Blubber (02) spots Mareti (20) 1 cells away
+[t023] Blubber (02): defensive -> fleeing
+[t023] Urist (12) spots JoJo (08) 6 cells away
+[t023] Mareti (20) spots Blubber (02) 1 cells away
+[t024] Leo (15): hunting -> camping
+[t024] Deh (05) spots Kenji (03) 6 cells away
+[t024] Sceadwian (10) hits Flimbersnatch (09) with spear [-27 hp, 73 left]
+[t025] Flimbersnatch (09): defensive -> hiding
+[t025] Leo (15): camping -> hunting
+[t025] Deh (05) spots Evander (04) 4 cells away
+[t025] Alice (07) spots Urist (12) 4 cells away
+[t025] Urist (12) spots Alice (07) 4 cells away
+[t026] Deh (05) spots Kenji (03) 3 cells away
+[t026] Deh (05) spots Evander (04) 3 cells away
+[t026] Alice (07) hits Urist (12) with sword [-28 hp, 72 left]
+[t026] Urist (12) hits Alice (07) with bow [-27 hp, 73 left]
+[t028] JoJo (08): fleeing -> defensive
+[t028] Athena (13): fleeing -> rushing
+[t028] Alice (07) hits Urist (12) with sword [-30 hp, 42 left]
+[t028] Urist (12) hits Alice (07) with bow [-29 hp, 44 left]
+[t029] Urist (12) hits Alice (07) with bow [-25 hp, 19 left]
+[t030] Athena (13) takes a axe from the stash at (9,41)
+[t030] stash at (9,41) is empty
+[t030] Athena (13): rushing -> cautious
+[t030] Evander (04) spots Deh (05) 1 cells away
+[t030] Deh (05) spots Kenji (03) 3 cells away
+[t030] Deh (05) spots Evander (04) 1 cells away
+[t030] Evander (04) hits Deh (05) with improvised club [-20 hp, 80 left]
+[t030] Deh (05) hits Evander (04) with knife [-26 hp, 57 left]
+[t030] Urist (12) hits Alice (07) with bow [-26 hp, 0 left]
+[t030] *** Alice (07) is eliminated by Urist (12) (kill #1) — 18 remain
+[t030] Urist (12): aggressive -> hunting
+[t031] JoJo (08): defensive -> rushing
+[t031] Bundinha (11) collapses from exhaustion and rests
+[t031] Urist (12) spots JoJo (08) 7 cells away
+[t031] Urist (12): hunting -> aggressive
+[t031] Athena (13) spots JoJo (08) 9 cells away
+[t031] Athena (13): cautious -> aggressive
+[t031] Alice (16) spots Nakombi (18) 9 cells away
+[t031] Alice (16): fleeing -> aggressive
+[t032] Bundinha (11): resting -> fleeing
+[t032] Leo (15): hunting -> aggressive
+[t032] JoJo (08) spots Urist (12) 3 cells away
+[t032] JoJo (08): rushing -> defensive
+[t032] Alice (16) spots Marcello (19) 6 cells away
+[t032] Alice (16): aggressive -> fleeing
+[t032] Urist (12) hits JoJo (08) with bow [-29 hp, 42 left]
+[t032] Marcello (19) hits Nakombi (18) with bare hands [-14 hp, 17 left]
+[t032] Nakombi (18) breaks off and flees
+[t032] Nakombi (18) swings at Marcello (19) but misses
+[t033] JoJo (08): defensive -> fleeing
+[t033] Bundinha (11) collapses from exhaustion and rests
+[t033] JoJo (08) spots Athena (13) 4 cells away
+[t033] Alice (16) spots Nakombi (18) 7 cells away
+[t033] Alice (16): fleeing -> aggressive
+[t033] Marcello (19) spots Alice (16) 9 cells away
+[t033] Marcello (19) spots Nakombi (18) 1 cells away
+[t033] Evander (04) hits Deh (05) with improvised club [-22 hp, 58 left]
+[t033] Deh (05) hits Evander (04) with knife [-24 hp, 33 left]
+[t033] Sceadwian (10) hits Flimbersnatch (09) with spear [-25 hp, 48 left]
+[t034] Bundinha (11): resting -> fleeing
+[t034] JoJo (08) spots Urist (12) 2 cells away
+[t034] Athena (13) spots Urist (12) 4 cells away
+[t034] Alice (16) spots Marcello (19) 4 cells away
+[t034] Alice (16): aggressive -> fleeing
+[t034] Marcello (19) spots Alice (16) 4 cells away
+[t034] Marcello (19) spots Nakombi (18) 1 cells away
+[t034] Urist (12) hits JoJo (08) with bow [-25 hp, 17 left]
+[t034] JoJo (08) breaks off and flees
+[t035] Urist (12) spots Athena (13) 3 cells away
+[t035] Leo (15) spots Alice (16) 9 cells away
+[t035] Alice (16) spots Nakombi (18) 6 cells away
+[t035] Alice (16): fleeing -> aggressive
+[t035] Alice (16) spots Marcello (19) 7 cells away
+[t035] Alice (16): aggressive -> fleeing
+[t035] Marcello (19) spots Alice (16) 7 cells away
+[t035] Marcello (19) spots Nakombi (18) 1 cells away
+[t035] Evander (04) swings at Deh (05) but misses
+[t035] Deh (05) hits Evander (04) with knife [-25 hp, 9 left]
+[t035] Urist (12) hits Athena (13) with bow [-28 hp, 56 left]
+[t035] Marcello (19) hits Nakombi (18) with bare hands [-12 hp, 4 left]
+[t035] Nakombi (18) breaks off and flees
+[t035] Nakombi (18) swings at Marcello (19) but misses
+[t036] SigurRos (01): fleeing -> rushing
+[t036] Kenji (03): fleeing -> defensive
+[t036] Bundinha (11): fleeing -> resting
+[t036] Dimonho (17): aggressive -> scouting
+[t036] Mareti (20): aggressive -> rushing
+[t036] Mareti (20) takes a spear from the stash at (114,58)
+[t036] stash at (114,58) is empty
+[t036] Mareti (20): rushing -> scouting
+[t036] Alice (16) spots Leo (15) 4 cells away
+[t036] Alice (16) spots Nakombi (18) 8 cells away
+[t036] Alice (16): fleeing -> aggressive
+[t036] Sceadwian (10) hits Flimbersnatch (09) with spear [-24 hp, 23 left]
+[t036] Urist (12) hits Athena (13) with bow [-23 hp, 33 left]
+[t037] Deh (05) spots Kenji (03) 7 cells away
+[t037] Deh (05) spots Evander (04) 1 cells away
+[t037] Leo (15) spots Alice (16) 2 cells away
+[t037] Leo (15) spots Nakombi (18) 7 cells away
+[t037] Leo (15) spots Marcello (19) 8 cells away
+[t037] Alice (16) spots Leo (15) 2 cells away
+[t037] Alice (16): aggressive -> fleeing
+[t037] Alice (16) spots Nakombi (18) 5 cells away
+[t037] Alice (16): fleeing -> aggressive
+[t037] Marcello (19) spots Alice (16) 6 cells away
+[t037] Marcello (19) spots Nakombi (18) 1 cells away
+[t037] Evander (04) swings at Deh (05) but misses
+[t037] Deh (05) hits Evander (04) with knife [-26 hp, 0 left]
+[t037] *** Evander (04) is eliminated by Deh (05) (kill #1) — 17 remain
+[t037] Deh (05): aggressive -> scouting
+[t037] Urist (12) hits Athena (13) with bow [-29 hp, 4 left]
+[t037] Marcello (19) hits Nakombi (18) with bare hands [-14 hp, 0 left]
+[t037] *** Nakombi (18) is eliminated by Marcello (19) (kill #1) — 16 remain
+[t037] Marcello (19): aggressive -> rushing
+[t038] Kenji (03): defensive -> sneaking
+[t038] Bundinha (11): resting -> rushing
+[t038] Bundinha (11) takes a sword from the stash at (52,27)
+[t038] Bundinha (11): rushing -> resting
+[t038] Bundinha (11) spots Alice (16) 7 cells away
+[t038] Bundinha (11): resting -> aggressive
+[t038] Bundinha (11) spots Marcello (19) 3 cells away
+[t038] Leo (15) spots Bundinha (11) 7 cells away
+[t038] Leo (15) spots Alice (16) 2 cells away
+[t038] Leo (15) spots Marcello (19) 5 cells away
+[t038] Alice (16) spots Leo (15) 2 cells away
+[t038] Alice (16): aggressive -> fleeing
+[t038] Alice (16) spots Marcello (19) 4 cells away
+[t038] Marcello (19) spots Bundinha (11) 3 cells away
+[t038] Marcello (19): rushing -> aggressive
+[t038] Marcello (19) spots Leo (15) 5 cells away
+[t038] Marcello (19): aggressive -> defensive
+[t038] Marcello (19) spots Alice (16) 4 cells away
+[t038] Marcello (19): defensive -> aggressive
+[t038] Urist (12) hits Athena (13) with bow [-24 hp, 0 left]
+[t038] *** Athena (13) is eliminated by Urist (12) (kill #2) — 15 remain
+[t038] Urist (12): aggressive -> hunting
+[t039] JoJo (08) spots Sceadwian (10) 3 cells away
+[t039] Bundinha (11) spots Leo (15) 4 cells away
+[t039] Leo (15) spots Bundinha (11) 4 cells away
+[t039] Leo (15) spots Alice (16) 4 cells away
+[t039] Leo (15) spots Marcello (19) 1 cells away
+[t039] Alice (16) spots Leo (15) 4 cells away
+[t039] Alice (16) spots Marcello (19) 4 cells away
+[t039] Marcello (19) spots Bundinha (11) 4 cells away
+[t039] Marcello (19) spots Leo (15) 1 cells away
+[t039] Marcello (19): aggressive -> defensive
+[t039] Marcello (19) spots Alice (16) 4 cells away
+[t039] Marcello (19): defensive -> aggressive
+[t039] Leo (15) swings at Marcello (19) but misses
+[t039] Marcello (19) swings at Leo (15) but misses
+[t040] Blubber (02): fleeing -> sneaking
+[t040] Urist (12): hunting -> scouting
+[t040] SigurRos (01) takes a improvised club from the stash at (97,68)
+[t040] SigurRos (01): rushing -> cautious
+[t040] Bundinha (11) spots Alice (16) 6 cells away
+[t040] Leo (15) spots Bundinha (11) 1 cells away
+[t040] Leo (15) spots Alice (16) 5 cells away
+[t040] Leo (15) spots Marcello (19) 3 cells away
+[t040] Alice (16) spots Bundinha (11) 6 cells away
+[t040] Alice (16) spots Leo (15) 5 cells away
+[t040] Alice (16) spots Marcello (19) 2 cells away
+[t040] Marcello (19) spots Bundinha (11) 4 cells away
+[t040] Marcello (19) spots Leo (15) 3 cells away
+[t040] Marcello (19): aggressive -> defensive
+[t040] Marcello (19) spots Alice (16) 2 cells away
+[t040] Marcello (19): defensive -> aggressive
+[t041] SigurRos (01): cautious -> camping
+[t041] Bundinha (11) spots Leo (15) 1 cells away
+[t041] Bundinha (11) spots Alice (16) 4 cells away
+[t041] Bundinha (11) spots Marcello (19) 3 cells away
+[t041] Leo (15) spots Bundinha (11) 1 cells away
+[t041] Leo (15) spots Alice (16) 4 cells away
+[t041] Leo (15) spots Marcello (19) 3 cells away
+[t041] Alice (16) spots Bundinha (11) 4 cells away
+[t041] Alice (16) spots Leo (15) 4 cells away
+[t041] Alice (16) spots Marcello (19) 1 cells away
+[t041] Marcello (19) spots Bundinha (11) 3 cells away
+[t041] Marcello (19) spots Leo (15) 3 cells away
+[t041] Marcello (19): aggressive -> defensive
+[t041] Marcello (19) spots Alice (16) 1 cells away
+[t041] Marcello (19): defensive -> aggressive
+[t041] Marcello (19) hits Alice (16) with bare hands [-14 hp, 42 left]
+[t041] Alice (16) swings at Marcello (19) but misses
+[t042] Bundinha (11) spots Leo (15) 1 cells away
+[t042] Bundinha (11) spots Alice (16) 4 cells away
+[t042] Bundinha (11) spots Marcello (19) 2 cells away
+[t042] Urist (12) spots JoJo (08) 8 cells away
+[t042] Urist (12): scouting -> aggressive
+[t042] Leo (15) spots Bundinha (11) 1 cells away
+[t042] Leo (15) spots Alice (16) 4 cells away
+[t042] Leo (15) spots Marcello (19) 2 cells away
+[t042] Alice (16) spots Bundinha (11) 4 cells away
+[t042] Alice (16) spots Leo (15) 4 cells away
+[t042] Alice (16) spots Marcello (19) 2 cells away
+[t042] Marcello (19) spots Bundinha (11) 2 cells away
+[t042] Marcello (19) spots Leo (15) 2 cells away
+[t042] Marcello (19): aggressive -> defensive
+[t042] Marcello (19) spots Alice (16) 2 cells away
+[t042] Marcello (19): defensive -> aggressive
+[t043] Bundinha (11) spots Leo (15) 1 cells away
+[t043] Bundinha (11) spots Alice (16) 5 cells away
+[t043] Bundinha (11) spots Marcello (19) 2 cells away
+[t043] Leo (15) spots Bundinha (11) 1 cells away
+[t043] Leo (15) spots Alice (16) 5 cells away
+[t043] Leo (15) spots Marcello (19) 3 cells away
+[t043] Alice (16) spots Bundinha (11) 5 cells away
+[t043] Alice (16) spots Leo (15) 5 cells away
+[t043] Alice (16) spots Marcello (19) 3 cells away
+[t043] Marcello (19) spots Bundinha (11) 2 cells away
+[t043] Marcello (19) spots Leo (15) 3 cells away
+[t043] Marcello (19): aggressive -> defensive
+[t043] Marcello (19) spots Alice (16) 3 cells away
+[t043] Marcello (19): defensive -> aggressive
+[t044] SigurRos (01): camping -> hunting
+[t044] Bundinha (11) collapses from exhaustion and rests
+[t044] JoJo (08) spots Urist (12) 6 cells away
+[t044] Bundinha (11) spots Leo (15) 1 cells away
+[t044] Bundinha (11): resting -> aggressive
+[t044] Bundinha (11) spots Marcello (19) 3 cells away
+[t044] Leo (15) spots Bundinha (11) 1 cells away
+[t044] Leo (15) spots Alice (16) 8 cells away
+[t044] Leo (15) spots Marcello (19) 4 cells away
+[t044] Alice (16) spots Bundinha (11) 7 cells away
+[t044] Alice (16) spots Marcello (19) 5 cells away
+[t044] Marcello (19) spots Bundinha (11) 3 cells away
+[t044] Marcello (19) spots Leo (15) 4 cells away
+[t044] Marcello (19): aggressive -> defensive
+[t044] Marcello (19) spots Alice (16) 5 cells away
+[t044] Marcello (19): defensive -> aggressive
+[t045] Bundinha (11) spots Leo (15) 1 cells away
+[t045] Bundinha (11) spots Marcello (19) 3 cells away
+[t045] Leo (15) spots Bundinha (11) 1 cells away
+[t045] Leo (15) spots Marcello (19) 2 cells away
+[t045] Marcello (19) spots Bundinha (11) 3 cells away
+[t045] Marcello (19) spots Leo (15) 2 cells away
+[t045] Marcello (19): aggressive -> defensive
+[t046] Bundinha (11) collapses from exhaustion and rests
+[t046] Bundinha (11) spots Leo (15) 1 cells away
+[t046] Bundinha (11): resting -> aggressive
+[t046] Bundinha (11) spots Marcello (19) 2 cells away
+[t046] Leo (15) spots Bundinha (11) 1 cells away
+[t046] Leo (15) spots Marcello (19) 1 cells away
+[t046] Marcello (19) spots Bundinha (11) 2 cells away
+[t046] Marcello (19): defensive -> aggressive
+[t046] Marcello (19) spots Leo (15) 1 cells away
+[t046] Marcello (19): aggressive -> defensive
+[t046] Leo (15) hits Marcello (19) with spear [-22 hp, 51 left]
+[t046] Marcello (19) hits Leo (15) with bare hands [-14 hp, 61 left]
+[t047] Bundinha (11) collapses from exhaustion and rests
+[t047] Bundinha (11) spots Leo (15) 2 cells away
+[t047] Bundinha (11): resting -> aggressive
+[t047] Bundinha (11) spots Marcello (19) 1 cells away
+[t047] Leo (15) spots Bundinha (11) 2 cells away
+[t047] Leo (15) spots Marcello (19) 1 cells away
+[t047] Marcello (19) spots Bundinha (11) 1 cells away
+[t047] Marcello (19) spots Leo (15) 1 cells away
+[t047] Leo (15) swings at Marcello (19) but misses
+[t047] Marcello (19) hits Leo (15) with bare hands [-14 hp, 47 left]
+[t048] SigurRos (01): hunting -> camping
+[t048] Deh (05): scouting -> camping
+[t048] JoJo (08) collapses from exhaustion and rests
+[t048] Bundinha (11) collapses from exhaustion and rests
+[t048] Bundinha (11) spots Leo (15) 2 cells away
+[t048] Bundinha (11): resting -> aggressive
+[t048] Bundinha (11) spots Marcello (19) 1 cells away
+[t048] Leo (15) spots Bundinha (11) 2 cells away
+[t048] Leo (15) spots Marcello (19) 1 cells away
+[t048] Marcello (19) spots Bundinha (11) 1 cells away
+[t048] Marcello (19) spots Leo (15) 1 cells away
+[t048] Bundinha (11) swings at Marcello (19) but misses
+[t048] Marcello (19) hits Bundinha (11) with bare hands [-14 hp, 36 left]
+[t048] Leo (15) hits Marcello (19) with spear [-23 hp, 28 left]
+[t049] SigurRos (01): camping -> cautious
+[t049] Deh (05): camping -> scouting
+[t049] JoJo (08): resting -> fleeing
+[t049] Marcello (19): defensive -> fleeing
+[t049] Bundinha (11) collapses from exhaustion and rests
+[t049] Dimonho (17) takes a axe from the stash at (70,25)
+[t049] Bundinha (11) spots Leo (15) 1 cells away
+[t049] Bundinha (11): resting -> aggressive
+[t049] Bundinha (11) spots Marcello (19) 2 cells away
+[t049] Leo (15) spots Bundinha (11) 1 cells away
+[t049] Leo (15) spots Marcello (19) 2 cells away
+[t049] Marcello (19) spots Bundinha (11) 2 cells away
+[t049] Marcello (19) spots Leo (15) 2 cells away
+[t050] JoJo (08) collapses from exhaustion and rests
+[t050] Bundinha (11) spots Leo (15) 1 cells away
+[t050] Bundinha (11) spots Marcello (19) 5 cells away
+[t050] Leo (15) spots Bundinha (11) 1 cells away
+[t050] Leo (15) spots Marcello (19) 4 cells away
+[t050] Marcello (19) spots Bundinha (11) 5 cells away
+[t050] Marcello (19) spots Leo (15) 4 cells away
+[t051] JoJo (08): resting -> fleeing
+[t051] Bundinha (11) collapses from exhaustion and rests
+[t051] Alice (16) takes a sword from the stash at (85,43)
+[t051] Alice (16): fleeing -> aggressive
+[t051] Bundinha (11) spots Leo (15) 1 cells away
+[t051] Bundinha (11): resting -> aggressive
+[t051] Bundinha (11) spots Marcello (19) 5 cells away
+[t051] Leo (15) spots Bundinha (11) 1 cells away
+[t051] Leo (15) spots Marcello (19) 4 cells away
+[t051] Marcello (19) spots Bundinha (11) 5 cells away
+[t051] Marcello (19) spots Leo (15) 4 cells away
+[t052] SigurRos (01): cautious -> camping
+[t052] JoJo (08) collapses from exhaustion and rests
+[t052] Bundinha (11) collapses from exhaustion and rests
+[t052] Bundinha (11) spots Leo (15) 1 cells away
+[t052] Bundinha (11): resting -> aggressive
+[t052] Leo (15) spots Bundinha (11) 1 cells away
+[t052] Leo (15) spots Dimonho (17) 7 cells away
+[t052] Leo (15) spots Marcello (19) 7 cells away
+[t052] Dimonho (17) spots Bundinha (11) 6 cells away
+[t052] Dimonho (17): scouting -> aggressive
+[t052] Marcello (19) spots Bundinha (11) 8 cells away
+[t052] Marcello (19) spots Leo (15) 7 cells away
+[t052] Bundinha (11) swings at Leo (15) but misses
+[t052] Leo (15) hits Bundinha (11) with spear [-24 hp, 12 left]
+[t053] JoJo (08): resting -> fleeing
+[t053] Bundinha (11) spots Dimonho (17) 3 cells away
+[t053] Bundinha (11): defensive -> aggressive
+[t053] Leo (15) spots Bundinha (11) 2 cells away
+[t053] Leo (15) spots Dimonho (17) 4 cells away
+[t053] Dimonho (17) spots Leo (15) 4 cells away
+[t054] JoJo (08) collapses from exhaustion and rests
+[t054] Bundinha (11) collapses from exhaustion and rests
+[t054] Bundinha (11) spots Leo (15) 3 cells away
+[t054] Bundinha (11): resting -> defensive
+[t054] Bundinha (11) spots Dimonho (17) 1 cells away
+[t054] Bundinha (11): defensive -> aggressive
+[t054] Leo (15) spots Bundinha (11) 3 cells away
+[t054] Leo (15) spots Dimonho (17) 2 cells away
+[t054] Dimonho (17) spots Bundinha (11) 1 cells away
+[t054] Dimonho (17) spots Leo (15) 2 cells away
+[t054] Bundinha (11) swings at Dimonho (17) but misses
+[t054] Dimonho (17) hits Bundinha (11) with axe [-26 hp, 0 left]
+[t054] *** Bundinha (11) is eliminated by Dimonho (17) (kill #1) — 14 remain
+[t054] Dimonho (17): aggressive -> scouting
+[t054] Leo (15) hits Dimonho (17) with spear [-28 hp, 21 left]
+[t055] SigurRos (01): camping -> hunting
+[t055] JoJo (08): resting -> fleeing
+[t055] Dimonho (17) spots Leo (15) 1 cells away
+[t055] Dimonho (17): scouting -> aggressive
+[t055] Sceadwian (10) swings at Flimbersnatch (09) but misses
+[t055] Flimbersnatch (09) swings at Sceadwian (10) but misses
+[t055] Leo (15) hits Dimonho (17) with spear [-22 hp, 0 left]
+[t055] *** Dimonho (17) is eliminated by Leo (15) (kill #2) — 13 remain
+[t055] Leo (15): aggressive -> hunting
+[t056] SigurRos (01): hunting -> cautious
+[t056] Deh (05): scouting -> camping
+[t056] JoJo (08) collapses from exhaustion and rests
+[t056] Sceadwian (10) hits Flimbersnatch (09) with spear [-22 hp, 1 left]
+[t057] JoJo (08): resting -> fleeing
+[t057] Urist (12): aggressive -> hunting
+[t058] Deh (05): camping -> scouting
+[t058] JoJo (08) collapses from exhaustion and rests
+[t058] Sceadwian (10) hits Flimbersnatch (09) with spear [-23 hp, 0 left]
+[t058] *** Flimbersnatch (09) is eliminated by Sceadwian (10) (kill #1) — 12 remain
+[t058] Sceadwian (10): aggressive -> hunting
+[t059] JoJo (08): resting -> fleeing
+[t059] Alice (16) collapses from exhaustion and rests
+[t060] JoJo (08): fleeing -> resting
+[t060] Leo (15): hunting -> aggressive
+[t061] Alice (16): resting -> hunting
+[t061] Alice (16) spots Leo (15) 6 cells away
+[t061] Alice (16): hunting -> aggressive
+[t062] Marcello (19) collapses from exhaustion and rests
+[t063] JoJo (08): resting -> sneaking
+[t063] Marcello (19): resting -> fleeing
+[t064] SigurRos (01): cautious -> hunting
+[t065] Marcello (19) collapses from exhaustion and rests
+[t068] SigurRos (01): hunting -> cautious
+[t068] Marcello (19): resting -> sneaking
+[t070] Alice (16) collapses from exhaustion and rests
+[t071] Alice (16): resting -> aggressive
+[t072] Deh (05): scouting -> camping
+[t072] Sceadwian (10): hunting -> resting
+[t073] Deh (05): camping -> scouting
+[t073] Sceadwian (10): resting -> hunting
+[t074] JoJo (08): sneaking -> resting
+[t074] Sceadwian (10) scavenges supplies at (23,65) [+10hp +25stam]
+[t075] Alice (16) collapses from exhaustion and rests
+[t075] JoJo (08) spots Marcello (19) 2 cells away
+[t075] JoJo (08): resting -> defensive
+[t075] Marcello (19) spots JoJo (08) 2 cells away
+[t075] Marcello (19): sneaking -> defensive
+[t076] SigurRos (01): cautious -> camping
+[t076] Alice (16): resting -> aggressive
+[t077] SigurRos (01): camping -> hunting
+[t080] SigurRos (01): hunting -> camping
+[t080] Urist (12): hunting -> scouting
+[t080] Alice (16) collapses from exhaustion and rests
+[t080] Sceadwian (10) spots Urist (12) 7 cells away
+[t080] Sceadwian (10): hunting -> aggressive
+[t080] Urist (12) spots Sceadwian (10) 7 cells away
+[t080] Urist (12): scouting -> aggressive
+[t081] SigurRos (01): camping -> cautious
+[t081] Alice (16): resting -> aggressive
+[t081] Leo (15) hits Alice (16) with spear [-24 hp, 18 left]
+[t082] JoJo (08): defensive -> aggressive
+[t082] JoJo (08) swings at Marcello (19) but misses
+[t082] Marcello (19) hits JoJo (08) with bare hands [-12 hp, 49 left]
+[t083] JoJo (08) swings at Marcello (19) but misses
+[t083] Marcello (19) hits JoJo (08) with bare hands [-14 hp, 36 left]
+[t084] JoJo (08): aggressive -> defensive
+[t084] JoJo (08) swings at Marcello (19) but misses
+[t084] Marcello (19) hits JoJo (08) with bare hands [-16 hp, 19 left]
+[t084] JoJo (08) breaks off and flees
+[t084] Sceadwian (10) hits Urist (12) with spear [-28 hp, 14 left]
+[t084] Urist (12) swings at Sceadwian (10) but misses
+[t085] Alice (16) collapses from exhaustion and rests
+[t086] Alice (16): resting -> aggressive
+[t086] Mareti (20) scavenges supplies at (91,53) [+10hp +25stam]
+[t086] Urist (12) hits Sceadwian (10) with bow [-25 hp, 75 left]
+[t087] Urist (12): aggressive -> defensive
+[t087] Leo (15) collapses from exhaustion and rests
+[t087] Sceadwian (10) hits Urist (12) with spear [-25 hp, 0 left]
+[t087] *** Urist (12) is eliminated by Sceadwian (10) (kill #2) — 11 remain
+[t087] Sceadwian (10): aggressive -> hunting
+[t088] Leo (15): resting -> aggressive
+[t090] Alice (16) collapses from exhaustion and rests
+[t091] Alice (16): resting -> aggressive
+[t092] SigurRos (01): cautious -> hunting
+[t093] Leo (15) collapses from exhaustion and rests
+[t094] Leo (15): resting -> aggressive
+[t095] Alice (16) collapses from exhaustion and rests
+[t096] SigurRos (01): hunting -> cautious
+[t096] Alice (16): resting -> aggressive
+[t096] Deh (05) scavenges supplies at (60,50) [+10hp +25stam]
+[t097] JoJo (08) collapses from exhaustion and rests
+[t098] Leo (15) collapses from exhaustion and rests
+[t099] Leo (15): resting -> aggressive
+[t099] Marcello (19): defensive -> sneaking
+[t100] SigurRos (01): cautious -> hunting
+[t100] JoJo (08): resting -> sneaking
+[t100] Alice (16) collapses from exhaustion and rests
+[t101] Alice (16): resting -> aggressive
+[t102] Marcello (19): sneaking -> resting
+[t103] Leo (15) collapses from exhaustion and rests
+[t104] SigurRos (01): hunting -> cautious
+[t104] Deh (05): scouting -> camping
+[t104] Leo (15): resting -> aggressive
+[t105] Deh (05): camping -> scouting
+[t105] Marcello (19): resting -> rushing
+[t105] Alice (16) collapses from exhaustion and rests
+[t105] Marcello (19) takes a knife from the stash at (6,6)
+[t105] Marcello (19): rushing -> scouting
+[t106] Alice (16): resting -> aggressive
+[t109] Leo (15) collapses from exhaustion and rests
+[t110] Leo (15): resting -> aggressive
+[t110] Alice (16) collapses from exhaustion and rests
+[t111] Alice (16): resting -> aggressive
+[t112] SigurRos (01): cautious -> camping
+[t112] Sceadwian (10): hunting -> resting
+[t113] SigurRos (01): camping -> hunting
+[t113] Sceadwian (10): resting -> hunting
+[t114] Moistwick (06) takes a axe from the stash at (42,66)
+[t114] Leo (15) collapses from exhaustion and rests
+[t114] Moistwick (06) spots Deh (05) 9 cells away
+[t114] Moistwick (06): hunting -> aggressive
+[t115] Leo (15): resting -> aggressive
+[t115] Alice (16) collapses from exhaustion and rests
+[t115] Deh (05) spots Moistwick (06) 3 cells away
+[t115] Deh (05): scouting -> aggressive
+[t116] Alice (16): resting -> aggressive
+[t116] Marcello (19): scouting -> hunting
+[t119] Leo (15) collapses from exhaustion and rests
+[t120] SigurRos (01): hunting -> camping
+[t120] Leo (15): resting -> aggressive
+[t120] Alice (16) collapses from exhaustion and rests
+[t121] Alice (16): resting -> aggressive
+[t122] SigurRos (01): camping -> hunting
+[t124] SigurRos (01): hunting -> camping
+[t124] Sceadwian (10): hunting -> resting
+[t124] Marcello (19): hunting -> scouting
+[t125] SigurRos (01): camping -> hunting
+[t125] Sceadwian (10): resting -> hunting
+[t125] Leo (15) collapses from exhaustion and rests
+[t125] Alice (16) collapses from exhaustion and rests
+[t126] Leo (15): resting -> aggressive
+[t126] Alice (16): resting -> aggressive
+[t128] SigurRos (01): hunting -> camping
+[t129] SigurRos (01): camping -> cautious
+[t129] Deh (05) hits Moistwick (06) with knife [-21 hp, 79 left]
+[t129] Moistwick (06) hits Deh (05) with axe [-30 hp, 38 left]
+[t130] Leo (15) collapses from exhaustion and rests
+[t130] Alice (16) collapses from exhaustion and rests
+[t131] Leo (15): resting -> aggressive
+[t131] Alice (16): resting -> aggressive
+[t131] Marcello (19) scavenges supplies at (11,26) [+10hp +25stam]
+[t132] SigurRos (01): cautious -> hunting
+[t133] Deh (05) hits Moistwick (06) with knife [-21 hp, 58 left]
+[t133] Moistwick (06) swings at Deh (05) but misses
+[t134] SigurRos (01) spots Mareti (20) 4 cells away
+[t134] SigurRos (01): hunting -> aggressive
+[t134] Mareti (20) spots SigurRos (01) 4 cells away
+[t134] Mareti (20): scouting -> aggressive
+[t135] Alice (16) collapses from exhaustion and rests
+[t136] Alice (16): resting -> aggressive
+[t136] Leo (15) collapses from exhaustion and rests
+[t136] SigurRos (01) hits Mareti (20) with improvised club [-16 hp, 82 left]
+[t136] Mareti (20) hits SigurRos (01) with spear [-27 hp, 40 left]
+[t137] Leo (15): resting -> aggressive
+[t137] Deh (05) hits Moistwick (06) with knife [-21 hp, 38 left]
+[t137] Moistwick (06) swings at Deh (05) but misses
+[t137] Mareti (20) swings at SigurRos (01) but misses
+[t138] SigurRos (01) hits Mareti (20) with improvised club [-18 hp, 64 left]
+[t138] Mareti (20) hits SigurRos (01) with spear [-22 hp, 19 left]
+[t139] SigurRos (01) swings at Mareti (20) but misses
+[t139] Mareti (20) hits SigurRos (01) with spear [-27 hp, 0 left]
+[t139] *** SigurRos (01) is eliminated by Mareti (20) (kill #1) — 10 remain
+[t139] Mareti (20): aggressive -> scouting
+[t140] !!! THE ARENA BEGINS TO COLLAPSE FROM THE EDGES !!!
+[t140] Sceadwian (10): hunting -> resting
+[t140] Alice (16) collapses from exhaustion and rests
+[t140] JoJo (08) spots Marcello (19) 3 cells away
+[t140] JoJo (08): sneaking -> fleeing
+[t140] Marcello (19) spots JoJo (08) 3 cells away
+[t140] Marcello (19): scouting -> aggressive
+[t141] Sceadwian (10): resting -> hunting
+[t141] Alice (16): resting -> aggressive
+[t141] Leo (15) collapses from exhaustion and rests
+[t141] Deh (05) hits Moistwick (06) with knife [-20 hp, 18 left]
+[t141] Moistwick (06) swings at Deh (05) but misses
+[t142] Leo (15): resting -> aggressive
+[t145] Moistwick (06) collapses from exhaustion and rests
+[t145] Alice (16) collapses from exhaustion and rests
+[t145] Deh (05) hits Moistwick (06) with knife [-24 hp, 0 left]
+[t145] *** Moistwick (06) is eliminated by Deh (05) (kill #2) — 9 remain
+[t145] Deh (05): aggressive -> sneaking
+[t146] Alice (16): resting -> aggressive
+[t146] Leo (15) collapses from exhaustion and rests
+[t147] Leo (15): resting -> aggressive
+[t150] Alice (16) collapses from exhaustion and rests
+[t151] Alice (16): resting -> aggressive
+[t152] Leo (15) collapses from exhaustion and rests
+[t153] Leo (15): resting -> aggressive
+[t155] Marcello (19): aggressive -> hunting
+[t155] Alice (16) collapses from exhaustion and rests
+[t156] JoJo (08): fleeing -> resting
+[t156] Sceadwian (10): hunting -> resting
+[t156] Alice (16): resting -> aggressive
+[t156] Marcello (19): hunting -> scouting
+[t157] Sceadwian (10): resting -> hunting
+[t157] Leo (15) collapses from exhaustion and rests
+[t158] JoJo (08): resting -> sneaking
+[t158] Leo (15): resting -> aggressive
+[t160] Marcello (19): scouting -> hunting
+[t160] Alice (16) collapses from exhaustion and rests
+[t161] Alice (16): resting -> aggressive
+[t162] Leo (15) collapses from exhaustion and rests
+[t163] Leo (15): resting -> aggressive
+[t164] Marcello (19): hunting -> scouting
+[t165] Alice (16) collapses from exhaustion and rests
+[t166] Alice (16): resting -> aggressive
+[t167] Sceadwian (10) spots Mareti (20) 6 cells away
+[t167] Sceadwian (10): hunting -> aggressive
+[t168] Deh (05): sneaking -> scouting
+[t168] Leo (15) collapses from exhaustion and rests
+[t169] Leo (15): resting -> aggressive
+[t170] Alice (16) collapses from exhaustion and rests
+[t170] Mareti (20) spots Sceadwian (10) 6 cells away
+[t170] Mareti (20): scouting -> aggressive
+[t171] Alice (16): resting -> aggressive
+[t172] Sceadwian (10) hits Mareti (20) with spear [-23 hp, 41 left]
+[t172] Mareti (20) hits Sceadwian (10) with spear [-22 hp, 53 left]
+[t173] Leo (15) collapses from exhaustion and rests
+[t173] Sceadwian (10) hits Mareti (20) with spear [-22 hp, 18 left]
+[t173] Mareti (20) hits Sceadwian (10) with spear [-22 hp, 32 left]
+[t174] Leo (15): resting -> aggressive
+[t174] Sceadwian (10) hits Mareti (20) with spear [-23 hp, 0 left]
+[t174] *** Mareti (20) is eliminated by Sceadwian (10) (kill #3) — 8 remain
+[t174] Sceadwian (10): aggressive -> resting
+[t175] JoJo (08) takes a improvised club from the stash at (70,25)
+[t175] stash at (70,25) is empty
+[t175] Alice (16) collapses from exhaustion and rests
+[t176] Sceadwian (10): resting -> sneaking
+[t176] Alice (16): resting -> aggressive
+[t176] Marcello (19): scouting -> hunting
+[t178] Leo (15) collapses from exhaustion and rests
+[t179] Leo (15): resting -> aggressive
+[t180] Deh (05): scouting -> camping
+[t180] Marcello (19): hunting -> scouting
+[t180] Alice (16) collapses from exhaustion and rests
+[t181] Deh (05): camping -> scouting
+[t181] Alice (16): resting -> aggressive
+[t181] JoJo (08) spots Marcello (19) 4 cells away
+[t181] JoJo (08): sneaking -> aggressive
+[t181] Marcello (19) spots JoJo (08) 4 cells away
+[t181] Marcello (19): scouting -> aggressive
+[t182] JoJo (08) swings at Marcello (19) but misses
+[t182] Marcello (19) hits JoJo (08) with knife [-20 hp, 0 left]
+[t182] *** JoJo (08) is eliminated by Marcello (19) (kill #2) — 7 remain
+[t182] Marcello (19): aggressive -> scouting
+[t184] Deh (05): scouting -> camping
+[t184] Leo (15) collapses from exhaustion and rests
+[t185] Deh (05): camping -> scouting
+[t185] Leo (15): resting -> aggressive
+[t185] Alice (16) collapses from exhaustion and rests
+[t186] Alice (16): resting -> aggressive
+[t186] Leo (15) hits Alice (16) with spear [-22 hp, 0 left]
+[t186] *** Alice (16) is eliminated by Leo (15) (kill #3) — 6 remain
+[t186] Leo (15): aggressive -> resting
+[t188] Leo (15): resting -> camping
+[t190] Leo (15): camping -> hunting
+[t192] Deh (05): scouting -> camping
+[t194] Sceadwian (10): sneaking -> hiding
+[t195] Deh (05): camping -> scouting
+[t195] Sceadwian (10): hiding -> hunting
+[t196] Deh (05): scouting -> camping
+[t197] Deh (05): camping -> scouting
+[t200] Deh (05): scouting -> camping
+[t201] Deh (05): camping -> scouting
+[t204] Leo (15): hunting -> resting
+[t204] Blubber (02) spots Kenji (03) 2 cells away
+[t204] Blubber (02): sneaking -> aggressive
+[t204] Kenji (03) spots Blubber (02) 2 cells away
+[t204] Kenji (03): sneaking -> defensive
+[t204] Kenji (03) swings at Blubber (02) but misses
+[t205] Leo (15): resting -> hunting
+[t205] Kenji (03) swings at Blubber (02) but misses
+[t206] Blubber (02) hits Kenji (03) with improvised club [-14 hp, 46 left]
+[t206] Kenji (03) swings at Blubber (02) but misses
+[t207] Blubber (02) hits Kenji (03) with improvised club [-13 hp, 33 left]
+[t207] Kenji (03) breaks off and flees
+[t207] Kenji (03) swings at Blubber (02) but misses
+[t208] Leo (15): hunting -> camping
+[t209] Leo (15): camping -> hunting
+[t211] Sceadwian (10) spots Marcello (19) 7 cells away
+[t211] Sceadwian (10): hunting -> aggressive
+[t211] Marcello (19) spots Sceadwian (10) 7 cells away
+[t211] Marcello (19): scouting -> aggressive
+[t215] Sceadwian (10) hits Marcello (19) with spear [-25 hp, 27 left]
+[t215] Marcello (19) swings at Sceadwian (10) but misses
+[t216] Sceadwian (10) hits Marcello (19) with spear [-22 hp, 5 left]
+[t217] Sceadwian (10) hits Marcello (19) with spear [-24 hp, 0 left]
+[t217] *** Marcello (19) is eliminated by Sceadwian (10) (kill #4) — 5 remain
+[t217] Sceadwian (10): aggressive -> hunting
+[t220] Deh (05): scouting -> camping
+[t220] Leo (15): hunting -> resting
+[t221] Leo (15): resting -> hunting
+[t224] Deh (05): camping -> scouting
+[t228] Blubber (02): aggressive -> sneaking
+[t228] Kenji (03): fleeing -> sneaking
+[t228] Deh (05): scouting -> camping
+[t229] Deh (05): camping -> scouting
+[t232] Deh (05): scouting -> camping
+[t232] Leo (15): hunting -> resting
+[t233] Leo (15): resting -> hunting
+[t237] Deh (05): camping -> scouting
+[t237] Deh (05) spots Sceadwian (10) 4 cells away
+[t237] Deh (05): scouting -> aggressive
+[t237] Sceadwian (10) spots Deh (05) 4 cells away
+[t237] Sceadwian (10): hunting -> aggressive
+[t238] Deh (05) hits Sceadwian (10) with knife [-20 hp, 21 left]
+[t238] Sceadwian (10) hits Deh (05) with spear [-23 hp, 19 left]
+[t240] Deh (05): aggressive -> defensive
+[t240] Leo (15): hunting -> aggressive
+[t243] Deh (05) spots Leo (15) 9 cells away
+[t244] Deh (05) spots Sceadwian (10) 3 cells away
+[t244] Sceadwian (10) spots Leo (15) 5 cells away
+[t245] Sceadwian (10) scavenges supplies at (60,50) [+10hp +25stam]
+[t245] Leo (15) spots Deh (05) 6 cells away
+[t245] Leo (15) spots Sceadwian (10) 3 cells away
+[t246] Deh (05) spots Leo (15) 6 cells away
+[t246] Sceadwian (10) swings at Leo (15) but misses
+[t246] Leo (15) swings at Sceadwian (10) but misses
+[t247] Deh (05) spots Sceadwian (10) 6 cells away
+[t247] Deh (05) spots Leo (15) 5 cells away
+[t247] Leo (15) spots Deh (05) 5 cells away
+[t247] Leo (15) spots Sceadwian (10) 1 cells away
+[t247] Sceadwian (10) swings at Leo (15) but misses
+[t247] Leo (15) hits Sceadwian (10) with spear [-28 hp, 3 left]
+[t248] Deh (05) spots Sceadwian (10) 6 cells away
+[t248] Deh (05): defensive -> aggressive
+[t248] Deh (05) spots Leo (15) 6 cells away
+[t248] Deh (05): aggressive -> defensive
+[t248] Leo (15) spots Deh (05) 6 cells away
+[t248] Leo (15) spots Sceadwian (10) 1 cells away
+[t248] Sceadwian (10) swings at Leo (15) but misses
+[t248] Leo (15) swings at Sceadwian (10) but misses
+[t249] Deh (05) spots Sceadwian (10) 5 cells away
+[t249] Deh (05): defensive -> aggressive
+[t249] Deh (05) spots Leo (15) 6 cells away
+[t249] Deh (05): aggressive -> defensive
+[t249] Sceadwian (10) hits Leo (15) with spear [-27 hp, 20 left]
+[t249] Leo (15) swings at Sceadwian (10) but misses
+[t250] Deh (05): defensive -> aggressive
+[t250] Deh (05) spots Sceadwian (10) 4 cells away
+[t250] Deh (05) spots Leo (15) 3 cells away
+[t250] Leo (15) spots Deh (05) 3 cells away
+[t250] Leo (15) spots Sceadwian (10) 1 cells away
+[t250] Sceadwian (10) swings at Leo (15) but misses
+[t250] Leo (15) swings at Sceadwian (10) but misses
+[t251] Deh (05) spots Sceadwian (10) 3 cells away
+[t251] Deh (05) spots Leo (15) 4 cells away
+[t251] Leo (15) spots Deh (05) 4 cells away
+[t251] Leo (15) spots Sceadwian (10) 1 cells away
+[t251] Sceadwian (10) hits Leo (15) with spear [-22 hp, 0 left]
+[t251] *** Leo (15) is eliminated by Sceadwian (10) (kill #5) — 4 remain
+[t251] Sceadwian (10): aggressive -> sneaking
+[t252] Blubber (02): sneaking -> vigilant
+[t252] Deh (05): aggressive -> sneaking
+[t255] Kenji (03): sneaking -> resting
+[t257] Kenji (03): resting -> vigilant
+[t260] Deh (05): sneaking -> hiding
+[t265] Kenji (03): vigilant -> fleeing
+[t265] Deh (05): hiding -> hunting
+[t267] Deh (05) spots Sceadwian (10) 3 cells away
+[t267] Deh (05): hunting -> aggressive
+[t267] Sceadwian (10) spots Deh (05) 3 cells away
+[t267] Sceadwian (10): sneaking -> aggressive
+[t268] Kenji (03): fleeing -> vigilant
+[t268] Deh (05) hits Sceadwian (10) with knife [-26 hp, 0 left]
+[t268] *** Sceadwian (10) is eliminated by Deh (05) (kill #3) — 3 remain
+[t268] Deh (05): aggressive -> hunting
+[t279] Deh (05) spots Blubber (02) 8 cells away
+[t279] Deh (05): hunting -> aggressive
+[t280] Kenji (03): vigilant -> fleeing
+[t284] Kenji (03): fleeing -> vigilant
+[t284] Deh (05) takes a axe from the stash at (74,64)
+[t284] Blubber (02) spots Deh (05) 1 cells away
+[t284] Blubber (02): vigilant -> fleeing
+[t290] Deh (05) hits Blubber (02) with axe [-31 hp, 16 left]
+[t290] Blubber (02) breaks off and flees
+[t290] Blubber (02) swings at Deh (05) but misses
+[t295] Kenji (03): vigilant -> fleeing
+[t296] Kenji (03): fleeing -> vigilant
+[t297] Deh (05) hits Blubber (02) with axe [-28 hp, 0 left]
+[t297] *** Blubber (02) is eliminated by Deh (05) (kill #4) — 2 remain
+[t297] Deh (05): aggressive -> hunting
+[t300] Kenji (03): vigilant -> fleeing
+[t304] Kenji (03): fleeing -> vigilant
+[t308] Deh (05): hunting -> aggressive
+[t312] Deh (05): aggressive -> fleeing
+[t315] Kenji (03): vigilant -> fleeing
+[t316] Kenji (03): fleeing -> vigilant
+[t316] Deh (05): fleeing -> aggressive
+[t320] Kenji (03) spots Deh (05) 1 cells away
+[t320] Kenji (03): vigilant -> fleeing
+[t320] Deh (05) hits Kenji (03) with axe [-31 hp, 24 left]
+[t320] Kenji (03) breaks off and flees
+[t320] Kenji (03) swings at Deh (05) but misses
+[t340] Deh (05) hits Kenji (03) with axe [-25 hp, 0 left]
+[t340] *** Kenji (03) is eliminated by Deh (05) (kill #5) — 1 remain
+[t340] Deh (05): aggressive -> resting
+[t340] === WINNER: Deh (05) with 5 kill(s) after 340 ticks ===
