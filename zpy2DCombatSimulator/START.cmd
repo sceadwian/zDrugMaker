@@ -1,4 +1,4 @@
 @echo off
 cd /d "%~dp0"
-py -3 zpyCombatArena02.py
+py -3 zpyCombatArena03.py
 if errorlevel 1 pause
