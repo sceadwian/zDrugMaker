@@ -13,7 +13,17 @@
 # The script prompts for user input and performs the chosen operation.
 # v2 - introduces new AI, it was a Claude revamped version. feels like an upgrade. there is still an issue with function 9, it could be improved as well. and function 4 which is removing first tag after date as well.
 # v2.1 - added [tag] management (view / edit / add / reorder) as menu item 6, everything after it shifted +1. Printout function extended to files as well
-# v2.1.1 - 
+# v2.1.1 - added a shared FILE SELECTION GATE (select_files) so bulk renames no longer
+#          hit every file in the folder. Before renaming, you can now narrow the target set by:
+#            Enter        -> all files (previous behaviour, unchanged)
+#            .jpg .png    -> only these extensions
+#            !.txt !.py   -> everything except these extensions
+#            1,3,5-8      -> pick by number from the printed list (ranges allowed)
+#            *report*     -> wildcard match on the file name
+#            q            -> cancel and return to the menu
+#          Wired into menu 3 (add prefix), 4 (remove prefix) and 5 (replace spaces).
+#          Those three now also list files numbered, and skip the script's own file.
+# v2.2 -
 
 """
 finalAnalisis.py
@@ -28,6 +38,7 @@ Run: python finalAnalisis.py
 import os
 import re
 import math
+import fnmatch
 import datetime
 import hashlib
 import shutil
@@ -184,6 +195,136 @@ def list_files():
 
 
 # ─────────────────────────────────────────────
+# SHARED FILE SELECTION GATE  (v2.1.1)
+# ─────────────────────────────────────────────
+# Every bulk-rename operation calls select_files() before it builds its
+# preview, so the user can narrow a folder down to just the files they mean
+# (e.g. the two .jpg files, but not the .txt sitting next to them).
+# Pressing Enter keeps the old "everything" behaviour.
+
+def _hint(key, text):
+    """One line of the selection legend, padded before colouring so it lines up."""
+    print(f"    {c(key.ljust(12), CYAN)}  {c(text, DIM)}")
+
+def _norm_ext(token):
+    """'jpg' / '.JPG' / ' .jpg ' → '.jpg'.  Returns '' if nothing usable."""
+    token = token.strip().lower()
+    if not token:
+        return ""
+    return token if token.startswith(".") else "." + token
+
+def _expand_number_spec(tokens, count):
+    """['1', '3', '5-8'] → ordered, de-duplicated 0-based indices. None if out of range."""
+    picked = []
+    for part in tokens:
+        m = re.fullmatch(r"(\d+)(?:-(\d+))?", part)
+        if not m:
+            return None
+        start = int(m.group(1))
+        end = int(m.group(2)) if m.group(2) else start
+        if not (1 <= start <= count) or not (1 <= end <= count):
+            return None
+        step = 1 if end >= start else -1
+        for n in range(start, end + step, step):
+            if n - 1 not in picked:
+                picked.append(n - 1)
+    return picked or None
+
+def _apply_ext_filter(files, tokens):
+    """Include/exclude by extension. Tokens prefixed with ! are exclusions."""
+    include, exclude = set(), set()
+    for t in tokens:
+        if t.startswith("!"):
+            ext = _norm_ext(t[1:])
+            if ext:
+                exclude.add(ext)
+        else:
+            ext = _norm_ext(t)
+            if ext:
+                include.add(ext)
+
+    if not include and not exclude:
+        return None  # nothing parseable
+
+    chosen = []
+    for f in files:
+        ext = os.path.splitext(f)[1].lower()
+        if include and ext not in include:
+            continue
+        if ext in exclude:
+            continue
+        chosen.append(f)
+    return chosen
+
+def select_files(files, action="this action", list_title="Files in scope"):
+    """
+    Ask which of `files` the caller should act on.
+
+    Returns the chosen subset (a list, order preserved) or None if the user
+    cancelled. An empty match re-prompts rather than silently doing nothing.
+    """
+    if not files:
+        return None
+
+    while True:
+        print()
+        print(c(f"  {list_title}:", BOLD))
+        print()
+        for i, f in enumerate(files, 1):
+            print(f"  {c(f'[{i:>2}]', CYAN)} {c(f, GREEN)}")
+
+        print()
+        print(c(f"  Which files should {action} apply to?", BOLD))
+        _hint("Enter",      f"all {len(files)} file(s)")
+        _hint(".jpg .png",  "only these extensions")
+        _hint("!.txt !.py", "everything except these extensions")
+        _hint("1,3,5-8",    "pick by number from the list above")
+        _hint("*report*",   "wildcard match on the file name")
+        _hint("q",          "cancel and return to the menu")
+        print()
+
+        raw = input(c("  Selection [Enter = all]: ", BOLD)).strip()
+
+        if raw.lower() in {"q", "quit", "cancel"}:
+            return None
+        if not raw:
+            return list(files)
+
+        tokens = [t for t in re.split(r"[,\s]+", raw) if t]
+
+        if any("*" in t or "?" in t for t in tokens):
+            how = "wildcard"
+            chosen = [f for f in files
+                      if any(fnmatch.fnmatch(f.lower(), t.lower()) for t in tokens)]
+        elif all(re.fullmatch(r"\d+(?:-\d+)?", t) for t in tokens):
+            how = "by number"
+            idx = _expand_number_spec(tokens, len(files))
+            if idx is None:
+                print(c(f"  ✗ Numbers must be between 1 and {len(files)} — e.g. 1,3,5-8", RED))
+                input(c("  Press Enter to try again …", DIM))
+                continue
+            chosen = [files[i] for i in idx]
+        else:
+            how = "by extension"
+            chosen = _apply_ext_filter(files, tokens)
+            if chosen is None:
+                print(c("  ✗ Could not read that selection. Use .jpg / !.txt / 1,3,5-8 / *name*", RED))
+                input(c("  Press Enter to try again …", DIM))
+                continue
+
+        if not chosen:
+            print(c("  ✗ That selection matched no files — try again.", RED))
+            input(c("  Press Enter to try again …", DIM))
+            continue
+
+        skipped = len(files) - len(chosen)
+        print()
+        print(c(f"  ✓ {len(chosen)} of {len(files)} file(s) selected ({how})"
+                f"{f' — {skipped} skipped' if skipped else ''}", GREEN))
+        return chosen
+
+
+# ─────────────────────────────────────────────
 # 3 — RENAME FILES WITH PREFIX
 # ─────────────────────────────────────────────
 def rename_files_with_prefix():
@@ -194,10 +335,16 @@ def rename_files_with_prefix():
     files = sorted([f for f in os.listdir(path)
                     if os.path.isfile(os.path.join(path, f)) and f != script_file])
 
-    print(c("  Current files:", BOLD))
-    print()
-    for f in files:
-        print(f"  {c('·', DIM)} {c(f, GREEN)}")
+    if not files:
+        print(c("  No files found in this folder.", YELLOW))
+        input(c("  Press Enter to return …", DIM))
+        return
+
+    files = select_files(files, action="the prefix", list_title="Current files")
+    if not files:
+        print(c("  Action cancelled.", YELLOW))
+        input(c("  Press Enter to return …", DIM))
+        return
 
     print()
     prefix = input(c("  Prefix (YYYYMMDD or YYYYMMXX): ", BOLD)).strip()
@@ -240,7 +387,9 @@ def remove_prefix_from_files():
     os.system("cls")
     banner("Rename Files — Remove Prefix")
     path = os.getcwd()
-    files = sorted(os.listdir(path))
+    script_file = os.path.basename(__file__)
+    files = sorted([f for f in os.listdir(path)
+                    if os.path.isfile(os.path.join(path, f)) and f != script_file])
 
     print(c("  Current files:", BOLD))
     print()
@@ -255,15 +404,23 @@ def remove_prefix_from_files():
         return
 
     pattern = fr"^{re.escape(prefix)}_[^_]+_"
-    renamed = []
-    for f in files:
-        if os.path.isfile(os.path.join(path, f)) and re.search(pattern, f):
-            renamed.append((f, re.sub(pattern, "", f)))
+    matched = [f for f in files if re.search(pattern, f)]
 
-    if not renamed:
+    if not matched:
         print(c("  No files matched that prefix.", YELLOW))
         input(c("  Press Enter to return …", DIM))
         return
+
+    # Only the files carrying that prefix are offered — the numbers below
+    # refer to this shorter list, not to the full folder listing above.
+    matched = select_files(matched, action="the prefix removal",
+                           list_title="Files carrying that prefix")
+    if not matched:
+        print(c("  Action cancelled.", YELLOW))
+        input(c("  Press Enter to return …", DIM))
+        return
+
+    renamed = [(f, re.sub(pattern, "", f)) for f in matched]
 
     print()
     print(c("  Proposed renames:", BOLD))
@@ -293,7 +450,9 @@ def replace_spaces_in_filenames():
     os.system("cls")
     banner("Naming — Replace Spaces with Underscores")
     path = os.getcwd()
-    spaced = {f: f.count(" ") for f in os.listdir(path) if " " in f}
+    script_file = os.path.basename(__file__)
+    spaced = {f: f.count(" ") for f in os.listdir(path)
+              if " " in f and f != script_file}
 
     if not spaced:
         print(c("  No files with spaces found.", YELLOW))
@@ -304,12 +463,28 @@ def replace_spaces_in_filenames():
     print(f"  {c('File Name', BOLD):<55} {c('Spaces', BOLD):>8}")
     divider()
     for f, n in sorted(spaced.items()):
-        print(f"  {c(f, GREEN):<64} {c(str(n), YELLOW):>17}")
+        marker = c("▶", DIM) if os.path.isdir(os.path.join(path, f)) else " "
+        print(f"  {marker} {c(f, GREEN):<64} {c(str(n), YELLOW):>17}")
+    print(c("  (▶ = folder)", DIM))
+
+    chosen = select_files(sorted(spaced), action="the space replacement",
+                          list_title="Names containing spaces")
+    if not chosen:
+        print(c("  Action cancelled.", YELLOW))
+        input(c("  Press Enter to return …", DIM))
+        return
+
+    print()
+    print(c("  Proposed renames:", BOLD))
+    divider()
+    for f in chosen:
+        print(f"  {c(f, DIM)}  {c('→', YELLOW)}  {c(f.replace(' ', '_'), CYAN)}")
     print()
 
-    choice = input(c("  Replace spaces with underscores? [Y/n]: ", BOLD)).strip().upper()
+    choice = input(c(f"  Replace spaces with underscores in {len(chosen)} name(s)? [Y/n]: ",
+                     BOLD)).strip().upper()
     if choice == "Y":
-        for f in spaced:
+        for f in chosen:
             new = f.replace(" ", "_")
             os.rename(os.path.join(path, f), os.path.join(path, new))
         print()

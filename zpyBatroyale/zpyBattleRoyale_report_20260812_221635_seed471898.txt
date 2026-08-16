@@ -1,0 +1,1024 @@
+zpyBattleRoyale report — seed 471898 — map zmapArenaWideTall01.zmap
+winner: Sceadwian (11) (4 kills)
+
+FINAL PLACEMENTS
+  1. Sceadwian (11)           kills=4  SURVIVED
+  2. Alice (08)               kills=1  slain by Sceadwian (11)
+  3. Blubber (20)             kills=0  slain by Sceadwian (11)
+  4. Pikachu (12)             kills=3  slain by Sceadwian (11)
+  5. Alice (04)               kills=0  slain by Pikachu (12)
+  6. Lukasz (16)              kills=0  caught in the arena collapse
+  7. SigurRos (19)            kills=2  caught in the arena collapse
+  8. Cabron (10)              kills=1  slain by Pikachu (12)
+  9. Mareti (01)              kills=2  slain by Pikachu (12)
+ 10. Elliot (15)              kills=0  slain by SigurRos (19)
+ 11. Hortense (05)            kills=0  slain by Mareti (01)
+ 12. Evander (17)             kills=1  slain by SigurRos (19)
+ 13. Nakombi (06)             kills=0  trap
+ 14. Deh (03)                 kills=1  slain by Mareti (01)
+ 15. Flimbersnatch (02)       kills=0  slain by Deh (03)
+ 16. Leo (18)                 kills=0  slain by Evander (17)
+ 17. Marcello (14)            kills=1  slain by Sceadwian (11)
+ 18. Dimonho (09)             kills=0  slain by Cabron (10)
+ 19. Athena (13)              kills=0  slain by Marcello (14)
+ 20. Bundinha (07)            kills=0  slain by Alice (08)
+
+EVENT LOG
+[t000] Match start: 20 competitors enter zmapArenaWideTall01.zmap (seed 471898)
+[t001] Nakombi (06): rushing -> cautious
+[t001] Alice (08): rushing -> cautious
+[t001] Marcello (14) takes a improvised club from the stash at (27,14)
+[t001] Marcello (14): rushing -> scouting
+[t002] Flimbersnatch (02) takes a axe from the stash at (114,58)
+[t002] Flimbersnatch (02): rushing -> hunting
+[t002] Deh (03) takes a improvised club from the stash at (98,76)
+[t002] Deh (03): rushing -> scouting
+[t002] Cabron (10) takes a improvised club from the stash at (13,65)
+[t002] Cabron (10): rushing -> camping
+[t002] Pikachu (12) takes a spear from the stash at (9,41)
+[t002] Pikachu (12): rushing -> scouting
+[t002] Evander (17) takes a spear from the stash at (70,8)
+[t002] Evander (17): rushing -> hunting
+[t002] Leo (18) takes a spear from the stash at (92,10)
+[t002] Leo (18): rushing -> camping
+[t002] Mareti (01) spots Flimbersnatch (02) 2 cells away
+[t002] Mareti (01): rushing -> defensive
+[t002] Flimbersnatch (02) spots Mareti (01) 2 cells away
+[t002] Flimbersnatch (02): hunting -> aggressive
+[t002] Marcello (14) spots Elliot (15) 7 cells away
+[t002] Marcello (14): scouting -> aggressive
+[t003] Leo (18): camping -> aggressive
+[t003] Elliot (15) spots Marcello (14) 2 cells away
+[t003] Elliot (15): rushing -> fleeing
+[t003] Lukasz (16) spots Evander (17) 1 cells away
+[t003] Lukasz (16): rushing -> fleeing
+[t003] Evander (17) spots Lukasz (16) 1 cells away
+[t003] Evander (17): hunting -> aggressive
+[t003] Mareti (01) hits Flimbersnatch (02) with bare hands [-13 hp, 87 left]
+[t003] Flimbersnatch (02) swings at Mareti (01) but misses
+[t003] Evander (17) hits Lukasz (16) with spear [-23 hp, 77 left]
+[t003] Lukasz (16) swings at Evander (17) but misses
+[t004] Dimonho (09) spots Cabron (10) 2 cells away
+[t004] Dimonho (09): rushing -> defensive
+[t004] Cabron (10) spots Dimonho (09) 2 cells away
+[t004] Cabron (10): camping -> aggressive
+[t005] Athena (13) takes a spear from the stash at (27,14)
+[t005] stash at (27,14) is empty
+[t005] Athena (13): rushing -> cautious
+[t005] Alice (04) spots Hortense (05) 5 cells away
+[t005] Alice (04): rushing -> aggressive
+[t005] Athena (13) spots Marcello (14) 7 cells away
+[t005] Athena (13): cautious -> aggressive
+[t006] Bundinha (07) takes a knife from the stash at (42,78)
+[t006] Bundinha (07): rushing -> hunting
+[t007] Flimbersnatch (02) spots and disarms a trap at (115,57)
+[t007] Mareti (01) hits Flimbersnatch (02) with bare hands [-14 hp, 74 left]
+[t007] Flimbersnatch (02) swings at Mareti (01) but misses
+[t008] Deh (03): scouting -> camping
+[t008] Lukasz (16): fleeing -> hiding
+[t008] Flimbersnatch (02) spots Blubber (20) 4 cells away
+[t008] Mareti (01) swings at Flimbersnatch (02) but misses
+[t008] Flimbersnatch (02) swings at Mareti (01) but misses
+[t009] Deh (03): camping -> scouting
+[t009] Hortense (05) takes a improvised club from the stash at (101,90)
+[t009] Hortense (05): rushing -> hunting
+[t009] Mareti (01) spots Blubber (20) 3 cells away
+[t009] Mareti (01): defensive -> aggressive
+[t009] Flimbersnatch (02) spots Mareti (01) 4 cells away
+[t009] Flimbersnatch (02) spots Blubber (20) 1 cells away
+[t009] Hortense (05) spots Alice (04) 10 cells away
+[t009] Hortense (05): hunting -> aggressive
+[t009] Marcello (14) spots Athena (13) 4 cells away
+[t009] Blubber (20) spots Mareti (01) 3 cells away
+[t009] Blubber (20): rushing -> fleeing
+[t009] Blubber (20) spots Flimbersnatch (02) 1 cells away
+[t009] Flimbersnatch (02) hits Blubber (20) with axe [-25 hp, 75 left]
+[t009] Blubber (20) swings at Flimbersnatch (02) but misses
+[t009] Dimonho (09) hits Cabron (10) with bare hands [-14 hp, 86 left]
+[t009] Cabron (10) swings at Dimonho (09) but misses
+[t010] Dimonho (09): defensive -> aggressive
+[t010] SigurRos (19) stumbles into a trap at (91,17) [-21 hp]
+[t010] Mareti (01) spots Flimbersnatch (02) 2 cells away
+[t010] Mareti (01): aggressive -> defensive
+[t010] Mareti (01) spots Blubber (20) 1 cells away
+[t010] Mareti (01): defensive -> aggressive
+[t010] Flimbersnatch (02) spots Mareti (01) 2 cells away
+[t010] Blubber (20) spots Mareti (01) 1 cells away
+[t011] Mareti (01) spots Flimbersnatch (02) 2 cells away
+[t011] Mareti (01): aggressive -> defensive
+[t011] Flimbersnatch (02) spots Blubber (20) 4 cells away
+[t011] Bundinha (07) spots Alice (08) 7 cells away
+[t011] Bundinha (07): hunting -> aggressive
+[t011] Alice (08) spots Bundinha (07) 7 cells away
+[t011] Alice (08): cautious -> defensive
+[t011] Blubber (20) spots Flimbersnatch (02) 4 cells away
+[t011] Dimonho (09) hits Cabron (10) with bare hands [-16 hp, 70 left]
+[t011] Cabron (10) swings at Dimonho (09) but misses
+[t012] Mareti (01) spots Blubber (20) 5 cells away
+[t012] Mareti (01): defensive -> aggressive
+[t012] Flimbersnatch (02) spots Mareti (01) 3 cells away
+[t012] Blubber (20) spots Mareti (01) 5 cells away
+[t012] Blubber (20) spots Flimbersnatch (02) 4 cells away
+[t013] Bundinha (07) scavenges supplies at (35,79) [+10hp +25stam]
+[t013] Athena (13) swings at Marcello (14) but misses
+[t013] Marcello (14) hits Athena (13) with improvised club [-16 hp, 84 left]
+[t014] Bundinha (07) swings at Alice (08) but misses
+[t014] Alice (08) hits Bundinha (07) with bare hands [-14 hp, 86 left]
+[t015] SigurRos (19) takes a bow from the stash at (92,10)
+[t015] stash at (92,10) is empty
+[t015] SigurRos (19): rushing -> camping
+[t015] Blubber (20) spots Mareti (01) 3 cells away
+[t015] Bundinha (07) swings at Alice (08) but misses
+[t015] Alice (08) hits Bundinha (07) with bare hands [-12 hp, 74 left]
+[t015] Dimonho (09) hits Cabron (10) with bare hands [-10 hp, 60 left]
+[t015] Cabron (10) hits Dimonho (09) with improvised club [-21 hp, 79 left]
+[t015] Athena (13) swings at Marcello (14) but misses
+[t016] Deh (03): scouting -> aggressive
+[t016] Alice (08): defensive -> aggressive
+[t016] Dimonho (09): aggressive -> defensive
+[t016] Elliot (15): fleeing -> rushing
+[t016] Evander (17): aggressive -> hunting
+[t016] Sceadwian (11) takes a knife from the stash at (16,44)
+[t016] Sceadwian (11): rushing -> hunting
+[t016] Elliot (15) spots Evander (17) 2 cells away
+[t016] Elliot (15): rushing -> fleeing
+[t016] Evander (17) spots Elliot (15) 2 cells away
+[t016] Evander (17): hunting -> aggressive
+[t017] Alice (04) spots and disarms a trap at (93,83)
+[t017] Elliot (15) takes a improvised club from the stash at (70,8)
+[t017] stash at (70,8) is empty
+[t017] Elliot (15): fleeing -> aggressive
+[t017] Blubber (20) spots Deh (03) 2 cells away
+[t017] Bundinha (07) swings at Alice (08) but misses
+[t017] Alice (08) hits Bundinha (07) with bare hands [-15 hp, 60 left]
+[t017] Dimonho (09) hits Cabron (10) with bare hands [-16 hp, 43 left]
+[t017] Cabron (10) hits Dimonho (09) with improvised club [-20 hp, 59 left]
+[t017] Athena (13) swings at Marcello (14) but misses
+[t017] Marcello (14) hits Athena (13) with improvised club [-16 hp, 68 left]
+[t018] Lukasz (16): hiding -> rushing
+[t018] Flimbersnatch (02) spots Deh (03) 3 cells away
+[t018] Deh (03) spots Mareti (01) 4 cells away
+[t018] Deh (03) spots Flimbersnatch (02) 3 cells away
+[t019] SigurRos (19): camping -> hunting
+[t019] Mareti (01) spots Flimbersnatch (02) 3 cells away
+[t019] Mareti (01): aggressive -> defensive
+[t019] Deh (03) spots Mareti (01) 6 cells away
+[t019] Deh (03) spots Flimbersnatch (02) 4 cells away
+[t019] Bundinha (07) swings at Alice (08) but misses
+[t019] Alice (08) swings at Bundinha (07) but misses
+[t019] Dimonho (09) hits Cabron (10) with bare hands [-16 hp, 26 left]
+[t019] Cabron (10) swings at Dimonho (09) but misses
+[t019] Athena (13) swings at Marcello (14) but misses
+[t020] SigurRos (19): hunting -> camping
+[t020] Deh (03) scavenges supplies at (101,60) [+10hp +25stam]
+[t020] Mareti (01) spots Deh (03) 4 cells away
+[t020] Deh (03) spots Mareti (01) 4 cells away
+[t020] Deh (03) spots Flimbersnatch (02) 3 cells away
+[t020] Lukasz (16) spots Elliot (15) 5 cells away
+[t020] Lukasz (16): rushing -> fleeing
+[t020] Lukasz (16) spots Evander (17) 4 cells away
+[t021] SigurRos (19): camping -> hunting
+[t021] Bundinha (07) hits Alice (08) with knife [-20 hp, 80 left]
+[t021] Alice (08) hits Bundinha (07) with bare hands [-16 hp, 44 left]
+[t021] Athena (13) swings at Marcello (14) but misses
+[t021] Marcello (14) swings at Athena (13) but misses
+[t021] Evander (17) hits Elliot (15) with spear [-24 hp, 76 left]
+[t022] Alice (08): aggressive -> defensive
+[t022] Bundinha (07) hits Alice (08) with knife [-18 hp, 62 left]
+[t022] Alice (08) hits Bundinha (07) with bare hands [-12 hp, 32 left]
+[t022] Dimonho (09) swings at Cabron (10) but misses
+[t022] Cabron (10) hits Dimonho (09) with improvised club [-17 hp, 42 left]
+[t022] Athena (13) swings at Marcello (14) but misses
+[t022] Elliot (15) swings at Evander (17) but misses
+[t022] Evander (17) hits Elliot (15) with spear [-29 hp, 47 left]
+[t023] Elliot (15): aggressive -> defensive
+[t023] Leo (18): aggressive -> hunting
+[t023] Bundinha (07) swings at Alice (08) but misses
+[t023] Alice (08) hits Bundinha (07) with bare hands [-16 hp, 16 left]
+[t023] Dimonho (09) hits Cabron (10) with bare hands [-12 hp, 14 left]
+[t023] Cabron (10) hits Dimonho (09) with improvised club [-17 hp, 25 left]
+[t023] Athena (13) swings at Marcello (14) but misses
+[t023] Marcello (14) hits Athena (13) with improvised club [-18 hp, 50 left]
+[t023] Evander (17) hits Elliot (15) with spear [-28 hp, 19 left]
+[t023] Elliot (15) breaks off and flees
+[t024] Dimonho (09): defensive -> fleeing
+[t024] SigurRos (19): hunting -> camping
+[t024] Leo (18) spots Lukasz (16) 8 cells away
+[t024] Leo (18): hunting -> aggressive
+[t025] SigurRos (19): camping -> cautious
+[t025] Lukasz (16) spots Leo (18) 2 cells away
+[t025] Athena (13) swings at Marcello (14) but misses
+[t025] Leo (18) hits Lukasz (16) with spear [-25 hp, 52 left]
+[t026] Bundinha (07) swings at Alice (08) but misses
+[t026] Alice (08) hits Bundinha (07) with bare hands [-15 hp, 2 left]
+[t027] Bundinha (07) swings at Alice (08) but misses
+[t027] Alice (08) swings at Bundinha (07) but misses
+[t027] Athena (13) swings at Marcello (14) but misses
+[t027] Marcello (14) hits Athena (13) with improvised club [-20 hp, 30 left]
+[t028] Athena (13): aggressive -> defensive
+[t028] SigurRos (19): cautious -> camping
+[t028] Bundinha (07) hits Alice (08) with knife [-20 hp, 43 left]
+[t028] Alice (08) hits Bundinha (07) with bare hands [-17 hp, 0 left]
+[t028] *** Bundinha (07) is eliminated by Alice (08) (kill #1) — 19 remain
+[t028] Alice (08): defensive -> cautious
+[t028] Athena (13) hits Marcello (14) with spear [-21 hp, 79 left]
+[t029] Athena (13) hits Marcello (14) with spear [-26 hp, 52 left]
+[t030] Athena (13): defensive -> aggressive
+[t031] SigurRos (19): camping -> cautious
+[t031] Alice (08) scavenges supplies at (35,79) [+10hp +25stam]
+[t031] Athena (13) swings at Marcello (14) but misses
+[t031] Marcello (14) swings at Athena (13) but misses
+[t032] Blubber (20): fleeing -> rushing
+[t032] Athena (13) swings at Marcello (14) but misses
+[t033] Mareti (01): defensive -> rushing
+[t033] Alice (04) hits Hortense (05) with bare hands [-13 hp, 87 left]
+[t033] Hortense (05) swings at Alice (04) but misses
+[t033] Athena (13) swings at Marcello (14) but misses
+[t033] Marcello (14) hits Athena (13) with improvised club [-22 hp, 8 left]
+[t034] Athena (13): aggressive -> defensive
+[t034] Sceadwian (11) spots Elliot (15) 7 cells away
+[t034] Sceadwian (11): hunting -> aggressive
+[t034] Athena (13) swings at Marcello (14) but misses
+[t035] Alice (04) hits Hortense (05) with bare hands [-14 hp, 73 left]
+[t035] Hortense (05) swings at Alice (04) but misses
+[t035] Athena (13) swings at Marcello (14) but misses
+[t035] Marcello (14) hits Athena (13) with improvised club [-16 hp, 0 left]
+[t035] *** Athena (13) is eliminated by Marcello (14) (kill #1) — 18 remain
+[t035] Marcello (14): aggressive -> hunting
+[t036] Dimonho (09): fleeing -> sneaking
+[t036] Cabron (10): aggressive -> sneaking
+[t036] Elliot (15): fleeing -> resting
+[t036] Evander (17): aggressive -> hunting
+[t036] SigurRos (19): cautious -> camping
+[t036] Blubber (20): rushing -> resting
+[t036] Marcello (14) spots Sceadwian (11) 9 cells away
+[t036] Marcello (14): hunting -> aggressive
+[t036] Elliot (15) spots Sceadwian (11) 1 cells away
+[t036] Elliot (15): resting -> fleeing
+[t037] SigurRos (19): camping -> hunting
+[t037] Mareti (01) takes a knife from the stash at (97,68)
+[t037] Mareti (01): rushing -> scouting
+[t037] Alice (04) swings at Hortense (05) but misses
+[t037] Hortense (05) swings at Alice (04) but misses
+[t038] Blubber (20): resting -> rushing
+[t039] Lukasz (16): fleeing -> rushing
+[t039] Leo (18): aggressive -> hunting
+[t039] Elliot (15) collapses from exhaustion and rests
+[t039] Sceadwian (11) spots Marcello (14) 4 cells away
+[t039] Alice (04) swings at Hortense (05) but misses
+[t039] Hortense (05) swings at Alice (04) but misses
+[t040] Elliot (15): resting -> fleeing
+[t040] SigurRos (19): hunting -> camping
+[t040] Blubber (20): rushing -> resting
+[t040] Alice (08) takes a knife from the stash at (42,78)
+[t040] stash at (42,78) is empty
+[t040] Alice (08): cautious -> hunting
+[t041] SigurRos (19): camping -> cautious
+[t041] Blubber (20): resting -> rushing
+[t041] Leo (18) spots Evander (17) 7 cells away
+[t041] Leo (18): hunting -> aggressive
+[t041] Alice (04) swings at Hortense (05) but misses
+[t041] Hortense (05) hits Alice (04) with improvised club [-18 hp, 82 left]
+[t041] Sceadwian (11) hits Marcello (14) with knife [-20 hp, 32 left]
+[t041] Marcello (14) hits Sceadwian (11) with improvised club [-20 hp, 80 left]
+[t042] Sceadwian (11) spots and disarms a trap at (42,29)
+[t042] Elliot (15) collapses from exhaustion and rests
+[t042] Leo (18) spots Blubber (20) 8 cells away
+[t043] Elliot (15): resting -> fleeing
+[t043] Evander (17) spots Leo (18) 1 cells away
+[t043] Evander (17): hunting -> aggressive
+[t043] Leo (18) spots Evander (17) 1 cells away
+[t043] Leo (18) spots Blubber (20) 3 cells away
+[t043] Evander (17) hits Leo (18) with spear [-25 hp, 75 left]
+[t043] Leo (18) hits Evander (17) with spear [-22 hp, 78 left]
+[t044] SigurRos (19): cautious -> hunting
+[t044] Blubber (20): rushing -> resting
+[t044] Evander (17) spots Blubber (20) 2 cells away
+[t044] Leo (18) spots Evander (17) 2 cells away
+[t044] Leo (18) spots Blubber (20) 2 cells away
+[t044] Blubber (20) spots Evander (17) 2 cells away
+[t044] Blubber (20): resting -> fleeing
+[t044] Blubber (20) spots Leo (18) 2 cells away
+[t045] Evander (17) spots Leo (18) 1 cells away
+[t045] Leo (18) spots Evander (17) 1 cells away
+[t045] Leo (18) spots Blubber (20) 4 cells away
+[t045] Sceadwian (11) swings at Marcello (14) but misses
+[t045] Marcello (14) swings at Sceadwian (11) but misses
+[t045] Evander (17) swings at Leo (18) but misses
+[t045] Leo (18) hits Evander (17) with spear [-28 hp, 50 left]
+[t046] Cabron (10): sneaking -> hiding
+[t046] Elliot (15) collapses from exhaustion and rests
+[t046] Leo (18) spots Evander (17) 3 cells away
+[t046] Leo (18) spots Blubber (20) 6 cells away
+[t047] Elliot (15): resting -> fleeing
+[t047] Deh (03) spots Lukasz (16) 3 cells away
+[t047] Lukasz (16) spots Deh (03) 3 cells away
+[t047] Lukasz (16): rushing -> fleeing
+[t047] Leo (18) spots Evander (17) 5 cells away
+[t048] Alice (08): hunting -> aggressive
+[t048] SigurRos (19): hunting -> camping
+[t048] Deh (03) takes a knife from the stash at (114,58)
+[t048] stash at (114,58) is empty
+[t048] Deh (03) spots Flimbersnatch (02) 1 cells away
+[t048] Deh (03) spots Lukasz (16) 4 cells away
+[t048] Lukasz (16) spots Flimbersnatch (02) 4 cells away
+[t048] Lukasz (16) spots Deh (03) 4 cells away
+[t048] SigurRos (19) spots Leo (18) 5 cells away
+[t048] SigurRos (19): camping -> aggressive
+[t049] Elliot (15) collapses from exhaustion and rests
+[t049] Blubber (20) collapses from exhaustion and rests
+[t049] Deh (03) spots Flimbersnatch (02) 2 cells away
+[t049] Leo (18) spots SigurRos (19) 5 cells away
+[t049] Sceadwian (11) hits Marcello (14) with knife [-23 hp, 9 left]
+[t049] Marcello (14) swings at Sceadwian (11) but misses
+[t049] Evander (17) hits Leo (18) with spear [-29 hp, 46 left]
+[t049] Leo (18) hits Evander (17) with spear [-23 hp, 27 left]
+[t050] Marcello (14): aggressive -> defensive
+[t050] Blubber (20): resting -> fleeing
+[t050] Leo (18) spots Evander (17) 4 cells away
+[t050] Leo (18) spots SigurRos (19) 2 cells away
+[t050] Leo (18) hits SigurRos (19) with spear [-24 hp, 55 left]
+[t050] SigurRos (19) swings at Leo (18) but misses
+[t051] Cabron (10): hiding -> camping
+[t051] Elliot (15): resting -> sneaking
+[t051] Lukasz (16) collapses from exhaustion and rests
+[t051] Blubber (20) collapses from exhaustion and rests
+[t051] Leo (18) spots Evander (17) 4 cells away
+[t051] Leo (18) spots SigurRos (19) 4 cells away
+[t051] Alice (04) swings at Hortense (05) but misses
+[t051] Hortense (05) swings at Alice (04) but misses
+[t051] Sceadwian (11) swings at Marcello (14) but misses
+[t051] Marcello (14) swings at Sceadwian (11) but misses
+[t051] SigurRos (19) swings at Leo (18) but misses
+[t052] Cabron (10): camping -> hunting
+[t052] Lukasz (16): resting -> fleeing
+[t052] Blubber (20): resting -> fleeing
+[t052] Nakombi (06) spots Alice (08) 1 cells away
+[t052] Nakombi (06): cautious -> fleeing
+[t052] Leo (18) spots Evander (17) 3 cells away
+[t052] Leo (18) spots SigurRos (19) 3 cells away
+[t052] Alice (08) hits Nakombi (06) with knife [-23 hp, 77 left]
+[t052] Nakombi (06) swings at Alice (08) but misses
+[t052] SigurRos (19) swings at Leo (18) but misses
+[t053] Dimonho (09) spots Cabron (10) 1 cells away
+[t053] Dimonho (09): sneaking -> fleeing
+[t053] Cabron (10) spots Dimonho (09) 1 cells away
+[t053] Cabron (10): hunting -> aggressive
+[t053] Leo (18) spots Evander (17) 3 cells away
+[t053] Leo (18) spots SigurRos (19) 3 cells away
+[t053] Cabron (10) hits Dimonho (09) with improvised club [-19 hp, 6 left]
+[t053] Dimonho (09) hits Cabron (10) with bare hands [-12 hp, 35 left]
+[t053] SigurRos (19) swings at Leo (18) but misses
+[t054] Dimonho (09) takes a knife from the stash at (13,65)
+[t054] stash at (13,65) is empty
+[t054] Dimonho (09): fleeing -> aggressive
+[t054] Lukasz (16) collapses from exhaustion and rests
+[t054] Blubber (20) collapses from exhaustion and rests
+[t054] Leo (18) spots Evander (17) 4 cells away
+[t054] Leo (18) spots SigurRos (19) 5 cells away
+[t055] Lukasz (16): resting -> fleeing
+[t055] Blubber (20): resting -> fleeing
+[t055] Leo (18) spots Evander (17) 6 cells away
+[t055] Leo (18) spots SigurRos (19) 5 cells away
+[t055] Flimbersnatch (02) swings at Deh (03) but misses
+[t055] Deh (03) hits Flimbersnatch (02) with knife [-20 hp, 54 left]
+[t055] Dimonho (09) hits Cabron (10) with knife [-22 hp, 14 left]
+[t055] Cabron (10) hits Dimonho (09) with improvised club [-17 hp, 0 left]
+[t055] *** Dimonho (09) is eliminated by Cabron (10) (kill #1) — 17 remain
+[t055] Cabron (10): aggressive -> sneaking
+[t056] Leo (18) spots Evander (17) 5 cells away
+[t056] Leo (18) spots SigurRos (19) 4 cells away
+[t057] Cabron (10): sneaking -> hiding
+[t057] Lukasz (16) collapses from exhaustion and rests
+[t057] Blubber (20) collapses from exhaustion and rests
+[t057] Leo (18) spots Evander (17) 2 cells away
+[t057] Leo (18) spots SigurRos (19) 3 cells away
+[t057] Alice (08) hits Nakombi (06) with knife [-18 hp, 60 left]
+[t057] Nakombi (06) swings at Alice (08) but misses
+[t057] Evander (17) swings at Leo (18) but misses
+[t057] Leo (18) hits Evander (17) with spear [-25 hp, 2 left]
+[t057] SigurRos (19) swings at Leo (18) but misses
+[t058] Lukasz (16): resting -> fleeing
+[t058] Leo (18) spots Evander (17) 3 cells away
+[t058] Leo (18) spots SigurRos (19) 4 cells away
+[t058] SigurRos (19) hits Leo (18) with bow [-18 hp, 28 left]
+[t059] Leo (18) spots Evander (17) 4 cells away
+[t059] Leo (18) spots SigurRos (19) 2 cells away
+[t059] Flimbersnatch (02) hits Deh (03) with axe [-27 hp, 73 left]
+[t059] Deh (03) hits Flimbersnatch (02) with knife [-24 hp, 30 left]
+[t059] Leo (18) hits SigurRos (19) with spear [-26 hp, 29 left]
+[t059] SigurRos (19) swings at Leo (18) but misses
+[t060] Blubber (20): resting -> rushing
+[t060] Lukasz (16) collapses from exhaustion and rests
+[t060] Leo (18) spots Evander (17) 6 cells away
+[t060] Leo (18) spots SigurRos (19) 3 cells away
+[t060] Sceadwian (11) hits Marcello (14) with knife [-20 hp, 0 left]
+[t060] *** Marcello (14) is eliminated by Sceadwian (11) (kill #1) — 16 remain
+[t060] Sceadwian (11): aggressive -> resting
+[t060] SigurRos (19) swings at Leo (18) but misses
+[t061] Sceadwian (11): resting -> hunting
+[t061] Lukasz (16): resting -> fleeing
+[t061] Leo (18) spots Evander (17) 7 cells away
+[t061] SigurRos (19) swings at Leo (18) but misses
+[t062] Cabron (10): hiding -> camping
+[t063] Lukasz (16) collapses from exhaustion and rests
+[t063] Leo (18) spots SigurRos (19) 6 cells away
+[t063] Flimbersnatch (02) hits Deh (03) with axe [-26 hp, 46 left]
+[t063] Deh (03) hits Flimbersnatch (02) with knife [-25 hp, 5 left]
+[t064] Sceadwian (11): hunting -> resting
+[t064] Blubber (20): rushing -> resting
+[t064] Leo (18) spots Evander (17) 4 cells away
+[t064] Leo (18) spots SigurRos (19) 3 cells away
+[t064] SigurRos (19) hits Leo (18) with bow [-18 hp, 9 left]
+[t065] Cabron (10): camping -> hunting
+[t065] Sceadwian (11): resting -> hunting
+[t065] Lukasz (16): resting -> rushing
+[t065] Leo (18) spots Evander (17) 6 cells away
+[t065] Leo (18) spots SigurRos (19) 3 cells away
+[t065] SigurRos (19) swings at Leo (18) but misses
+[t066] Elliot (15): sneaking -> hiding
+[t066] Blubber (20): resting -> rushing
+[t066] Leo (18) spots Evander (17) 3 cells away
+[t066] Leo (18) spots SigurRos (19) 2 cells away
+[t066] SigurRos (19) swings at Leo (18) but misses
+[t067] Leo (18) spots Evander (17) 1 cells away
+[t067] Leo (18) spots SigurRos (19) 4 cells away
+[t067] SigurRos (19) spots Evander (17) 4 cells away
+[t067] Evander (17) hits Leo (18) with spear [-24 hp, 0 left]
+[t067] *** Leo (18) is eliminated by Evander (17) (kill #1) — 15 remain
+[t067] Evander (17): aggressive -> sneaking
+[t068] Cabron (10): hunting -> camping
+[t068] Lukasz (16): rushing -> resting
+[t068] Blubber (20): rushing -> resting
+[t069] Cabron (10): camping -> hunting
+[t069] Blubber (20): resting -> rushing
+[t069] Flimbersnatch (02) collapses from exhaustion and rests
+[t070] Flimbersnatch (02): resting -> aggressive
+[t070] Elliot (15): hiding -> camping
+[t070] Lukasz (16): resting -> rushing
+[t070] Alice (04) collapses from exhaustion and rests
+[t070] Blubber (20) takes a sword from the stash at (85,43)
+[t070] Blubber (20): rushing -> resting
+[t070] Alice (04) spots Nakombi (06) 8 cells away
+[t070] Alice (04): resting -> aggressive
+[t071] Elliot (15): camping -> cautious
+[t071] Blubber (20): resting -> sneaking
+[t071] Alice (04) collapses from exhaustion and rests
+[t071] Alice (04) spots Hortense (05) 2 cells away
+[t071] Alice (04): resting -> aggressive
+[t071] Alice (04) spots Nakombi (06) 4 cells away
+[t071] Hortense (05) spots Nakombi (06) 6 cells away
+[t071] Alice (08) spots Alice (04) 6 cells away
+[t071] Alice (08) spots Nakombi (06) 3 cells away
+[t071] Flimbersnatch (02) swings at Deh (03) but misses
+[t071] Deh (03) hits Flimbersnatch (02) with knife [-21 hp, 0 left]
+[t071] *** Flimbersnatch (02) is eliminated by Deh (03) (kill #1) — 14 remain
+[t071] Deh (03): aggressive -> scouting
+[t072] Deh (03): scouting -> camping
+[t072] Cabron (10): hunting -> camping
+[t072] Elliot (15): cautious -> strategizing
+[t072] Alice (04) collapses from exhaustion and rests
+[t072] Alice (04) spots Hortense (05) 1 cells away
+[t072] Alice (04): resting -> aggressive
+[t072] Alice (04) spots Nakombi (06) 1 cells away
+[t072] Alice (04) spots Alice (08) 1 cells away
+[t072] Hortense (05) spots Alice (04) 1 cells away
+[t072] Hortense (05) spots Nakombi (06) 1 cells away
+[t072] Hortense (05) spots Alice (08) 2 cells away
+[t072] Nakombi (06) spots Alice (04) 1 cells away
+[t072] Nakombi (06) spots Hortense (05) 1 cells away
+[t072] Nakombi (06) spots Alice (08) 1 cells away
+[t072] Alice (08) spots Alice (04) 1 cells away
+[t072] Alice (08) spots Hortense (05) 2 cells away
+[t072] Alice (08) spots Nakombi (06) 1 cells away
+[t072] Alice (04) hits Alice (08) with bare hands [-15 hp, 37 left]
+[t072] Alice (08) swings at Alice (04) but misses
+[t073] Deh (03): camping -> scouting
+[t073] Alice (04) collapses from exhaustion and rests
+[t073] Hortense (05) collapses from exhaustion and rests
+[t073] Alice (04) spots Hortense (05) 1 cells away
+[t073] Alice (04): resting -> aggressive
+[t073] Alice (04) spots Nakombi (06) 5 cells away
+[t073] Alice (04) spots Alice (08) 2 cells away
+[t073] Hortense (05) spots Alice (04) 1 cells away
+[t073] Hortense (05): resting -> aggressive
+[t073] Hortense (05) spots Nakombi (06) 5 cells away
+[t073] Hortense (05) spots Alice (08) 2 cells away
+[t073] Alice (08) spots Alice (04) 2 cells away
+[t073] Alice (08) spots Hortense (05) 2 cells away
+[t073] Alice (08) spots Nakombi (06) 3 cells away
+[t074] Elliot (15): strategizing -> cautious
+[t074] Alice (04) collapses from exhaustion and rests
+[t074] Hortense (05) collapses from exhaustion and rests
+[t074] Alice (04) spots Nakombi (06) 6 cells away
+[t074] Alice (04): resting -> aggressive
+[t074] Alice (04) spots Alice (08) 4 cells away
+[t074] Hortense (05) spots Alice (04) 3 cells away
+[t074] Hortense (05): resting -> aggressive
+[t074] Hortense (05) spots Nakombi (06) 6 cells away
+[t074] Hortense (05) spots Alice (08) 4 cells away
+[t074] Alice (08) spots Alice (04) 4 cells away
+[t074] Alice (08) spots Nakombi (06) 1 cells away
+[t075] Cabron (10): camping -> hunting
+[t075] Alice (04) collapses from exhaustion and rests
+[t075] Hortense (05) collapses from exhaustion and rests
+[t075] Alice (04) spots Hortense (05) 1 cells away
+[t075] Alice (04): resting -> aggressive
+[t075] Alice (04) spots Nakombi (06) 4 cells away
+[t075] Alice (04) spots Alice (08) 2 cells away
+[t075] Hortense (05) spots Alice (04) 1 cells away
+[t075] Hortense (05): resting -> aggressive
+[t075] Hortense (05) spots Alice (08) 2 cells away
+[t075] Alice (08) spots Alice (04) 2 cells away
+[t075] Alice (08) spots Hortense (05) 2 cells away
+[t075] Alice (08) spots Nakombi (06) 1 cells away
+[t076] Deh (03): scouting -> camping
+[t076] Elliot (15): cautious -> strategizing
+[t076] Lukasz (16): rushing -> resting
+[t076] Alice (04) collapses from exhaustion and rests
+[t076] Hortense (05) collapses from exhaustion and rests
+[t076] Alice (04) spots Hortense (05) 2 cells away
+[t076] Alice (04): resting -> aggressive
+[t076] Alice (04) spots Nakombi (06) 2 cells away
+[t076] Alice (04) spots Alice (08) 1 cells away
+[t076] Hortense (05) spots Alice (04) 2 cells away
+[t076] Hortense (05): resting -> aggressive
+[t076] Hortense (05) spots Nakombi (06) 4 cells away
+[t076] Hortense (05) spots Alice (08) 2 cells away
+[t076] Nakombi (06) spots Alice (04) 2 cells away
+[t076] Nakombi (06) spots Alice (08) 1 cells away
+[t076] Alice (08) spots Alice (04) 1 cells away
+[t076] Alice (08) spots Hortense (05) 2 cells away
+[t076] Alice (08) spots Nakombi (06) 1 cells away
+[t076] Alice (04) swings at Alice (08) but misses
+[t076] Alice (08) swings at Alice (04) but misses
+[t077] Elliot (15): strategizing -> cautious
+[t077] Alice (04) collapses from exhaustion and rests
+[t077] Hortense (05) collapses from exhaustion and rests
+[t077] Pikachu (12) takes a axe from the stash at (42,66)
+[t077] Alice (04) spots Hortense (05) 2 cells away
+[t077] Alice (04): resting -> aggressive
+[t077] Alice (04) spots Nakombi (06) 4 cells away
+[t077] Alice (04) spots Alice (08) 1 cells away
+[t077] Hortense (05) spots Alice (04) 2 cells away
+[t077] Hortense (05): resting -> aggressive
+[t077] Hortense (05) spots Nakombi (06) 5 cells away
+[t077] Hortense (05) spots Alice (08) 2 cells away
+[t077] Alice (08) spots Alice (04) 1 cells away
+[t077] Alice (08) spots Hortense (05) 2 cells away
+[t077] Alice (08) spots Nakombi (06) 3 cells away
+[t077] Alice (04) swings at Alice (08) but misses
+[t077] Alice (08) swings at Alice (04) but misses
+[t078] Deh (03): camping -> scouting
+[t078] Lukasz (16): resting -> rushing
+[t078] Alice (04) collapses from exhaustion and rests
+[t078] Hortense (05) collapses from exhaustion and rests
+[t078] Alice (04) spots Hortense (05) 1 cells away
+[t078] Alice (04): resting -> aggressive
+[t078] Alice (04) spots Nakombi (06) 2 cells away
+[t078] Alice (04) spots Alice (08) 2 cells away
+[t078] Hortense (05) spots Alice (04) 1 cells away
+[t078] Hortense (05): resting -> aggressive
+[t078] Hortense (05) spots Nakombi (06) 4 cells away
+[t078] Hortense (05) spots Alice (08) 4 cells away
+[t078] Nakombi (06) spots Alice (04) 2 cells away
+[t078] Nakombi (06) spots Alice (08) 1 cells away
+[t078] Alice (08) spots Alice (04) 2 cells away
+[t078] Alice (08) spots Hortense (05) 4 cells away
+[t078] Alice (08) spots Nakombi (06) 1 cells away
+[t079] Alice (04) collapses from exhaustion and rests
+[t079] Hortense (05) collapses from exhaustion and rests
+[t079] Alice (04) spots Hortense (05) 1 cells away
+[t079] Alice (04): resting -> aggressive
+[t079] Alice (04) spots Nakombi (06) 4 cells away
+[t079] Alice (04) spots Alice (08) 1 cells away
+[t079] Hortense (05) spots Alice (04) 1 cells away
+[t079] Hortense (05): resting -> aggressive
+[t079] Hortense (05) spots Nakombi (06) 4 cells away
+[t079] Hortense (05) spots Alice (08) 1 cells away
+[t079] Alice (08) spots Alice (04) 1 cells away
+[t079] Alice (08) spots Hortense (05) 1 cells away
+[t079] Alice (08) spots Nakombi (06) 3 cells away
+[t079] Lukasz (16) spots Evander (17) 1 cells away
+[t079] Lukasz (16): rushing -> fleeing
+[t079] Lukasz (16) spots SigurRos (19) 7 cells away
+[t079] Evander (17) spots Lukasz (16) 1 cells away
+[t079] Evander (17): sneaking -> aggressive
+[t079] Alice (04) swings at Alice (08) but misses
+[t079] Alice (08) hits Alice (04) with knife [-23 hp, 60 left]
+[t079] Hortense (05) hits Alice (08) with improvised club [-16 hp, 22 left]
+[t079] Alice (08) swings at Hortense (05) but misses
+[t079] Evander (17) hits Lukasz (16) with spear [-28 hp, 24 left]
+[t079] Lukasz (16) breaks off and flees
+[t080] Alice (04): aggressive -> defensive
+[t080] Sceadwian (11): hunting -> resting
+[t080] SigurRos (19): aggressive -> sneaking
+[t080] Hortense (05) collapses from exhaustion and rests
+[t080] Alice (04) spots Hortense (05) 1 cells away
+[t080] Alice (04) spots Nakombi (06) 5 cells away
+[t080] Alice (04): defensive -> aggressive
+[t080] Alice (04) spots Alice (08) 1 cells away
+[t080] Alice (04): aggressive -> defensive
+[t080] Hortense (05) spots Alice (04) 1 cells away
+[t080] Hortense (05): resting -> aggressive
+[t080] Hortense (05) spots Nakombi (06) 4 cells away
+[t080] Hortense (05) spots Alice (08) 2 cells away
+[t080] Alice (08) spots Alice (04) 1 cells away
+[t080] Alice (08) spots Hortense (05) 2 cells away
+[t080] Alice (08) spots Nakombi (06) 5 cells away
+[t081] Sceadwian (11): resting -> hunting
+[t081] Hortense (05) collapses from exhaustion and rests
+[t081] Alice (04) spots Hortense (05) 1 cells away
+[t081] Alice (04) spots Nakombi (06) 8 cells away
+[t081] Alice (04): defensive -> aggressive
+[t081] Alice (04) spots Alice (08) 5 cells away
+[t081] Alice (04): aggressive -> defensive
+[t081] Hortense (05) spots Alice (04) 1 cells away
+[t081] Hortense (05): resting -> aggressive
+[t081] Lukasz (16) spots SigurRos (19) 2 cells away
+[t081] SigurRos (19) spots Lukasz (16) 2 cells away
+[t081] SigurRos (19): sneaking -> aggressive
+[t081] Hortense (05) hits Alice (04) with improvised club [-19 hp, 41 left]
+[t081] Alice (04) hits Hortense (05) with bare hands [-12 hp, 61 left]
+[t081] SigurRos (19) hits Lukasz (16) with bow [-21 hp, 3 left]
+[t082] Hortense (05) collapses from exhaustion and rests
+[t082] Alice (04) spots Hortense (05) 2 cells away
+[t083] Hortense (05): resting -> aggressive
+[t083] Lukasz (16) collapses from exhaustion and rests
+[t083] Alice (04) hits Hortense (05) with bare hands [-14 hp, 47 left]
+[t083] Hortense (05) hits Alice (04) with improvised club [-17 hp, 24 left]
+[t083] Alice (08) hits Nakombi (06) with knife [-22 hp, 38 left]
+[t083] Nakombi (06) swings at Alice (08) but misses
+[t084] Alice (04): defensive -> fleeing
+[t084] Cabron (10): hunting -> camping
+[t084] Elliot (15): cautious -> strategizing
+[t084] Lukasz (16): resting -> fleeing
+[t085] Cabron (10): camping -> hunting
+[t085] Pikachu (12) scavenges supplies at (35,79) [+10hp +25stam]
+[t086] Elliot (15): strategizing -> camping
+[t086] Alice (04) collapses from exhaustion and rests
+[t086] Lukasz (16) collapses from exhaustion and rests
+[t086] Deh (03) spots Mareti (01) 4 cells away
+[t086] Deh (03): scouting -> aggressive
+[t087] Alice (04): resting -> fleeing
+[t087] Elliot (15): camping -> strategizing
+[t087] Lukasz (16): resting -> fleeing
+[t087] Mareti (01) spots Deh (03) 1 cells away
+[t087] Mareti (01): scouting -> aggressive
+[t087] Sceadwian (11) spots Lukasz (16) 5 cells away
+[t087] Sceadwian (11): hunting -> aggressive
+[t087] Lukasz (16) spots Sceadwian (11) 5 cells away
+[t087] Mareti (01) hits Deh (03) with knife [-24 hp, 23 left]
+[t087] Deh (03) hits Mareti (01) with knife [-26 hp, 74 left]
+[t087] Alice (08) hits Nakombi (06) with knife [-18 hp, 20 left]
+[t087] Nakombi (06) breaks off and flees
+[t087] Nakombi (06) swings at Alice (08) but misses
+[t088] Deh (03): aggressive -> defensive
+[t088] Cabron (10): hunting -> camping
+[t088] Elliot (15): strategizing -> cautious
+[t089] Cabron (10): camping -> scouting
+[t089] Alice (04) collapses from exhaustion and rests
+[t089] Nakombi (06) collapses from exhaustion and rests
+[t089] Lukasz (16) collapses from exhaustion and rests
+[t089] Mareti (01) hits Deh (03) with knife [-25 hp, 0 left]
+[t089] *** Deh (03) is eliminated by Mareti (01) (kill #1) — 13 remain
+[t089] Mareti (01): aggressive -> scouting
+[t090] Alice (04): resting -> fleeing
+[t090] Nakombi (06): resting -> fleeing
+[t090] Lukasz (16): resting -> hiding
+[t091] Nakombi (06) collapses from exhaustion and rests
+[t092] Nakombi (06): resting -> fleeing
+[t092] Cabron (10): scouting -> hunting
+[t092] Evander (17): aggressive -> sneaking
+[t092] Alice (04) collapses from exhaustion and rests
+[t093] Alice (04): resting -> fleeing
+[t093] Nakombi (06) collapses from exhaustion and rests
+[t093] Cabron (10) scavenges supplies at (23,65) [+10hp +25stam]
+[t094] Nakombi (06): resting -> fleeing
+[t095] Alice (04) collapses from exhaustion and rests
+[t095] Nakombi (06) collapses from exhaustion and rests
+[t096] Alice (04): resting -> fleeing
+[t096] Nakombi (06): resting -> fleeing
+[t096] Cabron (10): hunting -> camping
+[t096] Elliot (15): cautious -> camping
+[t096] SigurRos (19): aggressive -> sneaking
+[t097] Hortense (05): aggressive -> resting
+[t097] Nakombi (06) collapses from exhaustion and rests
+[t098] Nakombi (06): resting -> fleeing
+[t098] Cabron (10): camping -> hunting
+[t098] Elliot (15): camping -> strategizing
+[t098] Nakombi (06) stumbles into a trap at (115,86) [-22 hp]
+[t098] *** Nakombi (06) is eliminated (trap) — 12 remain
+[t099] Alice (08): aggressive -> sneaking
+[t099] Elliot (15): strategizing -> cautious
+[t099] Alice (04) collapses from exhaustion and rests
+[t100] Hortense (05): resting -> scouting
+[t100] Sceadwian (11): aggressive -> resting
+[t101] Alice (04): resting -> sneaking
+[t101] Sceadwian (11): resting -> hunting
+[t104] Hortense (05): scouting -> camping
+[t104] Cabron (10): hunting -> camping
+[t104] Elliot (15): cautious -> strategizing
+[t105] Hortense (05): camping -> scouting
+[t105] Elliot (15): strategizing -> cautious
+[t106] Cabron (10): camping -> scouting
+[t108] Hortense (05): scouting -> camping
+[t108] Cabron (10): scouting -> hunting
+[t109] Hortense (05): camping -> scouting
+[t112] Sceadwian (11): hunting -> resting
+[t112] Elliot (15): cautious -> camping
+[t112] Lukasz (16): hiding -> sneaking
+[t113] Sceadwian (11): resting -> hunting
+[t114] Elliot (15): camping -> cautious
+[t116] Cabron (10): hunting -> camping
+[t116] Elliot (15): cautious -> strategizing
+[t117] Cabron (10): camping -> hunting
+[t117] Elliot (15): strategizing -> cautious
+[t120] Cabron (10): hunting -> camping
+[t120] Elliot (15): cautious -> strategizing
+[t121] Cabron (10): camping -> hunting
+[t123] Elliot (15): strategizing -> cautious
+[t124] Cabron (10): hunting -> camping
+[t124] Sceadwian (11): hunting -> resting
+[t124] Elliot (15): cautious -> camping
+[t124] Evander (17) spots SigurRos (19) 2 cells away
+[t124] Evander (17): sneaking -> aggressive
+[t124] SigurRos (19) spots Evander (17) 2 cells away
+[t124] SigurRos (19): sneaking -> aggressive
+[t124] Evander (17) hits SigurRos (19) with spear [-26 hp, 3 left]
+[t124] SigurRos (19) hits Evander (17) with bow [-17 hp, 0 left]
+[t124] *** Evander (17) is eliminated by SigurRos (19) (kill #1) — 11 remain
+[t124] SigurRos (19): aggressive -> sneaking
+[t125] Cabron (10): camping -> hunting
+[t125] Sceadwian (11): resting -> hunting
+[t125] Elliot (15): camping -> cautious
+[t127] Alice (04) spots and disarms a trap at (34,82)
+[t128] Alice (08): sneaking -> resting
+[t131] Hortense (05) spots Mareti (01) 9 cells away
+[t131] Hortense (05): scouting -> aggressive
+[t131] Lukasz (16) spots Blubber (20) 5 cells away
+[t131] Lukasz (16): sneaking -> fleeing
+[t132] Alice (08): resting -> hunting
+[t132] Cabron (10): hunting -> camping
+[t132] Elliot (15): cautious -> camping
+[t133] Elliot (15): camping -> cautious
+[t134] Cabron (10): camping -> scouting
+[t134] Mareti (01) spots Hortense (05) 6 cells away
+[t134] Mareti (01): scouting -> aggressive
+[t136] Cabron (10): scouting -> camping
+[t136] Elliot (15): cautious -> camping
+[t136] Mareti (01) hits Hortense (05) with knife [-25 hp, 22 left]
+[t136] Hortense (05) swings at Mareti (01) but misses
+[t137] Cabron (10): camping -> hunting
+[t137] Elliot (15): camping -> cautious
+[t139] Hortense (05): aggressive -> defensive
+[t140] !!! THE ARENA BEGINS TO COLLAPSE FROM THE EDGES !!!
+[t140] Cabron (10): hunting -> camping
+[t140] Sceadwian (11): hunting -> resting
+[t141] Cabron (10): camping -> scouting
+[t141] Sceadwian (11): resting -> hunting
+[t142] Mareti (01) hits Hortense (05) with knife [-25 hp, 0 left]
+[t142] *** Hortense (05) is eliminated by Mareti (01) (kill #2) — 10 remain
+[t142] Mareti (01): aggressive -> scouting
+[t144] Cabron (10): scouting -> camping
+[t144] Elliot (15): cautious -> camping
+[t144] Lukasz (16): fleeing -> sneaking
+[t145] Cabron (10): camping -> scouting
+[t145] Elliot (15): camping -> cautious
+[t146] Pikachu (12) spots Blubber (20) 3 cells away
+[t146] Pikachu (12): scouting -> aggressive
+[t146] Blubber (20) spots Pikachu (12) 3 cells away
+[t146] Blubber (20): sneaking -> defensive
+[t147] Pikachu (12) hits Blubber (20) with axe [-28 hp, 47 left]
+[t147] Blubber (20) swings at Pikachu (12) but misses
+[t148] Cabron (10): scouting -> hunting
+[t148] Blubber (20): defensive -> fleeing
+[t152] Sceadwian (11): hunting -> resting
+[t152] Elliot (15): cautious -> strategizing
+[t153] Sceadwian (11): resting -> hunting
+[t153] Mareti (01) spots Elliot (15) 3 cells away
+[t153] Mareti (01): scouting -> aggressive
+[t153] Elliot (15) spots Mareti (01) 3 cells away
+[t153] Elliot (15): strategizing -> defensive
+[t154] Mareti (01) hits Elliot (15) with knife [-21 hp, 25 left]
+[t154] Elliot (15) swings at Mareti (01) but misses
+[t155] Elliot (15): defensive -> fleeing
+[t157] Alice (08) spots Blubber (20) 9 cells away
+[t157] Alice (08): hunting -> aggressive
+[t160] Cabron (10): hunting -> scouting
+[t160] Blubber (20): fleeing -> sneaking
+[t161] Pikachu (12): aggressive -> scouting
+[t162] Pikachu (12) scavenges supplies at (60,50) [+10hp +25stam]
+[t164] Cabron (10): scouting -> camping
+[t164] Sceadwian (11): hunting -> resting
+[t165] Sceadwian (11): resting -> hunting
+[t165] Lukasz (16) spots SigurRos (19) 1 cells away
+[t165] Lukasz (16): sneaking -> fleeing
+[t165] SigurRos (19) spots Lukasz (16) 1 cells away
+[t165] SigurRos (19): sneaking -> aggressive
+[t165] SigurRos (19) swings at Lukasz (16) but misses
+[t165] Lukasz (16) swings at SigurRos (19) but misses
+[t166] Pikachu (12) spots Mareti (01) 7 cells away
+[t166] Pikachu (12): scouting -> aggressive
+[t166] SigurRos (19) swings at Lukasz (16) but misses
+[t168] Mareti (01): aggressive -> scouting
+[t168] Elliot (15): fleeing -> sneaking
+[t169] Cabron (10): camping -> hunting
+[t172] Alice (08): aggressive -> hunting
+[t176] Cabron (10): hunting -> scouting
+[t176] Sceadwian (11): hunting -> resting
+[t176] Lukasz (16): fleeing -> hiding
+[t176] Mareti (01) scavenges supplies at (60,50) [+10hp +25stam]
+[t177] Sceadwian (11): resting -> hunting
+[t179] SigurRos (19): aggressive -> sneaking
+[t180] Cabron (10): scouting -> hunting
+[t180] Pikachu (12): aggressive -> scouting
+[t181] Lukasz (16): hiding -> sneaking
+[t190] Alice (08) spots Blubber (20) 5 cells away
+[t190] Alice (08): hunting -> aggressive
+[t192] Sceadwian (11): hunting -> resting
+[t193] Sceadwian (11): resting -> hunting
+[t195] Blubber (20) spots Alice (08) 3 cells away
+[t195] Blubber (20): sneaking -> defensive
+[t196] Cabron (10): hunting -> scouting
+[t197] Lukasz (16) spots Mareti (01) 5 cells away
+[t197] Lukasz (16): sneaking -> fleeing
+[t198] Alice (08) hits Blubber (20) with knife [-23 hp, 24 left]
+[t198] Blubber (20) swings at Alice (08) but misses
+[t199] Pikachu (12) spots Lukasz (16) 5 cells away
+[t199] Pikachu (12): scouting -> aggressive
+[t199] Lukasz (16) spots Pikachu (12) 5 cells away
+[t199] Alice (08) hits Blubber (20) with knife [-22 hp, 3 left]
+[t199] Blubber (20) breaks off and flees
+[t199] Blubber (20) swings at Alice (08) but misses
+[t200] Cabron (10): scouting -> hunting
+[t202] Mareti (01) spots Pikachu (12) 4 cells away
+[t202] Mareti (01): scouting -> aggressive
+[t202] Pikachu (12) spots Mareti (01) 4 cells away
+[t204] Sceadwian (11): hunting -> resting
+[t205] Sceadwian (11): resting -> hunting
+[t205] Mareti (01) hits Pikachu (12) with knife [-25 hp, 75 left]
+[t205] Pikachu (12) swings at Mareti (01) but misses
+[t208] Elliot (15) spots SigurRos (19) 2 cells away
+[t208] Elliot (15): sneaking -> defensive
+[t208] SigurRos (19) spots Elliot (15) 2 cells away
+[t208] SigurRos (19): sneaking -> aggressive
+[t208] SigurRos (19) hits Elliot (15) with bow [-17 hp, 8 left]
+[t209] Mareti (01) hits Pikachu (12) with knife [-22 hp, 54 left]
+[t209] Pikachu (12) hits Mareti (01) with axe [-22 hp, 62 left]
+[t209] Elliot (15) swings at SigurRos (19) but misses
+[t209] SigurRos (19) swings at Elliot (15) but misses
+[t210] Mareti (01) swings at Pikachu (12) but misses
+[t210] Pikachu (12) hits Mareti (01) with axe [-26 hp, 36 left]
+[t210] SigurRos (19) hits Elliot (15) with bow [-21 hp, 0 left]
+[t210] *** Elliot (15) is eliminated by SigurRos (19) (kill #2) — 9 remain
+[t210] SigurRos (19): aggressive -> sneaking
+[t212] Alice (08): aggressive -> fleeing
+[t213] Mareti (01) hits Pikachu (12) with knife [-24 hp, 30 left]
+[t213] Pikachu (12) hits Mareti (01) with axe [-24 hp, 12 left]
+[t215] Lukasz (16): fleeing -> sneaking
+[t215] Alice (08) collapses from exhaustion and rests
+[t215] Mareti (01) swings at Pikachu (12) but misses
+[t215] Pikachu (12) hits Mareti (01) with axe [-26 hp, 0 left]
+[t215] *** Mareti (01) is eliminated by Pikachu (12) (kill #1) — 8 remain
+[t215] Pikachu (12): aggressive -> sneaking
+[t216] Alice (08): resting -> aggressive
+[t216] Cabron (10): hunting -> camping
+[t216] Sceadwian (11): hunting -> resting
+[t217] Sceadwian (11): resting -> hunting
+[t218] Cabron (10): camping -> hunting
+[t220] Alice (04): sneaking -> fleeing
+[t220] Cabron (10): hunting -> camping
+[t221] Alice (08) collapses from exhaustion and rests
+[t222] Alice (08): resting -> aggressive
+[t222] Cabron (10): camping -> hunting
+[t224] Alice (04): fleeing -> sneaking
+[t224] Alice (08): aggressive -> resting
+[t224] Cabron (10): hunting -> camping
+[t224] Blubber (20): fleeing -> sneaking
+[t225] Alice (08): resting -> fleeing
+[t225] Cabron (10): camping -> hunting
+[t225] Pikachu (12): sneaking -> resting
+[t226] Blubber (20) spots and disarms a trap at (90,76)
+[t227] Pikachu (12): resting -> scouting
+[t228] Alice (08): fleeing -> resting
+[t228] Sceadwian (11): hunting -> resting
+[t228] Pikachu (12) spots Cabron (10) 4 cells away
+[t228] Pikachu (12): scouting -> aggressive
+[t229] Alice (08): resting -> sneaking
+[t229] Sceadwian (11): resting -> hunting
+[t229] Cabron (10) spots Pikachu (12) 1 cells away
+[t229] Cabron (10): hunting -> aggressive
+[t229] Cabron (10) hits Pikachu (12) with improvised club [-18 hp, 24 left]
+[t229] Pikachu (12) hits Cabron (10) with axe [-24 hp, 42 left]
+[t231] Cabron (10) swings at Pikachu (12) but misses
+[t231] Pikachu (12) hits Cabron (10) with axe [-24 hp, 19 left]
+[t233] Cabron (10) swings at Pikachu (12) but misses
+[t233] Pikachu (12) hits Cabron (10) with axe [-26 hp, 0 left]
+[t233] *** Cabron (10) is eliminated by Pikachu (12) (kill #2) — 7 remain
+[t233] Pikachu (12): aggressive -> sneaking
+[t236] Pikachu (12): sneaking -> resting
+[t240] Pikachu (12): resting -> scouting
+[t244] Sceadwian (11): hunting -> resting
+[t245] Sceadwian (11): resting -> hunting
+[t247] Alice (04): sneaking -> resting
+[t250] Alice (04): resting -> rushing
+[t254] Alice (04) takes a knife from the stash at (42,66)
+[t254] stash at (42,66) is empty
+[t254] Alice (04): rushing -> hunting
+[t256] Sceadwian (11): hunting -> resting
+[t257] Sceadwian (11): resting -> hunting
+[t259] Alice (04) spots Sceadwian (11) 8 cells away
+[t259] Alice (04): hunting -> aggressive
+[t260] SigurRos (19): sneaking -> fleeing
+[t260] Sceadwian (11) spots Alice (04) 5 cells away
+[t260] Sceadwian (11): hunting -> aggressive
+[t260] *** SigurRos (19) is eliminated (caught in the arena collapse) — 6 remain
+[t264] Alice (04) spots Pikachu (12) 9 cells away
+[t264] Pikachu (12) spots Alice (04) 9 cells away
+[t264] Pikachu (12): scouting -> aggressive
+[t264] Sceadwian (11) hits Alice (04) with knife [-20 hp, 22 left]
+[t264] Alice (04) swings at Sceadwian (11) but misses
+[t265] Alice (04) spots Sceadwian (11) 4 cells away
+[t265] Alice (04) spots Pikachu (12) 5 cells away
+[t265] *** Lukasz (16) is eliminated (caught in the arena collapse) — 5 remain
+[t266] Alice (04) spots Sceadwian (11) 6 cells away
+[t266] Alice (04) spots Pikachu (12) 4 cells away
+[t267] Alice (04) spots Sceadwian (11) 7 cells away
+[t267] Alice (04) spots Pikachu (12) 3 cells away
+[t268] Alice (04) spots Sceadwian (11) 5 cells away
+[t268] Alice (04) spots Pikachu (12) 6 cells away
+[t269] Alice (04) spots Sceadwian (11) 6 cells away
+[t269] Alice (04) spots Pikachu (12) 4 cells away
+[t269] Pikachu (12) spots Sceadwian (11) 4 cells away
+[t270] Alice (04) spots Sceadwian (11) 4 cells away
+[t270] Alice (04) spots Pikachu (12) 3 cells away
+[t270] Sceadwian (11) spots Pikachu (12) 4 cells away
+[t270] Pikachu (12) spots Alice (04) 3 cells away
+[t270] Pikachu (12) spots Sceadwian (11) 4 cells away
+[t271] Alice (04) spots Sceadwian (11) 3 cells away
+[t271] Alice (04) spots Pikachu (12) 3 cells away
+[t271] Pikachu (12) spots Alice (04) 3 cells away
+[t271] Pikachu (12) spots Sceadwian (11) 4 cells away
+[t272] Alice (04) spots Sceadwian (11) 4 cells away
+[t272] Alice (04) spots Pikachu (12) 1 cells away
+[t272] Pikachu (12) spots Alice (04) 1 cells away
+[t272] Pikachu (12) spots Sceadwian (11) 3 cells away
+[t273] Alice (04) spots Sceadwian (11) 3 cells away
+[t273] Alice (04) spots Pikachu (12) 1 cells away
+[t273] Sceadwian (11) spots Alice (04) 3 cells away
+[t273] Pikachu (12) spots Alice (04) 1 cells away
+[t273] Pikachu (12) spots Sceadwian (11) 4 cells away
+[t273] Alice (04) swings at Pikachu (12) but misses
+[t273] Pikachu (12) hits Alice (04) with axe [-28 hp, 0 left]
+[t273] *** Alice (04) is eliminated by Pikachu (12) (kill #3) — 4 remain
+[t273] Pikachu (12): aggressive -> hunting
+[t274] Pikachu (12) spots Sceadwian (11) 4 cells away
+[t274] Pikachu (12): hunting -> aggressive
+[t275] Sceadwian (11) collapses from exhaustion and rests
+[t275] Sceadwian (11) scavenges supplies at (60,50) [+10hp +25stam]
+[t275] Sceadwian (11) spots Pikachu (12) 3 cells away
+[t275] Sceadwian (11): resting -> aggressive
+[t283] Sceadwian (11) hits Pikachu (12) with knife [-22 hp, 21 left]
+[t283] Pikachu (12) swings at Sceadwian (11) but misses
+[t284] Alice (08) spots Blubber (20) 3 cells away
+[t284] Alice (08): sneaking -> aggressive
+[t284] Sceadwian (11) hits Pikachu (12) with knife [-23 hp, 0 left]
+[t284] *** Pikachu (12) is eliminated by Sceadwian (11) (kill #2) — 3 remain
+[t284] Sceadwian (11): aggressive -> resting
+[t285] Sceadwian (11): resting -> hunting
+[t286] Blubber (20) spots Alice (08) 1 cells away
+[t286] Blubber (20): sneaking -> fleeing
+[t287] Sceadwian (11) spots Alice (08) 8 cells away
+[t287] Sceadwian (11): hunting -> aggressive
+[t288] Sceadwian (11) spots Blubber (20) 6 cells away
+[t289] Alice (08) spots Sceadwian (11) 2 cells away
+[t289] Alice (08): aggressive -> defensive
+[t289] Alice (08) spots Blubber (20) 3 cells away
+[t289] Alice (08): defensive -> aggressive
+[t289] Sceadwian (11) spots Alice (08) 2 cells away
+[t289] Sceadwian (11) spots Blubber (20) 4 cells away
+[t290] Alice (08) spots Sceadwian (11) 2 cells away
+[t290] Alice (08): aggressive -> defensive
+[t290] Alice (08) spots Blubber (20) 3 cells away
+[t290] Alice (08): defensive -> aggressive
+[t290] Sceadwian (11) spots Alice (08) 2 cells away
+[t290] Sceadwian (11) spots Blubber (20) 1 cells away
+[t290] Blubber (20) spots Sceadwian (11) 1 cells away
+[t290] Sceadwian (11) hits Blubber (20) with knife [-19 hp, 0 left]
+[t290] *** Blubber (20) is eliminated by Sceadwian (11) (kill #3) — 2 remain
+[t290] Sceadwian (11): aggressive -> resting
+[t291] Sceadwian (11): resting -> hunting
+[t291] Alice (08) spots Sceadwian (11) 1 cells away
+[t291] Alice (08): aggressive -> defensive
+[t291] Sceadwian (11) spots Alice (08) 1 cells away
+[t291] Sceadwian (11): hunting -> aggressive
+[t291] Alice (08) swings at Sceadwian (11) but misses
+[t291] Sceadwian (11) swings at Alice (08) but misses
+[t294] Alice (08) swings at Sceadwian (11) but misses
+[t294] Sceadwian (11) hits Alice (08) with knife [-24 hp, 11 left]
+[t298] Alice (08) swings at Sceadwian (11) but misses
+[t298] Sceadwian (11) hits Alice (08) with knife [-25 hp, 0 left]
+[t298] *** Alice (08) is eliminated by Sceadwian (11) (kill #4) — 1 remain
+[t298] Sceadwian (11): aggressive -> resting
+[t298] === WINNER: Sceadwian (11) with 4 kill(s) after 298 ticks ===
