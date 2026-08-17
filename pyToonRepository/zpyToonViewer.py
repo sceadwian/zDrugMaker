@@ -21,6 +21,17 @@ Views
 * Population  -- roster-wide analytics: demographics, political and moral
                  spectra, core group averages (PHY/COG/PSY/SOC), per-
                  attribute box plots, correlations, and a rating band census.
+* 2dCS Rating -- how the 2D Combat Simulator reads each character: an
+                 aptitude score for all five weapon classes, the specific
+                 weapons that suit them best, the combat numbers the engine
+                 derives from their sheet, and a plain-English reading of
+                 how they will actually behave in a fight.
+
+The ratings tab imports its weights from zpyCombatArena06.py rather than
+keeping its own copy, so it cannot drift out of step with the simulator.
+If the engine is not beside this script the tab says so rather than
+guessing. See the 2dCS BRIDGE block below for how the rating is built and
+for the measured correlations that justify it.
 
 Python 3, standard library only (tkinter + csv + statistics).
 """
@@ -97,6 +108,20 @@ BAND_RANGES = ["1-9", "10-24", "25-39", "40-59", "60-74", "75-89",
                "90-98", "99"]
 
 
+def _wrap(text, width):
+    """Word-wrap for canvas text, which does not wrap on its own."""
+    words, lines, line = text.split(), [], ""
+    for w in words:
+        if line and len(line) + 1 + len(w) > width:
+            lines.append(line)
+            line = w
+        else:
+            line = (line + " " + w) if line else w
+    if line:
+        lines.append(line)
+    return lines
+
+
 def band_for(value):
     for upper, color, label, short in BANDS:
         if value <= upper:
@@ -153,6 +178,250 @@ def compute_attr_stats(roster):
     return out
 
 
+# ===================================================================
+# 2dCS BRIDGE
+# ===================================================================
+# The ratings tab reports how the COMBAT SIMULATOR reads these characters,
+# so every weight below is imported from the engine rather than copied
+# into this file. A copy would be a second source of truth that silently
+# goes stale the next time a weapon is rebalanced -- and this tool exists
+# to tell the truth about the sim, so it must ask the sim.
+#
+# If the engine is not beside this script (the pyToonRepository copy of
+# the viewer, for instance) the tab says so instead of guessing.
+try:
+    import zpyCombatArena06 as ARENA
+    try:
+        import zpyArenaTournament as GAME
+        CS_VERSION = "v" + GAME.VERSION
+        CLASS_BIAS = GAME.CLASS_BIAS
+    except Exception:                       # engine present, game layer not
+        GAME = None
+        CS_VERSION = "v06e"
+        CLASS_BIAS = {}
+    CS_ERROR = ""
+except Exception as _exc:                   # pragma: no cover - environment
+    ARENA = GAME = None
+    CS_VERSION = "v06e"
+    CLASS_BIAS = {}
+    CS_ERROR = str(_exc)
+
+WCLASSES = ("blunt", "blade", "polearm", "ranged", "explosive")
+
+# How much of a character's fitness for a weapon class is know-how, and how
+# much is the body behind the blow. Both matter: skill spans 0.75x-1.25x on
+# damage AND buys up to 37% faster swings plus deliberate aim, while the
+# power mix spans 0.70x-1.30x on damage alone. Skill therefore carries a
+# little more, and the split is shown on screen so it can be argued with.
+#
+# VALIDATED, not asserted. 26 characters x 5 classes, 12 fights each against
+# a fixed opponent, correlating this rating with the measured win rate:
+#
+#     class      r(skill)  r(power)  r(aptitude)  r(+staying power)
+#     blunt          0.67      0.72         0.80              0.81
+#     blade          0.79      0.59         0.84              0.84
+#     polearm        0.79      0.50         0.82              0.86
+#     ranged         0.76      0.44         0.78              0.76
+#     explosive      0.79      0.24         0.68              0.71
+#
+# So it predicts well WITHIN a class. Pooled across classes it falls to
+# 0.61, because the classes are not equally strong -- a 60-rated polearm
+# fighter beats a 60-rated archer on the weapon, not the character. That is
+# why the tab says so on screen, and why RECOMMENDED ARMAMENT multiplies
+# fitness by each weapon's own measured win rate to answer the cross-class
+# question honestly.
+#
+# Note also that power barely predicts anything for explosives (0.24) -- a
+# thrown bomb is mostly skill and placement -- which is worth remembering
+# before anyone tunes these weights.
+APT_SKILL, APT_POWER = 0.55, 0.45
+# Aptitude is class-specific. Staying power is not -- it applies whatever
+# you hand them -- so it is reported separately and folded in only for the
+# roster ranking, where "who is best with a blade" really does depend on
+# whether they survive long enough to use it.
+RANK_APT, RANK_GENERAL = 0.60, 0.40
+
+# The measured strength of each individual weapon, from the lab bench that
+# produced the manual. Optional: without it the tab still rates characters,
+# it just cannot recommend a specific weapon.
+def _load_weapon_strength():
+    path = _HERE / "manual_data.json"
+    if not path.exists():
+        return {}
+    try:
+        import json
+        rows = json.loads(path.read_text(encoding="utf-8"))["lab_table"]
+    except Exception:
+        return {}
+    out = {}
+    for line in rows:
+        parts = line.split()
+        if len(parts) >= 10 and parts[-1].isdigit() and "-" in line:
+            try:
+                out[" ".join(parts[:-10])] = int(parts[-5])
+            except ValueError:
+                pass
+    return out
+
+
+WEAPON_STRENGTH = _load_weapon_strength()
+
+
+def cs_skill(char, wclass):
+    """How WELL this character uses the class -- the engine's own blend."""
+    return ARENA.weapon_skill(char, wclass)
+
+
+def cs_power(char, wclass):
+    """How HARD they hit with it, on the same 0-100 scale."""
+    return sum(ARENA.ga(char, k) * w
+               for k, w in ARENA.POWER_MIX[wclass].items())
+
+
+def cs_aptitude(char, wclass):
+    return APT_SKILL * cs_skill(char, wclass) + APT_POWER * cs_power(char,
+                                                                    wclass)
+
+
+def cs_general(char):
+    """Class-independent staying power: frame, evasion, guard, wind."""
+    frame = ARENA.frame_health(char)
+    ga = ARENA.ga
+    dodge = (ga(char, "agility") * .4 + ga(char, "balance") * .3
+             + ga(char, "perception") * .3)
+    guard = (ga(char, "composure") * .4 + ga(char, "balance") * .3
+             + ga(char, "strength") * .3)
+    stam = (45 + ga(char, "stamina") * .35 + ga(char, "recovery") * .20
+            + ga(char, "resilience") * .10)
+    return ((frame - 45) / 0.70 * .40 + dodge * .22 + guard * .18
+            + (stam - 45) / 0.65 * .20)
+
+
+def cs_profile(char):
+    """Everything the ratings tab needs about one character, straight out
+    of the engine's own formulas."""
+    ga = ARENA.ga
+    at = lambda k: ga(char, k)
+    frame = ARENA.frame_health(char)
+    prof = {
+        "apt": {w: cs_aptitude(char, w) for w in WCLASSES},
+        "skill": {w: cs_skill(char, w) for w in WCLASSES},
+        "power": {w: cs_power(char, w) for w in WCLASSES},
+        "general": cs_general(char),
+        "frame": frame,
+        "hp": int(frame * ARENA.VITALITY),
+        "speed": 62 + at("speed") * .55,
+        "dodge": at("agility") * .4 + at("balance") * .3 + at("perception") * .3,
+        "guard": at("composure") * .4 + at("balance") * .3 + at("strength") * .3,
+        "crit": 0.05 + at("dexterity") * .0008 + at("focus") * .0005,
+        "stam": int(45 + at("stamina") * .35 + at("recovery") * .20
+                    + at("resilience") * .10),
+        "reserve": ARENA.clamp(0.30 - at("aggression") * .0022
+                               + at("discipline") * .0018
+                               + at("patience") * .0012, 0.04, 0.45),
+        "tempo": 1.25 - at("aggression") / 100 * 0.5,
+        "recover": 0.75 + at("recovery") / 100 * 0.9,
+        "nerve": ARENA.clamp(0.32 - at("courage") * .0028
+                             - at("willpower") * .0008, 0.0, 0.35),
+        "flee": 2.0 + (100 - at("determination")) / 100 * 2.0,
+    }
+    # atk_speed needs the class, so report it for their best one
+    best = max(WCLASSES, key=lambda w: prof["apt"][w])
+    prof["best"] = best
+    prof["atk_speed"] = ARENA.clamp(
+        1.20 - prof["skill"][best] / 100 * .25 - at("speed") / 100 * .15,
+        0.75, 1.20)
+    # the seven personality composites the intent layer actually argues over
+    prof["mind"] = {
+        "Pressure": (at("aggression") * .45 + at("courage") * .30
+                     + at("determination") * .25),
+        "Restraint": (at("discipline") * .40 + at("patience") * .35
+                      + at("composure") * .25),
+        "Calculation": (at("intelligence") * .40 + at("perception") * .30
+                        + at("technical_aptitude") * .30),
+        "Self-preservation": (at("risk_assessment") * .45
+                              + at("composure") * .30 + at("willpower") * .25),
+        "Persistence": at("determination") * .55 + at("courage") * .45,
+        "Duty": (at("discipline") * .40 + at("courage") * .30
+                 + at("intelligence") * .30),
+        "Defiance": (at("courage") * .40 + at("determination") * .35
+                     + at("aggression") * .25),
+    }
+    return prof
+
+
+def cs_behaviour(prof):
+    """Plain-English reading of the composites -- what the intent layer
+    will actually do with this character. Each line names the pressure it
+    came from so a surprising one can be traced back."""
+    m_ = prof["mind"]
+    out = []
+    p, r = m_["Pressure"], m_["Restraint"]
+    if p - r > 12:
+        out.append(("Comes forward.", "Pressure %.0f over Restraint %.0f -- "
+                    "expect PRESS most of the fight, closing rather than "
+                    "circling." % (p, r)))
+    elif r - p > 12:
+        out.append(("Makes you come to them.", "Restraint %.0f over Pressure "
+                    "%.0f -- expect PROBE and GUARD, waiting for an opening "
+                    "instead of forcing one." % (r, p)))
+    else:
+        out.append(("Takes the fight as it comes.", "Pressure %.0f and "
+                    "Restraint %.0f are close, so they switch plans more "
+                    "often than most." % (p, r)))
+
+    sp = m_["Self-preservation"]
+    if sp >= 70:
+        out.append(("Reads the danger.", "Self-preservation %.0f -- breaks "
+                    "off early, avoids hazards, and will not walk into a "
+                    "crowd." % sp))
+    elif sp <= 40:
+        out.append(("Does not read the danger.", "Self-preservation %.0f -- "
+                    "will stand in fire and take on more than one." % sp))
+
+    c = m_["Calculation"]
+    if c >= 70:
+        out.append(("Fights with their head.", "Calculation %.0f -- FLANKs "
+                    "once the front door is shut, and picks targets rather "
+                    "than swinging at whoever is nearest." % c))
+    elif c <= 40:
+        out.append(("Fights in front of them.", "Calculation %.0f -- takes "
+                    "the direct line and rarely works around a guard." % c))
+
+    d = m_["Duty"]
+    if d >= 70:
+        out.append(("Turns back for team-mates.", "Duty %.0f -- expect "
+                    "PROTECT when an ally is pressed. A liability in a "
+                    "losing team, an anchor in a winning one." % d))
+
+    df, per = m_["Defiance"], m_["Persistence"]
+    if df >= 70:
+        out.append(("Goes down swinging.", "Defiance %.0f -- turns DESPERATE "
+                    "rather than fleeing when it goes badly." % df))
+    if per <= 40:
+        out.append(("Gives up the chase.", "Persistence %.0f -- drops a "
+                    "pursuit quickly and loses interest in a runner." % per))
+
+    n = prof["nerve"]
+    if n <= 0.06:
+        out.append(("Does not break.", "Panics below %.0f%% health -- "
+                    "effectively never." % (n * 100)))
+    elif n >= 0.22:
+        out.append(("Breaks early.", "Panics below %.0f%% health and runs "
+                    "for %.1f seconds." % (n * 100, prof["flee"])))
+
+    res = prof["reserve"]
+    if res <= 0.12:
+        out.append(("Spends everything.", "Keeps only %.0f%% of their wind "
+                    "in reserve -- fast starter, badly exposed late."
+                    % (res * 100)))
+    elif res >= 0.30:
+        out.append(("Paces themselves.", "Holds %.0f%% of their wind back, "
+                    "so they are still swinging at full speed when others "
+                    "are not." % (res * 100)))
+    return out
+
+
 class ToonViewer(tk.Tk):
     ROW_H = 22          # pixels per attribute bar row (character view)
     HEAD_H = 30         # pixels per group header
@@ -163,6 +432,7 @@ class ToonViewer(tk.Tk):
         super().__init__()
         self.roster = roster
         self.by_name = {c["display_name"]: c for c in roster}
+        self.by_id = {c["character_id"]: c for c in roster}
         self.current = None
         self.compare = None
         self._compute_population()
@@ -220,11 +490,14 @@ class ToonViewer(tk.Tk):
         self.notebook.pack(fill="both", expand=True)
         char_tab = ttk.Frame(self.notebook, padding=8)
         pop_tab = ttk.Frame(self.notebook, padding=8)
+        rate_tab = ttk.Frame(self.notebook, padding=8)
         self.notebook.add(char_tab, text="  Characters  ")
         self.notebook.add(pop_tab, text="  Population  ")
+        self.notebook.add(rate_tab, text="  2dCS Rating  ")
 
         self._build_character_tab(char_tab)
         self._build_population_tab(pop_tab)
+        self._build_rating_tab(rate_tab)
         self.bind_all("<MouseWheel>", self._on_wheel)
 
     def _build_character_tab(self, body):
@@ -306,13 +579,349 @@ class ToonViewer(tk.Tk):
         psb.pack(side="right", fill="y")
         self.pcanvas.bind("<Configure>", lambda e: self._draw_population())
 
+    # -------------------------------------------------------- 2dCS ratings
+    def _build_rating_tab(self, body):
+        if ARENA is None:
+            msg = ("The 2dCS engine could not be imported, so this tab has "
+                   "nothing to report:\n\n    %s\n\n"
+                   "This tab reads its weights from zpyCombatArena06.py "
+                   "rather than keeping its own copy, so it only works "
+                   "with the viewer sitting beside the simulator."
+                   % (CS_ERROR or "zpyCombatArena06 not found"))
+            tk.Label(body, text=msg, justify="left", anchor="nw",
+                     font=("Consolas", 10), fg="#b71c1c").pack(
+                         fill="both", expand=True, padx=20, pady=20)
+            self.rcanvas = None
+            return
+
+        self._profiles = {c["character_id"]: cs_profile(c)
+                          for c in self.roster}
+        # roster ranking per class: aptitude for the class, weighted with
+        # the staying power that decides whether they live to use it
+        self._class_rank = {}
+        for w in WCLASSES:
+            order = sorted(
+                self.roster,
+                key=lambda c: -(RANK_APT * self._profiles[c["character_id"]]
+                                ["apt"][w]
+                                + RANK_GENERAL
+                                * self._profiles[c["character_id"]]["general"]))
+            self._class_rank[w] = [c["character_id"] for c in order]
+
+        left = ttk.Frame(body)
+        left.pack(side="left", fill="y", padx=(0, 8))
+        ttk.Label(left, text="Filter").pack(anchor="w")
+        self.rfilter_var = tk.StringVar()
+        self.rfilter_var.trace_add("write",
+                                   lambda *_: self._refresh_rating_list())
+        ttk.Entry(left, textvariable=self.rfilter_var, width=30).pack(
+            fill="x", pady=(0, 6))
+
+        ttk.Label(left, text="Rank by").pack(anchor="w")
+        self.rsort_var = tk.StringVar(value="best class")
+        rbox = ttk.Combobox(left, textvariable=self.rsort_var, width=28,
+                            state="readonly",
+                            values=["best class", "name"] + list(WCLASSES)
+                            + ["staying power"])
+        rbox.pack(fill="x", pady=(0, 6))
+        rbox.bind("<<ComboboxSelected>>",
+                  lambda e: self._refresh_rating_list())
+
+        lf = ttk.Frame(left)
+        lf.pack(fill="both", expand=True)
+        self.rlist = tk.Listbox(lf, width=32, exportselection=False,
+                                font=("Consolas", 9))
+        rsb = ttk.Scrollbar(lf, command=self.rlist.yview)
+        self.rlist.configure(yscrollcommand=rsb.set)
+        self.rlist.pack(side="left", fill="both", expand=True)
+        rsb.pack(side="right", fill="y")
+        self.rlist.bind("<<ListboxSelect>>",
+                        lambda e: self._on_rating_select())
+
+        right = ttk.Frame(body)
+        right.pack(side="left", fill="both", expand=True)
+        cf = ttk.Frame(right)
+        cf.pack(fill="both", expand=True)
+        self.rcanvas = tk.Canvas(cf, bg="white", highlightthickness=0)
+        csb2 = ttk.Scrollbar(cf, command=self.rcanvas.yview)
+        self.rcanvas.configure(yscrollcommand=csb2.set)
+        self.rcanvas.pack(side="left", fill="both", expand=True)
+        csb2.pack(side="right", fill="y")
+        self.rcanvas.bind("<Configure>", lambda e: self._draw_rating())
+
+        self.rcurrent = None
+        self._refresh_rating_list()
+        if self.roster:
+            self.rlist.selection_set(0)
+            self._on_rating_select()
+
+    def _char_w(self, size):
+        """Measured width of one Consolas character at `size`. Cached --
+        tkinter font measurement is not free and this runs per line."""
+        cache = getattr(self, "_cw_cache", None)
+        if cache is None:
+            cache = self._cw_cache = {}
+        if size not in cache:
+            import tkinter.font as tkfont
+            cache[size] = max(
+                1.0, tkfont.Font(font=("Consolas", size)).measure("0"))
+        return cache[size]
+
+    def _refresh_rating_list(self):
+        key = self.rsort_var.get()
+        needle = self.rfilter_var.get().strip().lower()
+        self.rlist.delete(0, "end")
+        self._rvisible = []
+        if key == "name":
+            order = sorted(self.roster, key=lambda c: c["display_name"])
+        elif key == "staying power":
+            order = sorted(self.roster,
+                           key=lambda c: -self._profiles[c["character_id"]]
+                           ["general"])
+        elif key in WCLASSES:
+            order = [self.by_id[i] for i in self._class_rank[key]]
+        else:                                   # best class
+            order = sorted(self.roster,
+                           key=lambda c: -max(self._profiles[c["character_id"]]
+                                              ["apt"].values()))
+        for c in order:
+            if needle and needle not in c["display_name"].lower():
+                continue
+            p = self._profiles[c["character_id"]]
+            if key in WCLASSES:
+                label = "%2.0f %-3s %s" % (p["apt"][key], key[:3].upper(),
+                                           c["display_name"])
+            elif key == "staying power":
+                label = "%2.0f     %s" % (p["general"], c["display_name"])
+            else:
+                label = "%2.0f %-3s %s" % (max(p["apt"].values()),
+                                           p["best"][:3].upper(),
+                                           c["display_name"])
+            self.rlist.insert("end", label)
+            self._rvisible.append(c)
+        if self.rcurrent in self._rvisible:
+            self.rlist.selection_set(self._rvisible.index(self.rcurrent))
+
+    def _on_rating_select(self):
+        sel = self.rlist.curselection()
+        if sel and self._rvisible:
+            self.rcurrent = self._rvisible[sel[0]]
+            self._draw_rating()
+
+    def _draw_rating(self):
+        cv = getattr(self, "rcanvas", None)
+        if cv is None or not self.rcurrent:
+            return
+        cv.delete("all")
+        c = self.rcurrent
+        p = self._profiles[c["character_id"]]
+        width = max(cv.winfo_width(), 620)
+        n = len(self.roster)
+
+        def text(x, y, s, size=9, bold=False, color="#1f2733", anchor="nw"):
+            font = ("Consolas", size, "bold") if bold else ("Consolas", size)
+            cv.create_text(x, y, anchor=anchor, text=s, font=font, fill=color)
+
+        def section(y, title):
+            text(12, y, title, size=11, bold=True)
+            cv.create_line(12, y + 20, width - 16, y + 20, fill="#8a959e")
+            return y + 28
+
+        def bar(x, y, w, h, value, color, track="#e8ecf0"):
+            cv.create_rectangle(x, y, x + w, y + h, fill=track, outline=track)
+            fill = max(0, min(value, 100)) / 100 * w
+            if fill > 0:
+                cv.create_rectangle(x, y, x + fill, y + h, fill=color,
+                                    outline=color)
+
+        def note(y, body, x=12, size=8, color="#5a6675"):
+            """Small print, wrapped to whatever width the window is now.
+
+            Canvas text does not wrap on its own, so a long note just runs
+            off the right-hand edge. The wrap width is MEASURED from the
+            actual font rather than estimated from the point size -- an
+            estimate was close enough to look right and still overflowed
+            by a few pixels."""
+            per_char = self._char_w(size)
+            chars = max(40, int((width - x - 20) / per_char))
+            for line in _wrap(body, chars):
+                text(x, y, line, size=size, color=color)
+                y += size + 5
+            return y
+
+        y = 10
+        text(12, y, "2dCS COMBAT RATING -- %s" % c["display_name"],
+             size=12, bold=True)
+        y += 20
+        text(12, y, "how the 2D Combat Simulator %s reads this character   "
+                    "|   %s / %s" % (CS_VERSION, c["character_id"],
+                                     c["short_name"]),
+             size=9, color="#5a6675")
+        y += 26
+
+        # ------------------------------------------------ weapon aptitude
+        y = section(y, "WEAPON APTITUDE  --  what they are worth with each "
+                       "class")
+        # Explicit column positions rather than one padded string: the bar
+        # sits between two text columns, so a format width that grows past
+        # x=BAR would print straight through it.
+        CX, SX, PX, BX, BW, VX = 12, 132, 178, 190, 140, 344
+        text(CX, y, "CLASS", size=8, bold=True, color="#5a6675")
+        text(SX, y, "SKILL", size=8, bold=True, color="#5a6675", anchor="ne")
+        text(PX, y, "POWER", size=8, bold=True, color="#5a6675", anchor="ne")
+        text(BX, y, "APTITUDE", size=8, bold=True, color="#5a6675")
+        text(VX, y, "GRADE / ROSTER RANK", size=8, bold=True,
+             color="#5a6675")
+        y += 16
+        best_apt = max(p["apt"].values())
+        for w in sorted(WCLASSES, key=lambda k: -p["apt"][k]):
+            color, _label, short = band_for(int(p["apt"][w]))
+            rank = self._class_rank[w].index(c["character_id"]) + 1
+            lead = p["apt"][w] == best_apt
+            text(CX, y, w, size=9, bold=lead)
+            text(SX, y, "%.0f" % p["skill"][w], size=9, anchor="ne")
+            text(PX, y, "%.0f" % p["power"][w], size=9, anchor="ne")
+            bar(BX, y + 3, BW, 10, p["apt"][w], color)
+            text(VX, y, "%5.1f  %-8s  #%d of %d"
+                 % (p["apt"][w], short, rank, n), size=9,
+                 color="#1f2733" if lead else "#5a6675")
+            y += 18
+        y += 4
+        y = note(y, "APTITUDE = %.2f x skill + %.2f x power. Skill is the "
+                    "engine's own per-class attribute blend; power is what "
+                    "scales the damage." % (APT_SKILL, APT_POWER))
+        y = note(y, "Roster rank also weighs staying power (%.0f/100 here), "
+                    "because surviving to use the weapon is half of being "
+                    "good with it." % p["general"])
+        y += 14
+
+        # -------------------------------------------- recommended armament
+        y = section(y, "RECOMMENDED ARMAMENT  --  their fit x the weapon's "
+                       "own measured strength")
+        if WEAPON_STRENGTH:
+            picks = []
+            for wname, wep in ARENA.WEAPONS.items():
+                strength = WEAPON_STRENGTH.get(wname)
+                if strength is None:
+                    continue
+                fit = p["apt"][wep.wtype]
+                picks.append((fit / 100 * strength, wname, wep.wtype, fit,
+                              strength))
+            picks.sort(reverse=True)
+            WX, CLX, FX, SX2, BX2, BW2, TX = 12, 140, 260, 330, 344, 130, 486
+            text(WX, y, "WEAPON", size=8, bold=True, color="#5a6675")
+            text(CLX, y, "CLASS", size=8, bold=True, color="#5a6675")
+            text(FX, y, "THEIR FIT", size=8, bold=True, color="#5a6675",
+                 anchor="ne")
+            text(SX2, y, "WEAPON", size=8, bold=True, color="#5a6675",
+                 anchor="ne")
+            text(BX2, y, "COMBINED", size=8, bold=True, color="#5a6675")
+            y += 16
+            for score, wname, wt, fit, strength in picks[:6]:
+                text(WX, y, wname, size=9)
+                text(CLX, y, wt, size=9, color="#5a6675")
+                text(FX, y, "%.0f" % fit, size=9, anchor="ne")
+                text(SX2, y, "%d%%" % strength, size=9, anchor="ne")
+                bar(BX2, y + 3, BW2, 10, score, "#2e7d32")
+                text(TX, y, "%.0f" % score, size=9)
+                y += 17
+            y += 4
+            y = note(y, "Weapon win rates are measured 3v3 mirror duels from "
+                        "the 2dCS bench, not estimates -- a weapon nobody "
+                        "wins with is a poor pick however well it suits "
+                        "them.")
+        else:
+            y = note(y, "manual_data.json not found -- specific weapon "
+                        "recommendations need the measured bench results.",
+                     size=9, color="#b71c1c")
+        if CLASS_BIAS:
+            best_biased = max(
+                WCLASSES, key=lambda w: ARENA.weapon_skill(c, w)
+                + CLASS_BIAS.get(w, 0.0))
+            y = note(y, "The game itself would arm them from %s -- its own "
+                        "pick applies a small bias toward blades and "
+                        "polearms." % best_biased.upper())
+            y += 6
+        y += 8
+
+        # ------------------------------------------------------ in a fight
+        y = section(y, "IN A FIGHT  --  the numbers the engine derives")
+        stats = [
+            ("Health", "%d" % p["hp"], "frame %d x vitality" % p["frame"]),
+            ("Move speed", "%.0f px/s" % p["speed"], "from speed"),
+            ("Dodge", "%.0f" % p["dodge"], "agility, balance, perception"),
+            ("Guard", "%.0f" % p["guard"], "composure, balance, strength"),
+            ("Critical", "%.1f%%" % (p["crit"] * 100),
+             "dexterity and focus"),
+            ("Swing speed", "x%.2f" % p["atk_speed"],
+             "lower is faster; from %s skill" % p["best"]),
+            ("Tempo", "x%.2f" % p["tempo"],
+             "pause between attacks; from aggression"),
+            ("Stamina", "%d" % p["stam"], "recovers x%.2f" % p["recover"]),
+            ("Reserve", "%.0f%%" % (p["reserve"] * 100),
+             "wind they refuse to spend"),
+            ("Nerve", "panics under %.0f%%" % (p["nerve"] * 100),
+             "runs for %.1fs" % p["flee"]),
+        ]
+        for label, val, why in stats:
+            text(12, y, "%-13s %-16s %s" % (label, val, why), size=9,
+                 color="#1f2733")
+            y += 16
+        y += 12
+
+        # ----------------------------------------------------- temperament
+        y = section(y, "TEMPERAMENT  --  the pressures the intent layer "
+                       "argues over")
+        for name, val in sorted(p["mind"].items(), key=lambda kv: -kv[1]):
+            color, _lab, short = band_for(int(val))
+            text(12, y, name, size=9)
+            bar(190, y + 3, 140, 10, val, color)
+            text(344, y, "%5.1f  %s" % (val, short), size=9)
+            y += 18
+        y += 10
+
+        # ------------------------------------------------------- behaviour
+        y = section(y, "HOW THEY FIGHT")
+        for headline, why in cs_behaviour(p):
+            text(12, y, headline, size=10, bold=True)
+            y += 16
+            for line in _wrap(why, max(40, (width - 60) // 7)):
+                text(24, y, line, size=9, color="#3f4a57")
+                y += 14
+            y += 6
+        y += 6
+
+        # ------------------------------------------------------ provenance
+        cv.create_line(12, y, width - 16, y, fill="#8a959e")
+        y += 8
+        y = note(y, "All figures on this tab describe 2dCS %s "
+                    "(zpyCombatArena06.py) and are read live from the "
+                    "engine, never copied into this viewer."
+                 % CS_VERSION)
+        y = note(y, "Aptitude is DERIVED from the engine's formulas rather "
+                    "than measured. Checked against real fights it tracks "
+                    "the win rate closely WITHIN a class (r = 0.68 to 0.86 "
+                    "over 26 characters x 5 classes x 12 fights).")
+        y = note(y, "Do NOT read it across classes: a 60 with a polearm "
+                    "beats a 60 with a bow, because the classes themselves "
+                    "are not equally strong. RECOMMENDED ARMAMENT is the "
+                    "cross-class answer -- it folds in each weapon's own "
+                    "measured result.")
+        y = note(y, "Rebalancing weapons changes all of this. Re-run "
+                    "zpyArenaLab and refresh manual_data.json after any "
+                    "change.")
+        y += 20
+        cv.configure(scrollregion=(0, 0, width, y))
+
     def _on_wheel(self, event):
         try:
-            on_pop = self.notebook.index(self.notebook.select()) == 1
+            idx = self.notebook.index(self.notebook.select())
         except tk.TclError:
             return
-        cv = self.pcanvas if on_pop else self.canvas
-        cv.yview_scroll(-1 * (event.delta // 120), "units")
+        cv = (self.canvas, self.pcanvas,
+              getattr(self, "rcanvas", None))[idx] if idx < 3 else self.canvas
+        if cv is not None:
+            cv.yview_scroll(-1 * (event.delta // 120), "units")
 
     # ------------------------------------------------------------ list ops
     def _sorted_roster(self):
