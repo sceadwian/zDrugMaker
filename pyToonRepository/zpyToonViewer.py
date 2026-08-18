@@ -27,11 +27,27 @@ Views
                  derives from their sheet, and a plain-English reading of
                  how they will actually behave in a fight.
 
-The ratings tab imports its weights from zpyCombatArena06.py rather than
-keeping its own copy, so it cannot drift out of step with the simulator.
-If the engine is not beside this script the tab says so rather than
-guessing. See the 2dCS BRIDGE block below for how the rating is built and
-for the measured correlations that justify it.
+This viewer does NOT need to sit next to the simulator (v06g). The ratings
+tab reads its weights from whichever of these is best: the live engine if
+it happens to be importable, else a small cs_weights.json snapshot copied
+in beside this script, else the values built into this file as of 2dCS
+v06f. All three compute IDENTICAL ratings -- verified by parity check --
+so the only thing that changes is how fresh they can be after a rebalance.
+The tab always states which of the three is in use. See the 2dCS BRIDGE
+block below, and zpyArenaExport.py in the simulator folder for how the
+snapshot is produced.
+
+History
+-------
+v06g  Decoupled the ratings tab from needing the simulator nearby. It used
+      to hard-import zpyCombatArena06 and go blank without it -- which
+      surfaced when the user relocated this file away from the simulator
+      folder to keep it with the rest of their roster tools. Tracing the
+      actual dependency found it was five numbers (SKILL_WEIGHTS,
+      POWER_MIX, the frame_health formula, VITALITY, CLASS_BIAS); every
+      other figure on the tab was already plain arithmetic over a
+      character's own attributes. Added the engine/snapshot/built-in
+      fallback chain above so the file can travel on its own.
 
 Python 3, standard library only (tkinter + csv + statistics).
 """
@@ -189,22 +205,131 @@ def compute_attr_stats(roster):
 #
 # If the engine is not beside this script (the pyToonRepository copy of
 # the viewer, for instance) the tab says so instead of guessing.
-try:
-    import zpyCombatArena06 as ARENA
+# v06g: everything this bridge needs from the simulator turns out to be
+# five numbers -- SKILL_WEIGHTS, POWER_MIX, the frame_health formula,
+# VITALITY, and CLASS_BIAS. Every other figure on the ratings tab
+# (dodge, guard, crit, stamina, temperament, ...) was ALREADY plain
+# arithmetic over a character's own attributes, duplicated here rather
+# than read off a live Fighter -- it never touched the engine at all.
+#
+# So this used to import the whole engine just to reach five numbers, and
+# the tab went blank the moment the viewer was not sitting in the same
+# folder as the simulator. Three ways to get those five numbers now, tried
+# in order of freshness:
+#
+#   1. ENGINE  -- zpyCombatArena06 is importable (viewer sits beside the
+#                 simulator, or on sys.path). Always exactly current.
+#   2. SNAPSHOT -- cs_weights.json sits beside this script. Produced by
+#                 `py -3 zpyArenaExport.py` in the simulator folder and
+#                 then copied wherever the viewer lives. Current as of
+#                 whenever it was last regenerated.
+#   3. BUILT-IN -- neither is present. The viewer still rates characters,
+#                 using the weights baked in below as of 2dCS v06f. These
+#                 will drift if the simulator is rebalanced and nobody
+#                 refreshes the snapshot -- which is why the tab always
+#                 states which of the three it is using and how current
+#                 that is.
+#
+# Refresh the snapshot after any weapon or class-bias change:
+#     py -3 zpyArenaExport.py          (in the simulator folder)
+#     copy the resulting cs_weights.json next to this viewer
+
+_BUILTIN_CS = {
+    "cs_version": "v06g",
+    "skill_weights": {
+        "blunt": {"aggression": .35, "composure": .25,
+                  "technical_aptitude": .15, "focus": .15, "patience": .10},
+        "blade": {"technical_aptitude": .30, "focus": .25, "composure": .20,
+                  "aggression": .15, "patience": .10},
+        "polearm": {"patience": .30, "technical_aptitude": .25,
+                    "focus": .20, "composure": .15, "aggression": .10},
+        "ranged": {"focus": .35, "patience": .25, "technical_aptitude": .20,
+                   "composure": .15, "aggression": .05},
+        "explosive": {"technical_aptitude": .35, "composure": .25,
+                      "focus": .20, "patience": .15, "aggression": .05},
+    },
+    "power_mix": {
+        "blunt": {"strength": .7, "stamina": .3},
+        "blade": {"strength": .45, "dexterity": .4, "speed": .15},
+        "polearm": {"strength": .4, "dexterity": .3, "balance": .3},
+        "ranged": {"dexterity": .55, "strength": .25, "speed": .2},
+        "explosive": {"dexterity": .6, "strength": .4},
+    },
+    "frame_health": {"base": 45, "resilience": .30, "stamina": .25,
+                     "lifespan": .15},
+    "vitality": 2.0,
+    "class_bias": {"blade": 2.0, "polearm": 1.5},
+}
+
+
+def _load_cs_weights():
+    """(data, source) -- source is "engine", "snapshot" or "builtin"."""
     try:
-        import zpyArenaTournament as GAME
-        CS_VERSION = "v" + GAME.VERSION
-        CLASS_BIAS = GAME.CLASS_BIAS
-    except Exception:                       # engine present, game layer not
-        GAME = None
-        CS_VERSION = "v06e"
-        CLASS_BIAS = {}
-    CS_ERROR = ""
-except Exception as _exc:                   # pragma: no cover - environment
-    ARENA = GAME = None
-    CS_VERSION = "v06e"
-    CLASS_BIAS = {}
-    CS_ERROR = str(_exc)
+        import zpyCombatArena06 as _arena
+        try:
+            import zpyArenaTournament as _game
+            version, bias = "v" + _game.VERSION, _game.CLASS_BIAS
+        except Exception:
+            version, bias = "v" + getattr(_arena, "ENGINE_VERSION", "06f"), {}
+        return {
+            "cs_version": version,
+            "skill_weights": _arena.SKILL_WEIGHTS,
+            "power_mix": _arena.POWER_MIX,
+            "frame_health": {"base": 45, "resilience": .30, "stamina": .25,
+                             "lifespan": .15},
+            "vitality": _arena.VITALITY,
+            "class_bias": bias,
+        }, "engine", ""
+    except Exception:
+        pass
+    snap = _HERE / "cs_weights.json"
+    if snap.exists():
+        try:
+            import json
+            return (json.loads(snap.read_text(encoding="utf-8")),
+                    "snapshot", "")
+        except Exception as exc:
+            return _BUILTIN_CS, "builtin", "cs_weights.json unreadable: %s" % exc
+    return _BUILTIN_CS, "builtin", ""
+
+
+_CS, CS_SOURCE, CS_ERROR = _load_cs_weights()
+CS_VERSION = _CS["cs_version"]
+SKILL_WEIGHTS = _CS["skill_weights"]
+POWER_MIX = _CS["power_mix"]
+FRAME_HEALTH = _CS["frame_health"]
+VITALITY = _CS["vitality"]
+CLASS_BIAS = _CS["class_bias"]
+CS_SOURCE_BLURB = {
+    "engine": "read live from zpyCombatArena06.py sitting beside this "
+              "viewer -- always exactly current",
+    "snapshot": "read from cs_weights.json -- current as of whatever the "
+                "snapshot was last regenerated (%s)" % CS_VERSION,
+    "builtin": "the simulator is not nearby and no cs_weights.json was "
+              "found, so this is using the weights built into the viewer "
+              "as of 2dCS %s. Run `py -3 zpyArenaExport.py` in the "
+              "simulator folder and copy cs_weights.json here to refresh."
+              % CS_VERSION,
+}
+
+
+def cs_ga(char, key):
+    """Attribute lookup with a neutral default -- same rule the engine's
+    own ga() uses, so a missing column reads as average rather than zero."""
+    v = char.get(key, 50)
+    return v if isinstance(v, int) else 50
+
+
+def cs_clamp(v, lo, hi):
+    return max(lo, min(hi, v))
+
+
+def cs_frame_health(char):
+    fh = FRAME_HEALTH
+    return int(fh["base"] + cs_ga(char, "resilience") * fh["resilience"]
+               + cs_ga(char, "stamina") * fh["stamina"]
+               + cs_ga(char, "lifespan") * fh["lifespan"])
+
 
 WCLASSES = ("blunt", "blade", "polearm", "ranged", "explosive")
 
@@ -241,10 +366,16 @@ APT_SKILL, APT_POWER = 0.55, 0.45
 # whether they survive long enough to use it.
 RANK_APT, RANK_GENERAL = 0.60, 0.40
 
-# The measured strength of each individual weapon, from the lab bench that
-# produced the manual. Optional: without it the tab still rates characters,
-# it just cannot recommend a specific weapon.
-def _load_weapon_strength():
+# The measured strength AND class of each individual weapon, both parsed
+# out of the lab bench table that produced the manual. Both, not just the
+# win rate: RECOMMENDED ARMAMENT needs to know which class a weapon
+# belongs to, and that used to come from importing the live engine and
+# reading WEAPONS[name].wtype. The class is already sitting in this same
+# file's own columns (zpyArenaLab's own output format lists it first), so
+# reading it from here instead removes the last hard dependency on the
+# simulator being nearby. Optional either way: without manual_data.json
+# the tab still rates characters, it just cannot recommend a weapon.
+def _load_weapon_table():
     path = _HERE / "manual_data.json"
     if not path.exists():
         return {}
@@ -258,24 +389,25 @@ def _load_weapon_strength():
         parts = line.split()
         if len(parts) >= 10 and parts[-1].isdigit() and "-" in line:
             try:
-                out[" ".join(parts[:-10])] = int(parts[-5])
+                out[" ".join(parts[:-10])] = (int(parts[-5]), parts[-10])
             except ValueError:
                 pass
     return out
 
 
-WEAPON_STRENGTH = _load_weapon_strength()
+WEAPON_TABLE = _load_weapon_table()          # name -> (win%, class)
+WEAPON_STRENGTH = {n: w for n, (w, _t) in WEAPON_TABLE.items()}
 
 
 def cs_skill(char, wclass):
     """How WELL this character uses the class -- the engine's own blend."""
-    return ARENA.weapon_skill(char, wclass)
+    return sum(cs_ga(char, k) * w
+               for k, w in SKILL_WEIGHTS[wclass].items())
 
 
 def cs_power(char, wclass):
     """How HARD they hit with it, on the same 0-100 scale."""
-    return sum(ARENA.ga(char, k) * w
-               for k, w in ARENA.POWER_MIX[wclass].items())
+    return sum(cs_ga(char, k) * w for k, w in POWER_MIX[wclass].items())
 
 
 def cs_aptitude(char, wclass):
@@ -285,8 +417,8 @@ def cs_aptitude(char, wclass):
 
 def cs_general(char):
     """Class-independent staying power: frame, evasion, guard, wind."""
-    frame = ARENA.frame_health(char)
-    ga = ARENA.ga
+    frame = cs_frame_health(char)
+    ga = cs_ga
     dodge = (ga(char, "agility") * .4 + ga(char, "balance") * .3
              + ga(char, "perception") * .3)
     guard = (ga(char, "composure") * .4 + ga(char, "balance") * .3
@@ -300,35 +432,35 @@ def cs_general(char):
 def cs_profile(char):
     """Everything the ratings tab needs about one character, straight out
     of the engine's own formulas."""
-    ga = ARENA.ga
+    ga = cs_ga
     at = lambda k: ga(char, k)
-    frame = ARENA.frame_health(char)
+    frame = cs_frame_health(char)
     prof = {
         "apt": {w: cs_aptitude(char, w) for w in WCLASSES},
         "skill": {w: cs_skill(char, w) for w in WCLASSES},
         "power": {w: cs_power(char, w) for w in WCLASSES},
         "general": cs_general(char),
         "frame": frame,
-        "hp": int(frame * ARENA.VITALITY),
+        "hp": int(frame * VITALITY),
         "speed": 62 + at("speed") * .55,
         "dodge": at("agility") * .4 + at("balance") * .3 + at("perception") * .3,
         "guard": at("composure") * .4 + at("balance") * .3 + at("strength") * .3,
         "crit": 0.05 + at("dexterity") * .0008 + at("focus") * .0005,
         "stam": int(45 + at("stamina") * .35 + at("recovery") * .20
                     + at("resilience") * .10),
-        "reserve": ARENA.clamp(0.30 - at("aggression") * .0022
+        "reserve": cs_clamp(0.30 - at("aggression") * .0022
                                + at("discipline") * .0018
                                + at("patience") * .0012, 0.04, 0.45),
         "tempo": 1.25 - at("aggression") / 100 * 0.5,
         "recover": 0.75 + at("recovery") / 100 * 0.9,
-        "nerve": ARENA.clamp(0.32 - at("courage") * .0028
+        "nerve": cs_clamp(0.32 - at("courage") * .0028
                              - at("willpower") * .0008, 0.0, 0.35),
         "flee": 2.0 + (100 - at("determination")) / 100 * 2.0,
     }
     # atk_speed needs the class, so report it for their best one
     best = max(WCLASSES, key=lambda w: prof["apt"][w])
     prof["best"] = best
-    prof["atk_speed"] = ARENA.clamp(
+    prof["atk_speed"] = cs_clamp(
         1.20 - prof["skill"][best] / 100 * .25 - at("speed") / 100 * .15,
         0.75, 1.20)
     # the seven personality composites the intent layer actually argues over
@@ -581,18 +713,17 @@ class ToonViewer(tk.Tk):
 
     # -------------------------------------------------------- 2dCS ratings
     def _build_rating_tab(self, body):
-        if ARENA is None:
-            msg = ("The 2dCS engine could not be imported, so this tab has "
-                   "nothing to report:\n\n    %s\n\n"
-                   "This tab reads its weights from zpyCombatArena06.py "
-                   "rather than keeping its own copy, so it only works "
-                   "with the viewer sitting beside the simulator."
-                   % (CS_ERROR or "zpyCombatArena06 not found"))
-            tk.Label(body, text=msg, justify="left", anchor="nw",
-                     font=("Consolas", 10), fg="#b71c1c").pack(
-                         fill="both", expand=True, padx=20, pady=20)
-            self.rcanvas = None
-            return
+        # v06g: this used to refuse to build at all unless the simulator
+        # was importable. It always has usable weights now -- engine,
+        # snapshot, or built-in -- so the tab always builds; only the
+        # source note at the bottom of each report changes.
+        if CS_SOURCE == "builtin" and CS_ERROR:
+            warn = ttk.Label(
+                body, text="cs_weights.json exists but could not be read "
+                           "(%s) -- using the weights built into this "
+                           "viewer instead." % CS_ERROR,
+                foreground="#b71c1c", wraplength=760, justify="left")
+            warn.pack(fill="x", padx=4, pady=(0, 6))
 
         self._profiles = {c["character_id"]: cs_profile(c)
                           for c in self.roster}
@@ -798,14 +929,11 @@ class ToonViewer(tk.Tk):
         # -------------------------------------------- recommended armament
         y = section(y, "RECOMMENDED ARMAMENT  --  their fit x the weapon's "
                        "own measured strength")
-        if WEAPON_STRENGTH:
+        if WEAPON_TABLE:
             picks = []
-            for wname, wep in ARENA.WEAPONS.items():
-                strength = WEAPON_STRENGTH.get(wname)
-                if strength is None:
-                    continue
-                fit = p["apt"][wep.wtype]
-                picks.append((fit / 100 * strength, wname, wep.wtype, fit,
+            for wname, (strength, wtype) in WEAPON_TABLE.items():
+                fit = p["apt"][wtype]
+                picks.append((fit / 100 * strength, wname, wtype, fit,
                               strength))
             picks.sort(reverse=True)
             WX, CLX, FX, SX2, BX2, BW2, TX = 12, 140, 260, 330, 344, 130, 486
@@ -836,7 +964,7 @@ class ToonViewer(tk.Tk):
                      size=9, color="#b71c1c")
         if CLASS_BIAS:
             best_biased = max(
-                WCLASSES, key=lambda w: ARENA.weapon_skill(c, w)
+                WCLASSES, key=lambda w: cs_skill(c, w)
                 + CLASS_BIAS.get(w, 0.0))
             y = note(y, "The game itself would arm them from %s -- its own "
                         "pick applies a small bias toward blades and "
@@ -894,10 +1022,8 @@ class ToonViewer(tk.Tk):
         # ------------------------------------------------------ provenance
         cv.create_line(12, y, width - 16, y, fill="#8a959e")
         y += 8
-        y = note(y, "All figures on this tab describe 2dCS %s "
-                    "(zpyCombatArena06.py) and are read live from the "
-                    "engine, never copied into this viewer."
-                 % CS_VERSION)
+        y = note(y, "All figures on this tab describe 2dCS %s. %s"
+                 % (CS_VERSION, CS_SOURCE_BLURB[CS_SOURCE]))
         y = note(y, "Aptitude is DERIVED from the engine's formulas rather "
                     "than measured. Checked against real fights it tracks "
                     "the win rate closely WITHIN a class (r = 0.68 to 0.86 "
