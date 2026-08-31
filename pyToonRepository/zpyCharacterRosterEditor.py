@@ -32,9 +32,11 @@ Dependencies:
 from __future__ import annotations
 
 import csv
+import random
 import re
 import tkinter as tk
 from copy import deepcopy
+from decimal import Decimal, InvalidOperation
 from datetime import datetime
 from pathlib import Path
 from tkinter import filedialog, messagebox, ttk
@@ -42,13 +44,30 @@ from tkinter import filedialog, messagebox, ttk
 
 APP_NAME = "zpyCharacterRosterEditor"
 SCHEMA_NAME = "zpy"
-SCHEMA_VERSION = "1.0"
+SCHEMA_VERSION = "1.1"
 DEFAULT_CSV_CANDIDATES = [
     ".universal_characters_master.csv",
     "universal_characters_master.csv",
 ]
 
-RELIGION_CHOICES = ["christian", "atheist", "muslim", "hindu", "buddhist"]
+RELIGION_CHOICES = [
+    "Christian",
+    "Atheist",
+    "Muslim",
+    "Hindu",
+    "Buddhist",
+    "Jewish",
+    "Sikh",
+    "Shinto",
+    "Jain",
+    "Taoist",
+    "Rastafari",
+    "Jedi",
+    "Cylon",
+    "Fremen",
+    "Animist",
+    "Sauron-worshipper",
+]
 SEX_CHOICES = ["", "F", "M", "X", "Other"]
 SPECIES_DEFAULT = "human"
 
@@ -137,6 +156,370 @@ SCHEMA_FIELDS = IDENTITY_FIELDS + ATTRIBUTE_FIELDS
 RATING_FIELDS = ["left2right", "evil2good"] + ATTRIBUTE_FIELDS
 MEASUREMENT_FIELDS = ["height_cm", "weight_kg"]
 INTEGER_FIELDS = ["birth_year"] + RATING_FIELDS + MEASUREMENT_FIELDS
+
+ATTRIBUTE_LABELS = {
+    attr_key: attr_label
+    for _group_name, attr_list in ATTRIBUTE_GROUPS
+    for attr_key, attr_label in attr_list
+}
+
+ORIGIN_BASE_RATING = 55
+ORIGIN_TRAIT_WEIGHTS = [10, 8, 6, 4, 2]
+
+ORIGIN_BACKGROUNDS = {
+    "Academic": {
+        "intelligence": 7,
+        "learning": 5,
+        "memory": 3,
+        "strength": -5,
+        "aggression": -5,
+        "stamina": -5,
+    },
+    "Athlete": {
+        "stamina": 7,
+        "coordination": 5,
+        "speed": 3,
+        "memory": -5,
+        "deception": -5,
+        "faith": -5,
+    },
+    "Artisan": {
+        "dexterity": 7,
+        "creativity": 5,
+        "patience": 3,
+        "aggression": -5,
+        "speed": -5,
+        "tactical_awareness": -5,
+    },
+    "Caregiver": {
+        "empathy": 7,
+        "patience": 5,
+        "resilience": 3,
+        "aggression": -7,
+        "deception": -5,
+        "speed": -3,
+    },
+    "Entertainer": {
+        "charisma": 7,
+        "conversation": 5,
+        "creativity": 3,
+        "discipline": -5,
+        "risk_assessment": -5,
+        "technical_aptitude": -5,
+    },
+    "Nomad": {
+        "adaptability": 7,
+        "resilience": 5,
+        "perception": 3,
+        "memory": -5,
+        "loyalty": -5,
+        "technical_aptitude": -5,
+    },
+    "Soldier": {
+        "discipline": 7,
+        "tactical_awareness": 5,
+        "courage": 3,
+        "creativity": -5,
+        "empathy": -5,
+        "conversation": -5,
+    },
+    "Street Survivor": {
+        "perception": 7,
+        "adaptability": 5,
+        "deception": 3,
+        "faith": -5,
+        "patience": -5,
+        "loyalty": -5,
+    },
+}
+
+# Every answer changes exactly three attributes and has a net change of zero.
+# Across the 20 selected answers this produces exactly 60 attribute changes,
+# with all 34 character attributes represented at least once.
+ORIGIN_QUESTIONS = [
+    {
+        "prompt": "You notice danger before anyone else. What do you do?",
+        "answers": [
+            ("Study it before acting", {"intelligence": 4, "risk_assessment": 2, "courage": -6}),
+            ("Step forward immediately", {"courage": 6, "risk_assessment": -4, "intelligence": -2}),
+            ("Move everyone to safety", {"risk_assessment": 6, "courage": -4, "intelligence": -2}),
+        ],
+    },
+    {
+        "prompt": "A stranger asks for help but may be hiding something. How do you respond?",
+        "answers": [
+            ("Trust their feelings", {"empathy": 6, "deception": -4, "charisma": -2}),
+            ("Charm out the truth", {"charisma": 6, "empathy": -4, "deception": -2}),
+            ("Conceal your doubts and investigate", {"deception": 6, "charisma": -4, "empathy": -2}),
+        ],
+    },
+    {
+        "prompt": "Your community must cross difficult terrain. What role do you take?",
+        "answers": [
+            ("Carry the heaviest supplies", {"strength": 6, "agility": -4, "stamina": -2}),
+            ("Scout the quickest route", {"agility": 6, "strength": -4, "stamina": -2}),
+            ("Keep a steady pace all day", {"stamina": 6, "agility": -4, "strength": -2}),
+        ],
+    },
+    {
+        "prompt": "A machine nobody understands stops working. What is your approach?",
+        "answers": [
+            ("Diagnose it methodically", {"technical_aptitude": 6, "creativity": -4, "patience": -2}),
+            ("Invent an unconventional repair", {"creativity": 6, "technical_aptitude": -4, "patience": -2}),
+            ("Test one possibility at a time", {"patience": 6, "creativity": -4, "technical_aptitude": -2}),
+        ],
+    },
+    {
+        "prompt": "Two groups you care about become rivals. Where do you stand?",
+        "answers": [
+            ("Remain fiercely loyal to your own", {"loyalty": 6, "adaptability": -4, "aggression": -2}),
+            ("Adapt and seek common ground", {"adaptability": 6, "loyalty": -4, "aggression": -2}),
+            ("Force the dispute to a conclusion", {"aggression": 6, "adaptability": -4, "loyalty": -2}),
+        ],
+    },
+    {
+        "prompt": "Something moves at the edge of your vision. How do you react?",
+        "answers": [
+            ("Watch for the smallest detail", {"perception": 6, "speed": -4, "focus": -2}),
+            ("Concentrate and identify it", {"focus": 6, "speed": -4, "perception": -2}),
+            ("Sprint to intercept it", {"speed": 6, "focus": -4, "perception": -2}),
+        ],
+    },
+    {
+        "prompt": "A tense meeting is falling apart. What do you contribute?",
+        "answers": [
+            ("Keep everyone to the agreed rules", {"discipline": 6, "conversation": -4, "willpower": -2}),
+            ("Talk until people understand each other", {"conversation": 6, "discipline": -4, "willpower": -2}),
+            ("Refuse to let the meeting fail", {"willpower": 6, "conversation": -4, "discipline": -2}),
+        ],
+    },
+    {
+        "prompt": "You are learning a precise physical craft. What comes most naturally?",
+        "answers": [
+            ("Synchronizing every movement", {"coordination": 6, "dexterity": -4, "balance": -2}),
+            ("Performing delicate handwork", {"dexterity": 6, "balance": -4, "coordination": -2}),
+            ("Remaining stable under pressure", {"balance": 6, "coordination": -4, "dexterity": -2}),
+        ],
+    },
+    {
+        "prompt": "You must master a complicated new strategy. How do you learn it?",
+        "answers": [
+            ("Absorb new lessons rapidly", {"learning": 6, "memory": -4, "tactical_awareness": -2}),
+            ("Memorize every established pattern", {"memory": 6, "tactical_awareness": -4, "learning": -2}),
+            ("Study how choices alter the whole field", {"tactical_awareness": 6, "learning": -4, "memory": -2}),
+        ],
+    },
+    {
+        "prompt": "After a serious setback, what gets you moving again?",
+        "answers": [
+            ("Endure whatever comes next", {"resilience": 6, "recovery": -4, "metabolism": -2}),
+            ("Rest and rebuild carefully", {"recovery": 6, "resilience": -4, "metabolism": -2}),
+            ("Rely on your body's natural energy", {"metabolism": 6, "recovery": -4, "resilience": -2}),
+        ],
+    },
+    {
+        "prompt": "A long effort offers no guarantee of success. What sustains you?",
+        "answers": [
+            ("Belief that the effort has meaning", {"faith": 6, "composure": -4, "determination": -2}),
+            ("Calm control of your emotions", {"composure": 6, "determination": -4, "faith": -2}),
+            ("A refusal to stop", {"determination": 6, "faith": -4, "composure": -2}),
+        ],
+    },
+    {
+        "prompt": "How do you think about your future?",
+        "answers": [
+            ("Protect a long and healthy life", {"lifespan": 6, "risk_assessment": -4, "stamina": -2}),
+            ("Build endurance for years of work", {"stamina": 6, "lifespan": -4, "risk_assessment": -2}),
+            ("Avoid dangers that shorten lives", {"risk_assessment": 6, "stamina": -4, "lifespan": -2}),
+        ],
+    },
+    {
+        "prompt": "Someone publicly insults a vulnerable person. What do you do?",
+        "answers": [
+            ("Explain why the insult is wrong", {"intelligence": 6, "aggression": -4, "empathy": -2}),
+            ("Comfort the person who was hurt", {"empathy": 6, "intelligence": -4, "aggression": -2}),
+            ("Confront the offender directly", {"aggression": 6, "empathy": -4, "intelligence": -2}),
+        ],
+    },
+    {
+        "prompt": "You are given an important project with no instructions. What comes first?",
+        "answers": [
+            ("Imagine what it could become", {"creativity": 6, "discipline": -4, "technical_aptitude": -2}),
+            ("Determine the tools and mechanisms", {"technical_aptitude": 6, "creativity": -4, "discipline": -2}),
+            ("Create a strict working schedule", {"discipline": 6, "technical_aptitude": -4, "creativity": -2}),
+        ],
+    },
+    {
+        "prompt": "A friend asks you to keep a dangerous secret. What matters most?",
+        "answers": [
+            ("Having the courage to challenge them", {"courage": 6, "loyalty": -4, "deception": -2}),
+            ("Remaining loyal despite the risk", {"loyalty": 6, "deception": -4, "courage": -2}),
+            ("Hiding what you know convincingly", {"deception": 6, "courage": -4, "loyalty": -2}),
+        ],
+    },
+    {
+        "prompt": "You arrive alone at an unfamiliar social gathering. What do you do?",
+        "answers": [
+            ("Make a memorable entrance", {"charisma": 6, "patience": -4, "conversation": -2}),
+            ("Begin conversations with everyone", {"conversation": 6, "charisma": -4, "patience": -2}),
+            ("Observe quietly until the right moment", {"patience": 6, "conversation": -4, "charisma": -2}),
+        ],
+    },
+    {
+        "prompt": "A physical contest begins without warning. What is your advantage?",
+        "answers": [
+            ("Raw power", {"strength": 6, "speed": -4, "agility": -2}),
+            ("Explosive quickness", {"speed": 6, "agility": -4, "strength": -2}),
+            ("Evasive movement", {"agility": 6, "strength": -4, "speed": -2}),
+        ],
+    },
+    {
+        "prompt": "Your original plan becomes impossible. What happens next?",
+        "answers": [
+            ("Notice an overlooked opportunity", {"perception": 6, "adaptability": -4, "focus": -2}),
+            ("Concentrate on the original objective", {"focus": 6, "perception": -4, "adaptability": -2}),
+            ("Reshape the plan immediately", {"adaptability": 6, "focus": -4, "perception": -2}),
+        ],
+    },
+    {
+        "prompt": "You suffer a hard fall during an urgent task. What helps most?",
+        "answers": [
+            ("Controlling your movement", {"coordination": 6, "recovery": -4, "balance": -2}),
+            ("Staying upright through impact", {"balance": 6, "coordination": -4, "recovery": -2}),
+            ("Getting back up immediately", {"recovery": 6, "balance": -4, "coordination": -2}),
+        ],
+    },
+    {
+        "prompt": "You decide to become excellent at a difficult subject. What drives progress?",
+        "answers": [
+            ("Retaining everything you study", {"memory": 6, "willpower": -4, "learning": -2}),
+            ("Improving with every attempt", {"learning": 6, "memory": -4, "willpower": -2}),
+            ("Continuing when study becomes painful", {"willpower": 6, "learning": -4, "memory": -2}),
+        ],
+    },
+]
+
+# Preference questions intentionally raise the overall average. Every choice
+# adds 10 to one attribute and subtracts 2 from another, for a net gain of 8.
+ORIGIN_FAVORITE_QUESTIONS = [
+    {
+        "prompt": "Which kind of fictional character is usually your favourite?",
+        "answers": [
+            ("The brilliant inventor", {"technical_aptitude": 10, "strength": -2}),
+            ("The fearless warrior", {"courage": 10, "patience": -2}),
+            ("The compassionate healer", {"empathy": 10, "aggression": -2}),
+            ("The clever detective", {"perception": 10, "faith": -2}),
+            ("The charming rogue", {"charisma": 10, "loyalty": -2}),
+        ],
+    },
+    {
+        "prompt": "Which food sounds best right now?",
+        "answers": [
+            ("A hearty stew", {"stamina": 10, "speed": -2}),
+            ("A fiery curry", {"courage": 10, "composure": -2}),
+            ("Fresh fruit", {"metabolism": 10, "resilience": -2}),
+            ("An elaborate dessert", {"creativity": 10, "discipline": -2}),
+            ("Freshly baked bread", {"patience": 10, "charisma": -2}),
+        ],
+    },
+    {
+        "prompt": "Which colour appeals to you most?",
+        "answers": [
+            ("Red", {"aggression": 10, "patience": -2}),
+            ("Blue", {"composure": 10, "aggression": -2}),
+            ("Green", {"empathy": 10, "deception": -2}),
+            ("Gold", {"charisma": 10, "risk_assessment": -2}),
+            ("Purple", {"creativity": 10, "discipline": -2}),
+        ],
+    },
+    {
+        "prompt": "Which animal would you most want as a companion?",
+        "answers": [
+            ("Wolf", {"loyalty": 10, "conversation": -2}),
+            ("Owl", {"intelligence": 10, "strength": -2}),
+            ("Cat", {"agility": 10, "loyalty": -2}),
+            ("Horse", {"stamina": 10, "dexterity": -2}),
+            ("Dolphin", {"conversation": 10, "composure": -2}),
+        ],
+    },
+    {
+        "prompt": "How would you most enjoy spending a free afternoon?",
+        "answers": [
+            ("Reading a book", {"memory": 10, "speed": -2}),
+            ("Building something", {"technical_aptitude": 10, "charisma": -2}),
+            ("Playing a sport", {"coordination": 10, "focus": -2}),
+            ("Painting or writing", {"creativity": 10, "risk_assessment": -2}),
+            ("Meeting friends", {"conversation": 10, "discipline": -2}),
+        ],
+    },
+    {
+        "prompt": "Which kind of weather feels most inspiring?",
+        "answers": [
+            ("Bright sunshine", {"composure": 10, "perception": -2}),
+            ("A thunderstorm", {"courage": 10, "risk_assessment": -2}),
+            ("Falling snow", {"resilience": 10, "speed": -2}),
+            ("Steady rain", {"focus": 10, "charisma": -2}),
+            ("A powerful wind", {"adaptability": 10, "balance": -2}),
+        ],
+    },
+    {
+        "prompt": "Which place would you most like to explore?",
+        "answers": [
+            ("An ancient library", {"learning": 10, "aggression": -2}),
+            ("A busy workshop", {"dexterity": 10, "empathy": -2}),
+            ("A deep forest", {"perception": 10, "technical_aptitude": -2}),
+            ("A remote mountain", {"resilience": 10, "conversation": -2}),
+            ("A crowded market", {"charisma": 10, "focus": -2}),
+        ],
+    },
+    {
+        "prompt": "Which style of music would you choose first?",
+        "answers": [
+            ("Classical", {"focus": 10, "aggression": -2}),
+            ("Rock", {"determination": 10, "patience": -2}),
+            ("Jazz", {"adaptability": 10, "discipline": -2}),
+            ("Folk", {"faith": 10, "deception": -2}),
+            ("Electronic", {"technical_aptitude": 10, "empathy": -2}),
+        ],
+    },
+    {
+        "prompt": "Which kind of game is most appealing?",
+        "answers": [
+            ("Chess or strategy", {"tactical_awareness": 10, "agility": -2}),
+            ("Puzzles and riddles", {"intelligence": 10, "stamina": -2}),
+            ("Racing", {"risk_assessment": 10, "patience": -2}),
+            ("A team sport", {"loyalty": 10, "deception": -2}),
+            ("Role-playing adventures", {"creativity": 10, "strength": -2}),
+        ],
+    },
+    {
+        "prompt": "Which useful object would you prefer to carry?",
+        "answers": [
+            ("A sturdy hammer", {"strength": 10, "dexterity": -2}),
+            ("A precision knife", {"dexterity": 10, "strength": -2}),
+            ("A detailed map", {"tactical_awareness": 10, "faith": -2}),
+            ("A personal journal", {"memory": 10, "speed": -2}),
+            ("A versatile multi-tool", {"adaptability": 10, "focus": -2}),
+        ],
+    },
+]
+
+HOUSEHOLD_CHOICES = {
+    "Leo": {"intelligence": 10},
+    "Jojo": {"aggression": 10},
+    "Athena": {"creativity": 15, "discipline": -5},
+    "Elliot": {"technical_aptitude": 5, "determination": 10, "courage": -5},
+    "Evander": {"strength": 15, "resilience": -5},
+    "Alice": {
+        "willpower": 5,
+        "patience": -5,
+        "aggression": 5,
+        "metabolism": 5,
+        "stamina": 5,
+    },
+    "Gerald": {"metabolism": 20, "lifespan": -10},
+    "Catherine": {"lifespan": -5, "balance": 15},
+}
 
 
 def get_rating_color(value: int) -> str:
@@ -227,6 +610,890 @@ def clean_cell(value: object) -> str:
     if value is None:
         return ""
     return str(value).strip()
+
+
+def canonicalize_religion(value: object) -> str:
+    """Return the roster's preferred capitalization for a known religion."""
+    cleaned = clean_cell(value)
+    matches = {choice.casefold(): choice for choice in RELIGION_CHOICES}
+    return matches.get(cleaned.casefold(), cleaned)
+
+
+def format_origin_effects(effects: dict[str, int]) -> str:
+    """Return a readable summary of one balanced Origin Story answer."""
+    return ", ".join(
+        f"{ATTRIBUTE_LABELS[field]} {change:+d}"
+        for field, change in effects.items()
+    )
+
+
+def calculate_average_rank_curve(
+    characters: list[dict[str, str]],
+) -> list[float] | None:
+    """Return the average low-to-high attribute curve of original roster rows."""
+
+    def valid_profiles(rows: list[dict[str, str]]) -> list[list[int]]:
+        profiles: list[list[int]] = []
+        for character in rows:
+            values = [safe_int(character.get(field), None) for field in ATTRIBUTE_FIELDS]
+            if any(value is None or not 1 <= value <= 99 for value in values):
+                continue
+            profiles.append(sorted(int(value) for value in values if value is not None))
+        return profiles
+
+    original_rows = [
+        character
+        for character in characters
+        if clean_cell(character.get("schema_version", "")) == "1.0"
+    ]
+    profiles = valid_profiles(original_rows)
+    if not profiles:
+        profiles = valid_profiles(characters)
+    if not profiles:
+        return None
+
+    return [
+        sum(profile[position] for profile in profiles) / len(profiles)
+        for position in range(len(ATTRIBUTE_FIELDS))
+    ]
+
+
+def mould_middle_scores_to_average_curve(
+    scores: dict[str, int],
+    ranked_fields: list[str],
+    average_rank_curve: list[float] | None,
+) -> dict[str, int]:
+    """Nudge middle ratings toward the average roster shape at constant total."""
+    if average_rank_curve is None or len(average_rank_curve) != len(ATTRIBUTE_FIELDS):
+        return dict(scores)
+
+    adjusted = dict(scores)
+    middle_fields = ranked_fields[5:-5]
+    values = [adjusted[field] for field in middle_fields]
+    curve = average_rank_curve[5:-5]
+    if not values:
+        return adjusted
+
+    current_mean = sum(values) / len(values)
+    curve_mean = sum(curve) / len(curve)
+    normalized_curve = [current_mean + (value - curve_mean) for value in curve]
+
+    # Blend halfway toward the aggregate curve. Both sequences are ordered and
+    # have the same mean, so the targets preserve rank and total power.
+    targets = [
+        (current + target) / 2.0
+        for current, target in zip(values, normalized_curve)
+    ]
+    lower_bound = adjusted[ranked_fields[4]]
+    upper_bound = adjusted[ranked_fields[-5]]
+    targets = [max(lower_bound, min(upper_bound, target)) for target in targets]
+
+    # Transfer points only within the middle group. Every +1 is paired with a
+    # -1, top/bottom values remain frozen, and the established ordering cannot flip.
+    for _transfer in range(2000):
+        donors = [
+            index
+            for index, value in enumerate(values)
+            if value > targets[index] + 0.5
+            and value - 1 >= lower_bound
+            and (index == 0 or value - 1 >= values[index - 1])
+        ]
+        receivers = [
+            index
+            for index, value in enumerate(values)
+            if value < targets[index] - 0.5
+            and value + 1 <= upper_bound
+            and (index == len(values) - 1 or value + 1 <= values[index + 1])
+        ]
+        if not donors or not receivers:
+            break
+
+        valid_pairs: list[tuple[int, int]] = []
+        for donor in donors:
+            for receiver in receivers:
+                if donor == receiver:
+                    continue
+                trial = list(values)
+                trial[donor] -= 1
+                trial[receiver] += 1
+                if trial == sorted(trial):
+                    valid_pairs.append((donor, receiver))
+        if not valid_pairs:
+            break
+
+        donor, receiver = max(
+            valid_pairs,
+            key=lambda pair: (
+                values[pair[0]] - targets[pair[0]]
+                + targets[pair[1]] - values[pair[1]]
+            ),
+        )
+        values[donor] -= 1
+        values[receiver] += 1
+
+    for field, value in zip(middle_fields, values):
+        adjusted[field] = value
+    return adjusted
+
+
+def apply_origin_final_adjustments(
+    scores: dict[str, int],
+    positive_traits: list[str],
+    average_rank_curve: list[float] | None = None,
+) -> dict[str, int]:
+    """Apply final specialization boosts and penalties, constrained to 1-99."""
+    adjusted = dict(scores)
+    schema_position = {
+        field: position for position, field in enumerate(ATTRIBUTE_FIELDS)
+    }
+
+    # Rank once so tied values cannot place the same attribute in both groups.
+    ranked = sorted(
+        ATTRIBUTE_FIELDS,
+        key=lambda field: (adjusted[field], schema_position[field]),
+    )
+    lowest_five = ranked[:5]
+    highest_five = ranked[-5:]
+
+    for field in highest_five:
+        value = adjusted[field]
+        if value < 80:
+            adjusted[field] = 80 + (value % 10)
+        elif value < 90:
+            adjusted[field] = 90 + (value % 10)
+
+    for field in lowest_five:
+        adjusted[field] -= 5
+
+    adjusted = mould_middle_scores_to_average_curve(
+        adjusted,
+        ranked,
+        average_rank_curve,
+    )
+
+    # The weakest of the five selected positive traits becomes the defining
+    # strong suit after every other score change has been applied.
+    strong_suit = min(
+        positive_traits,
+        key=lambda field: (adjusted[field], schema_position[field]),
+    )
+    adjusted[strong_suit] = 99
+
+    return {
+        field: max(1, min(99, value))
+        for field, value in adjusted.items()
+    }
+
+
+def calculate_origin_scores(
+    answer_indices: list[int],
+    favorite_answer_indices: list[int],
+    background_choice: str,
+    positive_traits: list[str],
+    negative_traits: list[str],
+    correct_math_answers: int,
+    household_choice: str,
+    average_rank_curve: list[float] | None = None,
+) -> dict[str, int]:
+    """Calculate final Origin Story ratings from the completed questionnaire."""
+    if len(answer_indices) != len(ORIGIN_QUESTIONS):
+        raise ValueError("Every Origin Story question must have an answer.")
+    if len(favorite_answer_indices) != len(ORIGIN_FAVORITE_QUESTIONS):
+        raise ValueError("Every preference question must have an answer.")
+    if background_choice not in ORIGIN_BACKGROUNDS:
+        raise ValueError("A formative background is required.")
+    if len(positive_traits) != 5 or len(set(positive_traits)) != 5:
+        raise ValueError("Exactly five different positive traits are required.")
+    if len(negative_traits) != 5 or len(set(negative_traits)) != 5:
+        raise ValueError("Exactly five different negative traits are required.")
+    if set(positive_traits) & set(negative_traits):
+        raise ValueError("Positive and negative traits cannot overlap.")
+    if not 0 <= correct_math_answers <= 2:
+        raise ValueError("The number of correct math answers must be from zero to two.")
+    if household_choice not in HOUSEHOLD_CHOICES:
+        raise ValueError("A household choice is required.")
+
+    scores = {field: ORIGIN_BASE_RATING for field in RATING_FIELDS}
+
+    for question, answer_index in zip(ORIGIN_QUESTIONS, answer_indices):
+        answers = question["answers"]
+        if answer_index not in range(len(answers)):
+            raise ValueError("An Origin Story answer is invalid.")
+        _answer_text, effects = answers[answer_index]
+        for field, change in effects.items():
+            scores[field] += change
+
+    for question, answer_index in zip(
+        ORIGIN_FAVORITE_QUESTIONS,
+        favorite_answer_indices,
+    ):
+        answers = question["answers"]
+        if answer_index not in range(len(answers)):
+            raise ValueError("A preference answer is invalid.")
+        _answer_text, effects = answers[answer_index]
+        for field, change in effects.items():
+            scores[field] += change
+
+    for field, change in ORIGIN_BACKGROUNDS[background_choice].items():
+        scores[field] += change
+
+    for field, change in zip(positive_traits, ORIGIN_TRAIT_WEIGHTS):
+        scores[field] += change
+    for field, change in zip(negative_traits, ORIGIN_TRAIT_WEIGHTS):
+        scores[field] -= change
+
+    # Recalculate the weakest attribute after each correct answer. If several
+    # are tied, the stable schema order determines which receives the point bonus.
+    for _correct_answer in range(correct_math_answers):
+        weakest = min(ATTRIBUTE_FIELDS, key=lambda field: scores[field])
+        scores[weakest] += 2
+
+    for field, change in HOUSEHOLD_CHOICES[household_choice].items():
+        scores[field] += change
+
+    return apply_origin_final_adjustments(
+        scores,
+        positive_traits,
+        average_rank_curve,
+    )
+
+
+class OriginStoryWizard(tk.Toplevel):
+    """Modal questionnaire that creates a schema 1.1 character record."""
+
+    BACKGROUND_STEP = 1
+    QUESTIONS_FIRST_STEP = BACKGROUND_STEP + 1
+    FAVORITES_FIRST_STEP = QUESTIONS_FIRST_STEP + len(ORIGIN_QUESTIONS)
+    POSITIVE_TRAITS_STEP = FAVORITES_FIRST_STEP + len(ORIGIN_FAVORITE_QUESTIONS)
+    NEGATIVE_TRAITS_STEP = POSITIVE_TRAITS_STEP + 1
+    MATH_STEP = NEGATIVE_TRAITS_STEP + 1
+    LAST_STEP = MATH_STEP + 1
+    TOTAL_STEPS = LAST_STEP + 1
+
+    def __init__(
+        self,
+        parent: tk.Tk,
+        fieldnames: list[str],
+        character_id: str,
+        average_rank_curve: list[float] | None,
+    ) -> None:
+        super().__init__(parent)
+        self.parent = parent
+        self.fieldnames = fieldnames
+        self.character_id = character_id
+        self.average_rank_curve = average_rank_curve
+        self.result: dict[str, str] | None = None
+        self.correct_math_answers = 0
+        self.step = 0
+
+        self.title("Origin Story Character Creator")
+        self.geometry("820x690")
+        self.minsize(720, 600)
+        self.transient(parent)
+        self.protocol("WM_DELETE_WINDOW", self.cancel)
+
+        self.basic_vars = {
+            "first_name": tk.StringVar(),
+            "last_name": tk.StringVar(),
+            "display_name": tk.StringVar(),
+            "species": tk.StringVar(value=SPECIES_DEFAULT),
+            "religion": tk.StringVar(value=RELIGION_CHOICES[0]),
+            "nationality": tk.StringVar(),
+            "birth_year": tk.StringVar(value="2000"),
+            "height_cm": tk.StringVar(value="170"),
+            "weight_kg": tk.StringVar(value="70"),
+            "sex": tk.StringVar(),
+        }
+        self.background_var = tk.StringVar()
+        self.answer_vars = [tk.IntVar(value=-1) for _question in ORIGIN_QUESTIONS]
+        self.favorite_answer_vars = [
+            tk.IntVar(value=-1) for _question in ORIGIN_FAVORITE_QUESTIONS
+        ]
+        self.positive_vars = [tk.StringVar() for _slot in range(5)]
+        self.negative_vars = [tk.StringVar() for _slot in range(5)]
+        self.math_problems = [
+            (random.randint(1, 9999), random.randint(1, 9999))
+            for _problem in range(2)
+        ]
+        self.math_vars = [tk.StringVar() for _problem in range(2)]
+        self.household_var = tk.StringVar()
+
+        self.progress_var = tk.StringVar()
+        self.heading_var = tk.StringVar()
+
+        top = ttk.Frame(self, padding=(18, 14, 18, 8))
+        top.pack(fill="x")
+        ttk.Label(
+            top,
+            textvariable=self.heading_var,
+            font=("Arial", 16, "bold"),
+        ).pack(anchor="w")
+        ttk.Label(
+            top,
+            textvariable=self.progress_var,
+            foreground="#475569",
+        ).pack(anchor="w", pady=(3, 0))
+
+        separator = ttk.Separator(self, orient="horizontal")
+        separator.pack(fill="x")
+
+        self.content = ttk.Frame(self, padding=18)
+        self.content.pack(fill="both", expand=True)
+
+        nav = ttk.Frame(self, padding=(18, 8, 18, 14))
+        nav.pack(fill="x", side="bottom")
+        self.cancel_button = ttk.Button(nav, text="Cancel", command=self.cancel)
+        self.cancel_button.pack(side="left")
+        self.back_button = ttk.Button(nav, text="Back", command=self.go_back)
+        self.back_button.pack(side="right", padx=(6, 0))
+        self.next_button = ttk.Button(nav, text="Next", command=self.go_next)
+        self.next_button.pack(side="right")
+
+        self.render_step()
+        self.grab_set()
+        self.focus_force()
+
+    def clear_content(self) -> None:
+        for child in self.content.winfo_children():
+            child.destroy()
+
+    def render_step(self) -> None:
+        self.clear_content()
+        self.back_button.config(state="disabled" if self.step == 0 else "normal")
+        self.next_button.config(text="Create Character" if self.step == self.LAST_STEP else "Next")
+
+        if self.step == 0:
+            self.render_basics()
+        elif self.step == self.BACKGROUND_STEP:
+            self.render_background()
+        elif self.QUESTIONS_FIRST_STEP <= self.step < self.FAVORITES_FIRST_STEP:
+            self.render_question(self.step - self.QUESTIONS_FIRST_STEP)
+        elif self.FAVORITES_FIRST_STEP <= self.step < self.POSITIVE_TRAITS_STEP:
+            self.render_favorite_question(self.step - self.FAVORITES_FIRST_STEP)
+        elif self.step == self.POSITIVE_TRAITS_STEP:
+            self.render_traits(positive=True)
+        elif self.step == self.NEGATIVE_TRAITS_STEP:
+            self.render_traits(positive=False)
+        elif self.step == self.MATH_STEP:
+            self.render_math()
+        else:
+            self.render_household_choice()
+
+    def render_basics(self) -> None:
+        self.heading_var.set("Basic Character Information")
+        self.progress_var.set(
+            f"Step 1 of {self.TOTAL_STEPS} — identity and dimensions"
+        )
+
+        ttk.Label(
+            self.content,
+            text=(
+                f"Character ID {self.character_id} and short name "
+                f"{self.character_id[-3:]} will be assigned automatically."
+            ),
+            wraplength=740,
+        ).grid(row=0, column=0, columnspan=4, sticky="w", pady=(0, 14))
+
+        fields = [
+            ("first_name", "First Name", "entry"),
+            ("last_name", "Last Name", "entry"),
+            ("display_name", "Display Name", "entry"),
+            ("species", "Species", "entry"),
+            ("religion", "Religion", "religion"),
+            ("nationality", "Nationality", "entry"),
+            ("birth_year", "Birth Year", "entry"),
+            ("height_cm", "Height (cm)", "entry"),
+            ("weight_kg", "Weight (kg)", "entry"),
+            ("sex", "Sex", "sex"),
+        ]
+        for index, (field, label, widget_type) in enumerate(fields):
+            row = index // 2 + 1
+            column = (index % 2) * 2
+            ttk.Label(self.content, text=f"{label}:", font=("Arial", 9, "bold")).grid(
+                row=row,
+                column=column,
+                sticky="e",
+                padx=(0, 7),
+                pady=7,
+            )
+            if widget_type == "religion":
+                widget = ttk.Combobox(
+                    self.content,
+                    textvariable=self.basic_vars[field],
+                    values=RELIGION_CHOICES,
+                    state="readonly",
+                )
+            elif widget_type == "sex":
+                widget = ttk.Combobox(
+                    self.content,
+                    textvariable=self.basic_vars[field],
+                    values=SEX_CHOICES[1:],
+                    state="readonly",
+                )
+            else:
+                widget = ttk.Entry(self.content, textvariable=self.basic_vars[field])
+            widget.grid(row=row, column=column + 1, sticky="ew", padx=(0, 18), pady=7)
+
+        self.content.columnconfigure(1, weight=1)
+        self.content.columnconfigure(3, weight=1)
+
+    def render_background(self) -> None:
+        self.heading_var.set("Formative Background")
+        self.progress_var.set(
+            f"Step {self.step + 1} of {self.TOTAL_STEPS} — early life"
+        )
+        ttk.Label(
+            self.content,
+            text=(
+                "Choose the background that best represents the character's upbringing. "
+                "Every background strengthens three related attributes and weakens three "
+                "others with a net point change of zero."
+            ),
+            wraplength=740,
+        ).pack(anchor="w", pady=(0, 12))
+
+        for background, effects in ORIGIN_BACKGROUNDS.items():
+            option = ttk.Frame(self.content, padding=(8, 4))
+            option.pack(fill="x", pady=2)
+            ttk.Radiobutton(
+                option,
+                variable=self.background_var,
+                value=background,
+                text=background,
+            ).pack(anchor="w")
+            ttk.Label(
+                option,
+                text=format_origin_effects(effects),
+                foreground="#475569",
+                wraplength=700,
+            ).pack(anchor="w", padx=(25, 0), pady=(1, 0))
+
+    def render_question(self, question_index: int) -> None:
+        question = ORIGIN_QUESTIONS[question_index]
+        self.heading_var.set(f"Origin Question {question_index + 1} of 20")
+        self.progress_var.set(
+            f"Step {self.step + 1} of {self.TOTAL_STEPS} — balanced attribute choice"
+        )
+
+        ttk.Label(
+            self.content,
+            text=question["prompt"],
+            font=("Arial", 13, "bold"),
+            wraplength=740,
+            justify="left",
+        ).pack(anchor="w", pady=(0, 18))
+
+        for answer_index, (answer_text, effects) in enumerate(question["answers"]):
+            option = ttk.Frame(self.content, padding=(8, 7))
+            option.pack(fill="x", pady=5)
+            ttk.Radiobutton(
+                option,
+                variable=self.answer_vars[question_index],
+                value=answer_index,
+                text=answer_text,
+            ).pack(anchor="w")
+            ttk.Label(
+                option,
+                text=format_origin_effects(effects),
+                foreground="#475569",
+                wraplength=700,
+            ).pack(anchor="w", padx=(25, 0), pady=(2, 0))
+
+        ttk.Label(
+            self.content,
+            text="Every answer changes three attributes and always totals exactly zero.",
+            font=("Arial", 9, "italic"),
+            foreground="#64748B",
+        ).pack(anchor="w", pady=(18, 0))
+
+    def render_favorite_question(self, question_index: int) -> None:
+        question = ORIGIN_FAVORITE_QUESTIONS[question_index]
+        self.heading_var.set(
+            f"Preference Question {question_index + 1} of "
+            f"{len(ORIGIN_FAVORITE_QUESTIONS)}"
+        )
+        self.progress_var.set(
+            f"Step {self.step + 1} of {self.TOTAL_STEPS} — preference bonus"
+        )
+
+        ttk.Label(
+            self.content,
+            text=question["prompt"],
+            font=("Arial", 13, "bold"),
+            wraplength=740,
+            justify="left",
+        ).pack(anchor="w", pady=(0, 12))
+
+        for answer_index, (answer_text, effects) in enumerate(question["answers"]):
+            option = ttk.Frame(self.content, padding=(8, 4))
+            option.pack(fill="x", pady=2)
+            ttk.Radiobutton(
+                option,
+                variable=self.favorite_answer_vars[question_index],
+                value=answer_index,
+                text=answer_text,
+            ).pack(anchor="w")
+            ttk.Label(
+                option,
+                text=format_origin_effects(effects),
+                foreground="#475569",
+                wraplength=700,
+            ).pack(anchor="w", padx=(25, 0), pady=(1, 0))
+
+        ttk.Label(
+            self.content,
+            text="Every preference gives +10 to one attribute and −2 to another (net +8).",
+            font=("Arial", 9, "italic"),
+            foreground="#64748B",
+        ).pack(anchor="w", pady=(12, 0))
+
+    def render_traits(self, positive: bool) -> None:
+        direction = "Positive" if positive else "Negative"
+        self.heading_var.set(f"Choose Five {direction} Traits")
+        self.progress_var.set(
+            f"Step {self.step + 1} of {self.TOTAL_STEPS} — "
+            + ("ordered bonuses" if positive else "ordered penalties")
+        )
+        values = [ATTRIBUTE_LABELS[field] for field in ATTRIBUTE_FIELDS]
+        variables = self.positive_vars if positive else self.negative_vars
+        signs = "+" if positive else "−"
+
+        ttk.Label(
+            self.content,
+            text=(
+                "Order matters. Select five different attributes; the first receives "
+                f"{signs}10, followed by {signs}8, {signs}6, {signs}4, and {signs}2."
+            ),
+            wraplength=740,
+        ).pack(anchor="w", pady=(0, 14))
+
+        final_effect = (
+            "After all scoring, the lowest of these five positive traits becomes 99."
+            if positive
+            else "After all scoring, the character's five lowest attributes each lose another 5."
+        )
+        ttk.Label(
+            self.content,
+            text=final_effect,
+            foreground="#475569",
+            font=("Arial", 9, "italic"),
+            wraplength=740,
+        ).pack(anchor="w", pady=(0, 10))
+
+        grid = ttk.Frame(self.content)
+        grid.pack(fill="x")
+        grid.columnconfigure(2, weight=1)
+        for index, (variable, weight) in enumerate(zip(variables, ORIGIN_TRAIT_WEIGHTS)):
+            ttk.Label(grid, text=f"Priority {index + 1}:", font=("Arial", 9, "bold")).grid(
+                row=index,
+                column=0,
+                sticky="e",
+                padx=(0, 8),
+                pady=7,
+            )
+            ttk.Label(grid, text=f"{signs}{weight}", width=4).grid(
+                row=index,
+                column=1,
+                sticky="w",
+                padx=(0, 8),
+            )
+            ttk.Combobox(
+                grid,
+                textvariable=variable,
+                values=values,
+                state="readonly",
+            ).grid(row=index, column=2, sticky="ew", pady=7)
+
+    def render_math(self) -> None:
+        self.heading_var.set("Two Addition Questions")
+        self.progress_var.set(
+            f"Step {self.step + 1} of {self.TOTAL_STEPS} — weakest-attribute bonus"
+        )
+        ttk.Label(
+            self.content,
+            text=(
+                "Solve each three-decimal-place addition. Every correct answer adds "
+                "2 points to the character's current weakest attribute."
+            ),
+            wraplength=740,
+        ).pack(anchor="w", pady=(0, 18))
+
+        grid = ttk.Frame(self.content)
+        grid.pack(anchor="w")
+        for index, ((left, right), variable) in enumerate(
+            zip(self.math_problems, self.math_vars),
+            start=1,
+        ):
+            problem = f"{left / 1000:.3f} + {right / 1000:.3f} ="
+            ttk.Label(grid, text=f"{index}. {problem}", font=("Courier New", 13, "bold")).grid(
+                row=index - 1,
+                column=0,
+                sticky="e",
+                padx=(0, 10),
+                pady=10,
+            )
+            ttk.Entry(grid, textvariable=variable, width=16).grid(
+                row=index - 1,
+                column=1,
+                sticky="w",
+                pady=10,
+            )
+
+    def render_household_choice(self) -> None:
+        self.heading_var.set("The Most Important Question")
+        self.progress_var.set(
+            f"Step {self.step + 1} of {self.TOTAL_STEPS} — final household bonus"
+        )
+        ttk.Label(
+            self.content,
+            text="Who is the coolest person in the household?",
+            font=("Arial", 13, "bold"),
+        ).pack(anchor="w", pady=(0, 14))
+
+        ttk.Label(
+            self.content,
+            text=(
+                "At final scoring, the five highest attributes are promoted and the five "
+                "lowest lose 5. Those ten values are then frozen while the middle ratings "
+                "are gently moulded toward the original roster's aggregate average curve "
+                "without changing their total. Finally, the weakest selected positive "
+                "trait becomes 99. All ratings remain between 1 and 99."
+            ),
+            foreground="#475569",
+            wraplength=740,
+        ).pack(anchor="w", pady=(0, 12))
+
+        for person, effects in HOUSEHOLD_CHOICES.items():
+            row = ttk.Frame(self.content)
+            row.pack(fill="x", pady=3)
+            ttk.Radiobutton(
+                row,
+                variable=self.household_var,
+                value=person,
+                text=person,
+                width=14,
+            ).pack(side="left", anchor="n")
+            ttk.Label(
+                row,
+                text=format_origin_effects(effects),
+                foreground="#475569",
+                wraplength=580,
+            ).pack(side="left", anchor="w", padx=(8, 0))
+
+    def validate_basics(self) -> bool:
+        required = {
+            "first_name": "First Name",
+            "last_name": "Last Name",
+            "display_name": "Display Name",
+            "species": "Species",
+            "religion": "Religion",
+            "nationality": "Nationality",
+            "birth_year": "Birth Year",
+            "height_cm": "Height",
+            "weight_kg": "Weight",
+            "sex": "Sex",
+        }
+        missing = [label for field, label in required.items() if not self.basic_vars[field].get().strip()]
+        if missing:
+            messagebox.showerror(
+                "Missing information",
+                "Complete these fields:\n" + ", ".join(missing),
+                parent=self,
+            )
+            return False
+
+        numeric_rules = [
+            ("birth_year", "Birth Year", 1, 9999),
+            ("height_cm", "Height", 1, None),
+            ("weight_kg", "Weight", 1, None),
+        ]
+        for field, label, minimum, maximum in numeric_rules:
+            value = safe_int(self.basic_vars[field].get(), None)
+            if value is None or value < minimum or (maximum is not None and value > maximum):
+                allowed = f"{minimum}–{maximum}" if maximum is not None else f"at least {minimum}"
+                messagebox.showerror(
+                    "Invalid measurement",
+                    f"{label} must be a whole number ({allowed}).",
+                    parent=self,
+                )
+                return False
+            self.basic_vars[field].set(str(value))
+
+        self.basic_vars["religion"].set(
+            canonicalize_religion(self.basic_vars["religion"].get())
+        )
+        return True
+
+    def selected_trait_keys(self, variables: list[tk.StringVar]) -> list[str]:
+        label_to_field = {label: field for field, label in ATTRIBUTE_LABELS.items()}
+        return [label_to_field.get(variable.get(), "") for variable in variables]
+
+    def validate_traits(self, positive: bool) -> bool:
+        variables = self.positive_vars if positive else self.negative_vars
+        selected = self.selected_trait_keys(variables)
+        direction = "positive" if positive else "negative"
+        if any(not field for field in selected):
+            messagebox.showerror(
+                "Incomplete trait selection",
+                f"Choose all five {direction} traits.",
+                parent=self,
+            )
+            return False
+        if len(set(selected)) != 5:
+            messagebox.showerror(
+                "Duplicate trait",
+                f"Each {direction} trait must be different.",
+                parent=self,
+            )
+            return False
+        if not positive:
+            positive_selected = set(self.selected_trait_keys(self.positive_vars))
+            overlap = positive_selected & set(selected)
+            if overlap:
+                names = ", ".join(ATTRIBUTE_LABELS[field] for field in ATTRIBUTE_FIELDS if field in overlap)
+                messagebox.showerror(
+                    "Trait overlap",
+                    f"A trait cannot be both positive and negative:\n{names}",
+                    parent=self,
+                )
+                return False
+        return True
+
+    def validate_math_entries(self) -> bool:
+        for index, variable in enumerate(self.math_vars, start=1):
+            if not variable.get().strip():
+                messagebox.showerror(
+                    "Missing answer",
+                    f"Enter an answer for addition question {index}.",
+                    parent=self,
+                )
+                return False
+            try:
+                Decimal(variable.get().strip())
+            except InvalidOperation:
+                messagebox.showerror(
+                    "Invalid answer",
+                    f"Addition answer {index} must be a number.",
+                    parent=self,
+                )
+                return False
+        return True
+
+    def count_correct_math_answers(self) -> int:
+        correct = 0
+        for (left, right), variable in zip(self.math_problems, self.math_vars):
+            try:
+                submitted = Decimal(variable.get().strip())
+            except InvalidOperation:
+                continue
+            expected = Decimal(left + right) / Decimal(1000)
+            if submitted == expected:
+                correct += 1
+        return correct
+
+    def go_next(self) -> None:
+        if self.step == 0 and not self.validate_basics():
+            return
+        if self.step == self.BACKGROUND_STEP and not self.background_var.get():
+            messagebox.showerror(
+                "Choose a background",
+                "Select one formative background before continuing.",
+                parent=self,
+            )
+            return
+        if self.QUESTIONS_FIRST_STEP <= self.step < self.FAVORITES_FIRST_STEP:
+            question_index = self.step - self.QUESTIONS_FIRST_STEP
+            if self.answer_vars[question_index].get() == -1:
+                messagebox.showerror(
+                    "Choose an answer",
+                    "Select one answer before continuing.",
+                    parent=self,
+                )
+                return
+        if self.FAVORITES_FIRST_STEP <= self.step < self.POSITIVE_TRAITS_STEP:
+            question_index = self.step - self.FAVORITES_FIRST_STEP
+            if self.favorite_answer_vars[question_index].get() == -1:
+                messagebox.showerror(
+                    "Choose an answer",
+                    "Select one preference before continuing.",
+                    parent=self,
+                )
+                return
+        if self.step == self.POSITIVE_TRAITS_STEP and not self.validate_traits(positive=True):
+            return
+        if self.step == self.NEGATIVE_TRAITS_STEP and not self.validate_traits(positive=False):
+            return
+        if self.step == self.MATH_STEP and not self.validate_math_entries():
+            return
+        if self.step == self.LAST_STEP:
+            if not self.household_var.get():
+                messagebox.showerror(
+                    "Choose a person",
+                    "Select the coolest person in the household.",
+                    parent=self,
+                )
+                return
+            self.finish()
+            return
+
+        self.step += 1
+        self.render_step()
+
+    def go_back(self) -> None:
+        if self.step > 0:
+            self.step -= 1
+            self.render_step()
+
+    def finish(self) -> None:
+        positive_traits = self.selected_trait_keys(self.positive_vars)
+        negative_traits = self.selected_trait_keys(self.negative_vars)
+        self.correct_math_answers = self.count_correct_math_answers()
+        scores = calculate_origin_scores(
+            [variable.get() for variable in self.answer_vars],
+            [variable.get() for variable in self.favorite_answer_vars],
+            self.background_var.get(),
+            positive_traits,
+            negative_traits,
+            self.correct_math_answers,
+            self.household_var.get(),
+            self.average_rank_curve,
+        )
+
+        record = {field: "" for field in self.fieldnames}
+        record.update(
+            {
+                "schema_version": SCHEMA_VERSION,
+                "character_id": self.character_id,
+                "first_name": clean_cell(self.basic_vars["first_name"].get()),
+                "last_name": clean_cell(self.basic_vars["last_name"].get()),
+                "display_name": clean_cell(self.basic_vars["display_name"].get()),
+                "short_name": self.character_id[-3:],
+                "sex": clean_cell(self.basic_vars["sex"].get()),
+                "birth_year": clean_cell(self.basic_vars["birth_year"].get()),
+                "nationality": clean_cell(self.basic_vars["nationality"].get()),
+                "religion": canonicalize_religion(self.basic_vars["religion"].get()),
+                "species": clean_cell(self.basic_vars["species"].get()),
+                "height_cm": clean_cell(self.basic_vars["height_cm"].get()),
+                "weight_kg": clean_cell(self.basic_vars["weight_kg"].get()),
+                "description": "Character generated through the Origin Story questionnaire.",
+            }
+        )
+        for field, score in scores.items():
+            record[field] = str(score)
+
+        self.result = record
+        self.grab_release()
+        self.destroy()
+
+    def cancel(self) -> None:
+        if messagebox.askyesno(
+            "Cancel Origin Story",
+            "Discard this unfinished Origin Story?",
+            parent=self,
+        ):
+            self.result = None
+            self.grab_release()
+            self.destroy()
 
 
 class ZpyCharacterRosterEditor:
@@ -380,6 +1647,9 @@ class ZpyCharacterRosterEditor:
             side="left", expand=True, fill="x", padx=(0, 3)
         )
         ttk.Button(button_frame, text="Duplicate", command=self.duplicate_character).pack(
+            side="left", expand=True, fill="x", padx=3
+        )
+        ttk.Button(button_frame, text="Origin Story", command=self.origin_story).pack(
             side="left", expand=True, fill="x", padx=3
         )
         ttk.Button(button_frame, text="Delete", command=self.delete_character).pack(
@@ -798,6 +2068,7 @@ class ZpyCharacterRosterEditor:
         record: dict[str, str] = {}
         for field in self.fieldnames:
             record[field] = clean_cell(row.get(field, ""))
+        record["religion"] = canonicalize_religion(record.get("religion", ""))
         return record
 
     def save_current(self) -> None:
@@ -871,6 +2142,7 @@ class ZpyCharacterRosterEditor:
 
     def prepare_record_for_save(self, record: dict[str, str]) -> dict[str, str]:
         output = {field: clean_cell(record.get(field, "")) for field in self.fieldnames}
+        output["religion"] = canonicalize_religion(output.get("religion", ""))
 
         # Normalize schema version for blank rows while preserving explicit user edits.
         if not output.get("schema_version"):
@@ -912,6 +2184,26 @@ class ZpyCharacterRosterEditor:
     # Roster editing
     # ---------------------------------------------------------------------
 
+    def origin_story(self) -> None:
+        """Create a character through the guided Origin Story questionnaire."""
+        wizard = OriginStoryWizard(
+            self.root,
+            self.fieldnames,
+            self.next_character_id(),
+            calculate_average_rank_curve(self.characters),
+        )
+        self.root.wait_window(wizard)
+        if wizard.result is None:
+            return
+
+        self.characters.append(wizard.result)
+        self.current_index = len(self.characters) - 1
+        self.mark_dirty(
+            "Created a new character through Origin Story. "
+            f"Addition answers correct: {wizard.correct_math_answers}/2."
+        )
+        self.refresh_roster_list(select_index=self.current_index)
+
     def add_character(self) -> None:
         new_id = self.next_character_id()
         record = {field: "" for field in self.fieldnames}
@@ -926,7 +2218,7 @@ class ZpyCharacterRosterEditor:
                 "sex": "",
                 "birth_year": "2000",
                 "nationality": "",
-                "religion": "atheist",
+                "religion": "Atheist",
                 "left2right": "50",
                 "evil2good": "50",
                 "species": SPECIES_DEFAULT,
@@ -950,6 +2242,7 @@ class ZpyCharacterRosterEditor:
 
         source = deepcopy(self.characters[self.current_index])
         new_id = self.next_character_id()
+        source["schema_version"] = SCHEMA_VERSION
         source["character_id"] = new_id
         source["display_name"] = f"{source.get('display_name', 'Character')} Copy"
         source["short_name"] = new_id[-3:]
@@ -1056,6 +2349,7 @@ class ZpyCharacterRosterEditor:
         record = self.characters[self.current_index]
         for field, var in self.form_vars.items():
             record[field] = clean_cell(var.get())
+        record["religion"] = canonicalize_religion(record.get("religion", ""))
         record["description"] = self.description_text.get("1.0", "end-1c").strip()
 
     def on_form_change(self, field: str) -> None:
@@ -1310,6 +2604,7 @@ class ZpyCharacterRosterEditor:
     def validate_roster(self) -> list[str]:
         errors: list[str] = []
         ids_seen: dict[str, int] = {}
+        allowed_religions = {choice.casefold() for choice in RELIGION_CHOICES}
 
         for row_index, character in enumerate(self.characters, start=2):
             label = character.get("character_id", f"row {row_index}") or f"row {row_index}"
@@ -1329,8 +2624,8 @@ class ZpyCharacterRosterEditor:
                 if not clean_cell(character.get(required_field, "")):
                     errors.append(f"{label}: {required_field} is required.")
 
-            religion = clean_cell(character.get("religion", "")).lower()
-            if religion and religion not in RELIGION_CHOICES:
+            religion = clean_cell(character.get("religion", ""))
+            if religion and religion.casefold() not in allowed_religions:
                 errors.append(
                     f"{label}: religion must be one of "
                     f"{', '.join(RELIGION_CHOICES)}; got {religion!r}."

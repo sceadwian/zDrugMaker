@@ -5,7 +5,8 @@ This schema defines a single canonical CSV roster that can be read by multiple P
 ## Files and conventions
 
 - **Canonical file:** `universal_characters_master.csv`
-- **Schema version:** `1.0`
+- **Current schema version:** `1.1`
+- **Version 1.1 change:** expanded and capitalized the supported religion identities; no columns were added or removed
 - **Encoding:** UTF-8 with BOM, for reliable spreadsheet compatibility
 - **Attribute range:** integers from **1 to 99**
 - **Political orientation:** `left2right`, where **1 = far left**, **50 = political centre**, and **99 = far right**
@@ -43,7 +44,7 @@ Ratings describe relative potential or tendency. They are not direct success per
 | `sex` | Character sex, currently represented as `F` or `M` in the sample roster. |
 | `birth_year` | Year of birth; age is calculated by each simulation. |
 | `nationality` | Character's national identity. |
-| `religion` | One of: `christian`, `atheist`, `muslim`, `hindu`, or `buddhist`. |
+| `religion` | One of the supported capitalized religion identities listed below. |
 | `left2right` | Political orientation from far left (`1`) to far right (`99`). |
 | `evil2good` | Moral alignment from thoroughly evil (`1`) through neutral (`50`) to profoundly good (`99`). |
 | `species` | Biological or fictional species. |
@@ -115,6 +116,17 @@ Ratings describe relative potential or tendency. They are not direct success per
 - **Aggression** is a behavioural tendency, not combat ability.
 - **evil2good** is overall moral disposition; **empathy**, **loyalty**, **deception**, and **aggression** are behavioural tendencies that usually correlate with it but need not — a loyal, aggressive enforcer can be evil, and a deceptive spy can be good.
 - **Lifespan** is a relative biological potential rather than a literal number of years.
+
+## Supported religion identities (schema 1.1)
+
+`Christian`, `Atheist`, `Muslim`, `Hindu`, `Buddhist`, `Jewish`, `Sikh`,
+`Shinto`, `Jain`, `Taoist`, `Rastafari`, `Jedi`, `Cylon`, `Fremen`, `Animist`,
+and `Sauron-worshipper`.
+
+`Animist` is the standard follower term for animism and replaces the proposed
+label `Animalistic`. Schema 1.0 rows remain structurally compatible; the roster
+editor accepts the older lowercase spellings and displays known values using the
+schema 1.1 capitalization.
 
 ## Recommended use
 
