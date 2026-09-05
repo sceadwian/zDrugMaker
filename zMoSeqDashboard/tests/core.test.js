@@ -1,0 +1,66 @@
+'use strict';
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const C=require('../core.js');
+const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-12,`${a} != ${b}`);
+const header='subject\tgroup\tsyllable\tusage\ttreat\n';
+const text=header+'a1\t0\t0\t0.1\tControl\na2\t0\t0\t0.2\tControl\na3\t0\t0\t0.3\tControl\nb1\t2\t0\t0\tDose\na1\t0\t9\tNA\tControl\nb1\t2\t9\t0.5\tDose\n';
+const d=C.parse(text,'example.txt');
+assert.deepEqual(d.ids,['0','9']);
+const [control,dose]=C.series(d,'0');
+assert.equal(control.n,3);near(control.mean,.2);near(control.sd,.1);near(control.sem,.1/Math.sqrt(3));
+assert.equal(dose.mean,0);assert.equal(dose.n,1);assert.equal(dose.sem,null);
+assert.equal(C.series(d,'9')[0].n,0);assert.equal(C.series(d,'9')[0].mean,null);
+assert.equal(d.absentCells,2);assert.equal(d.missing,1);
+near(C.series(d,'0',100)[0].mean,20);
+near(C.series(d,'0',100)[0].sem,10/Math.sqrt(3));
+assert.deepEqual(C.prism(d,'0').rows,[['Control','Dose'],[.1,0],[.2,null],[.3,null]]);
+assert.equal(C.prism(d,'9').text,'Control\tDose\r\n\t0.5\r\n\t\r\n\t');
+assert.ok(C.animalExport(d,'9').includes('example.txt\t9\t0\tControl\ta2\tfraction\t'));
+assert.ok(C.summary(d,['0']).includes('sample_SD\tSEM'));
+assert.throws(()=>C.parse(text+'a1\t0\t0\t.5\tControl\n'),/Duplicate subject/);
+assert.throws(()=>C.parse(text+'a1\t2\t3\t.5\tDose\n'),/conflicting group/);
+assert.throws(()=>C.parse(header+'a\t0\t0\t50\tX'),/between 0 and 1/);
+assert.throws(()=>C.parse(header+'a\t0\t0\tInfinity\tX'),/valid number/);
+assert.throws(()=>C.parse(header+'a\t0\t0\tNaN\tX'),/No numeric/);
+assert.throws(()=>C.parse(header+'a\t0\t0\t0.5'),/fields/);
+const csv=C.parse('subject,group,syllable,usage,treat\r\n"a",0,7,.2,"Dose, low"\r\n');
+assert.equal(csv.groups[0].name,'Dose, low');
+assert.equal(C.tsv([['=formula']]),"'=formula");
+const many=C.parse(header+Array.from({length:9},(_,i)=>`a${i}\t${i}\t88\t0.2\tTreatment ${i}`).join('\n'));
+assert.equal(C.series(many,'88').length,9);
+const notes=C.blankNotes(d);notes.syllables['0']={label:'Grooming?',comment:'Review video'};
+notes.animals.a1={label:'Animal A',comment:'Test note'};notes.groups['0']={label:'Vehicle',comment:''};
+assert.deepEqual(C.validateNotes(JSON.parse(JSON.stringify(notes)),d),notes);
+assert.equal(C.fingerprint(text),C.fingerprint('\uFEFF'+text.replace(/\n/g,'\r\n')));
+assert.throws(()=>C.validateNotes(notes,C.parse(text,'renamed.txt')),/different file/);
+assert.throws(()=>C.validateNotes(notes,C.parse(text.replace('0.1','0.11'),'example.txt')),/different file/);
+const bad=JSON.parse(JSON.stringify(notes));bad.animals.unknown={label:'x',comment:''};
+assert.throws(()=>C.validateNotes(bad,d),/Unknown animals/);
+const root=path.join(__dirname,'..','data_MoSeq_raw');
+const expected={'2BrLSD':[23,2300,[8,8,7]],Ariadne:[23,2300,[7,8,8]],LSD:[24,2400,[8,8,8]],Psilocybin:[24,2400,[8,8,8]]};
+for(const [drug,[animals,rows,sizes]] of Object.entries(expected)){
+  const name=`MOS-VIZ1_usage_bysubject_${drug}.txt`,data=C.parse(fs.readFileSync(path.join(root,name),'utf8'),name);
+  assert.equal(data.subjects.size,animals);assert.equal(data.records.length,rows);assert.equal(data.ids.length,100);assert.equal(data.warnings.length,0);
+  assert.deepEqual(data.groups.map(g=>g.subjects.length),sizes);
+  // Independent direct sum and two-pass sample variance check across every treatment/syllable.
+  for(const id of data.ids)for(const g of C.series(data,id)){
+    const values=data.records.filter(r=>r.group===g.id&&r.syllable===id).map(r=>r.value);
+    const mean=values.reduce((a,b)=>a+b,0)/values.length;
+    const sem=Math.sqrt(values.reduce((sum,x)=>sum+(x-mean)**2,0)/(values.length-1)/values.length);
+    near(g.mean,mean);near(g.sem,sem);
+    assert.equal(C.prism(data,id).rows.length,Math.max(...sizes)+1);
+  }
+  console.log(`${drug}: ${animals} animals, ${rows} rows, 100 syllables; all means, SEMs and table sizes verified`);
+}
+console.log('Core, missing-data, export and notes checks passed.');
+const paired=C.parse(header+'a\t0\t1\t0.1\tControl\na\t0\t2\t0.4\tControl\nb\t0\t1\t0.3\tControl\nb\t0\t2\t0.2\tControl\nc\t0\t1\t0.8\tControl\nc\t0\t2\tNA\tControl\nd\t0\t1\t0.7\tControl');
+const sum=C.combine(paired,[{id:'combined-test',ids:['1','2']}]);
+assert.deepEqual(C.series(sum,'combined-test')[0].animals.map(a=>a.value),[.5,.5,null,null]);
+assert.equal(C.series(sum,'combined-test')[0].sem,0);
+assert.equal(C.series(sum,'combined-test')[0].n,2);
+assert.deepEqual(C.prism(sum,'combined-test',100).rows,[['Control'],[50],[50],[null],[null]]);
+assert.throws(()=>C.combine(paired,[{id:'x',ids:['1','1']}]),/distinct/);
+assert.throws(()=>C.combine(paired,[{id:'x',ids:['1','9']}]),/valid/);
+console.log('Combined syllables: per-animal sums, covariance-sensitive SEM, missing components and Prism totals verified.');

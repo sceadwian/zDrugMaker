@@ -1,0 +1,76 @@
+// Developer only. Set PLAYWRIGHT_MODULE and BROWSER_EXECUTABLE to existing installations.
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const assert=require('node:assert/strict');
+const path=require('node:path');
+const fs=require('node:fs');
+const {pathToFileURL}=require('node:url');
+(async()=>{
+  const root=path.resolve(__dirname,'..'),out=path.join(__dirname,'artifacts');fs.mkdirSync(out,{recursive:true});
+  const browser=await chromium.launch({headless:true,executablePath:process.env.BROWSER_EXECUTABLE});
+  const page=await browser.newPage({viewport:{width:1500,height:1050}});
+  const errors=[],external=[];
+  page.on('pageerror',e=>errors.push(e.message));
+  page.on('request',r=>{if(/^https?:/.test(r.url())&&!/^http:\/\/(127\.0\.0\.1|localhost)/.test(r.url()))external.push(r.url());});
+  const assertText=async(selector,text)=>assert.ok((await page.locator(selector).innerText()).includes(text));
+  try{
+    await page.goto(process.env.DASHBOARD_URL || pathToFileURL(path.join(root,'index.html')).href);
+    await page.waitForSelector('.chart-card');
+    assert.equal(await page.locator('.chart-card').count(),6);
+    assert.equal(await page.title(),'lbs MoSeq Syllable Explorer · v0.1');
+    assert.ok(await page.locator('.brand-logo').evaluate(img=>img.complete&&img.naturalWidth>0));
+    assert.equal(await page.locator('.chart-card').first().locator('.bar-values tbody tr').count(),3);
+    assert.equal(await page.locator('#dataset option').count(),5);
+    for(const [drug,n] of [['2BrLSD',23],['Ariadne',23],['LSD',24],['Psilocybin',24]]){
+      const value=await page.locator('#dataset option').evaluateAll((options,drug)=>options.find(o=>o.textContent===`MOS-VIZ1_usage_bysubject_${drug}.txt`).value,drug);
+      await page.selectOption('#dataset',value);await page.waitForFunction(n=>document.getElementById('animal-count').textContent===String(n),n);
+      await assertText('#dataset-name',drug);assert.equal(await page.locator('.chart-card').count(),6);
+    }
+    await page.selectOption('#units','percent');
+    await page.screenshot({path:path.join(out,'dashboard-v0.1.png'),fullPage:true});
+    const firstId=await page.locator('.chart-card').first().getAttribute('data-syllable');
+    await page.locator('.chart-card').first().getByRole('button',{name:/Annotate syllable/}).click();
+    await page.fill('#note-label','Candidate grooming');await page.fill('#note-comment','Review the video before assigning a behavior.');await page.click('#apply-note');
+    await page.selectOption('#note-kind','animals');await page.fill('#note-label','Animal note');await page.click('#apply-note');
+    await page.selectOption('#note-kind','groups');await page.fill('#note-label','Vehicle annotation');await page.click('#apply-note');
+    const downloadPromise=page.waitForEvent('download');await page.click('#save-notes');const download=await downloadPromise;
+    assert.equal(download.suggestedFilename(),'MOS-VIZ1_usage_bysubject_Psilocybin.moseq-notes.json');
+    const notesPath=path.join(out,download.suggestedFilename());await download.saveAs(notesPath);
+    const notes=JSON.parse(fs.readFileSync(notesPath,'utf8'));assert.equal(notes.syllables[firstId].label,'Candidate grooming');assert.equal(Object.keys(notes.animals).length,1);assert.equal(Object.keys(notes.groups).length,1);
+    await page.getByRole('button',{name:'Close notes',exact:true}).click();await assertText(`.chart-card[data-syllable="${firstId}"]`,'Candidate grooming');
+    assert.equal(await page.locator('.chart-card').first().locator('h3').innerText(),'Candidate grooming');
+    assert.equal(await page.locator('.chart-card').first().locator('.note-badge').innerText(),'Syllable '+firstId);
+    await assertText('#legend','Vehicle annotation');
+    assert.ok((await page.locator('.chart-card').first().locator('svg text').evaluateAll(nodes=>nodes.map(n=>n.firstChild?.nodeValue))).includes('Vehicle annotation'));
+    await assertText('.chart-card:first-child .bar-values','Vehicle annotation');
+    const expectedValues=await page.evaluate(id=>{const d=MoSeqCore.parse(MOSEQ_CATALOG.find(d=>d.name.endsWith('_Psilocybin.txt')).text);return MoSeqCore.series(d,id,100).map(g=>Number(g.mean.toPrecision(5))+' ± '+Number(g.sem.toPrecision(5)));},firstId);
+    assert.deepEqual(await page.locator('.chart-card').first().locator('.bar-values td:nth-child(2)').allTextContents(),expectedValues);
+    const svgPromise=page.waitForEvent('download');await page.locator('.chart-card').first().getByRole('button',{name:/Save SVG/}).click();const svgDownload=await svgPromise;
+    const svgPath=path.join(out,svgDownload.suggestedFilename());await svgDownload.saveAs(svgPath);const figure=fs.readFileSync(svgPath,'utf8');assert.ok(figure.includes('Candidate grooming'));assert.ok(figure.includes('Vehicle annotation'));assert.ok(figure.includes('Syllable '+firstId));
+    await page.screenshot({path:path.join(out,'dashboard-labels.png'),fullPage:true});
+    await page.locator('.chart-card').first().getByRole('button',{name:/Prism table/}).click();
+    assert.equal(await page.locator('#export-preview tbody tr').count(),8);assert.equal(await page.locator('#export-preview th').count(),3);
+    assert.ok(!(await page.locator('#export-text').inputValue()).includes('Vehicle annotation'));
+    await page.click('#copy-table');
+    const dp=page.waitForEvent('download');await page.click('#download-table');const table=await dp;await table.saveAs(path.join(out,table.suggestedFilename()));
+    await page.getByRole('button',{name:'Close export',exact:true}).click();
+    const sp=page.waitForEvent('download');await page.click('#save-session');const session=await sp;const sessionPath=path.join(out,session.suggestedFilename());await session.saveAs(sessionPath);
+    await page.reload();await page.waitForSelector('.chart-card');await page.setInputFiles('#session-input',sessionPath);await page.waitForSelector('.note-badge');await assertText('#dataset-name','Psilocybin');assert.equal(await page.locator('#units').inputValue(),'percent');
+    await page.click('#notes-button');await page.setInputFiles('#notes-input',notesPath);await assertText('#notes-status','3 note(s)');
+    const invalid={...notes,dataset:{...notes.dataset,filename:'wrong.txt'}};
+    await page.setInputFiles('#notes-input',{name:'wrong.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(invalid))});await page.waitForFunction(()=>document.getElementById('toast').textContent.includes('Notes not loaded'));
+    await page.getByRole('button',{name:'Close notes',exact:true}).click();
+    await page.click('#clear-selection');assert.equal(await page.locator('.chart-card').count(),0);
+    await page.fill('#syllable-search','99');await page.click('#select-all');assert.equal(await page.locator('.chart-card').count(),1);
+    await page.click('#top-six');
+    await page.getByRole('button',{name:'Help & instructions'}).click();await assertText('#help-dialog','Add labels and commentary');await page.getByRole('button',{name:'Close help',exact:true}).click();
+    await page.getByRole('button',{name:'About this application'}).click();await assertText('#about-dialog','VERSION 0.1');await assertText('#about-dialog','Leo B Silenieks');await assertText('#about-dialog','University of Guelph');await assertText('#about-dialog','Harvard Medical School');assert.equal(await page.locator('#about-dialog a[href^="mailto:"]').getAttribute('href'),'mailto:leo.silenieks@gmail.com');await page.getByRole('button',{name:'Close about',exact:true}).click();
+    await page.setViewportSize({width:390,height:844});await page.screenshot({path:path.join(out,'dashboard-mobile.png'),fullPage:true});
+    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'No page overflow on mobile');
+    await page.setViewportSize({width:1500,height:1050});
+    const fixture='subject\tgroup\tsyllable\tusage\ttreat\n'+Array.from({length:7},(_,i)=>`a${i}\t${i}\t55\t${i/10}\tTreatment ${i}`).join('\n');
+    await page.setInputFiles('#file-input',{name:'seven-groups.txt',mimeType:'text/plain',buffer:Buffer.from(fixture)});await page.waitForFunction(()=>document.getElementById('group-count').textContent==='7');assert.equal(await page.locator('.chart-card').count(),1);
+    await page.setInputFiles('#file-input',{name:'invalid.txt',mimeType:'text/plain',buffer:Buffer.from('bad data')});await page.waitForSelector('#error:not([hidden])');assert.equal(await page.locator('.chart-card').count(),0);
+    assert.deepEqual(errors,[]);assert.deepEqual(external,[]);
+    console.log('Browser checks passed: four datasets, graphs, notes round trip, mismatch rejection, session, Prism export, seven groups, invalid input, responsive layout, Help/About. No external requests.');
+  }finally{await browser.close();}
+})().catch(e=>{console.error(e);process.exitCode=1;});

@@ -1,0 +1,78 @@
+// Developer test: copies the application to a temporary folder, leaving study files untouched.
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
+const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),assert=require('node:assert/strict');
+const {spawn}=require('node:child_process');
+(async()=>{
+  const root=path.resolve(__dirname,'..'),temp=fs.mkdtempSync(path.join(os.tmpdir(),'moseq-workspace-test-')),out=path.join(__dirname,'artifacts');
+  for(const name of ['index.html','styles.css','app.js','core.js','palettes.js','launch.py','20251116_MoSeq_logo_gradientheatmap_invert.png'])fs.copyFileSync(path.join(root,name),path.join(temp,name));
+  fs.cpSync(path.join(root,'data_MoSeq_raw'),path.join(temp,'data_MoSeq_raw'),{recursive:true,filter:source=>fs.statSync(source).isDirectory()||source.endsWith('.txt')});
+  const server=spawn(process.env.PYTHON_EXECUTABLE||'python',['-u',path.join(temp,'launch.py'),'--no-browser'],{windowsHide:true});
+  let browser;
+  try{
+    const url=await new Promise((resolve,reject)=>{let text='';const timeout=setTimeout(()=>reject(new Error('Server did not start')),10000);server.stdout.on('data',chunk=>{text+=chunk;const match=text.match(/http:\/\/127\.0\.0\.1:\d+\/index.html/);if(match){clearTimeout(timeout);resolve(match[0]);}});server.on('error',reject);});
+    browser=await chromium.launch({headless:true,executablePath:process.env.BROWSER_EXECUTABLE});
+    const page=await browser.newPage({viewport:{width:1500,height:1050}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
+    await page.goto(url);await page.waitForSelector('.chart-card');
+    assert.equal(await page.locator('#units').inputValue(),'percent');
+    await page.click('#top-twenty');assert.equal(await page.locator('.chart-card').count(),20);await page.click('#top-six');assert.equal(await page.locator('.chart-card').count(),6);
+    const rawName=await page.locator('#dataset option:checked').textContent(),rawPath=path.join(temp,'data_MoSeq_raw',rawName),original=fs.readFileSync(rawPath);
+    await page.click('#clear-selection');await page.locator('#syllable-list input[data-syllable="0"]').check();await page.locator('#syllable-list input[data-syllable="1"]').check();
+    await page.click('[data-workspace="combined"]');await page.fill('#combination-name','Activity total');await page.click('#add-combination');
+    assert.equal(await page.locator('.chart-card').count(),1);assert.equal(await page.locator('.chart-card h3').innerText(),'Activity total');
+    assert.ok((await page.locator('.chart-card svg text').allTextContents()).includes('Syllable Usage %'));
+    assert.ok(await page.locator('.chart-card svg rect[stroke-opacity]').count()>0);
+    assert.equal(await page.locator('.chart-card svg path[stroke="#000000"]').count(),1);
+    assert.ok(await page.locator('.chart-card svg text[fill="#000000"]').count()>0);
+    await page.locator('.chart-card').getByRole('button',{name:/Prism table/}).click();
+    const values=await page.locator('#export-text').inputValue();
+    const expected=await page.evaluate(text=>{const d=MoSeqCore.parse(text);return MoSeqCore.prism(MoSeqCore.combine(d,[{id:'total',ids:['0','1']}]),'total',100).text;},original.toString('utf8'));
+    assert.equal(values,expected.replace(/\r\n/g,'\n'));await page.getByRole('button',{name:'Close export',exact:true}).click();
+    await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot({path:path.join(out,'combined-workspace.png'),fullPage:true});
+    await page.click('[data-workspace="heatmaps"]');await page.click('#heat-auto');
+    assert.equal(await page.locator('.heatmap-card svg rect[stroke]').count(),6);
+    const cells=await page.locator('.heatmap-card svg rect[data-syllable]').evaluateAll(nodes=>nodes.map(n=>({id:n.dataset.syllable,row:n.dataset.row,x:n.getAttribute('x'),y:n.getAttribute('y')})));
+    assert.equal(cells[0].x,cells[1].x);assert.notEqual(cells[0].y,cells[1].y);assert.notEqual(cells[0].x,cells[3].x);assert.equal(cells[0].y,cells[3].y);
+    for(const palette of ['viridis','magma','cividis','mako','turbo']){await page.selectOption('#heat-palette',palette);assert.equal(await page.locator('.heatmap-card svg rect[stroke]').count(),6);assert.ok(await page.evaluate(p=>MOSEQ_PALETTES[p].length===256,palette));}
+    for(const [palette,start,end] of [['pink-blue','rgb(255,44,223)','rgb(0,20,255)'],['cyan-pink','rgb(0,225,253)','rgb(252,0,122)'],['green-blue','rgb(0,255,91)','rgb(0,20,255)'],['yellow-red','rgb(255,229,59)','rgb(255,37,37)'],['ivory-pink','rgb(255,249,233)','rgb(255,0,91)']]){await page.selectOption('#heat-palette',palette);const legend=page.locator('.heatmap-card rect[width="1.1"]');assert.equal(await legend.first().getAttribute('fill'),start);assert.equal(await legend.last().getAttribute('fill'),end);}
+    await page.locator('#heat-width').evaluate(el=>{el.value=60;el.dispatchEvent(new Event('input'));});await page.locator('#heat-height').evaluate(el=>{el.value=45;el.dispatchEvent(new Event('input'));});assert.equal(await page.locator('.heatmap-card rect[data-syllable]').first().getAttribute('width'),'60');assert.equal(await page.locator('.heatmap-card rect[data-syllable]').first().getAttribute('height'),'45');
+    await page.click('#heat-square');assert.equal(await page.locator('#heat-height').inputValue(),'60');
+    await page.selectOption('#heat-level','animals');assert.equal(await page.locator('.heatmap-card svg rect[stroke]').count(),46);
+    assert.equal(await page.locator('[data-treatment-header]').count(),3);
+    const animalRows=await page.locator('.heatmap-card rect[data-syllable="0"]').evaluateAll(nodes=>nodes.map(n=>Number(n.getAttribute('y'))));assert.ok(animalRows[8]-animalRows[7]>animalRows[1]-animalRows[0]);
+    await page.click('#select-all');await page.locator('#heat-width').evaluate(el=>{el.value=8;el.dispatchEvent(new Event('input'));});await page.selectOption('#heat-palette','mako');assert.equal(await page.locator('.heatmap-card rect[data-syllable]').count(),2300);assert.equal(await page.locator('.heatmap-card rect[data-syllable]').first().getAttribute('width'),'8');
+    await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot({path:path.join(out,'heatmap-100-grouped-mako.png'),fullPage:true});
+    await page.click('#clear-selection');await page.locator('#syllable-list input[data-syllable="0"]').check();await page.locator('#syllable-list input[data-syllable="1"]').check();
+    await page.selectOption('#heat-level','groups');await page.selectOption('#heat-palette','blue-red');
+    await page.fill('#heat-low','10');await page.locator('#heat-low').dispatchEvent('change');assert.ok((await page.locator('#heat-status').innerText()).includes('Low < Midpoint < High'));assert.equal(await page.locator('.heatmap-card').count(),0);
+    await page.fill('#heat-low','0');await page.locator('#heat-low').dispatchEvent('change');await page.click('#heat-auto');
+    const before=Number(await page.locator('#heat-high').inputValue());await page.selectOption('#units','raw');assert.ok(Math.abs(Number(await page.locator('#heat-high').inputValue())-before/100)<1e-10);await page.selectOption('#units','percent');
+    await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot({path:path.join(out,'heatmap-workspace.png'),fullPage:true});
+    await page.click('#top-twenty');await page.selectOption('#heat-palette','viridis');await page.click('#heat-reset-size');
+    await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot({path:path.join(out,'heatmap-top20-viridis.png'),fullPage:true});
+    const svgDownload=page.waitForEvent('download');await page.click('#heat-svg');const svg=await svgDownload;const svgPath=path.join(temp,'heatmap.svg');await svg.saveAs(svgPath);const svgText=fs.readFileSync(svgPath,'utf8');assert.ok(svgText.includes('width="36" height="32"'));assert.ok(svgText.includes('data-syllable="0"'));
+    await page.click('#clear-selection');await page.locator('#syllable-list input[data-syllable="0"]').check();await page.locator('#syllable-list input[data-syllable="1"]').check();await page.selectOption('#heat-palette','blue-red');await page.locator('#heat-width').evaluate(el=>{el.value=60;el.dispatchEvent(new Event('input'));});await page.click('#heat-square');
+    const dp=page.waitForEvent('download');await page.click('#heat-table');const dl=await dp;const exportPath=path.join(temp,'heat.tsv');await dl.saveAs(exportPath);assert.ok(fs.readFileSync(exportPath,'utf8').includes(rawName));
+    const table=fs.readFileSync(exportPath,'utf8').split(/\r?\n/).map(line=>line.split('\t'));assert.equal(table.length,4);assert.deepEqual(table[0].slice(5),['Syllable 0','Syllable 1']);
+    await page.locator('#heat-width').evaluate(el=>{el.value=8;el.dispatchEvent(new Event('input'));});await page.selectOption('#heat-palette','mako');
+    await page.click('[data-workspace="combined"]');
+    const saved=page.waitForResponse(r=>r.url().endsWith('/api/session')&&r.request().method()==='POST');await page.click('#save-session');assert.equal((await saved).status(),200);
+    const sessionPath=rawPath.replace(/\.txt$/,'_session.json');const session=JSON.parse(fs.readFileSync(sessionPath,'utf8'));assert.equal(session.settings.combinations[0].label,'Activity total');assert.equal(session.settings.heat.palette,'mako');
+    assert.equal(session.settings.heat.cellWidth,'8');assert.equal(session.settings.heat.cellHeight,'60');
+    await page.reload();await page.waitForSelector('.chart-card');await page.waitForFunction(()=>document.querySelector('[data-workspace="combined"]').getAttribute('aria-pressed')==='true');assert.equal(await page.locator('.chart-card h3').innerText(),'Activity total');
+    await page.click('[data-workspace="heatmaps"]');assert.equal(await page.locator('#heat-palette').inputValue(),'mako');assert.equal(await page.locator('.heatmap-card svg rect[stroke]').count(),6);
+    assert.equal(await page.locator('#heat-width').inputValue(),'8');assert.equal(await page.locator('#heat-height').inputValue(),'60');
+    assert.deepEqual(fs.readFileSync(rawPath),original);assert.deepEqual(errors,[]);
+    await page.click('#close-dashboard');
+    assert.ok((await page.locator('#close-dashboard-message').innerText()).includes('unsaved'));
+    await page.getByRole('button',{name:'Keep working',exact:true}).last().click();
+    assert.equal(server.exitCode,null);
+    await page.click('#close-dashboard');await page.click('#save-before-close');
+    await page.waitForFunction(()=>document.getElementById('close-dashboard-status').textContent.includes('Current session saved'));
+    assert.equal(await page.locator('#unsaved-datasets li').count(),0);
+    await page.click('#confirm-close-dashboard');await page.waitForSelector('h1:text-is("Dashboard closed")');
+    await new Promise((resolve,reject)=>{if(server.exitCode!==null)return resolve();const timer=setTimeout(()=>reject(new Error('Launcher did not exit')),5000);server.once('exit',()=>{clearTimeout(timer);resolve();});});
+    assert.equal(server.exitCode,0);
+    console.log('Close dashboard: unsaved settings detected, cancel keeps server alive, save clears warning, close exits Python successfully.');
+    console.log('Workspace checks passed: per-animal combined export, axes and borders, group/animal heatmaps, thresholds and units, local session save and automatic restore, unchanged raw bytes.');
+  }finally{if(browser)await browser.close();server.kill();await new Promise(resolve=>server.exitCode!==null?resolve():server.once('exit',resolve));if(path.dirname(temp)===os.tmpdir()&&path.basename(temp).startsWith('moseq-workspace-test-'))fs.rmSync(temp,{recursive:true,force:true,maxRetries:3,retryDelay:200});}
+})().catch(e=>{console.error(e);process.exitCode=1;});
