@@ -11,7 +11,8 @@
   const savedViews=new Map(),viewNames=new Map();
   let savingSession=false,dashboardClosed=false;
   const viewKey=data=>C.fingerprint(data.text)+data.name;
-  let workspace='treatments',combinations=[],heatSvg=null,heatRows=[];
+  let workspace='treatments',combinations=[],heatSvg=null,heatRows=[],heatUnits='raw',barUnits='percent';
+  let heatSelection=[],barSelection=[];
   const viewData=()=>workspace==='combined'?C.combine(state.data,combinations):state.data;
   const plotIds=()=>workspace==='combined'?combinations.map(c=>c.id):ordered();
   let activeNotes = null;
@@ -77,7 +78,7 @@
       if(importedNotes&&(!noteMemory.get(noteKey)?.dirty||confirm('Replace unsaved notes for this dataset with the saved session notes?')))noteMemory.set(noteKey,{notes:C.validateNotes(importedNotes,state.data),dirty:false});
       if(!noteMemory.has(noteKey))noteMemory.set(noteKey,{notes:blank,dirty:false});
       activeNotes=noteMemory.get(noteKey);
-      state.selected=new Set(settings ? settings.selected.filter(id=>state.data.ids.includes(String(id))).map(String) : C.top(state.data));
+      state.selected=new Set(workspace==='heatmaps'?heatSelection:barSelection);
       const key=viewKey(state.data);viewNames.set(key,state.data.name);
       if(!savedViews.has(key)||src.kind==='session'||restored)savedViews.set(key,JSON.stringify(captureSettings()));
       $('syllable-search').value='';
@@ -101,16 +102,23 @@
       sourceMenu();
     }catch(e){error('Local folder refresh unavailable. Keep the Python launcher running, or use Open a data file. '+e.message);}
   }
-  function captureSettings(){return {selected:ordered(),units:$('units').value,scale:$('scale').value,columns:$('columns').value,points:$('points').checked,workspace,combinations,heat:{level:$('heat-level').value,palette:$('heat-palette').value,low:$('heat-low').value,mid:$('heat-mid').value,high:$('heat-high').value,cellWidth:$('heat-width').value,cellHeight:$('heat-height').value}};}
+  function captureSettings(){return {selected:ordered(),barSelected:workspace==='heatmaps'?barSelection:ordered(),units:$('units').value,barUnits,scale:$('scale').value,columns:$('columns').value,points:$('points').checked,workspace,combinations,heat:{defaultsVersion:2,selected:workspace==='heatmaps'?ordered():heatSelection,units:heatUnits,level:$('heat-level').value,palette:$('heat-palette').value,low:$('heat-low').value,mid:$('heat-mid').value,high:$('heat-high').value,cellWidth:$('heat-width').value,cellHeight:$('heat-height').value,orientation:$('heat-label-orientation').value,description:$('heat-description').value,showDescription:$('heat-show-description').checked}};}
   const settings=captureSettings;
   function applySettings(s){
     if(!s||!Array.isArray(s.selected))throw new Error('Invalid session settings.');
+    const valid=ids=>[...new Set(ids.map(String))].filter(id=>state.data.ids.includes(id));
+    barSelection=valid(Array.isArray(s.barSelected)?s.barSelected:s.selected);
+    const currentHeat=s.heat?.defaultsVersion===2;
+    heatSelection=currentHeat&&Array.isArray(s.heat.selected)?valid(s.heat.selected):[...state.data.ids];
+    const h=currentHeat?s.heat:{...s.heat,units:'raw',level:'animals',palette:'turbo',cellWidth:12,cellHeight:12,orientation:'horizontal',low:0,mid:.05,high:.1};
     $('units').value=s.units==='raw'?'raw':'percent';$('scale').value=s.scale==='individual'?'individual':'shared';$('columns').value=['2','3','4'].includes(s.columns)?s.columns:'3';$('points').checked=s.points!==false;
     combinations=Array.isArray(s.combinations)?s.combinations.map(c=>{if(typeof c.id!=='string'||!c.id.startsWith('combined-')||typeof c.label!=='string'||!c.label.trim()||c.label.length>100)throw new Error('Invalid saved combination.');return {id:c.id,label:c.label,ids:c.ids};}):[];
     C.combine(state.data,combinations);workspace=['treatments','combined','heatmaps'].includes(s.workspace)?s.workspace:'treatments';
-    $('heat-level').value=s.heat?.level==='animals'?'animals':'groups';$('heat-palette').value=[...$('heat-palette').options].some(o=>o.value===s.heat?.palette)?s.heat.palette:'teal';
-    $('heat-width').value=Math.max(8,Math.min(120,Number(s.heat?.cellWidth)||36));$('heat-height').value=Math.max(12,Math.min(90,Number(s.heat?.cellHeight)||32));
-    for(const [key,defaultValue] of [['low',0],['mid',factor()===100?5:.05],['high',factor()===100?10:.1]])$('heat-'+key).value=Number.isFinite(Number(s.heat?.[key]))?s.heat[key]:defaultValue;
+    barUnits=(s.barUnits||s.units)==='raw'?'raw':'percent';heatUnits=h.units==='percent'?'percent':'raw';$('units').value=workspace==='heatmaps'?heatUnits:barUnits;
+    $('heat-level').value=h.level==='groups'?'groups':'animals';$('heat-palette').value=[...$('heat-palette').options].some(o=>o.value===h.palette)?h.palette:'turbo';
+    $('heat-width').value=Math.max(8,Math.min(120,Number(h.cellWidth)||12));$('heat-height').value=Math.max(12,Math.min(90,Number(h.cellHeight)||12));
+    $('heat-label-orientation').value=h.orientation==='rotated'?'rotated':'horizontal';$('heat-description').value=typeof h.description==='string'?h.description.slice(0,1000):'';$('heat-show-description').checked=h.showDescription!==false;
+    for(const [key,defaultValue] of [['low',0],['mid',heatUnits==='percent'?5:.05],['high',heatUnits==='percent'?10:.1]])$('heat-'+key).value=Number.isFinite(Number(h[key]))?h[key]:defaultValue;
   }
   function render() {
     const d=state.data;
@@ -229,7 +237,13 @@
     const palettes={teal:['#fff9e9','#76c8ae','#00645e'],purple:['#fff9ed','#bc9cd4','#502079'],'blue-red':['#285f9e','#faf8f3','#b73249'],'pink-blue':['#FF2CDF','#0014FF'],'cyan-pink':['#00E1FD','#FC007A'],'green-blue':['#00FF5B','#0014FF'],'yellow-red':['#FFE53B','#FF2525'],'ivory-pink':['#fff9e9','#FF005B'],...window.MOSEQ_PALETTES};
     const colors=palettes[$('heat-palette').value];
     function shade(v){if(v==null)return '#cbd0d4';const position=Math.max(0,Math.min(1,v<=mid ? .5*(v-low)/(mid-low):.5+.5*(v-mid)/(high-mid)))*(colors.length-1),index=Math.min(colors.length-2,Math.floor(position)),t=position-index,a=colors[index],b=colors[index+1];const rgb=h=>[1,3,5].map(i=>parseInt(h.slice(i,i+2),16));return 'rgb('+rgb(a).map((n,i)=>Math.round(n+(rgb(b)[i]-n)*t)).join(',')+')';}
-    const left=210,cellW=Number($('heat-width').value),cellH=Number($('heat-height').value),top=cellW<18?90:145,width=Math.max(650,left+rows.length*cellW+25);
+    const left=210,cellW=Number($('heat-width').value),cellH=Number($('heat-height').value),width=Math.max(650,left+rows.length*cellW+25),horizontal=$('heat-label-orientation').value==='horizontal';
+    const description=$('heat-show-description').checked?$('heat-description').value.trim():'',descriptionLines=[];
+    const limit=Math.max(30,Math.floor((width-36)/6));
+    for(const paragraph of description.split(/\r?\n/)){if(!description)break;let line='';for(const word of paragraph.split(/\s+/)){if(line&&line.length+word.length+1>limit){descriptionLines.push(line);line='';}let rest=word;while(rest.length>limit){if(line){descriptionLines.push(line);line='';}descriptionLines.push(rest.slice(0,limit));rest=rest.slice(limit);}line+=(line?' ':'')+rest;}descriptionLines.push(line);}
+    const labelFont=cellW<18?8:10,labelTexts=rows.map(r=>cellW<18?r.id:r.label);
+    const lanes=horizontal&&cellW<18?Math.max(1,...labelTexts.map(t=>Math.ceil(t.length*labelFont*.6/cellW))):1;
+    const top=(horizontal?85+lanes*12:cellW<18?90:145)+(descriptionLines.length?descriptionLines.length*15+12:0);
     const individuals=$('heat-level').value==='animals',rowY=[],bands=[];let cursor=top;
     columns.forEach((c,i)=>{
       if(individuals&&(i===0||c.group.id!==columns[i-1].group.id)){
@@ -242,7 +256,8 @@
     $('heat-width-value').value=cellW+' px';$('heat-height-value').value=cellH+' px';
     const svg=svgNode('svg',{xmlns:NS,viewBox:`0 0 ${width} ${height}`,width,height,role:'img','aria-label':state.data.name+' usage heatmap'});
     svg.append(svgNode('rect',{width,height,fill:'#fff'}),svgNode('text',{x:18,y:23,'font-size':15,'font-family':'Arial',fill:'#172e3d'},prettyName(state.data.name)+' · '+($('heat-level').value==='animals'?'Individual animals':'Treatment means')),svgNode('text',{x:18,y:42,'font-size':10,'font-family':'Arial',fill:'#627580'},state.data.name+' · '+unitLabel()));
-    rows.forEach((r,j)=>{const label=svgNode('text',{transform:`translate(${left+j*cellW+cellW/2} ${top-9}) rotate(${cellW<18?-90:-45})`,'font-size':cellW<18?8:10,'font-family':'Arial',fill:'#172e3d'},cellW<18?r.id:r.label.length>25?r.label.slice(0,23)+'…':r.label);label.append(svgNode('title',{},r.label+' · Syllable '+r.id));svg.append(label);});
+    descriptionLines.forEach((line,i)=>svg.append(svgNode('text',{x:18,y:62+i*15,'font-size':11,'font-family':'Arial',fill:'#405c67','data-test-description':'true'},line)));
+    rows.forEach((r,j)=>{const maxChars=Math.max(2,Math.floor(cellW/(labelFont*.6))),full=labelTexts[j],display=horizontal&&cellW>=18&&full.length>maxChars?(r.label==='Syllable '+r.id?r.id:full.slice(0,maxChars-1)+'…'):full.length>25?full.slice(0,23)+'…':full;const label=svgNode('text',{transform:`translate(${left+j*cellW+cellW/2} ${top-9-(horizontal?j%lanes*12:0)}) rotate(${horizontal?0:cellW<18?-90:-45})`,'text-anchor':horizontal?'middle':'start','font-size':labelFont,'font-family':'Arial',fill:'#172e3d','data-syllable-label':r.id},display);label.append(svgNode('title',{},r.label+' · Syllable '+r.id));svg.append(label);});
     bands.forEach(b=>{
       const index=state.data.groups.findIndex(g=>g.id===b.group.id),heading=groupLabel(b.group)+' · '+b.group.subjects.length+' animals';
       svg.append(svgNode('rect',{x:18,y:b.y,width:width-36,height:22,fill:'#edf3f5',rx:3,'data-treatment-header':b.group.id}),svgNode('rect',{x:18,y:b.y,width:4,height:22,fill:color(index)}));
@@ -257,17 +272,20 @@
     const wrap=element('div',null,'heatmap-card');wrap.append(svg);area.append(wrap);heatSvg=svg;
     heatRows=[['dataset','units','group','treatment','animal',...rows.map(r=>'Syllable '+r.id)],...columns.map((c,i)=>[state.data.name,unitLabel(),c.group.id,c.group.name,$('heat-level').value==='animals'?c.original:'',...rows.map(r=>r.values[i])])];
   }
-  document.querySelectorAll('[data-workspace]').forEach(b=>b.addEventListener('click',()=>{workspace=b.dataset.workspace;renderCharts();}));
+  document.querySelectorAll('[data-workspace]').forEach(b=>b.addEventListener('click',()=>{if(workspace==='heatmaps'){heatUnits=$('units').value;heatSelection=ordered();}else{barUnits=$('units').value;barSelection=ordered();}workspace=b.dataset.workspace;$('units').value=workspace==='heatmaps'?heatUnits:barUnits;state.selected=new Set(workspace==='heatmaps'?heatSelection:barSelection);$('syllable-search').value='';render();}));
+  $('heat-restore-defaults').addEventListener('click',()=>{if(!state.data)return;heatSelection=[...state.data.ids];state.selected=new Set(heatSelection);heatUnits='raw';$('units').value='raw';$('heat-level').value='animals';$('heat-palette').value='turbo';$('heat-width').value=12;$('heat-height').value=12;$('heat-label-orientation').value='horizontal';$('heat-low').value=0;$('heat-mid').value=.05;$('heat-high').value=.1;$('syllable-search').value='';render();});
   $('add-combination').addEventListener('click',()=>{
     if(!state.data)return;const ids=ordered(),label=$('combination-name').value.trim();
     if(ids.length<2||!label){$('combination-status').textContent='Select at least two syllables and enter a name.';return;}
     combinations.push({id:'combined-'+Date.now().toString(36)+'-'+combinations.length,label,ids});$('combination-name').value='';$('combination-status').textContent='Added '+label+'. Save your session to keep this combination.';renderCharts();
   });
   for(const id of ['heat-level','heat-palette','heat-low','heat-mid','heat-high'])$(id).addEventListener('change',renderCharts);
+  for(const id of ['heat-label-orientation','heat-show-description'])$(id).addEventListener('change',renderCharts);
+  $('heat-description').addEventListener('input',renderCharts);
   for(const id of ['heat-width','heat-height'])$(id).addEventListener('input',renderCharts);
   $('heat-square').addEventListener('click',()=>{const size=Math.max(12,Math.min(90,Number($('heat-width').value)));$('heat-width').value=size;$('heat-height').value=size;renderCharts();});
-  $('heat-reset-size').addEventListener('click',()=>{$('heat-width').value=36;$('heat-height').value=32;renderCharts();});
-  $('units').addEventListener('change',()=>{const multiplier=factor()===100?100:.01;for(const k of ['low','mid','high'])$('heat-'+k).value=Number($('heat-'+k).value)*multiplier;renderCharts();});
+  $('heat-reset-size').addEventListener('click',()=>{$('heat-width').value=12;$('heat-height').value=12;renderCharts();});
+  $('units').addEventListener('change',()=>{if(workspace==='heatmaps'){const multiplier=($('units').value==='percent'?100:1)/(heatUnits==='percent'?100:1);for(const k of ['low','mid','high'])$('heat-'+k).value=Number($('heat-'+k).value)*multiplier;heatUnits=$('units').value;}else barUnits=$('units').value;renderCharts();});
   $('heat-auto').addEventListener('click',()=>{const values=heatData().rows.flatMap(r=>r.values).filter(v=>v!=null),high=values.length?Math.max(...values):factor()===100?1:.01;$('heat-low').value=0;$('heat-high').value=high||1;$('heat-mid').value=Number($('heat-high').value)/2;renderCharts();});
   $('heat-svg').addEventListener('click',()=>{if(heatSvg)download(new XMLSerializer().serializeToString(heatSvg),filename('heatmap.svg'),'image/svg+xml');});
   $('heat-table').addEventListener('click',()=>download(C.tsv(heatRows),filename('heatmap_values.tsv')));
