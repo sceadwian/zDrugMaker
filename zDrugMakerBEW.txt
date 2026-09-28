@@ -9,6 +9,7 @@ DEShaw_drug_Rusko	1
 Fenfluramine	1	
 FKE-023	1.03	2026-07-12
 JZ250602	1	
+JZP-541	1	2026-09-24
 JZP511	1	
 JZZ05001241	1	
 Kainic Acid	1	

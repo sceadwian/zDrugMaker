@@ -1206,3 +1206,63 @@ Volumes:
 
 ==================================================
 
+Date: 2026/09/24 - 10:59:53
+Calculation Type: Estimate Drug Amount
+Comments: TSA-261739-REP
+Estimated Drug Amount and Volumes
+========================================
+Compound: JZP-541
+BEW: 1
+Dose: 770 mg/kg
+Animals x trials: 12 x 1
+========================================
+Drug amount needed: 6.47e+03 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 8.4 ml
+- Oral (5 ml/kg): 42 ml
+- Mice (10 ml/kg): 84 ml
+========================================
+
+==================================================
+
+Date: 2026/09/24 - 11:10:08
+Calculation Type: Estimate Drug Amount
+Comments: TSA-261739-REP - 100, 150, 200 and 320 mg/kg i.p. - 20260924 email Amy
+Estimated Drug Amount and Volumes
+========================================
+Compound: JZP-541
+BEW: 1
+Dose: 770 mg/kg
+Animals x trials: 12 x 1
+========================================
+Drug amount needed: 6.47e+03 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 8.4 ml
+- Oral (5 ml/kg): 42 ml
+- Mice (10 ml/kg): 84 ml
+========================================
+
+==================================================
+
+Date: 2026/09/24 - 11:10:31
+Calculation Type: Estimate Drug Amount
+Comments: TSA-261739-REP - 100, 150, 200 and 320 mg/kg i.p. - 20260924 email Amy
+Estimated Drug Amount and Volumes
+========================================
+Compound: JZP-541
+BEW: 1
+Dose: 770 mg/kg
+Animals x trials: 12 x 1
+========================================
+Drug amount needed: 6.47e+03 mg
+========================================
+Volumes:
+- Rats (1 ml/kg): 8.4 ml
+- Oral (5 ml/kg): 42 ml
+- Mice (10 ml/kg): 84 ml
+========================================
+
+==================================================
+

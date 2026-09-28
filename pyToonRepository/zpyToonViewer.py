@@ -26,6 +26,12 @@ Views
                  weapons that suit them best, the combat numbers the engine
                  derives from their sheet, and a plain-English reading of
                  how they will actually behave in a fight.
+* Radar        -- up to four characters overlaid on two radar charts: their
+                 aptitude with all five weapon classes, and the six combat
+                 numbers the engine derives (health, speed, stamina,
+                 critical, dodge, guard). Same figures as the ratings tab,
+                 shaped for side-by-side comparison rather than reading one
+                 character at a time.
 
 This viewer does NOT need to sit next to the simulator (v06g). The ratings
 tab reads its weights from whichever of these is best: the live engine if
@@ -39,6 +45,16 @@ snapshot is produced.
 
 History
 -------
+v06h  Added the Radar tab. The ratings tab answers "what is this character
+      worth", one at a time; picking between four of them meant flipping
+      between four reports and holding the numbers in your head. The radar
+      reads every figure out of the same cs_profile() the ratings tab uses,
+      so the two tabs cannot disagree -- it is a second shape for numbers
+      that already existed, not a second calculation. Axis ends are derived
+      by running the engine's own formulas on an all-1 and an all-99
+      character rather than typed in, so a rebalanced snapshot rescales the
+      charts with it instead of quietly mis-drawing them.
+
 v06g  Decoupled the ratings tab from needing the simulator nearby. It used
       to hard-import zpyCombatArena06 and go blank without it -- which
       surfaced when the user relocated this file away from the simulator
@@ -53,6 +69,7 @@ Python 3, standard library only (tkinter + csv + statistics).
 """
 
 import csv
+import math
 import statistics as st
 import tkinter as tk
 from collections import Counter
@@ -122,6 +139,37 @@ BANDS = [
 ]
 BAND_RANGES = ["1-9", "10-24", "25-39", "40-59", "60-74", "75-89",
                "90-98", "99"]
+
+
+# ---- radar tab ----------------------------------------------------------
+# Four series is the practical ceiling on one radar: past that the polygons
+# stop being separable however distinct the colours are, which is why the
+# tab offers exactly four slots.
+RADAR_COLORS = ["#1565c0", "#ef6c00", "#6a1b9a", "#2e7d32"]
+# Axis order is the user's, not the engine's -- it puts the two ranged-ish
+# classes together and the two swung ones together, so a shape reads as a
+# style rather than as noise.
+RADAR_WEAPONS = ["ranged", "polearm", "explosive", "blade", "blunt"]
+# (label, cs_profile key, display multiplier, format). These six do NOT
+# share a unit -- health is hit points, critical is a probability -- so
+# each gets its own scale, and the ends are printed under each axis.
+RADAR_COMBAT = [
+    ("Health", "hp", 1, "%.0f"),
+    ("Speed", "speed", 1, "%.0f"),
+    ("Stamina", "stam", 1, "%.0f"),
+    ("Critical", "crit", 100, "%.1f%%"),
+    ("Dodge", "dodge", 1, "%.0f"),
+    ("Guard", "guard", 1, "%.0f"),
+]
+
+
+def _radar_points(cx, cy, radius, fracs):
+    """Vertices for one radar polygon. First axis points straight up and
+    the rest run clockwise, which is what people expect to read."""
+    n = len(fracs)
+    return [(cx + math.cos(-math.pi / 2 + 2 * math.pi * i / n) * radius * f,
+             cy + math.sin(-math.pi / 2 + 2 * math.pi * i / n) * radius * f)
+            for i, f in enumerate(fracs)]
 
 
 def _wrap(text, width):
@@ -584,6 +632,10 @@ class ToonViewer(tk.Tk):
     def _compute_population(self):
         roster = self.roster
         self.stats = compute_attr_stats(roster)
+        # 2dCS profiles live here rather than in the ratings tab because
+        # the radar tab needs them too, and tab build order should not
+        # decide whether a tab has its numbers.
+        self._profiles = {c["character_id"]: cs_profile(c) for c in roster}
         # per-character core group averages and their composite
         self.core = {
             c["character_id"]: {g: st.fmean(c[a] for a in attrs)
@@ -623,13 +675,16 @@ class ToonViewer(tk.Tk):
         char_tab = ttk.Frame(self.notebook, padding=8)
         pop_tab = ttk.Frame(self.notebook, padding=8)
         rate_tab = ttk.Frame(self.notebook, padding=8)
+        radar_tab = ttk.Frame(self.notebook, padding=8)
         self.notebook.add(char_tab, text="  Characters  ")
         self.notebook.add(pop_tab, text="  Population  ")
         self.notebook.add(rate_tab, text="  2dCS Rating  ")
+        self.notebook.add(radar_tab, text="  Radar  ")
 
         self._build_character_tab(char_tab)
         self._build_population_tab(pop_tab)
         self._build_rating_tab(rate_tab)
+        self._build_radar_tab(radar_tab)
         self.bind_all("<MouseWheel>", self._on_wheel)
 
     def _build_character_tab(self, body):
@@ -725,8 +780,6 @@ class ToonViewer(tk.Tk):
                 foreground="#b71c1c", wraplength=760, justify="left")
             warn.pack(fill="x", padx=4, pady=(0, 6))
 
-        self._profiles = {c["character_id"]: cs_profile(c)
-                          for c in self.roster}
         # roster ranking per class: aptitude for the class, weighted with
         # the staying power that decides whether they live to use it
         self._class_rank = {}
@@ -1039,13 +1092,297 @@ class ToonViewer(tk.Tk):
         y += 20
         cv.configure(scrollregion=(0, 0, width, y))
 
+    # ------------------------------------------------------- radar compare
+    # Every number plotted here is read out of the same cs_profile() the
+    # ratings tab prints, so the two tabs cannot drift apart. This tab only
+    # reshapes them: one report per character answers "what is this one
+    # worth", a radar answers "which of these four do I take".
+
+    @staticmethod
+    def _radar_value(prof, key):
+        """Weapon axes live under prof['apt'], combat axes at the top."""
+        return prof["apt"][key] if key in WCLASSES else prof[key]
+
+    @staticmethod
+    def _norm(value, lo, hi):
+        if hi <= lo:
+            return 0.5
+        return max(0.0, min(1.0, (value - lo) / (hi - lo)))
+
+    def _radar_formula_bounds(self):
+        """Where each axis starts and ends, DERIVED by running the engine's
+        own formulas on an all-1 and an all-99 character.
+
+        Health and stamina are not 1-99 numbers -- they come out of
+        frame_health and VITALITY -- so their ends have to be computed.
+        Computing all of them the same way means a rebalanced snapshot
+        rescales these charts with it instead of quietly mis-drawing
+        against ends that were typed in once and forgotten."""
+        lo = cs_profile({a: 1 for a in ALL_ATTRS})
+        hi = cs_profile({a: 99 for a in ALL_ATTRS})
+        out = {w: (lo["apt"][w], hi["apt"][w]) for w in WCLASSES}
+        for _label, key, _mult, _fmt in RADAR_COMBAT:
+            out[key] = (lo[key], hi[key])
+        return out
+
+    def _radar_roster_bounds(self):
+        """Zoomed alternative: each axis spans only what this roster
+        actually covers. Small differences become visible, which is what
+        you want when choosing between two similar characters -- but the
+        shape no longer means "good", only "good for this roster"."""
+        out = {}
+        for key in list(WCLASSES) + [k for _l, k, _m, _f in RADAR_COMBAT]:
+            vals = [self._radar_value(p, key)
+                    for p in self._profiles.values()]
+            lo, hi = min(vals), max(vals)
+            span = (hi - lo) or 1.0
+            # pad the low end so the weakest is not pinned at the centre
+            out[key] = (lo - span * 0.12, hi + span * 0.03)
+        return out
+
+    def _build_radar_tab(self, body):
+        left = ttk.Frame(body)
+        left.pack(side="left", fill="y", padx=(0, 8))
+        ttk.Label(left, text="Compare up to 4",
+                  font=("Consolas", 10, "bold")).pack(anchor="w")
+        ttk.Label(left, text="pick '(none)' to drop a slot",
+                  font=("Consolas", 8), foreground="#5a6675").pack(
+                      anchor="w", pady=(0, 6))
+
+        names = ["(none)"] + sorted(self.by_name)
+        # Open on the three best weapon users so the tab shows something on
+        # arrival; the empty fourth slot reads as an invitation.
+        opening = [c["display_name"] for c in sorted(
+            self.roster, key=lambda c: -max(
+                self._profiles[c["character_id"]]["apt"].values()))[:3]]
+        self.radar_vars = []
+        for i in range(4):
+            row = ttk.Frame(left)
+            row.pack(fill="x", pady=2)
+            swatch = tk.Canvas(row, width=14, height=14,
+                               highlightthickness=0)
+            swatch.create_rectangle(1, 1, 13, 13, fill=RADAR_COLORS[i],
+                                    outline=RADAR_COLORS[i])
+            swatch.pack(side="left", padx=(0, 5))
+            var = tk.StringVar(
+                value=opening[i] if i < len(opening) else "(none)")
+            box = ttk.Combobox(row, textvariable=var, width=24,
+                               state="readonly", values=names)
+            box.pack(side="left")
+            box.bind("<<ComboboxSelected>>",
+                     lambda e: self._draw_radar_tab())
+            self.radar_vars.append(var)
+
+        ttk.Button(left, text="Clear all", command=self._clear_radar).pack(
+            anchor="w", pady=(10, 14))
+
+        ttk.Label(left, text="Scale",
+                  font=("Consolas", 10, "bold")).pack(anchor="w")
+        self.radar_scale = tk.StringVar(value="formula")
+        for value, label in (("formula", "Full formula range"),
+                             ("roster", "Roster range (zoom)")):
+            ttk.Radiobutton(left, text=label, value=value,
+                            variable=self.radar_scale,
+                            command=self._draw_radar_tab).pack(anchor="w")
+
+        right = ttk.Frame(body)
+        right.pack(side="left", fill="both", expand=True)
+        cf = ttk.Frame(right)
+        cf.pack(fill="both", expand=True)
+        self.radar_canvas = tk.Canvas(cf, bg="white", highlightthickness=0)
+        rsb = ttk.Scrollbar(cf, command=self.radar_canvas.yview)
+        self.radar_canvas.configure(yscrollcommand=rsb.set)
+        self.radar_canvas.pack(side="left", fill="both", expand=True)
+        rsb.pack(side="right", fill="y")
+        self.radar_canvas.bind("<Configure>",
+                               lambda e: self._draw_radar_tab())
+
+        # never changes, so pay for it once rather than on every redraw
+        self._formula_bounds = self._radar_formula_bounds()
+        self._draw_radar_tab()
+
+    def _clear_radar(self):
+        for var in self.radar_vars:
+            var.set("(none)")
+        self._draw_radar_tab()
+
+    def _draw_radar_panel(self, cv, x, y, w, title, subtitle, axes, series):
+        """One radar plus the value table under it. Returns its bottom y."""
+        def text(tx, ty, s, size=9, bold=False, color="#1f2733",
+                 anchor="nw"):
+            font = ("Consolas", size, "bold") if bold else ("Consolas", size)
+            cv.create_text(tx, ty, anchor=anchor, text=s, font=font,
+                           fill=color)
+
+        text(x, y, title, size=11, bold=True)
+        text(x, y + 17, subtitle, size=8, color="#5a6675")
+        radius = max(78, min(w / 2 - 78, 158))
+        # The top axis carries a label AND its range underneath, stacked
+        # upward from the rim -- 70px of headroom, or the range text lands
+        # on the subtitle.
+        cx, cy = x + w / 2, y + 70 + radius
+        n = len(axes)
+
+        for frac in (0.25, 0.50, 0.75, 1.0):
+            pts = _radar_points(cx, cy, radius, [frac] * n)
+            cv.create_polygon([co for p in pts for co in p], fill="",
+                              outline="#9aa4ad" if frac == 1 else "#dfe4e8")
+
+        for i, (label, key, mult, fmt) in enumerate(axes):
+            ang = -math.pi / 2 + 2 * math.pi * i / n
+            ca, sa = math.cos(ang), math.sin(ang)
+            cv.create_line(cx, cy, cx + ca * radius, cy + sa * radius,
+                           fill="#dfe4e8")
+            lx, ly = cx + ca * (radius + 20), cy + sa * (radius + 20)
+            anchor = "w" if ca > 0.3 else "e" if ca < -0.3 else "center"
+            text(lx, ly, label, size=9, bold=True, anchor=anchor)
+            lo, hi = self._rbounds[key]
+            # the ends matter: without them a shape is unreadable, because
+            # no two of these axes share a unit
+            text(lx, ly + (-11 if sa < -0.5 else 11),
+                 "%s-%s" % (fmt % (lo * mult), fmt % (hi * mult)),
+                 size=7, color="#8a959e", anchor=anchor)
+
+        plotted = []
+        for _c, color, prof in series:
+            fracs = [self._norm(self._radar_value(prof, key),
+                                *self._rbounds[key])
+                     for _l, key, _m, _f in axes]
+            plotted.append((color, _radar_points(cx, cy, radius, fracs)))
+        for color, pts in plotted:
+            cv.create_polygon([co for p in pts for co in p], fill=color,
+                              outline=color, width=2, stipple="gray12")
+        # vertices last, so a point buried under three fills stays visible
+        for color, pts in plotted:
+            for px, py in pts:
+                cv.create_oval(px - 3, py - 3, px + 3, py + 3,
+                               fill=color, outline="white")
+
+        ty = cy + radius + 46
+        cols = [x + 104 + j * 66 for j in range(len(series))]
+        text(x, ty, "AXIS", size=8, bold=True, color="#5a6675")
+        for j, (c, color, _p) in enumerate(series):
+            text(cols[j], ty, c["short_name"], size=8, bold=True,
+                 color=color, anchor="ne")
+        ty += 15
+        for label, key, mult, fmt in axes:
+            vals = [self._radar_value(p, key) for _c, _col, p in series]
+            best = max(vals)
+            text(x, ty, label, size=8)
+            for j, v in enumerate(vals):
+                lead = v >= best - 1e-9
+                text(cols[j], ty, fmt % (v * mult), size=8, bold=lead,
+                     color=series[j][1] if lead else "#3f4a57", anchor="ne")
+            ty += 15
+        return ty
+
+    def _draw_radar_tab(self):
+        cv = getattr(self, "radar_canvas", None)
+        if cv is None:
+            return
+        cv.delete("all")
+        width = max(cv.winfo_width(), 620)
+
+        def text(tx, ty, s, size=9, bold=False, color="#1f2733",
+                 anchor="nw"):
+            font = ("Consolas", size, "bold") if bold else ("Consolas", size)
+            cv.create_text(tx, ty, anchor=anchor, text=s, font=font,
+                           fill=color)
+
+        def note(y, body, size=8, color="#5a6675"):
+            chars = max(40, int((width - 32) / self._char_w(size)))
+            for line in _wrap(body, chars):
+                text(12, y, line, size=size, color=color)
+                y += size + 5
+            return y
+
+        zoomed = self.radar_scale.get() == "roster"
+        self._rbounds = (self._radar_roster_bounds() if zoomed
+                         else self._formula_bounds)
+
+        series = []
+        for i, var in enumerate(self.radar_vars):
+            c = self.by_name.get(var.get())
+            if c is not None:
+                series.append((c, RADAR_COLORS[i],
+                               self._profiles[c["character_id"]]))
+
+        y = 10
+        text(12, y, "RADAR COMPARE", size=12, bold=True)
+        y += 20
+        text(12, y, "2dCS %s  |  scale: %s" % (
+            CS_VERSION,
+            "roster min-max (differences exaggerated)" if zoomed
+            else "full formula range (absolute)"), size=9, color="#5a6675")
+        y += 24
+
+        if not series:
+            text(12, y, "Choose at least one character on the left.",
+                 size=10, color="#b71c1c")
+            cv.configure(scrollregion=(0, 0, width, y + 30))
+            return
+
+        lx = 12
+        for c, color, _p in series:
+            label = "%s (%s)" % (c["display_name"], c["short_name"])
+            span = 16 + len(label) * self._char_w(9) + 22
+            if lx > 12 and lx + span > width - 12:      # wrap long rosters
+                lx, y = 12, y + 20
+            cv.create_rectangle(lx, y + 2, lx + 11, y + 13, fill=color,
+                                outline=color)
+            text(lx + 16, y, label, size=9)
+            lx += span
+        y += 28
+
+        # Two panels side by side when there is room, stacked when there is
+        # not -- the tables below each radar need ~370px to stay aligned.
+        two_col = width >= 850
+        pane_w = (width - 34) / 2 if two_col else width - 24
+        weapon_axes = [(w, w, 1, "%.0f") for w in RADAR_WEAPONS]
+        end1 = self._draw_radar_panel(
+            cv, 12, y, pane_w, "WEAPON APTITUDE",
+            "the same aptitude number the 2dCS tab prints", weapon_axes,
+            series)
+        end2 = self._draw_radar_panel(
+            cv, 12 + pane_w + 10 if two_col else 12,
+            y if two_col else end1 + 26, pane_w, "IN A FIGHT",
+            "six derived numbers, each on its own scale", RADAR_COMBAT,
+            series)
+        y = (max(end1, end2) if two_col else end2) + 22
+
+        cv.create_line(12, y, width - 16, y, fill="#8a959e")
+        y += 8
+        y = note(y, "Both charts read straight out of cs_profile(), so they "
+                    "agree with the 2dCS Rating tab by construction -- "
+                    "nothing here is calculated a second time.")
+        y = note(y, "WEAPON APTITUDE compares characters DOWN an axis, "
+                    "never across them. A 60 with a polearm beats a 60 with "
+                    "a bow, because the classes are not equally strong; the "
+                    "ratings tab's RECOMMENDED ARMAMENT is the cross-class "
+                    "answer.")
+        y = note(y, "IN A FIGHT axes carry different units -- health is hit "
+                    "points, critical is a percentage -- so each is scaled "
+                    "against its own ends, printed under its label. A wide "
+                    "shape means broadly capable; comparing one axis to the "
+                    "one beside it means nothing.")
+        y = note(y, "Scale: FULL FORMULA RANGE puts every axis between what "
+                    "an all-1 and an all-99 character would score, so shapes "
+                    "are absolute and comparable between sessions. ROSTER "
+                    "RANGE zooms each axis to this roster's own spread, "
+                    "which makes small differences legible but flatters "
+                    "whoever happens to lead.")
+        y += 20
+        cv.configure(scrollregion=(0, 0, width, y))
+
     def _on_wheel(self, event):
         try:
             idx = self.notebook.index(self.notebook.select())
         except tk.TclError:
             return
-        cv = (self.canvas, self.pcanvas,
-              getattr(self, "rcanvas", None))[idx] if idx < 3 else self.canvas
+        panes = (self.canvas, self.pcanvas,
+                 getattr(self, "rcanvas", None),
+                 getattr(self, "radar_canvas", None))
+        cv = panes[idx] if idx < len(panes) else None
         if cv is not None:
             cv.yview_scroll(-1 * (event.delta // 120), "units")
 

@@ -7,3 +7,22 @@ Put in front of each item the size of the folder of file.
 
 
                                                                                                               
+promt version 3
+I would like to make this application have a more user friendly and efficient UI. 
+I would like to make a python application to label photos.
+I want to be able to view the photos in a particular folder inside the application, I should be able to change the number of thumbnails and therefore their size on the screen
+Allow for easy to label photos based on what you see on the photos
+Have a list of common labels I often use when you go edit a photo so you can just check a box to add for example the name of a family member. 
+Common words should just be that easy.
+The application should take all the labels being applied to a particular file and edit the file name based on that. 
+for example a photo taken on June 27th, 2026 of Elliot showing a butterfly to alice maybe have 20260627_Elliot_Alice_buttefly_IMG_135135.JPG
+this is an example, say I want to remove the label Alice, I should be easily able to click on a button and it will change the name to 20260627_Elliot_Alice_buttefly_IMG_135135.JPG
+If it's better, the program can make lots of preliminary edits to names before it applies to all of them.
+when app goes to apply the name change needs to confirm with user first.
+
+I want all the functions of the current v2 still available in the new app, but they can be less prominent than the photo naming functionality
+
+I would love it even more if the app can read and print all the metadata for the photo and maybe even give me the ability to edit the metadata, not sure if that's an option
+no external libraries.
+I would like for the app to automatically suggest dates to be added at the beginning of the name such as 20260627 based on the data photo was taken on the metadata
+makes it so user doesn't even have to type that out.
